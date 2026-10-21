@@ -1,0 +1,25 @@
+{
+  "page": "boot/packaging--aot.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/packaging/aot.html",
+  "version": "4.1.1",
+  "html_sha256": "2f8ca73df6b25cdfbac32e8b2546f77afef1c0ed8131e78b15679164402d31fb",
+  "code_blocks": [
+    {
+      "language": "shell",
+      "text": "$ mvn -Pnative package"
+    },
+    {
+      "language": "shell",
+      "text": "$ java -Dspring.aot.enabled=true -jar myapplication.jar\n\n........ Starting AOT-processed MyApplication ..."
+    }
+  ],
+  "headings": [
+    "Ahead-of-Time Processing With the JVM"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Profile.html": "r1",
+    "https://docs.spring.io/spring-boot/4.1/how-to/aot.html#howto.aot.conditions": "r2",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnProperty.html": "r3",
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/native-image/introducing-graalvm-native-images.html#packaging.native-image.introducing-graalvm-native-images.understanding-aot-processing": "r4"
+  }
+}

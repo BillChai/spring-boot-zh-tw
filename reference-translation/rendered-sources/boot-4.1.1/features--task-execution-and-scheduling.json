@@ -1,0 +1,96 @@
+{
+  "page": "boot/features--task-execution-and-scheduling.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/features/task-execution-and-scheduling.html",
+  "version": "4.1.1",
+  "html_sha256": "1d5b8b80aa24e068018fd5a4c4d6626888056daee4a235d44d4ec0e445ecb173",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.core.task.SimpleAsyncTaskExecutor\n\n@Configuration(proxyBeanMethods = false)\nclass MyTaskExecutorConfiguration {\n\n\t@Bean(\"applicationTaskExecutor\")\n\tfun applicationTaskExecutor(): SimpleAsyncTaskExecutor {\n\t\treturn SimpleAsyncTaskExecutor(\"app-\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.core.task.SimpleAsyncTaskExecutor;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyTaskExecutorConfiguration {\n\n\t@Bean(\"applicationTaskExecutor\")\n\tSimpleAsyncTaskExecutor applicationTaskExecutor() {\n\t\treturn new SimpleAsyncTaskExecutor(\"app-\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.core.task.SimpleAsyncTaskExecutor\nimport org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor\n\n\n@Configuration(proxyBeanMethods = false)\nclass MyTaskExecutorConfiguration {\n\n\t@Bean(\"applicationTaskExecutor\")\n\tfun applicationTaskExecutor(): SimpleAsyncTaskExecutor {\n\t\treturn SimpleAsyncTaskExecutor(\"app-\")\n\t}\n\n\t@Bean(\"taskExecutor\")\n\tfun taskExecutor(): ThreadPoolTaskExecutor {\n\t\tval threadPoolTaskExecutor = ThreadPoolTaskExecutor()\n\t\tthreadPoolTaskExecutor.setThreadNamePrefix(\"async-\")\n\t\treturn threadPoolTaskExecutor\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.core.task.SimpleAsyncTaskExecutor;\nimport org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyTaskExecutorConfiguration {\n\n\t@Bean(\"applicationTaskExecutor\")\n\tSimpleAsyncTaskExecutor applicationTaskExecutor() {\n\t\treturn new SimpleAsyncTaskExecutor(\"app-\");\n\t}\n\n\t@Bean(\"taskExecutor\")\n\tThreadPoolTaskExecutor taskExecutor() {\n\t\tThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();\n\t\tthreadPoolTaskExecutor.setThreadNamePrefix(\"async-\");\n\t\treturn threadPoolTaskExecutor;\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.task.SimpleAsyncTaskExecutorBuilder\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.core.task.SimpleAsyncTaskExecutor\n\n@Configuration(proxyBeanMethods = false)\nclass MyTaskExecutorConfiguration {\n\n\t@Bean\n\tfun taskExecutor(builder: SimpleAsyncTaskExecutorBuilder): SimpleAsyncTaskExecutor {\n\t\treturn builder.build()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.task.SimpleAsyncTaskExecutorBuilder;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.core.task.SimpleAsyncTaskExecutor;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyTaskExecutorConfiguration {\n\n\t@Bean\n\tSimpleAsyncTaskExecutor taskExecutor(SimpleAsyncTaskExecutorBuilder builder) {\n\t\treturn builder.build();\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.scheduling.annotation.AsyncConfigurer\nimport java.util.concurrent.Executor\nimport java.util.concurrent.ExecutorService\nimport java.util.concurrent.Executors\n\n@Configuration(proxyBeanMethods = false)\nclass MyTaskExecutorConfiguration {\n\n\t@Bean\n\tfun asyncConfigurer(executorService: ExecutorService): AsyncConfigurer {\n\t\treturn object : AsyncConfigurer {\n\t\t\toverride fun getAsyncExecutor(): Executor {\n\t\t\t\treturn executorService\n\t\t\t}\n\t\t}\n\t}\n\n\t@Bean\n\tfun executorService(): ExecutorService {\n\t\treturn Executors.newCachedThreadPool()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.util.concurrent.Executor;\nimport java.util.concurrent.ExecutorService;\nimport java.util.concurrent.Executors;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.scheduling.annotation.AsyncConfigurer;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyTaskExecutorConfiguration {\n\n\t@Bean\n\tAsyncConfigurer asyncConfigurer(ExecutorService executorService) {\n\t\treturn new AsyncConfigurer() {\n\n\t\t\t@Override\n\t\t\tpublic Executor getAsyncExecutor() {\n\t\t\t\treturn executorService;\n\t\t\t}\n\n\t\t};\n\t}\n\n\t@Bean\n\tExecutorService executorService() {\n\t\treturn Executors.newCachedThreadPool();\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.beans.factory.annotation.Qualifier\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport java.util.concurrent.Executors\nimport java.util.concurrent.ScheduledExecutorService\n\n@Configuration(proxyBeanMethods = false)\nclass MyTaskExecutorConfiguration {\n\n\t@Bean(defaultCandidate = false)\n\t@Qualifier(\"scheduledExecutorService\")\n\tfun scheduledExecutorService(): ScheduledExecutorService {\n\t\treturn Executors.newSingleThreadScheduledExecutor()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.util.concurrent.Executors;\nimport java.util.concurrent.ScheduledExecutorService;\n\nimport org.springframework.beans.factory.annotation.Qualifier;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyTaskExecutorConfiguration {\n\n\t@Bean(defaultCandidate = false)\n\t@Qualifier(\"scheduledExecutorService\")\n\tScheduledExecutorService scheduledExecutorService() {\n\t\treturn Executors.newSingleThreadScheduledExecutor();\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.task.execution.mode=force"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  task:\n    execution:\n      mode: force"
+    },
+    {
+      "language": "properties",
+      "text": "spring.task.execution.pool.max-size=16\nspring.task.execution.pool.queue-capacity=100\nspring.task.execution.pool.keep-alive=10s"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  task:\n    execution:\n      pool:\n        max-size: 16\n        queue-capacity: 100\n        keep-alive: \"10s\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.task.scheduling.thread-name-prefix=scheduling-\nspring.task.scheduling.pool.size=2"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  task:\n    scheduling:\n      thread-name-prefix: \"scheduling-\"\n      pool:\n        size: 2"
+    }
+  ],
+  "headings": [
+    "Task Execution and Scheduling"
+  ],
+  "links": {
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html": "r1",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/task/AsyncTaskExecutor.html": "r2",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/task/SimpleAsyncTaskExecutor.html": "r3",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/scheduling/concurrent/ThreadPoolTaskExecutor.html": "r4",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/scheduling/annotation/EnableAsync.html": "r5",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/scheduling/annotation/AsyncConfigurer.html": "r6",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Callable.html": "r7",
+    "https://docs.spring.io/spring-framework/reference/7.0/core/beans/java/composing-configuration-classes.html#beans-java-startup-background": "r8",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Primary.html": "r9",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/task/ThreadPoolTaskExecutorBuilder.html": "r10",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/task/SimpleAsyncTaskExecutorBuilder.html": "r11",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r12",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/annotation/Qualifier.html": "r13",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/annotation/Autowired.html": "r14",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/scheduling/annotation/EnableScheduling.html": "r15",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/scheduling/concurrent/SimpleAsyncTaskScheduler.html": "r16",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/scheduling/concurrent/ThreadPoolTaskScheduler.html": "r17",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/task/ThreadPoolTaskSchedulerBuilder.html": "r18",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/task/SimpleAsyncTaskSchedulerBuilder.html": "r19"
+  }
+}

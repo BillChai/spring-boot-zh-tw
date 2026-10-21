@@ -1,0 +1,13 @@
+{
+  "page": "boot/security--index.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/security/index.html",
+  "version": "4.1.1",
+  "html_sha256": "7ebc6e116e10fd46f5060a509e160a2f38d946f1ee5b30773389e2d1f87e0b5a",
+  "code_blocks": [],
+  "headings": [
+    "Security"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1/reference/web/spring-security.html#web.security": "r1"
+  }
+}

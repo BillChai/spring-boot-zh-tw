@@ -1,0 +1,585 @@
+{
+  "page": "boot/actuator--metrics.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html",
+  "version": "4.1.1",
+  "html_sha256": "1757b4e00206424b157589484e6ac864fc3f3fe6447228e67d7161bf3ae9f979",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "management.datadog.metrics.export.enabled=false"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  datadog:\n    metrics:\n      export:\n        enabled: false"
+    },
+    {
+      "language": "properties",
+      "text": "management.defaults.metrics.export.enabled=false"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  defaults:\n    metrics:\n      export:\n        enabled: false"
+    },
+    {
+      "language": "properties",
+      "text": "management.metrics.use-global-registry=false"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  metrics:\n    use-global-registry: false"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.micrometer.core.instrument.MeterRegistry\nimport org.springframework.boot.micrometer.metrics.autoconfigure.MeterRegistryCustomizer\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\n\n@Configuration(proxyBeanMethods = false)\nclass MyMeterRegistryConfiguration {\n\n\t@Bean\n\tfun metricsCommonTags(): MeterRegistryCustomizer<MeterRegistry> {\n\t\treturn MeterRegistryCustomizer { registry ->\n\t\t\tregistry.config().commonTags(\"region\", \"us-east-1\")\n\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.micrometer.core.instrument.MeterRegistry;\n\nimport org.springframework.boot.micrometer.metrics.autoconfigure.MeterRegistryCustomizer;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyMeterRegistryConfiguration {\n\n\t@Bean\n\tpublic MeterRegistryCustomizer<MeterRegistry> metricsCommonTags() {\n\t\treturn (registry) -> registry.config().commonTags(\"region\", \"us-east-1\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.micrometer.core.instrument.Meter\nimport io.micrometer.core.instrument.config.NamingConvention\nimport io.micrometer.graphite.GraphiteMeterRegistry\nimport org.springframework.boot.micrometer.metrics.autoconfigure.MeterRegistryCustomizer\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\n\n@Configuration(proxyBeanMethods = false)\nclass MyMeterRegistryConfiguration {\n\n\t@Bean\n\tfun graphiteMetricsNamingConvention(): MeterRegistryCustomizer<GraphiteMeterRegistry> {\n\t\treturn MeterRegistryCustomizer { registry: GraphiteMeterRegistry ->\n\t\t\tregistry.config().namingConvention(this::name)\n\t\t}\n\t}\n\n\tprivate fun name(name: String, type: Meter.Type, baseUnit: String?): String {\n\t\treturn  ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.micrometer.core.instrument.Meter;\nimport io.micrometer.core.instrument.config.NamingConvention;\nimport io.micrometer.graphite.GraphiteMeterRegistry;\n\nimport org.springframework.boot.micrometer.metrics.autoconfigure.MeterRegistryCustomizer;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyMeterRegistryConfiguration {\n\n\t@Bean\n\tpublic MeterRegistryCustomizer<GraphiteMeterRegistry> graphiteMetricsNamingConvention() {\n\t\treturn (registry) -> registry.config().namingConvention(this::name);\n\t}\n\n\tprivate String name(String name, Meter.Type type, String baseUnit) {\n\t\treturn ...\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "management.appoptics.metrics.export.api-token=YOUR_TOKEN"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  appoptics:\n    metrics:\n      export:\n        api-token: \"YOUR_TOKEN\""
+    },
+    {
+      "language": "properties",
+      "text": "management.atlas.metrics.export.uri=https://atlas.example.com:7101/api/v1/publish"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  atlas:\n    metrics:\n      export:\n        uri: \"https://atlas.example.com:7101/api/v1/publish\""
+    },
+    {
+      "language": "properties",
+      "text": "management.datadog.metrics.export.api-key=YOUR_KEY"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  datadog:\n    metrics:\n      export:\n        api-key: \"YOUR_KEY\""
+    },
+    {
+      "language": "properties",
+      "text": "management.datadog.metrics.export.api-key=YOUR_API_KEY\nmanagement.datadog.metrics.export.application-key=YOUR_APPLICATION_KEY"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  datadog:\n    metrics:\n      export:\n        api-key: \"YOUR_API_KEY\"\n        application-key: \"YOUR_APPLICATION_KEY\""
+    },
+    {
+      "language": "properties",
+      "text": "management.datadog.metrics.export.uri=https://api.datadoghq.eu"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  datadog:\n    metrics:\n      export:\n        uri: \"https://api.datadoghq.eu\""
+    },
+    {
+      "language": "properties",
+      "text": "management.datadog.metrics.export.step=30s"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  datadog:\n    metrics:\n      export:\n        step: \"30s\""
+    },
+    {
+      "language": "properties",
+      "text": "management.dynatrace.metrics.export.uri=https://example.live.dynatrace.com/api/v2/metrics/ingest\nmanagement.dynatrace.metrics.export.api-token=YOUR_TOKEN"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  dynatrace:\n    metrics:\n      export:\n        uri: \"https://example.live.dynatrace.com/api/v2/metrics/ingest\"\n        api-token: \"YOUR_TOKEN\""
+    },
+    {
+      "language": "properties",
+      "text": "management.dynatrace.metrics.export.v2.metric-key-prefix=your.key.prefix\nmanagement.dynatrace.metrics.export.v2.enrich-with-dynatrace-metadata=true\nmanagement.dynatrace.metrics.export.v2.default-dimensions.key1=value1\nmanagement.dynatrace.metrics.export.v2.default-dimensions.key2=value2\nmanagement.dynatrace.metrics.export.v2.use-dynatrace-summary-instruments=true\nmanagement.dynatrace.metrics.export.v2.export-meter-metadata=true"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  dynatrace:\n    metrics:\n      export:\n        # Specify uri and api-token here if not using the local OneAgent endpoint.\n        v2:\n          metric-key-prefix: \"your.key.prefix\"\n          enrich-with-dynatrace-metadata: true\n          default-dimensions:\n            key1: \"value1\"\n            key2: \"value2\"\n          use-dynatrace-summary-instruments: true # (default: true)\n          export-meter-metadata: true             # (default: true)"
+    },
+    {
+      "language": "properties",
+      "text": "management.dynatrace.metrics.export.uri=https://{your-environment-id}.live.dynatrace.com\nmanagement.dynatrace.metrics.export.api-token=YOUR_TOKEN\nmanagement.dynatrace.metrics.export.v1.device-id=YOUR_DEVICE_ID"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  dynatrace:\n    metrics:\n      export:\n        uri: \"https://{your-environment-id}.live.dynatrace.com\"\n        api-token: \"YOUR_TOKEN\"\n        v1:\n          device-id: \"YOUR_DEVICE_ID\""
+    },
+    {
+      "language": "properties",
+      "text": "management.dynatrace.metrics.export.step=30s"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  dynatrace:\n    metrics:\n      export:\n        step: \"30s\""
+    },
+    {
+      "language": "properties",
+      "text": "management.elastic.metrics.export.host=https://elastic.example.com:8086"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  elastic:\n    metrics:\n      export:\n        host: \"https://elastic.example.com:8086\""
+    },
+    {
+      "language": "properties",
+      "text": "management.ganglia.metrics.export.host=ganglia.example.com\nmanagement.ganglia.metrics.export.port=9649"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  ganglia:\n    metrics:\n      export:\n        host: \"ganglia.example.com\"\n        port: 9649"
+    },
+    {
+      "language": "properties",
+      "text": "management.graphite.metrics.export.host=graphite.example.com\nmanagement.graphite.metrics.export.port=9004"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  graphite:\n    metrics:\n      export:\n         host: \"graphite.example.com\"\n         port: 9004"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.micrometer.core.instrument.Clock\nimport io.micrometer.core.instrument.Meter\nimport io.micrometer.core.instrument.config.NamingConvention\nimport io.micrometer.core.instrument.util.HierarchicalNameMapper\nimport io.micrometer.graphite.GraphiteConfig\nimport io.micrometer.graphite.GraphiteMeterRegistry\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\n\n@Configuration(proxyBeanMethods = false)\nclass MyGraphiteConfiguration {\n\n\t@Bean\n\tfun graphiteMeterRegistry(config: GraphiteConfig, clock: Clock): GraphiteMeterRegistry {\n\t\treturn GraphiteMeterRegistry(config, clock, this::toHierarchicalName)\n\t}\n\tprivate fun toHierarchicalName(id: Meter.Id, convention: NamingConvention): String {\n\t\treturn  ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.micrometer.core.instrument.Clock;\nimport io.micrometer.core.instrument.Meter;\nimport io.micrometer.core.instrument.config.NamingConvention;\nimport io.micrometer.core.instrument.util.HierarchicalNameMapper;\nimport io.micrometer.graphite.GraphiteConfig;\nimport io.micrometer.graphite.GraphiteMeterRegistry;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyGraphiteConfiguration {\n\n\t@Bean\n\tpublic GraphiteMeterRegistry graphiteMeterRegistry(GraphiteConfig config, Clock clock) {\n\t\treturn new GraphiteMeterRegistry(config, clock, this::toHierarchicalName);\n\t}\n\n\tprivate String toHierarchicalName(Meter.Id id, NamingConvention convention) {\n\t\treturn ...\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "management.humio.metrics.export.api-token=YOUR_TOKEN"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  humio:\n    metrics:\n      export:\n        api-token: \"YOUR_TOKEN\""
+    },
+    {
+      "language": "properties",
+      "text": "management.humio.metrics.export.tags.alpha=a\nmanagement.humio.metrics.export.tags.bravo=b"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  humio:\n    metrics:\n      export:\n        tags:\n          alpha: \"a\"\n          bravo: \"b\""
+    },
+    {
+      "language": "properties",
+      "text": "management.influx.metrics.export.uri=https://influx.example.com:8086"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  influx:\n    metrics:\n      export:\n        uri: \"https://influx.example.com:8086\""
+    },
+    {
+      "language": "properties",
+      "text": "management.jmx.metrics.export.domain=com.example.app.metrics"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  jmx:\n    metrics:\n      export:\n        domain: \"com.example.app.metrics\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.micrometer.core.instrument.Clock\nimport io.micrometer.core.instrument.Meter\nimport io.micrometer.core.instrument.config.NamingConvention\nimport io.micrometer.core.instrument.util.HierarchicalNameMapper\nimport io.micrometer.jmx.JmxConfig\nimport io.micrometer.jmx.JmxMeterRegistry\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\n\n@Configuration(proxyBeanMethods = false)\nclass MyJmxConfiguration {\n\n\t@Bean\n\tfun jmxMeterRegistry(config: JmxConfig, clock: Clock): JmxMeterRegistry {\n\t\treturn JmxMeterRegistry(config, clock, this::toHierarchicalName)\n\t}\n\n\tprivate fun toHierarchicalName(id: Meter.Id, convention: NamingConvention): String {\n\t\treturn  ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.micrometer.core.instrument.Clock;\nimport io.micrometer.core.instrument.Meter;\nimport io.micrometer.core.instrument.config.NamingConvention;\nimport io.micrometer.core.instrument.util.HierarchicalNameMapper;\nimport io.micrometer.jmx.JmxConfig;\nimport io.micrometer.jmx.JmxMeterRegistry;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyJmxConfiguration {\n\n\t@Bean\n\tpublic JmxMeterRegistry jmxMeterRegistry(JmxConfig config, Clock clock) {\n\t\treturn new JmxMeterRegistry(config, clock, this::toHierarchicalName);\n\t}\n\n\tprivate String toHierarchicalName(Meter.Id id, NamingConvention convention) {\n\t\treturn ...\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "management.kairos.metrics.export.uri=https://kairosdb.example.com:8080/api/v1/datapoints"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  kairos:\n    metrics:\n      export:\n        uri: \"https://kairosdb.example.com:8080/api/v1/datapoints\""
+    },
+    {
+      "language": "properties",
+      "text": "management.newrelic.metrics.export.api-key=YOUR_KEY\nmanagement.newrelic.metrics.export.account-id=YOUR_ACCOUNT_ID"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  newrelic:\n    metrics:\n      export:\n        api-key: \"YOUR_KEY\"\n        account-id: \"YOUR_ACCOUNT_ID\""
+    },
+    {
+      "language": "properties",
+      "text": "management.newrelic.metrics.export.step=30s"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  newrelic:\n    metrics:\n      export:\n        step: \"30s\""
+    },
+    {
+      "language": "properties",
+      "text": "management.newrelic.metrics.export.client-provider-type=insights-agent"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  newrelic:\n    metrics:\n      export:\n        client-provider-type: \"insights-agent\""
+    },
+    {
+      "language": "properties",
+      "text": "management.otlp.metrics.export.url=https://otlp.example.com:4318/v1/metrics"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  otlp:\n    metrics:\n      export:\n        url: \"https://otlp.example.com:4318/v1/metrics\""
+    },
+    {
+      "language": "yaml",
+      "text": "scrape_configs:\n- job_name: \"spring\"\n  metrics_path: \"/actuator/prometheus\"\n  static_configs:\n  - targets: [\"HOST:PORT\"]"
+    },
+    {
+      "language": "xml",
+      "text": "<dependency>\n\t<groupId>io.prometheus</groupId>\n\t<artifactId>prometheus-metrics-exporter-pushgateway</artifactId>\n</dependency>"
+    },
+    {
+      "language": "properties",
+      "text": "management.simple.metrics.export.enabled=false"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  simple:\n    metrics:\n      export:\n        enabled: false"
+    },
+    {
+      "language": "properties",
+      "text": "management.stackdriver.metrics.export.project-id=my-project"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  stackdriver:\n    metrics:\n      export:\n        project-id: \"my-project\""
+    },
+    {
+      "language": "properties",
+      "text": "management.stackdriver.metrics.export.step=30s"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  stackdriver:\n    metrics:\n      export:\n        step: \"30s\""
+    },
+    {
+      "language": "properties",
+      "text": "management.statsd.metrics.export.host=statsd.example.com\nmanagement.statsd.metrics.export.port=9125\nmanagement.statsd.metrics.export.protocol=udp"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  statsd:\n    metrics:\n      export:\n        host: \"statsd.example.com\"\n        port: 9125\n        protocol: \"udp\""
+    },
+    {
+      "language": "properties",
+      "text": "management.statsd.metrics.export.flavor=etsy"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  statsd:\n    metrics:\n      export:\n        flavor: \"etsy\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.jpa.properties[hibernate.generate_statistics]=true"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  jpa:\n    properties:\n      \"[hibernate.generate_statistics]\": true"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.micrometer.core.instrument.binder.mongodb.MongoCommandTagsProvider\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\n\n@Configuration(proxyBeanMethods = false)\nclass MyCommandTagsProviderConfiguration {\n\n\t@Bean\n\tfun customCommandTagsProvider(): MongoCommandTagsProvider? {\n\t\treturn CustomCommandTagsProvider()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.micrometer.core.instrument.binder.mongodb.MongoCommandTagsProvider;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyCommandTagsProviderConfiguration {\n\n\t@Bean\n\tpublic MongoCommandTagsProvider customCommandTagsProvider() {\n\t\treturn new CustomCommandTagsProvider();\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "management.metrics.mongodb.command.enabled=false"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  metrics:\n    mongodb:\n      command:\n        enabled: false"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.micrometer.core.instrument.binder.mongodb.MongoConnectionPoolTagsProvider\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\n\n@Configuration(proxyBeanMethods = false)\nclass MyConnectionPoolTagsProviderConfiguration {\n\n\t@Bean\n\tfun customConnectionPoolTagsProvider(): MongoConnectionPoolTagsProvider {\n\t\treturn CustomConnectionPoolTagsProvider()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.micrometer.core.instrument.binder.mongodb.MongoConnectionPoolTagsProvider;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyConnectionPoolTagsProviderConfiguration {\n\n\t@Bean\n\tpublic MongoConnectionPoolTagsProvider customConnectionPoolTagsProvider() {\n\t\treturn new CustomConnectionPoolTagsProvider();\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "management.metrics.mongodb.connectionpool.enabled=false"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  metrics:\n    mongodb:\n      connectionpool:\n        enabled: false"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.micrometer.core.instrument.MeterRegistry\nimport io.micrometer.core.instrument.Tags\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean(registry: MeterRegistry) {\n\n\tprivate val dictionary: Dictionary\n\n\tinit {\n\t\tdictionary = Dictionary.load()\n\t\tregistry.gauge(\"dictionary.size\", Tags.empty(), dictionary.words.size)\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.micrometer.core.instrument.MeterRegistry;\nimport io.micrometer.core.instrument.Tags;\n\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final Dictionary dictionary;\n\n\tpublic MyBean(MeterRegistry registry) {\n\t\tthis.dictionary = Dictionary.load();\n\t\tregistry.gauge(\"dictionary.size\", Tags.empty(), this.dictionary.getWords().size());\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.micrometer.core.instrument.Gauge\nimport io.micrometer.core.instrument.binder.MeterBinder\nimport org.springframework.context.annotation.Bean\n\nclass MyMeterBinderConfiguration {\n\n\t@Bean\n\tfun queueSize(queue: Queue): MeterBinder {\n\t\treturn MeterBinder { registry ->\n\t\t\tGauge.builder(\"queueSize\", queue::size).register(registry)\n\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.micrometer.core.instrument.Gauge;\nimport io.micrometer.core.instrument.binder.MeterBinder;\n\nimport org.springframework.context.annotation.Bean;\n\npublic class MyMeterBinderConfiguration {\n\n\t@Bean\n\tpublic MeterBinder queueSize(Queue queue) {\n\t\treturn (registry) -> Gauge.builder(\"queueSize\", queue::size).register(registry);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.micrometer.core.instrument.config.MeterFilter\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\n\n@Configuration(proxyBeanMethods = false)\nclass MyMetricsFilterConfiguration {\n\n\t@Bean\n\tfun renameRegionTagMeterFilter(): MeterFilter {\n\t\treturn MeterFilter.renameTag(\"com.example\", \"mytag.region\", \"mytag.area\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.micrometer.core.instrument.config.MeterFilter;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyMetricsFilterConfiguration {\n\n\t@Bean\n\tpublic MeterFilter renameRegionTagMeterFilter() {\n\t\treturn MeterFilter.renameTag(\"com.example\", \"mytag.region\", \"mytag.area\");\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "management.metrics.tags.region=us-east-1\nmanagement.metrics.tags.stack=prod"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  metrics:\n    tags:\n      region: \"us-east-1\"\n      stack: \"prod\""
+    },
+    {
+      "language": "properties",
+      "text": "management.metrics.enable.example.remote=false"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  metrics:\n    enable:\n      example:\n        remote: false"
+    }
+  ],
+  "headings": [
+    "Metrics",
+    "Getting Started",
+    "Supported Monitoring Systems",
+    "AppOptics",
+    "Atlas",
+    "Datadog",
+    "Dynatrace",
+    "v2 API",
+    "Auto-configuration",
+    "Manual Configuration",
+    "v1 API (Deprecated)",
+    "Version-independent Settings",
+    "Elastic",
+    "Ganglia",
+    "Graphite",
+    "Humio",
+    "Influx",
+    "JMX",
+    "KairosDB",
+    "New Relic",
+    "OTLP",
+    "Prometheus",
+    "Simple",
+    "Stackdriver",
+    "StatsD",
+    "Supported Metrics and Meters",
+    "JVM Metrics",
+    "System Metrics",
+    "Application Startup Metrics",
+    "Logger Metrics",
+    "Task Execution and Scheduling Metrics",
+    "JMS Metrics",
+    "Spring MVC Metrics",
+    "Spring WebFlux Metrics",
+    "Jersey Server Metrics",
+    "SSL Bundle Metrics",
+    "HTTP Client Metrics",
+    "Tomcat Metrics",
+    "Cache Metrics",
+    "Spring Batch Metrics",
+    "Spring GraphQL Metrics",
+    "DataSource Metrics",
+    "Hibernate Metrics",
+    "Spring Data Repository Metrics",
+    "RabbitMQ Metrics",
+    "Spring Integration Metrics",
+    "Kafka Metrics",
+    "MongoDB Metrics",
+    "MongoDB Command Metrics",
+    "MongoDB Connection Pool Metrics",
+    "Neo4j Metrics",
+    "Jetty Metrics",
+    "Redis Metrics",
+    "Registering Custom Metrics",
+    "Customizing Individual Metrics",
+    "Common Tags",
+    "Per-meter Properties",
+    "Metrics Endpoint",
+    "Integration with Micrometer Observation"
+  ],
+  "links": {
+    "https://micrometer.io": "r1",
+    "https://docs.micrometer.io/micrometer/reference/1.17": "r2",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.appoptics": "r3",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.atlas": "r4",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.datadog": "r5",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.dynatrace": "r6",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.elastic": "r7",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.ganglia": "r8",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.graphite": "r9",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.humio": "r10",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.influx": "r11",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.jmx": "r12",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.kairos": "r13",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.newrelic": "r14",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.otlp": "r15",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.prometheus": "r16",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.simple": "r17",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.stackdriver": "r18",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.statsd": "r19",
+    "https://docs.micrometer.io/micrometer/reference/1.17/concepts": "r20",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/MeterRegistry.html": "r21",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/Metrics.html": "r22",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/metrics/autoconfigure/MeterRegistryCustomizer.html": "r23",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.supported": "r24",
+    "https://api.appoptics.com/v1/measurements": "r25",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/appOptics": "r26",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/atlas": "r27",
+    "https://github.com/Netflix/atlas": "r28",
+    "https://www.datadoghq.com": "r29",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/datadog": "r30",
+    "https://docs.datadoghq.com/getting_started/site": "r31",
+    "https://api.datadoghq.com": "r32",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/dynatrace": "r33",
+    "https://docs.dynatrace.com/docs/shortlink/micrometer-metrics-ingest": "r34",
+    "https://docs.dynatrace.com/docs/shortlink/api-metrics": "r35",
+    "https://docs.dynatrace.com/docs/shortlink/api-metrics-v2-post-datapoints": "r36",
+    "https://docs.dynatrace.com/docs/shortlink/local-api": "r37",
+    "https://docs.dynatrace.com/docs/shortlink/api-authentication": "r38",
+    "https://docs.dynatrace.com/docs/shortlink/micrometer-metrics-ingest#dt-configuration-properties": "r39",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/elastic": "r40",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/ganglia": "r41",
+    "http://ganglia.sourceforge.net": "r42",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/graphite": "r43",
+    "https://graphiteapp.org": "r44",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/util/HierarchicalNameMapper.html": "r45",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/graphite#_hierarchical_name_mapping": "r46",
+    "https://javadoc.io/doc/io.micrometer/micrometer-registry-graphite/1.17.1/io/micrometer/graphite/GraphiteMeterRegistry.html": "r47",
+    "https://javadoc.io/doc/io.micrometer/micrometer-registry-graphite/1.17.1/io/micrometer/graphite/GraphiteConfig.html": "r48",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/Clock.html": "r49",
+    "https://cloud.humio.com": "r50",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/humio": "r51",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/influx": "r52",
+    "https://www.influxdata.com": "r53",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/jmx": "r54",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/jmx#_hierarchical_name_mapping": "r55",
+    "https://javadoc.io/doc/io.micrometer/micrometer-registry-jmx/1.17.1/io/micrometer/jmx/JmxMeterRegistry.html": "r56",
+    "https://javadoc.io/doc/io.micrometer/micrometer-registry-jmx/1.17.1/io/micrometer/jmx/JmxConfig.html": "r57",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/kairos": "r58",
+    "https://kairosdb.github.io/": "r59",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/new-relic": "r60",
+    "https://newrelic.com": "r61",
+    "https://javadoc.io/doc/io.micrometer/micrometer-registry-new-relic/1.17.1/io/micrometer/newrelic/NewRelicClientProvider.html": "r62",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/otlp": "r63",
+    "https://opentelemetry.io/": "r64",
+    "https://opentelemetry.io/docs/specs/otel/metrics/data-model/#exemplars": "r65",
+    "https://javadoc.io/doc/io.micrometer/micrometer-registry-otlp/1.17.1/io/micrometer/registry/otlp/ExemplarContextProvider.html": "r66",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/tracing.html": "r67",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/prometheus": "r68",
+    "https://prometheus.io": "r69",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/endpoints.html#actuator.endpoints.exposing": "r70",
+    "https://prometheus.io/docs/prometheus/latest/feature_flags/#exemplars-storage": "r71",
+    "https://javadoc.io/doc/io.prometheus/prometheus-metrics-tracer-common/1.7.0/io/prometheus/metrics/tracer/common/SpanContext.html": "r72",
+    "https://javadoc.io/doc/io.prometheus/simpleclient_tracer_common/0.16.0/io/prometheus/client/exemplars/tracer/common/SpanContextSupplier.html": "r73",
+    "https://docs.micrometer.io/tracing/reference/1.7": "r74",
+    "https://github.com/OpenObservability/OpenMetrics/blob/v1.0.0/specification/OpenMetrics.md#exemplars": "r75",
+    "https://github.com/prometheus/pushgateway": "r76",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/metrics/export/prometheus/PrometheusPushGatewayManager.html": "r77",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.endpoint": "r78",
+    "https://cloud.google.com/stackdriver/": "r79",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/stackdriver": "r80",
+    "https://docs.micrometer.io/micrometer/reference/1.17/implementations/statsD": "r81",
+    "https://docs.micrometer.io/micrometer/reference/reference/jvm.html#_java_21_metrics": "r82",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/scheduling/concurrent/ThreadPoolTaskExecutor.html": "r83",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/scheduling/concurrent/ThreadPoolTaskScheduler.html": "r84",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ThreadPoolExecutor.html": "r85",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/core/JmsTemplate.html": "r86",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/annotation/JmsListener.html": "r87",
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/observability.html#observability.jms": "r88",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/core/JmsClient.html": "r89",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/core/JmsMessagingTemplate.html": "r90",
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/observability.html#observability.http-server.servlet": "r91",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r92",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/server/observation/DefaultServerRequestObservationConvention.html": "r93",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/server/observation/ServerRequestObservationConvention.html": "r94",
+    "https://docs.spring.io/spring-boot/4.1/reference/web/servlet.html#web.servlet.spring-mvc.error-handling": "r95",
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/observability.html#observability.http-server.reactive": "r96",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/server/reactive/observation/DefaultServerRequestObservationConvention.html": "r97",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/server/reactive/observation/ServerRequestObservationConvention.html": "r98",
+    "https://docs.spring.io/spring-boot/4.1/reference/web/reactive.html#web.reactive.webflux.error-handling": "r99",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/binder/jersey/server/JerseyObservationConvention.html": "r100",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/client/RestTemplate.html": "r101",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/function/client/WebClient.html": "r102",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/client/RestClient.html": "r103",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/restclient/RestTemplateBuilder.html": "r104",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/function/client/WebClient.Builder.html": "r105",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/client/RestClient.Builder.html": "r106",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/restclient/observation/ObservationRestTemplateCustomizer.html": "r107",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webclient/observation/ObservationWebClientCustomizer.html": "r108",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/restclient/observation/ObservationRestClientCustomizer.html": "r109",
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/observability.html#observability.http-client": "r110",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/client/observation/ClientRequestObservationConvention.html": "r111",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/function/client/ClientRequestObservationConvention.html": "r112",
+    "https://tomcat.apache.org/tomcat-11.0-doc/api/org/apache/tomcat/util/modeler/Registry.html": "r113",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/cache/Cache.html": "r114",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/cache/CacheManager.html": "r115",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/cache/metrics/CacheMetricsRegistrar.html": "r116",
+    "https://docs.spring.io/spring-batch/reference/6.0/monitoring-and-metrics.html": "r117",
+    "https://docs.spring.io/spring-graphql/reference/2.0/observability.html": "r118",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html": "r119",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jdbc/metadata/DataSourcePoolMetadataProvider.html": "r120",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jdbc/autoconfigure/DataSourcePoolMetadataProvidersConfiguration.html": "r121",
+    "https://jakarta.ee/specifications/persistence/3.2/apidocs/jakarta.persistence/jakarta/persistence/EntityManagerFactory.html": "r122",
+    "https://docs.spring.io/spring-data/commons/docs/4.1.x/api/org/springframework/data/repository/Repository.html": "r123",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/annotation/Timed.html": "r124",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/metrics/RepositoryTagsProvider.html": "r125",
+    "https://docs.spring.io/spring-integration/reference/7.1/metrics.html#micrometer-integration": "r126",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/core/MicrometerConsumerListener.html": "r127",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/core/MicrometerProducerListener.html": "r128",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/streams/KafkaStreamsMicrometerListener.html": "r129",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/config/StreamsBuilderFactoryBean.html": "r130",
+    "https://docs.spring.io/spring-kafka/reference/4.1/kafka/micrometer.html#micrometer-native": "r131",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/binder/mongodb/MongoMetricsCommandListener.html": "r132",
+    "https://mongodb.github.io/mongo-java-driver/5.8/apidocs/mongodb-driver-sync/com/mongodb/client/MongoClient.html": "r133",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/binder/mongodb/MongoCommandTagsProvider.html": "r134",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/binder/mongodb/MongoMetricsConnectionPoolListener.html": "r135",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/binder/mongodb/MongoConnectionPoolTagsProvider.html": "r136",
+    "https://javadoc.io/doc/org.neo4j.driver/neo4j-java-driver/6.1.0/org/neo4j/driver/observation/micrometer/MicrometerObservationProvider.html": "r137",
+    "https://javadoc.io/doc/org.neo4j.driver/neo4j-java-driver/6.1.0/org/neo4j/driver/Driver.html": "r138",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/neo4j/autoconfigure/ConfigBuilderCustomizer.html": "r139",
+    "https://javadoc.jetty.org/jetty-12/org/eclipse/jetty/util/thread/ThreadPool.html": "r140",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/binder/jetty/JettyServerThreadPoolMetrics.html": "r141",
+    "https://javadoc.jetty.org/jetty-12/org/eclipse/jetty/server/Connector.html": "r142",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/binder/jetty/JettyConnectionMetrics.html": "r143",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/binder/jetty/JettySslHandshakeMetrics.html": "r144",
+    "https://javadoc.io/doc/io.lettuce/lettuce-core/7.5.2.RELEASE/io/lettuce/core/tracing/MicrometerTracing.html": "r145",
+    "https://docs.spring.io/spring-data/redis/docs/4.1.x/api/org/springframework/data/redis/connection/lettuce/LettuceConnectionFactory.html": "r146",
+    "https://redis.github.io/lettuce/advanced-usage/observability": "r147",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/binder/MeterBinder.html": "r148",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/Meter.html": "r149",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/config/MeterFilter.html": "r150",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/metrics/autoconfigure/PropertiesMeterFilter.html": "r151",
+    "https://docs.micrometer.io/micrometer/reference/1.17/concepts/histogram-quantiles.html": "r152",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/observation/DefaultMeterObservationHandler.html": "r153",
+    "https://javadoc.io/doc/io.micrometer/micrometer-observation/1.17.1/io/micrometer/observation/ObservationRegistry.html": "r154"
+  }
+}

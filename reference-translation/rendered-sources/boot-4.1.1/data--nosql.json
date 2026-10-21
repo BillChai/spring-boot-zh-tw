@@ -1,0 +1,471 @@
+{
+  "page": "boot/data--nosql.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/data/nosql.html",
+  "version": "4.1.1",
+  "html_sha256": "b3faff46afa0fe55fa1522ed719e094f248f40d68e4ec6d0963936ad7f9971e2",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.data.redis.core.StringRedisTemplate\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean(private val template: StringRedisTemplate) {\n\n\t// ...\n\n\tfun someMethod(): Boolean {\n\t\treturn template.hasKey(\"spring\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.data.redis.core.StringRedisTemplate;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final StringRedisTemplate template;\n\n\tpublic MyBean(StringRedisTemplate template) {\n\t\tthis.template = template;\n\t}\n\n\t// ...\n\n\tpublic Boolean someMethod() {\n\t\treturn this.template.hasKey(\"spring\");\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.data.redis.host=localhost\nspring.data.redis.port=6379\nspring.data.redis.database=0\nspring.data.redis.username=user\nspring.data.redis.password=secret"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  data:\n    redis:\n      host: \"localhost\"\n      port: 6379\n      database: 0\n      username: \"user\"\n      password: \"secret\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.data.redis.url=redis://user:secret@localhost:6379\nspring.data.redis.database=0"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  data:\n    redis:\n      url: \"redis://user:secret@localhost:6379\"\n      database: 0"
+    },
+    {
+      "language": "properties",
+      "text": "spring.data.redis.ssl.enabled=true"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  data:\n    redis:\n      ssl:\n        enabled: true"
+    },
+    {
+      "language": "properties",
+      "text": "spring.data.redis.ssl.bundle=example"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  data:\n    redis:\n      ssl:\n        bundle: \"example\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.data.redis.annotation.RedisListener\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean {\n\n\t@RedisListener(\"someChannel\")\n\tfun processMessage(content: String) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.data.redis.annotation.RedisListener;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\t@RedisListener(\"someChannel\")\n\tpublic void processMessage(String content) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.data.redis.autoconfigure.RedisMessageListenerContainerConfigurer\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.data.redis.connection.RedisConnectionFactory\nimport org.springframework.data.redis.listener.RedisMessageListenerContainer\n\n@Configuration(proxyBeanMethods = false)\nclass MyRedisConfiguration {\n\n\t@Bean\n\tfun myRedisMessageListenerContainer(\n\t\tconfigurer: RedisMessageListenerContainerConfigurer,\n\t\tconnectionFactory: RedisConnectionFactory\n\t): RedisMessageListenerContainer {\n\t\tval container = RedisMessageListenerContainer()\n\t\tconfigurer.configure(container, connectionFactory)\n\t\t// ... custom configuration\n\t\treturn container\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.data.redis.autoconfigure.RedisMessageListenerContainerConfigurer;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.data.redis.connection.RedisConnectionFactory;\nimport org.springframework.data.redis.listener.RedisMessageListenerContainer;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyRedisConfiguration {\n\n\t@Bean\n\tpublic RedisMessageListenerContainer myRedisMessageListenerContainer(\n\t\t\tRedisMessageListenerContainerConfigurer configurer, RedisConnectionFactory connectionFactory) {\n\t\tRedisMessageListenerContainer container = new RedisMessageListenerContainer();\n\t\tconfigurer.configure(container, connectionFactory);\n\t\t// ... custom configuration\n\t\treturn container;\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.data.redis.annotation.RedisListener\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean {\n\n\t@RedisListener(topic = \"someChannel\", container = \"myRedisMessageListenerContainer\")\n\tfun processMessage(content: String) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.data.redis.annotation.RedisListener;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\t@RedisListener(topic = \"someChannel\", container = \"myRedisMessageListenerContainer\")\n\tpublic void processMessage(String content) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import com.mongodb.client.MongoCollection\nimport org.bson.Document\nimport org.springframework.data.mongodb.MongoDatabaseFactory\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean(private val mongo: MongoDatabaseFactory) {\n\n\t// ...\n\n\tfun someMethod(): MongoCollection<Document> {\n\t\tval db = mongo.mongoDatabase\n\t\treturn db.getCollection(\"users\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import com.mongodb.client.MongoCollection;\nimport com.mongodb.client.MongoDatabase;\nimport org.bson.Document;\n\nimport org.springframework.data.mongodb.MongoDatabaseFactory;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final MongoDatabaseFactory mongo;\n\n\tpublic MyBean(MongoDatabaseFactory mongo) {\n\t\tthis.mongo = mongo;\n\t}\n\n\t// ...\n\n\tpublic MongoCollection<Document> someMethod() {\n\t\tMongoDatabase db = this.mongo.getMongoDatabase();\n\t\treturn db.getCollection(\"users\");\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.mongodb.uri=mongodb://user:[email protected]:27017,mongoserver2.example.com:23456/test"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  mongodb:\n    uri: \"mongodb://user:[email protected]:27017,mongoserver2.example.com:23456/test\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.mongodb.host=mongoserver1.example.com\nspring.mongodb.port=27017\nspring.mongodb.additional-hosts[0]=mongoserver2.example.com:23456\nspring.mongodb.database=test\nspring.mongodb.username=user\nspring.mongodb.password=secret"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  mongodb:\n    host: \"mongoserver1.example.com\"\n    port: 27017\n    additional-hosts:\n    - \"mongoserver2.example.com:23456\"\n    database: \"test\"\n    username: \"user\"\n    password: \"secret\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.mongodb.uri=mongodb://user:[email protected]:27017,mongoserver2.example.com:23456/test\nspring.mongodb.ssl.enabled=true"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  mongodb:\n    uri: \"mongodb://user:[email protected]:27017,mongoserver2.example.com:23456/test\"\n    ssl:\n      enabled: true"
+    },
+    {
+      "language": "properties",
+      "text": "spring.mongodb.uri=mongodb://user:[email protected]:27017,mongoserver2.example.com:23456/test\nspring.mongodb.ssl.bundle=example"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  mongodb:\n    uri: \"mongodb://user:[email protected]:27017,mongoserver2.example.com:23456/test\"\n    ssl:\n      bundle: \"example\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import com.mongodb.client.MongoCollection\nimport org.bson.Document\nimport org.springframework.data.mongodb.core.MongoTemplate\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean(private val mongoTemplate: MongoTemplate) {\n\n\t// ...\n\n\tfun someMethod(): MongoCollection<Document> {\n\t\treturn mongoTemplate.getCollection(\"users\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import com.mongodb.client.MongoCollection;\nimport org.bson.Document;\n\nimport org.springframework.data.mongodb.core.MongoTemplate;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final MongoTemplate mongoTemplate;\n\n\tpublic MyBean(MongoTemplate mongoTemplate) {\n\t\tthis.mongoTemplate = mongoTemplate;\n\t}\n\n\t// ...\n\n\tpublic MongoCollection<Document> someMethod() {\n\t\treturn this.mongoTemplate.getCollection(\"users\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.data.domain.Page\nimport org.springframework.data.domain.Pageable\nimport org.springframework.data.repository.Repository\n\ninterface CityRepository :\n\tRepository<City, Long> {\n\tfun findAll(pageable: Pageable?): Page<City>\n\tfun findByNameAndStateAllIgnoringCase(name: String, state: String): City?\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.data.domain.Page;\nimport org.springframework.data.domain.Pageable;\nimport org.springframework.data.repository.Repository;\n\npublic interface CityRepository extends Repository<City, Long> {\n\n\tPage<City> findAll(Pageable pageable);\n\n\tCity findByNameAndStateAllIgnoringCase(String name, String state);\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.neo4j.driver.Driver\nimport org.neo4j.driver.TransactionContext\nimport org.neo4j.driver.Values\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean(private val driver: Driver) {\n\t// ...\n\tfun someMethod(message: String?): String {\n\t\tdriver.session().use { session ->\n\t\t\treturn@someMethod session.executeWrite { transaction: TransactionContext ->\n\t\t\t\ttransaction\n\t\t\t\t\t.run(\n\t\t\t\t\t\t\"CREATE (a:Greeting) SET a.message = \\$message RETURN a.message + ', from node ' + id(a)\",\n\t\t\t\t\t\tValues.parameters(\"message\", message)\n\t\t\t\t\t)\n\t\t\t\t\t.single()[0].asString()\n\t\t\t}\n\t\t}\n\t}\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.neo4j.driver.Driver;\nimport org.neo4j.driver.Session;\nimport org.neo4j.driver.Values;\n\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final Driver driver;\n\n\tpublic MyBean(Driver driver) {\n\t\tthis.driver = driver;\n\t}\n\n\t// ...\n\n\tpublic String someMethod(String message) {\n\t\ttry (Session session = this.driver.session()) {\n\t\t\treturn session.executeWrite(\n\t\t\t\t\t(transaction) -> transaction\n\t\t\t\t\t\t.run(\"CREATE (a:Greeting) SET a.message = $message RETURN a.message + ', from node ' + id(a)\",\n\t\t\t\t\t\t\t\tValues.parameters(\"message\", message))\n\t\t\t\t\t\t.single()\n\t\t\t\t\t\t.get(0)\n\t\t\t\t\t\t.asString());\n\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.neo4j.uri=bolt://my-server:7687\nspring.neo4j.authentication.username=neo4j\nspring.neo4j.authentication.password=secret"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  neo4j:\n    uri: \"bolt://my-server:7687\"\n    authentication:\n      username: \"neo4j\"\n      password: \"secret\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.data.neo4j.repository.Neo4jRepository\n\ninterface CityRepository : Neo4jRepository<City, Long> {\n\n\tfun findOneByNameAndState(name: String?, state: String?): City?\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.data.neo4j.repository.Neo4jRepository;\n\npublic interface CityRepository extends Neo4jRepository<City, Long> {\n\n\tCity findOneByNameAndState(String name, String state);\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.neo4j.driver.Driver\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.data.neo4j.core.ReactiveDatabaseSelectionProvider\nimport org.springframework.data.neo4j.core.transaction.ReactiveNeo4jTransactionManager\n\n@Configuration(proxyBeanMethods = false)\nclass MyNeo4jConfiguration {\n\n\t@Bean\n\tfun reactiveTransactionManager(driver: Driver,\n\t\t\tdatabaseNameProvider: ReactiveDatabaseSelectionProvider): ReactiveNeo4jTransactionManager {\n\t\treturn ReactiveNeo4jTransactionManager(driver, databaseNameProvider)\n\t}\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.neo4j.driver.Driver;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.data.neo4j.core.ReactiveDatabaseSelectionProvider;\nimport org.springframework.data.neo4j.core.transaction.ReactiveNeo4jTransactionManager;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyNeo4jConfiguration {\n\n\t@Bean\n\tpublic ReactiveNeo4jTransactionManager reactiveTransactionManager(Driver driver,\n\t\t\tReactiveDatabaseSelectionProvider databaseNameProvider) {\n\t\treturn new ReactiveNeo4jTransactionManager(driver, databaseNameProvider);\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.elasticsearch.uris=https://search.example.com:9200\nspring.elasticsearch.socket-timeout=10s\nspring.elasticsearch.username=user\nspring.elasticsearch.password=secret"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  elasticsearch:\n    uris: \"https://search.example.com:9200\"\n    socket-timeout: \"10s\"\n    username: \"user\"\n    password: \"secret\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.elasticsearch.restclient.sniffer.enabled=true\nspring.elasticsearch.restclient.sniffer.interval=10m\nspring.elasticsearch.restclient.sniffer.delay-after-failure=30s"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  elasticsearch:\n    restclient:\n      sniffer:\n        enabled: true\n        interval: \"10m\"\n        delay-after-failure: \"30s\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.stereotype.Component\n\n@Component\nclass MyBean(private val template: org.springframework.data.elasticsearch.client.elc.ElasticsearchTemplate ) {\n\n\t// ...\n\n\tfun someMethod(id: String): Boolean {\n\t\treturn template.exists(id, User::class.java)\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.data.elasticsearch.client.elc.ElasticsearchTemplate;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final ElasticsearchTemplate template;\n\n\tpublic MyBean(ElasticsearchTemplate template) {\n\t\tthis.template = template;\n\t}\n\n\t// ...\n\n\tpublic boolean someMethod(String id) {\n\t\treturn this.template.exists(id, User.class);\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.data.elasticsearch.repositories.enabled=false"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  data:\n    elasticsearch:\n      repositories:\n        enabled: false"
+    },
+    {
+      "language": "properties",
+      "text": "spring.cassandra.keyspace-name=mykeyspace\nspring.cassandra.contact-points=cassandrahost1:9042,cassandrahost2:9042\nspring.cassandra.local-datacenter=datacenter1"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  cassandra:\n    keyspace-name: \"mykeyspace\"\n    contact-points: \"cassandrahost1:9042,cassandrahost2:9042\"\n    local-datacenter: \"datacenter1\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.cassandra.keyspace-name=mykeyspace\nspring.cassandra.contact-points=cassandrahost1,cassandrahost2\nspring.cassandra.local-datacenter=datacenter1"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  cassandra:\n    keyspace-name: \"mykeyspace\"\n    contact-points: \"cassandrahost1,cassandrahost2\"\n    local-datacenter: \"datacenter1\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.cassandra.keyspace-name=mykeyspace\nspring.cassandra.contact-points=cassandrahost1,cassandrahost2\nspring.cassandra.local-datacenter=datacenter1\nspring.cassandra.ssl.enabled=true"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  cassandra:\n    keyspace-name: \"mykeyspace\"\n    contact-points: \"cassandrahost1,cassandrahost2\"\n    local-datacenter: \"datacenter1\"\n    ssl:\n      enabled: true"
+    },
+    {
+      "language": "properties",
+      "text": "spring.cassandra.keyspace-name=mykeyspace\nspring.cassandra.contact-points=cassandrahost1,cassandrahost2\nspring.cassandra.local-datacenter=datacenter1\nspring.cassandra.ssl.bundle=example"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  cassandra:\n    keyspace-name: \"mykeyspace\"\n    contact-points: \"cassandrahost1,cassandrahost2\"\n    local-datacenter: \"datacenter1\"\n    ssl:\n      bundle: \"example\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.data.cassandra.core.CassandraTemplate\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean(private val template: CassandraTemplate) {\n\n\t// ...\n\n\tfun someMethod(): Long {\n\t\treturn template.count(User::class.java)\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.data.cassandra.core.CassandraTemplate;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final CassandraTemplate template;\n\n\tpublic MyBean(CassandraTemplate template) {\n\t\tthis.template = template;\n\t}\n\n\t// ...\n\n\tpublic long someMethod() {\n\t\treturn this.template.count(User.class);\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.couchbase.connection-string=couchbase://192.168.1.123\nspring.couchbase.username=user\nspring.couchbase.password=secret"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  couchbase:\n    connection-string: \"couchbase://192.168.1.123\"\n    username: \"user\"\n    password: \"secret\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.couchbase.connection-string=couchbase://192.168.1.123\nspring.couchbase.env.ssl.enabled=true\nspring.couchbase.authentication.jks.location=classpath:client.p12\nspring.couchbase.authentication.jks.password=secret"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  couchbase:\n    connection-string: \"couchbase://192.168.1.123\"\n    env:\n      ssl:\n        enabled: true\n    authentication:\n      jks:\n        location: \"classpath:client.p12\"\n        password: \"secret\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.couchbase.connection-string=couchbase://192.168.1.123\nspring.couchbase.env.ssl.enabled=true\nspring.couchbase.authentication.pem.certificates=classpath:client.crt\nspring.couchbase.authentication.pem.private-key=classpath:client.key"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  couchbase:\n    connection-string: \"couchbase://192.168.1.123\"\n    env:\n      ssl:\n        enabled: true\n    authentication:\n      pem:\n        certificates: \"classpath:client.crt\"\n        private-key: \"classpath:client.key\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.couchbase.env.timeouts.connect=3s\nspring.couchbase.env.ssl.bundle=example"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  couchbase:\n    env:\n      timeouts:\n        connect: \"3s\"\n      ssl:\n        bundle: \"example\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.data.couchbase.bucket-name=my-bucket"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  data:\n    couchbase:\n      bucket-name: \"my-bucket\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.data.couchbase.core.CouchbaseTemplate\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean(private val template: CouchbaseTemplate) {\n\n\t// ...\n\n\tfun someMethod(): String {\n\t\treturn template.bucketName\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.data.couchbase.core.CouchbaseTemplate;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final CouchbaseTemplate template;\n\n\tpublic MyBean(CouchbaseTemplate template) {\n\t\tthis.template = template;\n\t}\n\n\t// ...\n\n\tpublic String someMethod() {\n\t\treturn this.template.getBucketName();\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.util.Arrays\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.data.couchbase.config.BeanNames\nimport org.springframework.data.couchbase.core.convert.CouchbaseCustomConversions\n\n@Configuration(proxyBeanMethods = false)\nclass MyCouchbaseConfiguration {\n\n\t@Bean(BeanNames.COUCHBASE_CUSTOM_CONVERSIONS)\n\tfun myCustomConversions(): CouchbaseCustomConversions {\n\t\treturn CouchbaseCustomConversions(Arrays.asList(MyConverter()))\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.assertj.core.util.Arrays;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.data.couchbase.config.BeanNames;\nimport org.springframework.data.couchbase.core.convert.CouchbaseCustomConversions;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyCouchbaseConfiguration {\n\n\t@Bean(BeanNames.COUCHBASE_CUSTOM_CONVERSIONS)\n\tpublic CouchbaseCustomConversions myCustomConversions() {\n\t\treturn new CouchbaseCustomConversions(Arrays.asList(new MyConverter()));\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.ldap.urls=ldap://myserver:1235\nspring.ldap.username=admin\nspring.ldap.password=secret"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  ldap:\n    urls: \"ldap://myserver:1235\"\n    username: \"admin\"\n    password: \"secret\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.ldap.core.LdapTemplate\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean(private val template: LdapTemplate) {\n\n\t// ...\n\n\tfun someMethod(): List<User> {\n\t\treturn template.findAll(User::class.java)\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.util.List;\n\nimport org.springframework.ldap.core.LdapTemplate;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final LdapTemplate template;\n\n\tpublic MyBean(LdapTemplate template) {\n\t\tthis.template = template;\n\t}\n\n\t// ...\n\n\tpublic List<User> someMethod() {\n\t\treturn this.template.findAll(User.class);\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.ldap.embedded.base-dn=dc=spring,dc=io"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  ldap:\n    embedded:\n      base-dn: \"dc=spring,dc=io\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.ldap.embedded.base-dn[0]=dc=spring,dc=io\nspring.ldap.embedded.base-dn[1]=dc=vmware,dc=com"
+    },
+    {
+      "language": "yaml",
+      "text": "spring.ldap.embedded.base-dn:\n- \"dc=spring,dc=io\"\n- \"dc=vmware,dc=com\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.ldap.embedded.ssl.bundle=example"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  ldap:\n    embedded:\n      ssl:\n        bundle: \"example\""
+    }
+  ],
+  "headings": [
+    "Working with NoSQL Technologies",
+    "Redis",
+    "Connecting to Redis",
+    "Receiving a Message",
+    "MongoDB",
+    "Connecting to a MongoDB Database",
+    "MongoTemplate",
+    "Spring Data MongoDB Repositories",
+    "Neo4j",
+    "Connecting to a Neo4j Database",
+    "Spring Data Neo4j Repositories",
+    "Elasticsearch",
+    "Connecting to Elasticsearch Using REST clients",
+    "Connecting to Elasticsearch Using Rest5Client",
+    "Connecting to Elasticsearch Using ElasticsearchClient",
+    "Connecting to Elasticsearch using ReactiveElasticsearchClient",
+    "Connecting to Elasticsearch by Using Spring Data",
+    "Spring Data Elasticsearch Repositories",
+    "Cassandra",
+    "Connecting to Cassandra",
+    "Spring Data Cassandra Repositories",
+    "Couchbase",
+    "Connecting to Couchbase",
+    "Spring Data Couchbase Repositories",
+    "LDAP",
+    "Connecting to an LDAP Server",
+    "Spring Data LDAP Repositories",
+    "Embedded In-memory LDAP Server",
+    "SSL"
+  ],
+  "links": {
+    "https://spring.io/projects/spring-data-cassandra": "r1",
+    "https://spring.io/projects/spring-data-couchbase": "r2",
+    "https://spring.io/projects/spring-data-elasticsearch": "r3",
+    "https://spring.io/projects/spring-data-geode": "r4",
+    "https://spring.io/projects/spring-data-ldap": "r5",
+    "https://spring.io/projects/spring-data-mongodb": "r6",
+    "https://spring.io/projects/spring-data-neo4j": "r7",
+    "https://spring.io/projects/spring-data-redis": "r8",
+    "https://github.com/spring-projects/spring-boot-data-geode": "r9",
+    "https://docs.spring.io/spring-boot-data-geode-build/2.0.x/reference/html5#geode-repositories": "r10",
+    "https://spring.io/projects/spring-data": "r11",
+    "https://redis.io/": "r12",
+    "https://github.com/redis/lettuce/": "r13",
+    "https://github.com/redis/jedis/": "r14",
+    "https://github.com/spring-projects/spring-data-redis": "r15",
+    "https://docs.spring.io/spring-data/redis/docs/4.1.x/api/org/springframework/data/redis/connection/RedisConnectionFactory.html": "r16",
+    "https://docs.spring.io/spring-data/redis/docs/4.1.x/api/org/springframework/data/redis/core/StringRedisTemplate.html": "r17",
+    "https://docs.spring.io/spring-data/redis/docs/4.1.x/api/org/springframework/data/redis/core/RedisTemplate.html": "r18",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/redis/autoconfigure/LettuceClientConfigurationBuilderCustomizer.html": "r19",
+    "https://javadoc.io/doc/io.lettuce/lettuce-core/7.5.2.RELEASE/io/lettuce/core/resource/ClientResources.html": "r20",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/redis/autoconfigure/ClientResourcesBuilderCustomizer.html": "r21",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/redis/autoconfigure/JedisClientConfigurationBuilderCustomizer.html": "r22",
+    "https://docs.spring.io/spring-data/redis/docs/4.1.x/api/org/springframework/data/redis/connection/RedisStandaloneConfiguration.html": "r23",
+    "https://docs.spring.io/spring-data/redis/docs/4.1.x/api/org/springframework/data/redis/connection/RedisSentinelConfiguration.html": "r24",
+    "https://docs.spring.io/spring-data/redis/docs/4.1.x/api/org/springframework/data/redis/connection/RedisClusterConfiguration.html": "r25",
+    "https://docs.spring.io/spring-data/redis/docs/4.1.x/api/org/springframework/data/redis/connection/RedisStaticMasterReplicaConfiguration.html": "r26",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r27",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/ssl.html": "r28",
+    "https://docs.spring.io/spring-data/redis/docs/4.1.x/api/org/springframework/data/redis/annotation/RedisListener.html": "r29",
+    "https://docs.spring.io/spring-data/redis/docs/4.1.x/api/org/springframework/data/redis/listener/RedisMessageListenerContainer.html": "r30",
+    "https://docs.spring.io/spring-data/redis/docs/4.1.x/api/org/springframework/data/redis/annotation/EnableRedisListeners.html": "r31",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/redis/autoconfigure/RedisMessageListenerContainerConfigurer.html": "r32",
+    "https://www.mongodb.com/": "r33",
+    "https://docs.spring.io/spring-data/mongodb/docs/5.1.x/api/org/springframework/data/mongodb/MongoDatabaseFactory.html": "r34",
+    "https://mongodb.github.io/mongo-java-driver/5.8/apidocs/mongodb-driver-sync/com/mongodb/client/MongoClient.html": "r35",
+    "https://mongodb.github.io/mongo-java-driver/5.8/apidocs/mongodb-driver-core/com/mongodb/MongoClientSettings.html": "r36",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/mongodb/autoconfigure/MongoClientSettingsBuilderCustomizer.html": "r37",
+    "https://mongodb.github.io/mongo-java-driver/5.8/apidocs/mongodb-driver-core/com/mongodb/MongoClientSettings.Builder.html": "r38",
+    "https://docs.spring.io/cdn-cgi/l/email-protection": "r39",
+    "https://docs.spring.io/spring-data/mongodb/docs/5.1.x/api/org/springframework/data/mongodb/core/MongoTemplate.html": "r40",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html": "r41",
+    "https://docs.spring.io/spring-data/mongodb/docs/5.1.x/api/org/springframework/data/mongodb/core/MongoOperations.html": "r42",
+    "https://jakarta.ee/specifications/persistence/3.2/apidocs/jakarta.persistence/jakarta/persistence/Entity.html": "r43",
+    "https://docs.spring.io/spring-boot/4.1/reference/using/auto-configuration.html#using.auto-configuration.packages": "r44",
+    "https://docs.spring.io/spring-data/mongodb/docs/5.1.x/api/org/springframework/data/mongodb/repository/config/EnableMongoRepositories.html": "r45",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/persistence/autoconfigure/EntityScan.html": "r46",
+    "https://docs.spring.io/spring-data/mongodb/reference/5.1": "r47",
+    "https://neo4j.com/": "r48",
+    "https://javadoc.io/doc/org.neo4j.driver/neo4j-java-driver/6.1.0/org/neo4j/driver/Driver.html": "r49",
+    "https://javadoc.io/doc/org.neo4j.driver/neo4j-java-driver/6.1.0/org/neo4j/driver/Session.html": "r50",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/neo4j/autoconfigure/ConfigBuilderCustomizer.html": "r51",
+    "https://docs.spring.io/spring-data/neo4j/reference/8.1": "r52",
+    "https://docs.spring.io/spring-data/neo4j/docs/8.1.x/api/org/springframework/data/neo4j/core/schema/Node.html": "r53",
+    "https://docs.spring.io/spring-data/neo4j/docs/8.1.x/api/org/springframework/data/neo4j/core/Neo4jTemplate.html": "r54",
+    "https://docs.spring.io/spring-data/neo4j/docs/8.1.x/api/org/springframework/data/neo4j/core/ReactiveNeo4jTemplate.html": "r55",
+    "https://docs.spring.io/spring-data/neo4j/docs/8.1.x/api/org/springframework/data/neo4j/repository/config/EnableNeo4jRepositories.html": "r56",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/transaction/ReactiveTransactionManager.html": "r57",
+    "https://www.elastic.co/products/elasticsearch": "r58",
+    "https://docs.spring.io/spring-data/elasticsearch/docs/6.1.x/api/org/springframework/data/elasticsearch/client/elc/ReactiveElasticsearchClient.html": "r59",
+    "https://www.elastic.co/docs/reference/elasticsearch/clients/java/transport/rest5-client/": "r60",
+    "https://www.elastic.co/docs/reference/elasticsearch/clients/java": "r61",
+    "http://localhost:9200": "r62",
+    "https://javadoc.io/doc/co.elastic.clients/elasticsearch-java/9.4.5/index.html/co/elastic/clients/transport/rest5_client/low_level/Rest5Client.html": "r63",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/elasticsearch/autoconfigure/Rest5ClientBuilderCustomizer.html": "r64",
+    "https://javadoc.io/doc/co.elastic.clients/elasticsearch-java/9.4.5/index.html/co/elastic/clients/transport/rest5_client/low_level/Rest5ClientBuilder.html": "r65",
+    "https://javadoc.io/doc/co.elastic.clients/elasticsearch-java/9.4.5/index.html/co/elastic/clients/transport/rest5_client/low_level/sniffer/Sniffer.html": "r66",
+    "https://javadoc.io/doc/co.elastic.clients/elasticsearch-java/9.4.5/index.html/co/elastic/clients/elasticsearch/ElasticsearchClient.html": "r67",
+    "https://javadoc.io/doc/co.elastic.clients/elasticsearch-java/9.4.5/index.html/co/elastic/clients/transport/rest5_client/Rest5ClientOptions.html": "r68",
+    "https://docs.spring.io/spring-data/elasticsearch/docs/6.1.x/api/org/springframework/data/elasticsearch/client/elc/ElasticsearchTemplate.html": "r69",
+    "https://docs.spring.io/spring-boot/4.1/reference/data/nosql.html#data.nosql.elasticsearch.connecting-using-rest.reactiveclient": "r70",
+    "https://docs.spring.io/spring-data/elasticsearch/docs/6.1.x/api/org/springframework/data/elasticsearch/client/elc/ReactiveElasticsearchTemplate.html": "r71",
+    "https://docs.spring.io/spring-data/elasticsearch/docs/6.1.x/api/org/springframework/data/elasticsearch/annotations/Document.html": "r72",
+    "https://docs.spring.io/spring-data/elasticsearch/docs/6.1.x/api/org/springframework/data/elasticsearch/repository/config/EnableElasticsearchRepositories.html": "r73",
+    "https://docs.spring.io/spring-data/elasticsearch/reference/6.1": "r74",
+    "https://docs.spring.io/spring-data/elasticsearch/docs/6.1.x/api/org/springframework/data/elasticsearch/core/ElasticsearchOperations.html": "r75",
+    "https://docs.spring.io/spring-data/elasticsearch/docs/6.1.x/api/org/springframework/data/elasticsearch/core/ReactiveElasticsearchOperations.html": "r76",
+    "https://cassandra.apache.org/": "r77",
+    "https://docs.spring.io/spring-data/cassandra/docs/5.1.x/api/org/springframework/data/cassandra/core/cql/CqlTemplate.html": "r78",
+    "https://docs.spring.io/spring-data/cassandra/docs/5.1.x/api/org/springframework/data/cassandra/core/CassandraTemplate.html": "r79",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/cassandra/autoconfigure/DriverConfigLoaderBuilderCustomizer.html": "r80",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/cassandra/autoconfigure/CqlSessionBuilderCustomizer.html": "r81",
+    "https://docs.spring.io/spring-data/cassandra/docs/5.1.x/api/org/springframework/data/cassandra/repository/Query.html": "r82",
+    "https://docs.spring.io/spring-data/cassandra/docs/5.1.x/api/org/springframework/data/cassandra/repository/config/EnableCassandraRepositories.html": "r83",
+    "https://docs.spring.io/spring-data/cassandra/reference/5.1": "r84",
+    "https://www.couchbase.com/": "r85",
+    "https://github.com/spring-projects/spring-data-couchbase": "r86",
+    "https://javadoc.io/doc/com.couchbase.client/java-client/3.11.3/com/couchbase/client/java/Cluster.html": "r87",
+    "https://docs.couchbase.com/dotnet-sdk/current/howtos/managing-connections.html": "r88",
+    "https://docs.couchbase.com/server/current/manage/manage-security/configure-client-certificates.html": "r89",
+    "https://javadoc.io/doc/com.couchbase.client/java-client/3.11.3/com/couchbase/client/java/env/ClusterEnvironment.html": "r90",
+    "https://javadoc.io/doc/com.couchbase.client/java-client/3.11.3/com/couchbase/client/java/Bucket.html": "r91",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/couchbase/autoconfigure/ClusterEnvironmentBuilderCustomizer.html": "r92",
+    "https://docs.spring.io/spring-data/couchbase/docs/6.1.x/api/org/springframework/data/couchbase/repository/config/EnableCouchbaseRepositories.html": "r93",
+    "https://docs.spring.io/spring-data/couchbase/reference/6.1": "r94",
+    "https://docs.spring.io/spring-data/couchbase/docs/6.1.x/api/org/springframework/data/couchbase/core/CouchbaseTemplate.html": "r95",
+    "https://docs.spring.io/spring-data/couchbase/docs/6.1.x/api/org/springframework/data/couchbase/CouchbaseClientFactory.html": "r96",
+    "https://docs.spring.io/spring-data/couchbase/docs/6.1.x/api/org/springframework/data/couchbase/core/mapping/CouchbaseMappingContext.html": "r97",
+    "https://docs.spring.io/spring-data/commons/docs/4.1.x/api/org/springframework/data/convert/CustomConversions.html": "r98",
+    "https://docs.spring.io/spring-data/couchbase/docs/6.1.x/api/org/springframework/data/couchbase/config/BeanNames.html": "r99",
+    "https://en.wikipedia.org/wiki/Lightweight_Directory_Access_Protocol": "r100",
+    "https://ldap.com/unboundid-ldap-sdk-for-java/": "r101",
+    "https://github.com/spring-projects/spring-data-ldap": "r102",
+    "https://docs.spring.io/spring-ldap/docs/4.1.x/api/org/springframework/ldap/core/support/LdapContextSource.html": "r103",
+    "https://docs.spring.io/spring-ldap/docs/4.1.x/api/org/springframework/ldap/core/support/DirContextAuthenticationStrategy.html": "r104",
+    "https://docs.spring.io/spring-ldap/docs/4.1.x/api/org/springframework/ldap/pool2/factory/PooledContextSource.html": "r105",
+    "https://docs.spring.io/spring-ldap/docs/4.1.x/api/org/springframework/ldap/core/ContextSource.html": "r106",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Primary.html": "r107",
+    "https://docs.spring.io/spring-ldap/docs/4.1.x/api/org/springframework/ldap/core/LdapTemplate.html": "r108",
+    "https://docs.spring.io/spring-data/ldap/docs/4.1.x/api/org/springframework/data/ldap/repository/config/EnableLdapRepositories.html": "r109",
+    "https://docs.spring.io/spring-data/ldap/reference/4.1": "r110"
+  }
+}

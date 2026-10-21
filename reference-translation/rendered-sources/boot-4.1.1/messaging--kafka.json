@@ -1,0 +1,125 @@
+{
+  "page": "boot/messaging--kafka.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/messaging/kafka.html",
+  "version": "4.1.1",
+  "html_sha256": "c76f65708ef2dd65be3fb9bc98763c8a48c34a9bfc3f600e71e2bee2deda76f2",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.kafka.bootstrap-servers=localhost:9092\nspring.kafka.consumer.group-id=myGroup"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  kafka:\n    bootstrap-servers: \"localhost:9092\"\n    consumer:\n      group-id: \"myGroup\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.kafka.core.KafkaTemplate\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean(private val kafkaTemplate: KafkaTemplate<String, String>) {\n\n\t// ...\n\n\tfun someMethod() {\n\t\tkafkaTemplate.send(\"someTopic\", \"Hello\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.kafka.core.KafkaTemplate;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final KafkaTemplate<String, String> kafkaTemplate;\n\n\tpublic MyBean(KafkaTemplate<String, String> kafkaTemplate) {\n\t\tthis.kafkaTemplate = kafkaTemplate;\n\t}\n\n\t// ...\n\n\tpublic void someMethod() {\n\t\tthis.kafkaTemplate.send(\"someTopic\", \"Hello\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.kafka.annotation.KafkaListener\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean {\n\n\t@KafkaListener(topics = [\"someTopic\"])\n\tfun processMessage(content: String?) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.kafka.annotation.KafkaListener;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\t@KafkaListener(topics = \"someTopic\")\n\tpublic void processMessage(String content) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.apache.kafka.common.serialization.Serdes\nimport org.apache.kafka.streams.KeyValue\nimport org.apache.kafka.streams.StreamsBuilder\nimport org.apache.kafka.streams.kstream.KStream\nimport org.apache.kafka.streams.kstream.Produced\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.kafka.annotation.EnableKafkaStreams\nimport org.springframework.kafka.support.serializer.JacksonJsonSerde\n\n@Configuration(proxyBeanMethods = false)\n@EnableKafkaStreams\nclass MyKafkaStreamsConfiguration {\n\n\t@Bean\n\tfun kStream(streamsBuilder: StreamsBuilder): KStream<Int, String> {\n\t\tval stream = streamsBuilder.stream<Int, String>(\"ks1In\")\n\t\tstream.map(this::uppercaseValue).to(\"ks1Out\", Produced.with(Serdes.Integer(), JacksonJsonSerde()))\n\t\treturn stream\n\t}\n\n\tprivate fun uppercaseValue(key: Int, value: String): KeyValue<Int, String> {\n\t\treturn KeyValue(key, value.uppercase())\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.util.Locale;\n\nimport org.apache.kafka.common.serialization.Serdes;\nimport org.apache.kafka.streams.KeyValue;\nimport org.apache.kafka.streams.StreamsBuilder;\nimport org.apache.kafka.streams.kstream.KStream;\nimport org.apache.kafka.streams.kstream.Produced;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.kafka.annotation.EnableKafkaStreams;\nimport org.springframework.kafka.support.serializer.JacksonJsonSerde;\n\n@Configuration(proxyBeanMethods = false)\n@EnableKafkaStreams\npublic class MyKafkaStreamsConfiguration {\n\n\t@Bean\n\tpublic KStream<Integer, String> kStream(StreamsBuilder streamsBuilder) {\n\t\tKStream<Integer, String> stream = streamsBuilder.stream(\"ks1In\");\n\t\tstream.map(this::uppercaseValue).to(\"ks1Out\", Produced.with(Serdes.Integer(), new JacksonJsonSerde<>()));\n\t\treturn stream;\n\t}\n\n\tprivate KeyValue<Integer, String> uppercaseValue(Integer key, String value) {\n\t\treturn new KeyValue<>(key, value.toUpperCase(Locale.getDefault()));\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.kafka.properties[prop.one]=first\nspring.kafka.admin.properties[prop.two]=second\nspring.kafka.consumer.properties[prop.three]=third\nspring.kafka.producer.properties[prop.four]=fourth\nspring.kafka.streams.properties[prop.five]=fifth"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  kafka:\n    properties:\n      \"[prop.one]\": \"first\"\n    admin:\n      properties:\n        \"[prop.two]\": \"second\"\n    consumer:\n      properties:\n        \"[prop.three]\": \"third\"\n    producer:\n      properties:\n        \"[prop.four]\": \"fourth\"\n    streams:\n      properties:\n        \"[prop.five]\": \"fifth\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.kafka.consumer.value-deserializer=org.springframework.kafka.support.serializer.JacksonJsonDeserializer\nspring.kafka.consumer.properties[spring.json.value.default.type]=com.example.Invoice\nspring.kafka.consumer.properties[spring.json.trusted.packages]=com.example.main,com.example.another"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  kafka:\n    consumer:\n      value-deserializer: \"org.springframework.kafka.support.serializer.JacksonJsonDeserializer\"\n      properties:\n        \"[spring.json.value.default.type]\": \"com.example.Invoice\"\n        \"[spring.json.trusted.packages]\": \"com.example.main,com.example.another\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.kafka.producer.value-serializer=org.springframework.kafka.support.serializer.JacksonJsonSerializer\nspring.kafka.producer.properties[spring.json.add.type.headers]=false"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  kafka:\n    producer:\n      value-serializer: \"org.springframework.kafka.support.serializer.JacksonJsonSerializer\"\n      properties:\n        \"[spring.json.add.type.headers]\": false"
+    },
+    {
+      "language": "kotlin",
+      "text": "\tinit {\n\t\tSystem.setProperty(EmbeddedKafkaBroker.BROKER_LIST_PROPERTY, \"spring.kafka.bootstrap-servers\")\n\t}"
+    },
+    {
+      "language": "java",
+      "text": "\tstatic {\n\t\tSystem.setProperty(EmbeddedKafkaBroker.BROKER_LIST_PROPERTY, \"spring.kafka.bootstrap-servers\");\n\t}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.kafka.test.context.EmbeddedKafka\n\n@SpringBootTest\n@EmbeddedKafka(topics = [\"someTopic\"], bootstrapServersProperty = \"spring.kafka.bootstrap-servers\")\nclass MyTest {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.kafka.test.context.EmbeddedKafka;\n\n@SpringBootTest\n@EmbeddedKafka(topics = \"someTopic\", bootstrapServersProperty = \"spring.kafka.bootstrap-servers\")\nclass MyTest {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.kafka.bootstrap-servers=${spring.embedded.kafka.brokers}"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  kafka:\n    bootstrap-servers: \"${spring.embedded.kafka.brokers}\""
+    }
+  ],
+  "headings": [
+    "Apache Kafka Support",
+    "Sending a Message",
+    "Receiving a Message",
+    "Kafka Streams",
+    "Additional Kafka Properties",
+    "Testing with Embedded Kafka"
+  ],
+  "links": {
+    "https://kafka.apache.org/": "r1",
+    "https://kafka.apache.org/42/javadoc/org/apache/kafka/clients/admin/NewTopic.html": "r2",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/kafka/autoconfigure/KafkaProperties.html": "r3",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/core/KafkaTemplate.html": "r4",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/transaction/KafkaTransactionManager.html": "r5",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/support/converter/RecordMessageConverter.html": "r6",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/annotation/KafkaListener.html": "r7",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/config/KafkaListenerContainerFactory.html": "r8",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/listener/adapter/RecordFilterStrategy.html": "r9",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/listener/CommonErrorHandler.html": "r10",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/listener/AfterRollbackProcessor.html": "r11",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/listener/ConsumerAwareRebalanceListener.html": "r12",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/support/converter/BatchMessageConverter.html": "r13",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/transaction/ChainedKafkaTransactionManager.html": "r14",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Primary.html": "r15",
+    "https://kafka.apache.org/42/javadoc/org/apache/kafka/streams/StreamsBuilder.html": "r16",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/config/KafkaStreamsConfiguration.html": "r17",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/annotation/EnableKafkaStreams.html": "r18",
+    "https://docs.spring.io/spring-boot/4.1/reference/messaging/kafka.html#messaging.kafka.additional-properties": "r19",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r20",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/config/StreamsBuilderFactoryBeanConfigurer.html": "r21",
+    "https://docs.spring.io/spring-boot/4.1/appendix/application-properties/index.html#appendix.application-properties.integration": "r22",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/support/serializer/JacksonJsonDeserializer.html": "r23",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/support/serializer/JacksonJsonSerializer.html": "r24",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/test/context/EmbeddedKafka.html": "r25",
+    "https://docs.spring.io/spring-kafka/reference/4.1/testing.html#ekb": "r26",
+    "https://docs.spring.io/spring-kafka/docs/4.1.x/api/org/springframework/kafka/test/EmbeddedKafkaBroker.html": "r27"
+  }
+}

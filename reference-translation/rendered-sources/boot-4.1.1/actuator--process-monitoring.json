@@ -1,0 +1,24 @@
+{
+  "page": "boot/actuator--process-monitoring.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/actuator/process-monitoring.html",
+  "version": "4.1.1",
+  "html_sha256": "8fe47aac6673225c7f7a3a56f003910f12d2e7bbc08e454eb97bf917d2568fa0",
+  "code_blocks": [
+    {
+      "language": "text",
+      "text": "org.springframework.context.ApplicationListener=\\\norg.springframework.boot.context.ApplicationPidFileWriter,\\\norg.springframework.boot.web.server.context.WebServerPortFileWriter"
+    }
+  ],
+  "headings": [
+    "Process Monitoring",
+    "Extending Configuration",
+    "Programmatically Enabling Process Monitoring"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/ApplicationPidFileWriter.html": "r1",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/web/server/context/WebServerPortFileWriter.html": "r2",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/process-monitoring.html#actuator.process-monitoring.configuration": "r3",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/process-monitoring.html#actuator.process-monitoring.programmatically": "r4",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Writer.html": "r5"
+  }
+}

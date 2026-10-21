@@ -1,0 +1,238 @@
+{
+  "page": "boot/features--logging.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/features/logging.html",
+  "version": "4.1.1",
+  "html_sha256": "b928d22e02ecd5b10802f1234dd2d7e5656e10b16a79d79d601c89f541ff15de",
+  "code_blocks": [
+    {
+      "language": "text",
+      "text": "2026-08-17T10:51:28.508Z  INFO 11390 --- [myapp] [           main] o.s.b.d.f.logexample.MyApplication       : Starting MyApplication using Java 25.0.4 with PID 11390 (/opt/apps/myapp.jar started by myuser in /opt/apps/)\n2026-08-17T10:51:28.527Z  INFO 11390 --- [myapp] [           main] o.s.b.d.f.logexample.MyApplication       : No active profile set, falling back to 1 default profile: \"default\"\n2026-08-17T10:51:33.118Z  INFO 11390 --- [myapp] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)\n2026-08-17T10:51:33.232Z  INFO 11390 --- [myapp] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]\n2026-08-17T10:51:33.239Z  INFO 11390 --- [myapp] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]\n2026-08-17T10:51:33.461Z  INFO 11390 --- [myapp] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 4632 ms\n2026-08-17T10:51:35.255Z  INFO 11390 --- [myapp] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'\n2026-08-17T10:51:35.286Z  INFO 11390 --- [myapp] [           main] o.s.b.d.f.logexample.MyApplication       : Started MyApplication in 8.572 seconds (process running for 10.155)\n\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u00002026-08-17T10:51:35.315Z  INFO 11390 --- [myapp] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete\n2026-08-17T10:51:35.346Z  INFO 11390 --- [myapp] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete"
+    },
+    {
+      "language": "shell",
+      "text": "$ java -jar myapp.jar --debug"
+    },
+    {
+      "language": "text",
+      "text": "%clr(%5p)"
+    },
+    {
+      "language": "text",
+      "text": "%clr(%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}){yellow,bold}"
+    },
+    {
+      "language": "properties",
+      "text": "logging.level.root=warn\nlogging.level.org.springframework.web=debug\nlogging.level.org.hibernate=error"
+    },
+    {
+      "language": "yaml",
+      "text": "logging:\n  level:\n    root: \"warn\"\n    org.springframework.web: \"debug\"\n    org.hibernate: \"error\""
+    },
+    {
+      "language": "properties",
+      "text": "logging.group.tomcat=org.apache.catalina,org.apache.coyote,org.apache.tomcat"
+    },
+    {
+      "language": "yaml",
+      "text": "logging:\n  group:\n    tomcat: \"org.apache.catalina,org.apache.coyote,org.apache.tomcat\""
+    },
+    {
+      "language": "properties",
+      "text": "logging.level.tomcat=trace"
+    },
+    {
+      "language": "yaml",
+      "text": "logging:\n  level:\n    tomcat: \"trace\""
+    },
+    {
+      "language": "properties",
+      "text": "logging.register-shutdown-hook=false"
+    },
+    {
+      "language": "yaml",
+      "text": "logging:\n  register-shutdown-hook: false"
+    },
+    {
+      "language": "text",
+      "text": "2019-08-30 12:30:04.031 user:someone INFO 22174 --- [  nio-8080-exec-0] demo.Controller\nHandling authenticated request"
+    },
+    {
+      "language": "xml",
+      "text": "<!-- replace your encoder with StructuredLogEncoder -->\n<encoder class=\"org.springframework.boot.logging.logback.StructuredLogEncoder\">\n\t<format>${CONSOLE_LOG_STRUCTURED_FORMAT}</format>\n\t<charset>${CONSOLE_LOG_CHARSET}</charset>\n</encoder>"
+    },
+    {
+      "language": "xml",
+      "text": "<!-- replace your PatternLayout with StructuredLogLayout -->\n<StructuredLogLayout format=\"${sys:CONSOLE_LOG_STRUCTURED_FORMAT}\" charset=\"${sys:CONSOLE_LOG_CHARSET}\"/>"
+    },
+    {
+      "language": "properties",
+      "text": "logging.structured.format.console=ecs\nlogging.structured.format.file=ecs"
+    },
+    {
+      "language": "yaml",
+      "text": "logging:\n  structured:\n    format:\n      console: ecs\n      file: ecs"
+    },
+    {
+      "language": "json",
+      "text": "{\"@timestamp\":\"2024-01-01T10:15:00.067462556Z\",\"log\":{\"level\":\"INFO\",\"logger\":\"org.example.Application\"},\"process\":{\"pid\":39599,\"thread\":{\"name\":\"main\"}},\"service\":{\"name\":\"simple\"},\"message\":\"No active profile set, falling back to 1 default profile: \\\"default\\\"\",\"ecs\":{\"version\":\"8.11\"}}"
+    },
+    {
+      "language": "properties",
+      "text": "logging.structured.ecs.service.name=MyService\nlogging.structured.ecs.service.version=1\nlogging.structured.ecs.service.environment=Production\nlogging.structured.ecs.service.node-name=Primary"
+    },
+    {
+      "language": "yaml",
+      "text": "logging:\n  structured:\n    ecs:\n      service:\n        name: MyService\n        version: 1.0\n        environment: Production\n        node-name: Primary"
+    },
+    {
+      "language": "properties",
+      "text": "logging.structured.format.console=gelf\nlogging.structured.format.file=gelf"
+    },
+    {
+      "language": "yaml",
+      "text": "logging:\n  structured:\n    format:\n      console: gelf\n      file: gelf"
+    },
+    {
+      "language": "json",
+      "text": "{\"version\":\"1.1\",\"short_message\":\"No active profile set, falling back to 1 default profile: \\\"default\\\"\",\"timestamp\":1725958035.857,\"level\":6,\"_level_name\":\"INFO\",\"_process_pid\":47649,\"_process_thread_name\":\"main\",\"_log_logger\":\"org.example.Application\"}"
+    },
+    {
+      "language": "properties",
+      "text": "logging.structured.gelf.host=MyService\nlogging.structured.gelf.service.version=1"
+    },
+    {
+      "language": "yaml",
+      "text": "logging:\n  structured:\n    gelf:\n      host: MyService\n      service:\n        version: 1.0"
+    },
+    {
+      "language": "properties",
+      "text": "logging.structured.format.console=logstash\nlogging.structured.format.file=logstash"
+    },
+    {
+      "language": "yaml",
+      "text": "logging:\n  structured:\n    format:\n      console: logstash\n      file: logstash"
+    },
+    {
+      "language": "json",
+      "text": "{\"@timestamp\":\"2024-01-01T10:15:00.111037681+02:00\",\"@version\":\"1\",\"message\":\"No active profile set, falling back to 1 default profile: \\\"default\\\"\",\"logger_name\":\"org.example.Application\",\"thread_name\":\"main\",\"level\":\"INFO\",\"level_value\":20000}"
+    },
+    {
+      "language": "properties",
+      "text": "logging.structured.json.exclude=log.level\nlogging.structured.json.rename.process.id=procid\nlogging.structured.json.add.corpname=mycorp"
+    },
+    {
+      "language": "yaml",
+      "text": "logging:\n  structured:\n    json:\n      exclude: log.level\n      rename:\n        process.id: procid\n      add:\n        corpname: mycorp"
+    },
+    {
+      "language": "properties",
+      "text": "logging.structured.json.stacktrace.root=first\nlogging.structured.json.stacktrace.max-length=1024\nlogging.structured.json.stacktrace.include-common-frames=true\nlogging.structured.json.stacktrace.include-hashes=true"
+    },
+    {
+      "language": "yaml",
+      "text": "logging:\n  structured:\n    json:\n      stacktrace:\n        root: first\n        max-length: 1024\n        include-common-frames: true\n        include-hashes: true"
+    },
+    {
+      "language": "kotlin",
+      "text": "import ch.qos.logback.classic.spi.ILoggingEvent\nimport org.springframework.boot.logging.structured.StructuredLogFormatter\n\nclass MyCustomFormat : StructuredLogFormatter<ILoggingEvent> {\n\n\toverride fun format(event: ILoggingEvent): String {\n\t\treturn \"time=${event.instant} level=${event.level} message=${event.message}\\n\"\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import ch.qos.logback.classic.spi.ILoggingEvent;\n\nimport org.springframework.boot.logging.structured.StructuredLogFormatter;\n\nclass MyCustomFormat implements StructuredLogFormatter<ILoggingEvent> {\n\n\t@Override\n\tpublic String format(ILoggingEvent event) {\n\t\treturn \"time=\" + event.getInstant() + \" level=\" + event.getLevel() + \" message=\" + event.getMessage() + \"\\n\";\n\t}\n\n}"
+    },
+    {
+      "language": "text",
+      "text": "ERROR in ch.qos.logback.core.joran.spi.Interpreter@4:71 - no applicable action for [springProperty], current ElementPath is [[configuration][springProperty]]\nERROR in ch.qos.logback.core.joran.spi.Interpreter@4:71 - no applicable action for [springProfile], current ElementPath is [[configuration][springProfile]]"
+    },
+    {
+      "language": "xml",
+      "text": "<springProfile name=\"staging\">\n\t<!-- configuration to be enabled when the \"staging\" profile is active -->\n</springProfile>\n\n<springProfile name=\"dev | staging\">\n\t<!-- configuration to be enabled when the \"dev\" or \"staging\" profiles are active -->\n</springProfile>\n\n<springProfile name=\"!production\">\n\t<!-- configuration to be enabled when the \"production\" profile is not active -->\n</springProfile>"
+    },
+    {
+      "language": "xml",
+      "text": "<springProperty scope=\"context\" name=\"fluentHost\" source=\"myapp.fluentd.host\"\n\t\tdefaultValue=\"localhost\"/>\n<appender name=\"FLUENT\" class=\"ch.qos.logback.more.appenders.DataFluentAppender\">\n\t<remoteHost>${fluentHost}</remoteHost>\n\t...\n</appender>"
+    },
+    {
+      "language": "xml",
+      "text": "<SpringProfile name=\"staging\">\n\t<!-- configuration to be enabled when the \"staging\" profile is active -->\n</SpringProfile>\n\n<SpringProfile name=\"dev | staging\">\n\t<!-- configuration to be enabled when the \"dev\" or \"staging\" profiles are active -->\n</SpringProfile>\n\n<SpringProfile name=\"!production\">\n\t<!-- configuration to be enabled when the \"production\" profile is not active -->\n</SpringProfile>"
+    },
+    {
+      "language": "xml",
+      "text": "<Properties>\n\t<Property name=\"applicationName\">${spring:spring.application.name}</Property>\n\t<Property name=\"applicationGroup\">${spring:spring.application.group}</Property>\n</Properties>"
+    }
+  ],
+  "headings": [
+    "Logging",
+    "Log Format",
+    "Console Output",
+    "Color-coded Output",
+    "File Output",
+    "File Rotation",
+    "Log Levels",
+    "Log Groups",
+    "Using a Log Shutdown Hook",
+    "Custom Log Configuration",
+    "Structured Logging",
+    "Elastic Common Schema",
+    "Graylog Extended Log Format (GELF)",
+    "Logstash JSON format",
+    "Customizing Structured Logging JSON",
+    "Customizing Structured Logging Stack Traces",
+    "Supporting Other Structured Logging Formats",
+    "Logback Extensions",
+    "Profile-specific Configuration",
+    "Environment Properties",
+    "Log4j2 Extensions",
+    "Profile-specific Configuration",
+    "Environment Properties Lookup",
+    "Log4j2 System Properties"
+  ],
+  "links": {
+    "https://commons.apache.org/logging": "r1",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.logging/java/util/logging/package-summary.html": "r2",
+    "https://logging.apache.org/log4j/2.x/": "r3",
+    "https://logback.qos.ch/": "r4",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/tracing.html#actuator.micrometer-tracing.logging": "r5",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/ansi/AnsiOutput.Enabled.html": "r6",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html": "r7",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.typesafe-configuration-properties.relaxed-binding.maps-from-environment-variables": "r8",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.application-json": "r9",
+    "https://www.jooq.org/javadoc/3.21.7/org/jooq/tools/LoggerListener.html": "r10",
+    "https://logback.qos.ch/manual/loggingSeparation.html": "r11",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/logging/LoggingSystem.html": "r12",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html": "r13",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/PropertySources.html": "r14",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html": "r15",
+    "https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot/src/main/resources/org/springframework/boot/logging/logback/defaults.xml": "r16",
+    "https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot/src/main/resources/org/springframework/boot/logging/log4j2/log4j2.xml": "r17",
+    "https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot/src/main/resources/org/springframework/boot/logging/java/logging-file.properties": "r18",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.files.property-placeholders": "r19",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/logging.html#features.logging.structured.ecs": "r20",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/logging.html#features.logging.structured.gelf": "r21",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/logging.html#features.logging.structured.logstash": "r22",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/logging.html#features.logging.custom-log-configuration": "r23",
+    "https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot/src/main/resources/org/springframework/boot/logging/logback/structured-console-appender.xml": "r24",
+    "https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot/src/main/resources/org/springframework/boot/logging/logback/structured-file-appender.xml": "r25",
+    "https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot/src/main/resources/org/springframework/boot/logging/log4j2/log4j2-file.xml": "r26",
+    "https://www.elastic.co/guide/en/ecs/8.11/ecs-reference.html": "r27",
+    "https://www.slf4j.org/manual.html#fluent": "r28",
+    "https://www.slf4j.org/apidocs/org/slf4j/spi/LoggingEventBuilder.html#addKeyValue(java.lang.String,java.lang.Object)": "r29",
+    "https://go2docs.graylog.org/current/getting_in_log_data/gelf.html": "r30",
+    "https://github.com/logfellow/logstash-logback-encoder?tab=readme-ov-file#standard-fields": "r31",
+    "https://www.slf4j.org/api/org/slf4j/Marker.html": "r32",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/logging/structured/StructuredLoggingJsonMembersCustomizer.html": "r33",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/logging/StackTracePrinter.html": "r34",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/logging/StandardStackTracePrinter.html": "r35",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/logging/structured/StructuredLogFormatter.html": "r36",
+    "https://logback.qos.ch/apidocs/ch.qos.logback.core/ch/qos/logback/classic/spi/ILoggingEvent.html": "r37",
+    "https://logging.apache.org/log4j/2.x/javadoc/log4j-core/org/apache/logging/log4j/core/LogEvent.html": "r38",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html": "r39",
+    "https://logback.qos.ch/manual/configuration.html#autoScan": "r40",
+    "https://docs.spring.io/spring-framework/reference/7.0/core/beans/environment.html#beans-definition-profiles-java": "r41",
+    "https://logging.apache.org/log4j/2.x/log4j-spring-boot.html": "r42",
+    "https://logging.apache.org/log4j/2.x/manual/lookups.html": "r43",
+    "https://logging.apache.org/log4j/2.x/manual/systemproperties.html": "r44",
+    "https://logging.apache.org/log4j/2.x/javadoc/log4j-core/org/apache/logging/log4j/core/appender/ConsoleAppender.html": "r45",
+    "https://github.com/fusesource/jansi": "r46"
+  }
+}

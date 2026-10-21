@@ -1,0 +1,15 @@
+[r1]: https://rsocket.io
+[r2]: https://docs.spring.io/spring-framework/reference/7.0/rsocket.html#rsocket-spring
+[r3]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/messaging/rsocket/RSocketStrategies.html
+[r4]: https://cbor.io/
+[r5]: https://docs.spring.io/spring-boot/4.1/reference/features/json.html#features.json.jackson
+[r6]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/rsocket/messaging/RSocketStrategiesCustomizer.html
+[r7]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/annotation/Order.html
+[r8]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/WebApplicationType.html#REACTIVE
+[r9]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/messaging/rsocket/annotation/support/RSocketMessageHandler.html
+[r10]: https://docs.spring.io/spring-framework/reference/7.0/web/webmvc/mvc-controller/ann-advice.html
+[r11]: https://javadoc.io/doc/io.rsocket/rsocket-core/1.1.5/io/rsocket/RSocket.html
+[r12]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/messaging/rsocket/RSocketRequester.html
+[r13]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/stereotype/Controller.html
+[r14]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/messaging/rsocket/RSocketRequester.Builder.html
+[r15]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/messaging/rsocket/RSocketConnectorConfigurer.html

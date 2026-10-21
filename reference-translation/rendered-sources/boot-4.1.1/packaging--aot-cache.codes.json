@@ -1,0 +1,6 @@
+[
+  "```shell\n$ java -Djarmode=tools -jar my-app.jar extract --destination application\n$ cd application\n$ java -XX:AOTCacheOutput=app.aot -Dspring.context.exit=onRefresh -jar my-app.jar\n```",
+  "```shell\n$ java -XX:AOTCache=app.aot -jar my-app.jar\n```",
+  "```shell\n$ java -Djarmode=tools -jar my-app.jar extract --destination application\n$ cd application\n$ java -XX:ArchiveClassesAtExit=application.jsa -Dspring.context.exit=onRefresh -jar my-app.jar\n```",
+  "```shell\n$ java -XX:SharedArchiveFile=application.jsa -jar my-app.jar\n```"
+]

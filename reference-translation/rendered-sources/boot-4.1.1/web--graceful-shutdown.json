@@ -1,0 +1,35 @@
+{
+  "page": "boot/web--graceful-shutdown.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/web/graceful-shutdown.html",
+  "version": "4.1.1",
+  "html_sha256": "f9fe04036b29dfe20aba41c5487cf93d10eec749153db52cea1ac89345c797ef",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.lifecycle.timeout-per-shutdown-phase=20s"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  lifecycle:\n    timeout-per-shutdown-phase: \"20s\""
+    },
+    {
+      "language": "properties",
+      "text": "server.shutdown=immediate"
+    },
+    {
+      "language": "yaml",
+      "text": "server:\n  shutdown: \"immediate\""
+    }
+  ],
+  "headings": [
+    "Graceful Shutdown",
+    "Rejecting Requests During the Grace Period",
+    "Disabling Graceful Shutdown"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/SmartLifecycle.html": "r1",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/tomcat/TomcatWebServer.html#shutDownGracefully(org.springframework.boot.web.server.GracefulShutdownCallback)": "r2",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/reactor/netty/NettyWebServer.html#shutDownGracefully(org.springframework.boot.web.server.GracefulShutdownCallback)": "r3",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jetty/JettyWebServer.html#shutDownGracefully(org.springframework.boot.web.server.GracefulShutdownCallback)": "r4"
+  }
+}

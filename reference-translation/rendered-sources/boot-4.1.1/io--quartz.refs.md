@@ -1,0 +1,15 @@
+[r1]: https://www.quartz-scheduler.org/
+[r2]: https://javadoc.io/doc/org.quartz-scheduler/quartz/2.5.2/org/quartz/Scheduler.html
+[r3]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/scheduling/quartz/SchedulerFactoryBean.html
+[r4]: https://javadoc.io/doc/org.quartz-scheduler/quartz/2.5.2/org/quartz/JobDetail.html
+[r5]: https://javadoc.io/doc/org.quartz-scheduler/quartz/2.5.2/org/quartz/JobBuilder.html
+[r6]: https://javadoc.io/doc/org.quartz-scheduler/quartz/2.5.2/org/quartz/Calendar.html
+[r7]: https://javadoc.io/doc/org.quartz-scheduler/quartz/2.5.2/org/quartz/Trigger.html
+[r8]: https://javadoc.io/doc/org.quartz-scheduler/quartz/2.5.2/org/quartz/spi/JobStore.html
+[r9]: https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html
+[r10]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html
+[r11]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/quartz/autoconfigure/QuartzDataSource.html
+[r12]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/transaction/TransactionManager.html
+[r13]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/quartz/autoconfigure/QuartzTransactionManager.html
+[r14]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/quartz/autoconfigure/SchedulerFactoryBeanCustomizer.html
+[r15]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html

@@ -1,0 +1,2717 @@
+<!DOCTYPE html>
+<html lang="en">
+  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-domain-script="018ee325-b3a7-7753-937b-b8b3e643b1a7"></script><script>function OptanonWrapper() {}</script><script>function setGTM(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js"}); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != "dataLayer" ? "&l=" + l : ""; j.async = true; j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl; f.parentNode.insertBefore(j, f); } if (document.cookie.indexOf("OptanonConsent") > -1 && document.cookie.indexOf("groups=") > -1) { setGTM(window, document, "script", "dataLayer", "GTM-W8CQ8TL"); } else { waitForOnetrustActiveGroups(); } var timer; function waitForOnetrustActiveGroups() { if (document.cookie.indexOf("OptanonConsent") > -1 && document.cookie.indexOf("groups=") > -1) { clearTimeout(timer); setGTM(window, document, "script", "dataLayer", "GTM-W8CQ8TL"); } else { timer = setTimeout(waitForOnetrustActiveGroups, 250); }}</script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Creating Your Own Auto-configuration :: Spring Boot</title>
+    <link rel="canonical" href="https://docs.spring.io/spring-boot/reference/features/developing-auto-configuration.html">
+    <link rel="prev" href="dev-services.html">
+    <link rel="next" href="kotlin.html">
+    <meta name="generator" content="Antora 3.2.1">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/onetrust.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="v0.4.26"> 
+    <meta name="version" content="4.1.1">
+    <meta name="generation" content="4.1">
+    <meta name="versioned-url" content="https://docs.spring.io/spring-boot/4.1/reference/features/developing-auto-configuration.html">
+    <meta name="component" content="boot">
+    <meta name="latest-version" content="true">
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://spring.io">
+        <img
+          id="springlogo"
+          class="block"
+          src="../../_/img/spring-logo.svg"
+          alt="Spring"
+        />
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Why Spring</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/why-spring">Overview</a>
+            <li class="navbar-item navbar-item-special-3">Trending</li>
+            <a class="navbar-item" href="https://spring.io/ai">Generative AI</a>
+            <a class="navbar-item" href="https://spring.io/cloud">Cloud</a>
+            <li class="navbar-item navbar-item-special-3">Architecture Patterns</li>
+            <a class="navbar-item" href="https://spring.io/microservices">Microservices</a>
+            <a class="navbar-item" href="https://spring.io/reactive">Reactive</a>
+            <a class="navbar-item" href="https://spring.io/event-driven">Event Driven</a>
+            <li class="navbar-item navbar-item-special-3">Application Types</li>
+            <a class="navbar-item" href="https://spring.io/web-applications">Web Applications</a>
+            <a class="navbar-item" href="https://spring.io/serverless">Serverless</a>
+            <a class="navbar-item" href="https://spring.io/batch">Batch</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Learn</a>
+          <div class="navbar-dropdown">
+            <li class="navbar-item navbar-item-special-3">Getting Started</li>
+            <a class="navbar-item" href="https://spring.io/quickstart">Quickstart</a>
+            <a class="navbar-item" href="https://spring.io/guides">Guides</a>
+            <li class="navbar-item navbar-item-special-3">Academy</li>
+            <a class="navbar-item" href="https://spring.academy/courses">Courses
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg>
+            </a>
+            <a class="navbar-item" href="https://spring.academy/learning-path">Get Certified
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Projects</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://spring.io/projects">Overview</a>
+            <li class="navbar-item navbar-item-special-3">Projects</li>
+            <a class="navbar-item" href="https://spring.io/projects/spring-boot">Spring Boot</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-framework">Spring Framework</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-cloud">Spring Cloud</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-ai">Spring AI</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-data">Spring Data</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-integration">Spring Integration</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-batch">Spring Batch</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-security">Spring Security</a>
+            <li class="navbar-item navbar-item-special-3">Foundational Projects</li>
+            <a class="navbar-item" href="https://micrometer.io">Micrometer
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg>
+            </a>
+            <a class="navbar-item" href="https://projectreactor.io">Reactor
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg>
+            </a>
+            <li class="navbar-item navbar-item-special-3">Development Tools</li>
+            <a class="navbar-item" href="https://spring.io/tools">Spring Tools</a>
+            <a class="navbar-item navbar-item-special-2" href="https://start.spring.io">Spring Initializr
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/blog">Blog</a>
+            <a class="navbar-item" href="https://spring.io/projects#release-calendar">Release Calendar</a>
+            <a class="navbar-item" href="https://spring.io/projects/generations">Version Mappings</a>
+            <a class="navbar-item" href="https://spring.io/projects/release-highlights">Release Highlights</a>
+            <a class="navbar-item" href="https://spring.io/security">Security Advisories</a>
+            <li class="navbar-item navbar-item-special-3">GitHub Orgs</li>
+            <a class="navbar-item" href="https://github.com/spring-projects">Spring Projects
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg>
+            </a>
+            <a class="navbar-item" href="https://github.com/spring-cloud">Spring Cloud
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Community</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/community">Overview</a>
+            <a class="navbar-item" href="https://spring.io/events">Events</a>
+            <a class="navbar-item" href="https://spring.io/authors">Authors</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable is-enterprise">
+          <a class="navbar-link" href="#">Enterprise</a>
+          <div class="navbar-dropdown lg is-right">
+            <a class="navbar-item" href="https://enterprise.spring.io/">Overview</a>
+            <a class="navbar-item" href="https://enterprise.spring.io/lts-releases">Long-term Support</a>
+            <a class="navbar-item" href="https://enterprise.spring.io/spring-application-advisor">Automated Upgrades</a>
+            <a class="navbar-item" href="https://enterprise.spring.io/enterprise-extensions">Governance and Compliance</a>
+            <a class="navbar-item" href="https://enterprise.spring.io/enterprise-components">Modern App Development</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <label class="theme-toggler">
+      <input
+        type="checkbox"
+        type="checkbox"
+        id="switch-theme-checkbox"
+        name="switch-theme-checkbox"
+      />
+      <span class="icon"><svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="moon"
+          class="svg-inline--fa fa-moon moon"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 384 512"
+        ><path
+            fill="currentColor"
+            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"
+          ></path>
+        </svg>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="sun"
+          class="svg-inline--fa fa-sun sun"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+        ><path
+            fill="currentColor"
+            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"
+          ></path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+!function (theme) {
+  if (theme === 'dark') {
+    document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+  }
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="boot" data-version="4.1.1">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">Spring Boot</span>
+  <span class="version">4.1.1</span>
+  <button class="browse-version" id="browse-version">
+    <svg
+      height="24px"
+      id="Layer_1"
+      style="enable-background:new 0 0 512 512;"
+      version="1.1"
+      viewBox="0 0 512 512"
+      width="24px"
+      xml:space="preserve"
+    ><g><path
+          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
+        ></path><path
+          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
+        ></path><path
+          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
+        ></path></g></svg>
+  </button>
+  <div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    <span>Search</span>
+    <span class="search-key"></span>
+  </button>
+</div>
+</div><ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link navtree-icon-home"  href="../../index.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link navtree-icon-book"  href="../../documentation.html">Documentation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link navtree-icon-question"  href="../../community.html">Community</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link navtree-icon-server"  href="../../system-requirements.html">System Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link navtree-icon-gift"  href="../../installing.html">Installing Spring Boot</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link navtree-icon-rocket"  href="../../upgrading.html">Upgrading Spring Boot</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../tutorial/index.html">Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../tutorial/first-application/index.html">Developing Your First Spring Boot Application</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../index.html">Reference</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../using/index.html">Developing with Spring Boot</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/build-systems.html">Build Systems</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/structuring-your-code.html">Structuring Your Code</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/configuration-classes.html">Configuration Classes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/auto-configuration.html">Auto-configuration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/spring-beans-and-dependency-injection.html">Spring Beans and Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/using-the-springbootapplication-annotation.html">Using the @SpringBootApplication Annotation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/running-your-application.html">Running Your Application</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/devtools.html">Developer Tools</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/packaging-for-production.html">Packaging Your Application for Production</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="index.html">Core Features</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="spring-application.html">SpringApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="external-config.html">Externalized Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="profiles.html">Profiles</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="internationalization.html">Internationalization</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="aop.html">Aspect-Oriented Programming</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="json.html">JSON</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="task-execution-and-scheduling.html">Task Execution and Scheduling</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="dev-services.html">Development-time Services</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link"  href="developing-auto-configuration.html">Creating Your Own Auto-configuration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="kotlin.html">Kotlin Support</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="ssl.html">SSL</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../web/index.html">Web</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../web/servlet.html">Servlet Web Applications</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../web/reactive.html">Reactive Web Applications</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../web/graceful-shutdown.html">Graceful Shutdown</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../web/spring-security.html">Spring Security</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../web/spring-session.html">Spring Session</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../web/spring-graphql.html">Spring for GraphQL</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../web/spring-hateoas.html">Spring HATEOAS</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../data/index.html">Data</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../data/sql.html">SQL Databases</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../data/nosql.html">Working with NoSQL Technologies</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../io/index.html">IO</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/caching.html">Caching</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/spring-batch.html">Spring Batch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/grpc.html">gRPC</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/hazelcast.html">Hazelcast</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/quartz.html">Quartz Scheduler</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/email.html">Sending Email</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/validation.html">Validation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/rest-client.html">Calling REST Services</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/webservices.html">Web Services</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/jta.html">Distributed Transactions With JTA</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../messaging/index.html">Messaging</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../messaging/jms.html">JMS</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../messaging/amqp.html">AMQP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../messaging/kafka.html">Apache Kafka Support</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../messaging/pulsar.html">Apache Pulsar Support</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../messaging/rsocket.html">RSocket</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../messaging/spring-integration.html">Spring Integration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../messaging/websockets.html">WebSockets</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../security/index.html">Security</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../security/oauth2.html">OAuth2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../security/saml2.html">SAML 2.0</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../testing/index.html">Testing</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../testing/test-modules.html">Test Modules</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../testing/test-scope-dependencies.html">Test Scope Dependencies</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../testing/spring-applications.html">Testing Spring Applications</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../testing/spring-boot-applications.html">Testing Spring Boot Applications</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../testing/testcontainers.html">Testcontainers</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../testing/test-utilities.html">Test Utilities</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../packaging/index.html">Packaging Spring Boot Applications</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../packaging/efficient.html">Efficient Deployments</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../packaging/aot-cache.html">AOT Cache</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../packaging/aot.html">Ahead-of-Time Processing With the JVM</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../packaging/native-image/index.html">GraalVM Native Images</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link"  href="../packaging/native-image/introducing-graalvm-native-images.html">Introducing GraalVM Native Images</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link"  href="../packaging/native-image/advanced-topics.html">Advanced Native Images Topics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../packaging/checkpoint-restore.html">Checkpoint and Restore With the JVM</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../packaging/container-images/index.html">Container Images</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link"  href="../packaging/container-images/efficient-images.html">Efficient Container Images</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link"  href="../packaging/container-images/dockerfiles.html">Dockerfiles</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link"  href="../packaging/container-images/cloud-native-buildpacks.html">Cloud Native Buildpacks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../actuator/index.html">Production-ready Features</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/enabling.html">Enabling Production-ready Features</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/endpoints.html">Endpoints</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/monitoring.html">Monitoring and Management Over HTTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/jmx.html">Monitoring and Management over JMX</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/observability.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/loggers.html">Loggers</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/tracing.html">Tracing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/auditing.html">Auditing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/http-exchanges.html">Recording HTTP Exchanges</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/process-monitoring.html">Process Monitoring</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/cloud-foundry.html">Cloud Foundry Support</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../how-to/index.html">How-to Guides</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/application.html">Spring Boot Application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/properties-and-configuration.html">Properties and Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/webserver.html">Embedded Web Servers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/spring-mvc.html">Spring MVC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/jersey.html">Jersey</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/http-clients.html">HTTP Clients</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/data-access.html">Data Access</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/data-initialization.html">Database Initialization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/nosql.html">NoSQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/messaging.html">Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/batch.html">Batch Applications</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/actuator.html">Actuator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/security.html">Security</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/hotswapping.html">Hot Swapping</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/testing.html">Testing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/build.html">Build</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/aot.html">Ahead-of-Time Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../how-to/native-image/index.html">GraalVM Native Applications</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../how-to/native-image/developing-your-first-application.html">Developing Your First GraalVM Native Application</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../how-to/native-image/testing-native-applications.html">Testing GraalVM Native Images</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/aot-cache.html">AOT Cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../how-to/deployment/index.html">Deploying Spring Boot Applications</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../how-to/deployment/traditional-deployment.html">Traditional Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../how-to/deployment/cloud.html">Deploying to the Cloud</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../how-to/deployment/installing.html">Installing Spring Boot Applications</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/docker-compose.html">Docker Compose</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../build-tool-plugin/index.html">Build Tool Plugins</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../maven-plugin/index.html">Maven Plugin</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/using.html">Using the Plugin</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/goals.html">Goals</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/packaging.html">Packaging Executable Archives</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/build-image.html">Packaging OCI Images</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/run.html">Running your Application with Maven</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/aot.html">Ahead-of-Time Processing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/integration-tests.html">Running Integration Tests</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/build-info.html">Integrating with Actuator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/help.html">Help Information</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../gradle-plugin/index.html">Gradle Plugin</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/managing-dependencies.html">Managing Dependencies</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/packaging.html">Packaging Executable Archives</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/packaging-oci-image.html">Packaging OCI Images</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/publishing.html">Publishing your Application</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/running.html">Running your Application with Gradle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/aot.html">Ahead-of-Time Processing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/integrating-with-actuator.html">Integrating with Actuator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/reacting.html">Reacting to Other Plugins</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../build-tool-plugin/antlib.html">Spring Boot AntLib Module</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../build-tool-plugin/other-build-systems.html">Supporting Other Build Systems</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../cli/index.html">Spring Boot CLI</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../cli/installation.html">Installing the CLI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../cli/using-the-cli.html">Using the CLI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Rest APIs</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../api/rest/actuator/index.html">Actuator</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/auditevents.html">Audit Events (<code>auditevents</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/beans.html">Beans (<code>beans</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/caches.html">Caches (<code>caches</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/conditions.html">Conditions Evaluation Report (<code>conditions</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/configprops.html">Configuration Properties (<code>configprops</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/env.html">Environment (<code>env</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/flyway.html">Flyway (<code>flyway</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/health.html">Health (<code>health</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/heapdump.html">Heap Dump (<code>heapdump</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/httpexchanges.html">HTTP Exchanges (<code>httpexchanges</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/info.html">Info (<code>info</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/integrationgraph.html">Spring Integration Graph (<code>integrationgraph</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/liquibase.html">Liquibase (<code>liquibase</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/logfile.html">Log File (<code>logfile</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/loggers.html">Loggers (<code>loggers</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/mappings.html">Mappings (<code>mappings</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/metrics.html">Metrics (<code>metrics</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/prometheus.html">Prometheus (<code>prometheus</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/quartz.html">Quartz (<code>quartz</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/sbom.html">Software Bill of Materials (<code>sbom</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/scheduledtasks.html">Scheduled Tasks (<code>scheduledtasks</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/sessions.html">Sessions (<code>sessions</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/shutdown.html">Shutdown (<code>shutdown</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/startup.html">Application Startup (<code>startup</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/threaddump.html">Thread Dump (<code>threaddump</code>)</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java APIs</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link link-external"  target="_blank" href="../../api/java/index.html">Spring Boot</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link link-external"  target="_blank" href="../../gradle-plugin/api/java/index.html">Gradle Plugin</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link link-external"  target="_blank" href="../../maven-plugin/api/java/index.html">Maven Plugin</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kotlin APIs</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link link-external"  target="_blank" href="../../api/kotlin/index.html">Spring Boot</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Specifications</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../specification/configuration-metadata/index.html">Configuration Metadata</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/configuration-metadata/format.html">Metadata Format</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/configuration-metadata/manual-hints.html">Providing Manual Hints</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/configuration-metadata/annotation-processor.html">Generating Your Own Metadata by Using the Annotation Processor</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../specification/executable-jar/index.html">The Executable Jar Format</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/executable-jar/nested-jars.html">Nested JARs</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/executable-jar/jarfile-class.html">Spring Boot&#8217;s &#8220;NestedJarFile&#8221; Class</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/executable-jar/launching.html">Launching Executable Jars</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/executable-jar/property-launcher.html">PropertiesLauncher Features</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/executable-jar/restrictions.html">Executable Jar Restrictions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/executable-jar/alternatives.html">Alternative Single Jar Solutions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Appendix</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../appendix/application-properties/index.html">Common Application Properties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../appendix/deprecated-application-properties/index.html">Deprecated Application Properties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/index.html">Auto-configuration Classes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-activemq.html">spring-boot-activemq</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-actuator-autoconfigure.html">spring-boot-actuator-autoconfigure</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-amqp.html">spring-boot-amqp</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-artemis.html">spring-boot-artemis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-autoconfigure.html">spring-boot-autoconfigure</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-batch.html">spring-boot-batch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-batch-data-mongodb.html">spring-boot-batch-data-mongodb</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-batch-jdbc.html">spring-boot-batch-jdbc</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-cache.html">spring-boot-cache</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-cassandra.html">spring-boot-cassandra</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-cloudfoundry.html">spring-boot-cloudfoundry</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-couchbase.html">spring-boot-couchbase</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-cassandra.html">spring-boot-data-cassandra</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-commons.html">spring-boot-data-commons</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-couchbase.html">spring-boot-data-couchbase</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-elasticsearch.html">spring-boot-data-elasticsearch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-jdbc.html">spring-boot-data-jdbc</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-jpa.html">spring-boot-data-jpa</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-ldap.html">spring-boot-data-ldap</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-mongodb.html">spring-boot-data-mongodb</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-neo4j.html">spring-boot-data-neo4j</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-r2dbc.html">spring-boot-data-r2dbc</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-redis.html">spring-boot-data-redis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-rest.html">spring-boot-data-rest</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-devtools.html">spring-boot-devtools</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-elasticsearch.html">spring-boot-elasticsearch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-flyway.html">spring-boot-flyway</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-freemarker.html">spring-boot-freemarker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-graphql.html">spring-boot-graphql</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-groovy-templates.html">spring-boot-groovy-templates</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-grpc-client.html">spring-boot-grpc-client</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-grpc-server.html">spring-boot-grpc-server</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-gson.html">spring-boot-gson</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-h2console.html">spring-boot-h2console</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-hateoas.html">spring-boot-hateoas</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-hazelcast.html">spring-boot-hazelcast</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-health.html">spring-boot-health</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-hibernate.html">spring-boot-hibernate</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-http-client.html">spring-boot-http-client</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-http-codec.html">spring-boot-http-codec</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-http-converter.html">spring-boot-http-converter</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-integration.html">spring-boot-integration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jackson.html">spring-boot-jackson</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jackson2.html">spring-boot-jackson2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jdbc.html">spring-boot-jdbc</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jersey.html">spring-boot-jersey</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jetty.html">spring-boot-jetty</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jms.html">spring-boot-jms</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jooq.html">spring-boot-jooq</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jsonb.html">spring-boot-jsonb</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-kafka.html">spring-boot-kafka</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-kotlinx-serialization-json.html">spring-boot-kotlinx-serialization-json</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-ldap.html">spring-boot-ldap</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-liquibase.html">spring-boot-liquibase</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-mail.html">spring-boot-mail</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-micrometer-metrics.html">spring-boot-micrometer-metrics</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-micrometer-observation.html">spring-boot-micrometer-observation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-micrometer-tracing.html">spring-boot-micrometer-tracing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-micrometer-tracing-brave.html">spring-boot-micrometer-tracing-brave</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-micrometer-tracing-opentelemetry.html">spring-boot-micrometer-tracing-opentelemetry</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-mongodb.html">spring-boot-mongodb</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-mustache.html">spring-boot-mustache</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-neo4j.html">spring-boot-neo4j</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-netty.html">spring-boot-netty</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-opentelemetry.html">spring-boot-opentelemetry</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-persistence.html">spring-boot-persistence</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-pulsar.html">spring-boot-pulsar</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-quartz.html">spring-boot-quartz</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-r2dbc.html">spring-boot-r2dbc</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-reactor.html">spring-boot-reactor</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-reactor-netty.html">spring-boot-reactor-netty</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-restclient.html">spring-boot-restclient</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-resttestclient.html">spring-boot-resttestclient</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-rsocket.html">spring-boot-rsocket</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-security.html">spring-boot-security</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-security-oauth2-authorization-server.html">spring-boot-security-oauth2-authorization-server</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-security-oauth2-client.html">spring-boot-security-oauth2-client</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-security-oauth2-resource-server.html">spring-boot-security-oauth2-resource-server</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-security-saml2.html">spring-boot-security-saml2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-sendgrid.html">spring-boot-sendgrid</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-servlet.html">spring-boot-servlet</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-session.html">spring-boot-session</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-session-data-redis.html">spring-boot-session-data-redis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-session-jdbc.html">spring-boot-session-jdbc</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-testcontainers.html">spring-boot-testcontainers</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-thymeleaf.html">spring-boot-thymeleaf</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-tomcat.html">spring-boot-tomcat</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-transaction.html">spring-boot-transaction</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-validation.html">spring-boot-validation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-webclient.html">spring-boot-webclient</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-webflux.html">spring-boot-webflux</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-webmvc.html">spring-boot-webmvc</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-webservices.html">spring-boot-webservices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-websocket.html">spring-boot-websocket</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-zipkin.html">spring-boot-zipkin</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../appendix/test-auto-configuration/index.html">Test Auto-configuration Annotations</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/test-auto-configuration/slices.html">Test Slices</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../appendix/dependency-versions/index.html">Dependency Versions</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/dependency-versions/coordinates.html">Managed Dependency Coordinates</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/dependency-versions/properties.html">Version Properties</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+<div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    <span>Search</span>
+    <span class="search-key"></span>
+  </button>
+</div>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title="Creating Your Own Auto-configuration"
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/spring-projects/spring-boot/blob/v4.1.1/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/developing-auto-configuration.adoc">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Edit this Page
+        </a>
+              <a href="https://github.com/spring-projects/spring-boot" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css"><![CDATA[
+              .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+        <a href="https://stackoverflow.com/tags/spring-boot">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path
+              d="M290.7 311L95 269.7 86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8 153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24 119.3 160.3 32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"
+            ></path></svg>
+          Stack Overflow
+        </a>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li id="copy-url" title="Copy versioned URL"></li>
+      <li><a href="../../index.html">Spring Boot</a></li>
+      <li><a href="../index.html">Reference</a></li>
+      <li><a href="index.html">Core Features</a></li>
+      <li><a href="developing-auto-configuration.html">Creating Your Own Auto-configuration</a></li>
+    </ul>
+  </nav>
+</div><h1 id="page-title" class="page">Creating Your Own Auto-configuration</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you work in a company that develops shared libraries, or if you work on an open-source or commercial library, you might want to develop your own auto-configuration.
+Auto-configuration classes can be bundled in external jars and still be picked up by Spring Boot.</p>
+</div>
+<div class="paragraph">
+<p>Auto-configuration can be associated to a &#8220;starter&#8221; that provides the auto-configuration code as well as the typical libraries that you would use with it.
+We first cover what you need to know to build your own auto-configuration and then we move on to the <a href="#features.developing-auto-configuration.custom-starter">typical steps required to create a custom starter</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.developing-auto-configuration.understanding-auto-configured-beans"><a class="anchor" href="#features.developing-auto-configuration.understanding-auto-configured-beans"></a>Understanding Auto-configured Beans</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Classes that implement auto-configuration are annotated with <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/AutoConfiguration.html" class="apiref"><code>@AutoConfiguration</code></a>.
+This annotation itself is meta-annotated with <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html" class="apiref"><code>@Configuration</code></a>, making auto-configurations standard <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html" class="apiref"><code>@Configuration</code></a> classes.
+Additional <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Conditional.html" class="apiref"><code>@Conditional</code></a> annotations are used to constrain when the auto-configuration should apply.
+Usually, auto-configuration classes use <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnClass.html" class="apiref"><code>@ConditionalOnClass</code></a> and <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBean.html" class="apiref"><code>@ConditionalOnMissingBean</code></a> annotations.
+This ensures that auto-configuration applies only when relevant classes are found and when you have not declared your own <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html" class="apiref"><code>@Configuration</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>You can browse the source code of <a href="https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure"><code>spring-boot-autoconfigure</code></a> to see the core <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/AutoConfiguration.html" class="apiref"><code>@AutoConfiguration</code></a> classes that Spring provides (see the <a href="https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot-autoconfigure/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports"><code>META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports</code></a> file).
+You can also look at the equivalent file in other modules to see the auto-configurations that they provide.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.developing-auto-configuration.locating-auto-configuration-candidates"><a class="anchor" href="#features.developing-auto-configuration.locating-auto-configuration-candidates"></a>Locating Auto-configuration Candidates</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring Boot checks for the presence of a <code>META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports</code> file within your published jar.
+The file should list your configuration classes, with one class name per line, as shown in the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">com.mycorp.libx.autoconfigure.LibXAutoConfiguration
+com.mycorp.libx.autoconfigure.LibXWebAutoConfiguration</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You can add comments to the imports file using the <code>#</code> character.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+In the unusual case that an auto-configuration class is not a top-level class, its class name should use <code>$</code> to separate it from its containing class, for example <code>com.example.Outer$NestedAutoConfiguration</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Auto-configurations must be loaded <em>only</em> by being named in the imports file.
+Make sure that they are defined in a specific package space and that they are never the target of component scanning.
+Furthermore, auto-configuration classes should not enable component scanning to find additional components.
+Specific <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Import.html" class="apiref"><code>@Import</code></a> annotations should be used instead.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If your configuration needs to be applied in a specific order, you can use the <code>before</code>, <code>beforeName</code>, <code>after</code> and <code>afterName</code> attributes on the <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/AutoConfiguration.html" class="apiref"><code>@AutoConfiguration</code></a> annotation or the dedicated <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/AutoConfigureBefore.html" class="apiref"><code>@AutoConfigureBefore</code></a> and <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/AutoConfigureAfter.html" class="apiref"><code>@AutoConfigureAfter</code></a> annotations.
+For example, if you provide web-specific configuration, your class may need to be applied after <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webmvc/autoconfigure/WebMvcAutoConfiguration.html" class="apiref"><code>WebMvcAutoConfiguration</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>If you want to order certain auto-configurations that should not have any direct knowledge of each other, you can also use <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/AutoConfigureOrder.html" class="apiref"><code>@AutoConfigureOrder</code></a>.
+That annotation has the same semantic as the regular <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/annotation/Order.html" class="apiref"><code>@Order</code></a> annotation but provides a dedicated order for auto-configuration classes.</p>
+</div>
+<div class="paragraph">
+<p>As with standard <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html" class="apiref"><code>@Configuration</code></a> classes, the order in which auto-configuration classes are applied only affects the order in which their beans are defined.
+The order in which those beans are subsequently created is unaffected and is determined by each bean&#8217;s dependencies and any <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/DependsOn.html" class="apiref"><code>@DependsOn</code></a> relationships.</p>
+</div>
+<div class="sect2">
+<h3 id="features.developing-auto-configuration.locating-auto-configuration-candidates.deprecating"><a class="anchor" href="#features.developing-auto-configuration.locating-auto-configuration-candidates.deprecating"></a>Deprecating and Replacing Auto-configuration Classes</h3>
+<div class="paragraph">
+<p>You may need to occasionally deprecate auto-configuration classes and offer an alternative.
+For example, you may want to change the package name where your auto-configuration class resides.</p>
+</div>
+<div class="paragraph">
+<p>Since auto-configuration classes may be referenced in <code>before</code>/<code>after</code> ordering and <code>excludes</code>, you&#8217;ll need to add an additional file that tells Spring Boot how to deal with replacements.
+To define replacements, create a <code>META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.replacements</code> file indicating the link between the old class and the new one.</p>
+</div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">com.mycorp.libx.autoconfigure.LibXAutoConfiguration=com.mycorp.libx.autoconfigure.core.LibXAutoConfiguration</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>AutoConfiguration.imports</code> file should also be updated to <em>only</em> reference the replacement class.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.developing-auto-configuration.condition-annotations"><a class="anchor" href="#features.developing-auto-configuration.condition-annotations"></a>Condition Annotations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You almost always want to include one or more <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Conditional.html" class="apiref"><code>@Conditional</code></a> annotations on your auto-configuration class.
+The <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBean.html" class="apiref"><code>@ConditionalOnMissingBean</code></a> annotation is one common example that is used to allow developers to override auto-configuration if they are not happy with your defaults.</p>
+</div>
+<div class="paragraph">
+<p>Spring Boot includes a number of <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Conditional.html" class="apiref"><code>@Conditional</code></a> annotations that you can reuse in your own code by annotating <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html" class="apiref"><code>@Configuration</code></a> classes or individual <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html" class="apiref"><code>@Bean</code></a> methods.
+These annotations include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#features.developing-auto-configuration.condition-annotations.class-conditions">Class Conditions</a></p>
+</li>
+<li>
+<p><a href="#features.developing-auto-configuration.condition-annotations.bean-conditions">Bean Conditions</a></p>
+</li>
+<li>
+<p><a href="#features.developing-auto-configuration.condition-annotations.property-conditions">Property Conditions</a></p>
+</li>
+<li>
+<p><a href="#features.developing-auto-configuration.condition-annotations.resource-conditions">Resource Conditions</a></p>
+</li>
+<li>
+<p><a href="#features.developing-auto-configuration.condition-annotations.web-application-conditions">Web Application Conditions</a></p>
+</li>
+<li>
+<p><a href="#features.developing-auto-configuration.condition-annotations.spel-conditions">SpEL Expression Conditions</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="features.developing-auto-configuration.condition-annotations.class-conditions"><a class="anchor" href="#features.developing-auto-configuration.condition-annotations.class-conditions"></a>Class Conditions</h3>
+<div class="paragraph">
+<p>The <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnClass.html" class="apiref"><code>@ConditionalOnClass</code></a> and <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingClass.html" class="apiref"><code>@ConditionalOnMissingClass</code></a> annotations let <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html" class="apiref"><code>@Configuration</code></a> classes be included based on the presence or absence of specific classes.
+Due to the fact that annotation metadata is parsed by using <a href="https://asm.ow2.io/">ASM</a>, you can use the <code>value</code> attribute to refer to the real class, even though that class might not actually appear on the running application classpath.
+You can also use the <code>name</code> attribute if you prefer to specify the class name by using a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" class="apiref"><code>String</code></a> value.</p>
+</div>
+<div class="paragraph">
+<p>This mechanism does not apply the same way to <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html" class="apiref"><code>@Bean</code></a> methods where typically the return type is the target of the condition: before the condition on the method applies, the JVM will have loaded the class and potentially processed method references which will fail if the class is not present.</p>
+</div>
+<div class="paragraph">
+<p>To handle this scenario, a separate <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html" class="apiref"><code>@Configuration</code></a> class can be used to isolate the condition, as shown in the following example:</p>
+</div>
+<div id="_tabs_1" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_1_java" class="tab">
+<p>Java</p>
+</li>
+<li id="_tabs_1_kotlin" class="tab">
+<p>Kotlin</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_1_java--panel" class="tabpanel" aria-labelledby="_tabs_1_java">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java"><span class="fold-block is-hidden-folded">import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+</span><span class="fold-block">@AutoConfiguration
+// Some conditions ...
+public final class MyAutoConfiguration {
+
+	// Auto-configured beans ...
+
+	@Configuration(proxyBeanMethods = false)
+	@ConditionalOnClass(SomeService.class)
+	static class SomeServiceConfiguration {
+
+		@Bean
+		@ConditionalOnMissingBean
+		SomeService someService() {
+			return new SomeService();
+		}
+
+	}
+
+}</span></code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_1_kotlin--panel" class="tabpanel" aria-labelledby="_tabs_1_kotlin">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin"><span class="fold-block is-hidden-folded">import org.springframework.boot.autoconfigure.AutoConfiguration
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+
+</span><span class="fold-block">@AutoConfiguration
+// Some conditions ...
+class MyAutoConfiguration {
+
+	// Auto-configured beans ...
+	@Configuration(proxyBeanMethods = false)
+	@ConditionalOnClass(SomeService::class)
+	class SomeServiceConfiguration {
+
+		@Bean
+		@ConditionalOnMissingBean
+		fun someService(): SomeService {
+			return SomeService()
+		}
+
+	}
+
+}</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you use <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnClass.html" class="apiref"><code>@ConditionalOnClass</code></a> or <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingClass.html" class="apiref"><code>@ConditionalOnMissingClass</code></a> as a part of a meta-annotation to compose your own composed annotations, you must use <code>name</code> as referring to the class in such a case is not handled.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.developing-auto-configuration.condition-annotations.bean-conditions"><a class="anchor" href="#features.developing-auto-configuration.condition-annotations.bean-conditions"></a>Bean Conditions</h3>
+<div class="paragraph">
+<p>The <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBean.html" class="apiref"><code>@ConditionalOnBean</code></a> and <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBean.html" class="apiref"><code>@ConditionalOnMissingBean</code></a> annotations let a bean be included based on the presence or absence of specific beans.
+You can use the <code>value</code> attribute to specify beans by type or <code>name</code> to specify beans by name.
+The <code>search</code> attribute lets you limit the <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html" class="apiref"><code>ApplicationContext</code></a> hierarchy that should be considered when searching for beans.</p>
+</div>
+<div class="paragraph">
+<p>When placed on a <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html" class="apiref"><code>@Bean</code></a> method, the target type defaults to the return type of the method, as shown in the following example:</p>
+</div>
+<div id="_tabs_2" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_2_java" class="tab">
+<p>Java</p>
+</li>
+<li id="_tabs_2_kotlin" class="tab">
+<p>Kotlin</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_2_java--panel" class="tabpanel" aria-labelledby="_tabs_2_java">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java"><span class="fold-block is-hidden-folded">import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
+
+</span><span class="fold-block">@AutoConfiguration
+public final class MyAutoConfiguration {
+
+	@Bean
+	@ConditionalOnMissingBean
+	SomeService someService() {
+		return new SomeService();
+	}
+
+}</span></code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_2_kotlin--panel" class="tabpanel" aria-labelledby="_tabs_2_kotlin">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin"><span class="fold-block is-hidden-folded">import org.springframework.boot.autoconfigure.AutoConfiguration
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
+import org.springframework.context.annotation.Bean
+
+</span><span class="fold-block">@AutoConfiguration
+class MyAutoConfiguration {
+
+	@Bean
+	@ConditionalOnMissingBean
+	fun someService(): SomeService {
+		return SomeService()
+	}
+
+}</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>In the preceding example, the <code>someService</code> bean is going to be created if no bean of type <code>SomeService</code> is already contained in the <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html" class="apiref"><code>ApplicationContext</code></a>.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You need to be very careful about the order in which bean definitions are added, as these conditions are evaluated based on what has been processed so far.
+For this reason, we recommend using only <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBean.html" class="apiref"><code>@ConditionalOnBean</code></a> and <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBean.html" class="apiref"><code>@ConditionalOnMissingBean</code></a> annotations on auto-configuration classes (since these are guaranteed to load after any user-defined bean definitions have been added).
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBean.html" class="apiref"><code>@ConditionalOnBean</code></a> and <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBean.html" class="apiref"><code>@ConditionalOnMissingBean</code></a> do not prevent <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html" class="apiref"><code>@Configuration</code></a> classes from being created.
+The only difference between using these conditions at the class level and marking each contained <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html" class="apiref"><code>@Bean</code></a> method with the annotation is that the former prevents registration of the <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html" class="apiref"><code>@Configuration</code></a> class as a bean if the condition does not match.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+When declaring a <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html" class="apiref"><code>@Bean</code></a> method, provide as much type information as possible in the method&#8217;s return type.
+For example, if your bean&#8217;s concrete class implements an interface the bean method&#8217;s return type should be the concrete class and not the interface.
+Providing as much type information as possible in <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html" class="apiref"><code>@Bean</code></a> methods is particularly important when using bean conditions as their evaluation can only rely upon to type information that is available in the method signature.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.developing-auto-configuration.condition-annotations.property-conditions"><a class="anchor" href="#features.developing-auto-configuration.condition-annotations.property-conditions"></a>Property Conditions</h3>
+<div class="paragraph">
+<p>The <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnProperty.html" class="apiref"><code>@ConditionalOnProperty</code></a> annotation lets configuration be included based on a Spring Environment property.
+Use the <code>prefix</code> and <code>name</code> attributes to specify the property that should be checked.
+By default, any property that exists and is not equal to <code>false</code> is matched.
+There is also a dedicated <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBooleanProperty.html" class="apiref"><code>@ConditionalOnBooleanProperty</code></a> annotation specifically made for boolean properties.
+With both annotations you can also create more advanced checks by using the <code>havingValue</code> and <code>matchIfMissing</code> attributes.</p>
+</div>
+<div class="paragraph">
+<p>If multiple names are given in the <code>name</code> attribute, all of the properties have to pass the test for the condition to match.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.developing-auto-configuration.condition-annotations.resource-conditions"><a class="anchor" href="#features.developing-auto-configuration.condition-annotations.resource-conditions"></a>Resource Conditions</h3>
+<div class="paragraph">
+<p>The <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnResource.html" class="apiref"><code>@ConditionalOnResource</code></a> annotation lets configuration be included only when a specific resource is present.
+Resources can be specified by using the usual Spring conventions, as shown in the following example: <code>file:/home/user/test.dat</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.developing-auto-configuration.condition-annotations.web-application-conditions"><a class="anchor" href="#features.developing-auto-configuration.condition-annotations.web-application-conditions"></a>Web Application Conditions</h3>
+<div class="paragraph">
+<p>The <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnWebApplication.html" class="apiref"><code>@ConditionalOnWebApplication</code></a> and <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnNotWebApplication.html" class="apiref"><code>@ConditionalOnNotWebApplication</code></a> annotations let configuration be included depending on whether the application is a web application.
+A servlet-based web application is any application that uses a Spring <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/context/WebApplicationContext.html" class="apiref"><code>WebApplicationContext</code></a>, defines a <code>session</code> scope, or has a <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/context/ConfigurableWebEnvironment.html" class="apiref"><code>ConfigurableWebEnvironment</code></a>.
+A reactive web application is any application that uses a <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/web/context/reactive/ReactiveWebApplicationContext.html" class="apiref"><code>ReactiveWebApplicationContext</code></a>, or has a <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/web/context/reactive/ConfigurableReactiveWebEnvironment.html" class="apiref"><code>ConfigurableReactiveWebEnvironment</code></a>.</p>
+</div>
+<div class="paragraph">
+<p>The <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnWarDeployment.html" class="apiref"><code>@ConditionalOnWarDeployment</code></a> and <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnNotWarDeployment.html" class="apiref"><code>@ConditionalOnNotWarDeployment</code></a> annotations let configuration be included depending on whether the application is a traditional WAR application that is deployed to a servlet container.
+This condition will not match for applications that are run with an embedded web server.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.developing-auto-configuration.condition-annotations.spel-conditions"><a class="anchor" href="#features.developing-auto-configuration.condition-annotations.spel-conditions"></a>SpEL Expression Conditions</h3>
+<div class="paragraph">
+<p>The <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnExpression.html" class="apiref"><code>@ConditionalOnExpression</code></a> annotation lets configuration be included based on the result of a <a href="https://docs.spring.io/spring-framework/reference/7.0/core/expressions.html">SpEL expression</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Referencing a bean in the expression will cause that bean to be initialized very early in context refresh processing.
+As a result, the bean won&#8217;t be eligible for post-processing (such as configuration properties binding) and its state may be incomplete.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.developing-auto-configuration.testing"><a class="anchor" href="#features.developing-auto-configuration.testing"></a>Testing your Auto-configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An auto-configuration can be affected by many factors: user configuration (<code>@Bean</code> definition and <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a> customization), condition evaluation (presence of a particular library), and others.
+Concretely, each test should create a well defined <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html" class="apiref"><code>ApplicationContext</code></a> that represents a combination of those customizations.
+<a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/runner/ApplicationContextRunner.html" class="apiref"><code>ApplicationContextRunner</code></a> provides a great way to achieve that.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/runner/ApplicationContextRunner.html" class="apiref"><code>ApplicationContextRunner</code></a> doesn&#8217;t work when running the tests in a native image.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/runner/ApplicationContextRunner.html" class="apiref"><code>ApplicationContextRunner</code></a> is usually defined as a field of the test class to gather the base, common configuration.
+The following example makes sure that <code>MyServiceAutoConfiguration</code> is always invoked:</p>
+</div>
+<div id="_tabs_3" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_3_java" class="tab">
+<p>Java</p>
+</li>
+<li id="_tabs_3_kotlin" class="tab">
+<p>Kotlin</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_3_java--panel" class="tabpanel" aria-labelledby="_tabs_3_java">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">	private final ApplicationContextRunner contextRunner = new ApplicationContextRunner()
+		.withConfiguration(AutoConfigurations.of(MyServiceAutoConfiguration.class));</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_3_kotlin--panel" class="tabpanel" aria-labelledby="_tabs_3_kotlin">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">	val contextRunner = ApplicationContextRunner()
+		.withConfiguration(AutoConfigurations.of(MyServiceAutoConfiguration::class.java))</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If multiple auto-configurations have to be defined, there is no need to order their declarations as they are invoked in the exact same order as when running the application.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Each test can use the runner to represent a particular use case.
+For instance, the sample below invokes a user configuration (<code>UserConfiguration</code>) and checks that the auto-configuration backs off properly.
+Invoking <code>run</code> provides a callback context that can be used with AssertJ.</p>
+</div>
+<div id="_tabs_4" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_4_java" class="tab">
+<p>Java</p>
+</li>
+<li id="_tabs_4_kotlin" class="tab">
+<p>Kotlin</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_4_java--panel" class="tabpanel" aria-labelledby="_tabs_4_java">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">	@Test
+	void defaultServiceBacksOff() {
+		this.contextRunner.withUserConfiguration(UserConfiguration.class).run((context) -&gt; {
+			assertThat(context).hasSingleBean(MyService.class);
+			assertThat(context).getBean("myCustomService").isSameAs(context.getBean(MyService.class));
+		});
+	}
+
+	@Configuration(proxyBeanMethods = false)
+	static class UserConfiguration {
+
+		@Bean
+		MyService myCustomService() {
+			return new MyService("mine");
+		}
+
+	}</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_4_kotlin--panel" class="tabpanel" aria-labelledby="_tabs_4_kotlin">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">	@Test
+	fun defaultServiceBacksOff() {
+		contextRunner.withUserConfiguration(UserConfiguration::class.java)
+			.run { context: AssertableApplicationContext -&gt;
+				assertThat(context).hasSingleBean(MyService::class.java)
+				assertThat(context).getBean("myCustomService")
+					.isSameAs(context.getBean(MyService::class.java))
+			}
+	}
+
+	@Configuration(proxyBeanMethods = false)
+	internal class UserConfiguration {
+
+		@Bean
+		fun myCustomService(): MyService {
+			return MyService("mine")
+		}
+
+	}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>It is also possible to easily customize the <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a>, as shown in the following example:</p>
+</div>
+<div id="_tabs_5" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_5_java" class="tab">
+<p>Java</p>
+</li>
+<li id="_tabs_5_kotlin" class="tab">
+<p>Kotlin</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_5_java--panel" class="tabpanel" aria-labelledby="_tabs_5_java">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">	@Test
+	void serviceNameCanBeConfigured() {
+		this.contextRunner.withPropertyValues("user.name=test123").run((context) -&gt; {
+			assertThat(context).hasSingleBean(MyService.class);
+			assertThat(context.getBean(MyService.class).getName()).isEqualTo("test123");
+		});
+	}</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_5_kotlin--panel" class="tabpanel" aria-labelledby="_tabs_5_kotlin">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">	@Test
+	fun serviceNameCanBeConfigured() {
+		contextRunner.withPropertyValues("user.name=test123").run { context: AssertableApplicationContext -&gt;
+			assertThat(context).hasSingleBean(MyService::class.java)
+			assertThat(context.getBean(MyService::class.java).name).isEqualTo("test123")
+		}
+	}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The runner can also be used to display the <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionEvaluationReport.html" class="apiref"><code>ConditionEvaluationReport</code></a>.
+The report can be printed at <code>INFO</code> or <code>DEBUG</code> level.
+The following example shows how to use the <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/logging/ConditionEvaluationReportLoggingListener.html" class="apiref"><code>ConditionEvaluationReportLoggingListener</code></a> to print the report in auto-configuration tests.</p>
+</div>
+<div id="_tabs_6" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_6_java" class="tab">
+<p>Java</p>
+</li>
+<li id="_tabs_6_kotlin" class="tab">
+<p>Kotlin</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_6_java--panel" class="tabpanel" aria-labelledby="_tabs_6_java">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java"><span class="fold-block is-hidden-folded">import org.junit.jupiter.api.Test;
+
+import org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener;
+import org.springframework.boot.logging.LogLevel;
+import org.springframework.boot.test.context.runner.ApplicationContextRunner;
+
+</span><span class="fold-block">class MyConditionEvaluationReportingTests {
+
+	@Test
+	void autoConfigTest() {
+		new ApplicationContextRunner()
+			.withInitializer(ConditionEvaluationReportLoggingListener.forLogLevel(LogLevel.INFO))
+			.run((context) -&gt; {
+				// Test something...
+			});
+	}
+
+}</span></code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_6_kotlin--panel" class="tabpanel" aria-labelledby="_tabs_6_kotlin">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin"><span class="fold-block is-hidden-folded">import org.junit.jupiter.api.Test
+import org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener
+import org.springframework.boot.logging.LogLevel
+import org.springframework.boot.test.context.assertj.AssertableApplicationContext
+import org.springframework.boot.test.context.runner.ApplicationContextRunner
+
+</span><span class="fold-block">class MyConditionEvaluationReportingTests {
+
+	@Test
+	fun autoConfigTest() {
+		ApplicationContextRunner()
+			.withInitializer(ConditionEvaluationReportLoggingListener.forLogLevel(LogLevel.INFO))
+			.run { context: AssertableApplicationContext? -&gt;
+				// Test something...
+			}
+	}
+
+}</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.developing-auto-configuration.testing.simulating-a-web-context"><a class="anchor" href="#features.developing-auto-configuration.testing.simulating-a-web-context"></a>Simulating a Web Context</h3>
+<div class="paragraph">
+<p>If you need to test an auto-configuration that only operates in a servlet or reactive web application context, use the <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/runner/WebApplicationContextRunner.html" class="apiref"><code>WebApplicationContextRunner</code></a> or <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/runner/ReactiveWebApplicationContextRunner.html" class="apiref"><code>ReactiveWebApplicationContextRunner</code></a> respectively.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.developing-auto-configuration.testing.overriding-classpath"><a class="anchor" href="#features.developing-auto-configuration.testing.overriding-classpath"></a>Overriding the Classpath</h3>
+<div class="paragraph">
+<p>It is also possible to test what happens when a particular class and/or package is not present at runtime.
+Spring Boot ships with a <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/FilteredClassLoader.html" class="apiref"><code>FilteredClassLoader</code></a> that can easily be used by the runner.
+In the following example, we assert that if <code>MyService</code> is not present, the auto-configuration is properly disabled:</p>
+</div>
+<div id="_tabs_7" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_7_java" class="tab">
+<p>Java</p>
+</li>
+<li id="_tabs_7_kotlin" class="tab">
+<p>Kotlin</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_7_java--panel" class="tabpanel" aria-labelledby="_tabs_7_java">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">	@Test
+	void serviceIsIgnoredIfLibraryIsNotPresent() {
+		this.contextRunner.withClassLoader(new FilteredClassLoader(MyService.class))
+			.run((context) -&gt; assertThat(context).doesNotHaveBean("myService"));
+	}</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_7_kotlin--panel" class="tabpanel" aria-labelledby="_tabs_7_kotlin">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin">	@Test
+	fun serviceIsIgnoredIfLibraryIsNotPresent() {
+		contextRunner.withClassLoader(FilteredClassLoader(MyService::class.java))
+			.run { context: AssertableApplicationContext? -&gt;
+				assertThat(context).doesNotHaveBean("myService")
+			}
+	}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.developing-auto-configuration.custom-starter"><a class="anchor" href="#features.developing-auto-configuration.custom-starter"></a>Creating Your Own Starter</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>A typical Spring Boot starter contains code to auto-configure and customize the infrastructure of a given technology, let&#8217;s call that "acme".
+To make it easily extensible, a number of configuration keys in a dedicated namespace can be exposed to the environment.
+Finally, a single "starter" dependency is provided to help users get started as easily as possible.</p>
+</div>
+<div class="paragraph">
+<p>Concretely, a custom starter can contain the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>acme-spring-boot</code> module that contains the auto-configuration code for "acme" as well as any API to use the feature.</p>
+</li>
+<li>
+<p>The <code>acme-spring-boot-starter</code> module that provides a dependency to the other starters required by "acme", <code>acme-spring-boot</code>, and potentially additional dependencies that are typically useful.
+In a nutshell, adding the starter should provide everything needed to start using that library.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This separation in two modules is in no way necessary.
+If "acme" has several flavors, options or optional features, then it is better to separate the auto-configuration as you can clearly express the fact some features are optional.
+Besides, you have the ability to craft a starter that provides an opinion about those optional dependencies.
+At the same time, others can rely only on <code>acme-spring-boot</code> and craft their own starter with different opinions.</p>
+</div>
+<div class="paragraph">
+<p>If the auto-configuration is relatively straightforward and does not have optional features, merging the two modules in the starter is definitely an option.</p>
+</div>
+<div class="paragraph">
+<p>If "acme" has a basic set of dependencies that are required to work, but you want to express a more opinionated view, then having a separate starter is a good option.</p>
+</div>
+<div class="paragraph">
+<p>When testing "acme" features, you may need test-specific auto-configurations.
+For example, you could offer a way to replace external dependencies with in-memory alternatives.
+A separate test-scoped starter can be created for this purpose, following the same principles.</p>
+</div>
+<div class="sect2">
+<h3 id="features.developing-auto-configuration.custom-starter.naming"><a class="anchor" href="#features.developing-auto-configuration.custom-starter.naming"></a>Naming</h3>
+<div class="paragraph">
+<p>You should make sure to provide a proper namespace for your starter.
+Do not start your module names with <code>spring-boot</code>, even if you use a different Maven <code>groupId</code>.
+We may offer official support for the thing you auto-configure in the future.</p>
+</div>
+<div class="paragraph">
+<p>As a rule of thumb, you should name a combined module after the starter.
+For example, assume that you are creating a starter for "acme" and that you name the auto-configure module <code>acme-spring-boot</code> and the starter <code>acme-spring-boot-starter</code>.
+If you only have one module that combines the two, name it <code>acme-spring-boot-starter</code>.</p>
+</div>
+<div class="paragraph">
+<p>If "acme" also has a test-scoped starter, name it <code>acme-spring-boot-starter-test</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.developing-auto-configuration.custom-starter.configuration-keys"><a class="anchor" href="#features.developing-auto-configuration.custom-starter.configuration-keys"></a>Configuration keys</h3>
+<div class="paragraph">
+<p>If your starter provides configuration keys, use a unique namespace for them.
+In particular, do not include your keys in the namespaces that Spring Boot uses (such as <code>server</code>, <code>management</code>, <code>spring</code>, and so on).
+If you use the same namespace, we may modify these namespaces in the future in ways that break your modules.
+As a rule of thumb, prefix all your keys with a namespace that you own (for example <code>acme</code>).</p>
+</div>
+<div class="paragraph">
+<p>Make sure that configuration keys are documented by adding field Javadoc for each property, as shown in the following example:</p>
+</div>
+<div id="_tabs_8" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_8_java" class="tab">
+<p>Java</p>
+</li>
+<li id="_tabs_8_kotlin" class="tab">
+<p>Kotlin</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_8_java--panel" class="tabpanel" aria-labelledby="_tabs_8_java">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java"><span class="fold-block is-hidden-folded">import java.time.Duration;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+</span><span class="fold-block">@ConfigurationProperties("acme")
+public class AcmeProperties {
+
+	/**
+	 * Whether to check the location of acme resources.
+	 */
+	private boolean checkLocation = true;
+
+	/**
+	 * Timeout for establishing a connection to the acme server.
+	 */
+	private Duration loginTimeout = Duration.ofSeconds(3);
+
+</span><span class="fold-block is-hidden-unfolded">	// getters/setters ...
+
+</span><span class="fold-block is-hidden-folded">	public boolean isCheckLocation() {
+		return this.checkLocation;
+	}
+
+	public void setCheckLocation(boolean checkLocation) {
+		this.checkLocation = checkLocation;
+	}
+
+	public Duration getLoginTimeout() {
+		return this.loginTimeout;
+	}
+
+	public void setLoginTimeout(Duration loginTimeout) {
+		this.loginTimeout = loginTimeout;
+	}
+
+</span><span class="fold-block">}</span></code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_8_kotlin--panel" class="tabpanel" aria-labelledby="_tabs_8_kotlin">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin"><span class="fold-block is-hidden-folded">import org.springframework.boot.context.properties.ConfigurationProperties
+import java.time.Duration
+
+</span><span class="fold-block">@ConfigurationProperties("acme")
+class AcmeProperties(
+
+	/**
+	 * Whether to check the location of acme resources.
+	 */
+	var isCheckLocation: Boolean = true,
+
+	/**
+	 * Timeout for establishing a connection to the acme server.
+	 */
+	var loginTimeout:Duration = Duration.ofSeconds(3))</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You should only use plain text with <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/ConfigurationProperties.html" class="apiref"><code>@ConfigurationProperties</code></a> field Javadoc, since they are not processed before being added to the JSON.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If you use <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/ConfigurationProperties.html" class="apiref"><code>@ConfigurationProperties</code></a> with record class then record components' descriptions should be provided via class-level Javadoc tag <code>@param</code> (there are no explicit instance fields in record classes to put regular field-level Javadocs on).</p>
+</div>
+<div class="paragraph">
+<p>Here are some rules we follow internally to make sure descriptions are consistent:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Do not start the description by "The" or "A".</p>
+</li>
+<li>
+<p>For <code>boolean</code> types, start the description with "Whether" or "Enable".</p>
+</li>
+<li>
+<p>For collection-based types, start the description with "Comma-separated list"</p>
+</li>
+<li>
+<p>Use <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html" class="apiref"><code>Duration</code></a> rather than <code>long</code> and describe the default unit if it differs from milliseconds, such as "If a duration suffix is not specified, seconds will be used".</p>
+</li>
+<li>
+<p>Do not provide the default value in the description unless it has to be determined at runtime.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Make sure to <a href="../../specification/configuration-metadata/annotation-processor.html" class="xref page">trigger meta-data generation</a> so that IDE assistance is available for your keys as well.
+You may want to review the generated metadata (<code>META-INF/spring-configuration-metadata.json</code>) to make sure your keys are properly documented.
+Using your own starter in a compatible IDE is also a good idea to validate that quality of the metadata.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.developing-auto-configuration.custom-starter.autoconfigure-module"><a class="anchor" href="#features.developing-auto-configuration.custom-starter.autoconfigure-module"></a>The &#8220;autoconfigure&#8221; Module</h3>
+<div class="paragraph">
+<p>The <code>autoconfigure</code> module contains everything that is necessary to get started with the library.
+It may also contain configuration key definitions (such as <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/ConfigurationProperties.html" class="apiref"><code>@ConfigurationProperties</code></a>) and any callback interface that can be used to further customize how the components are initialized.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+You should mark the dependencies to the library as optional so that you can include the <code>autoconfigure</code> module in your projects more easily.
+If you do it that way, the library is not provided and, by default, Spring Boot backs off.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Spring Boot uses an annotation processor to collect the conditions on auto-configurations in a metadata file (<code>META-INF/spring-autoconfigure-metadata.properties</code>).
+If that file is present, it is used to eagerly filter auto-configurations that do not match, which will improve startup time.</p>
+</div>
+<div class="paragraph">
+<p>When building with Maven, configure the compiler plugin (3.12.0 or later) to add <code>spring-boot-autoconfigure-processor</code> to the annotation processor paths:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;project&gt;
+	&lt;build&gt;
+		&lt;plugins&gt;
+			&lt;plugin&gt;
+				&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+				&lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+				&lt;configuration&gt;
+					&lt;annotationProcessorPaths&gt;
+						&lt;path&gt;
+							&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+							&lt;artifactId&gt;spring-boot-autoconfigure-processor&lt;/artifactId&gt;
+						&lt;/path&gt;
+					&lt;/annotationProcessorPaths&gt;
+				&lt;/configuration&gt;
+			&lt;/plugin&gt;
+		&lt;/plugins&gt;
+	&lt;/build&gt;
+&lt;/project&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With Gradle, the dependency should be declared in the <code>annotationProcessor</code> configuration, as shown in the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-gradle hljs" data-lang="gradle">dependencies {
+	annotationProcessor "org.springframework.boot:spring-boot-autoconfigure-processor"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.developing-auto-configuration.custom-starter.starter-module"><a class="anchor" href="#features.developing-auto-configuration.custom-starter.starter-module"></a>Starter Module</h3>
+<div class="paragraph">
+<p>The starter is really an empty jar.
+Its only purpose is to provide the necessary dependencies to work with the library.
+You can think of it as an opinionated view of what is required to get started.</p>
+</div>
+<div class="paragraph">
+<p>Do not make assumptions about the project in which your starter is added.
+If the library you are auto-configuring typically requires other starters, mention them as well.
+Providing a proper set of <em>default</em> dependencies may be hard if the number of optional dependencies is high, as you should avoid including dependencies that are unnecessary for a typical usage of the library.
+In other words, you should not include optional dependencies.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Either way, your starter must reference the core Spring Boot starter (<code>spring-boot-starter</code>) directly or indirectly (there is no need to add it if your starter relies on another starter).
+If a project is created with only your custom starter, Spring Boot&#8217;s core features will be honoured by the presence of the core starter.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="dev-services.html">Development-time Services</a></span>
+  <span class="next"><a href="kotlin.html">Kotlin Support</a></span>
+</nav>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+              <div class="colset">
+                <div class="col-left">
+
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../../index.html">Spring Boot</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Stable
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="developing-auto-configuration.html">
+      4.1.1
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../4.0/reference/features/developing-auto-configuration.html">
+      4.0.8
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../3.5/reference/features/developing-auto-configuration.html">
+      3.5.16
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../3.4/reference/features/developing-auto-configuration.html">
+      3.4.13
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../3.3/reference/features/developing-auto-configuration.html">
+      3.3.13
+    </a>
+  </li>
+</ul>                        </div>
+                        <div class="version-item">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Preview
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../../4.2/reference/features/developing-auto-configuration.html">
+      4.2.0-M2
+    </a>
+  </li>
+</ul>                        </div>
+                        <div class="version-item">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Snapshot
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../../4.2-SNAPSHOT/reference/features/developing-auto-configuration.html">
+      4.2.0-SNAPSHOT
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../4.0-SNAPSHOT/reference/features/developing-auto-configuration.html">
+      4.0.10-SNAPSHOT
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+                </div>
+                <div class="col-right">
+                  <ul class="projects">
+  <li>
+    Related Spring Documentation
+    <ul class="projects-list">
+        <li>
+<a href="https://docs.spring.io/spring-boot/">
+  Spring Boot
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-framework/reference/">
+  Spring Framework
+</a>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+  Spring Cloud
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-build/reference/">
+  Spring Cloud Build
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-bus/reference/">
+  Spring Cloud Bus
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-circuitbreaker/reference/">
+  Spring Cloud Circuit Breaker
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-commons/reference/">
+  Spring Cloud Commons
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-config/reference/">
+  Spring Cloud Config
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-consul/reference/">
+  Spring Cloud Consul
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-contract/reference/">
+  Spring Cloud Contract
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-function/reference/">
+  Spring Cloud Function
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-gateway/reference/">
+  Spring Cloud Gateway
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-kubernetes/reference/">
+  Spring Cloud Kubernetes
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-netflix/reference/">
+  Spring Cloud Netflix
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-openfeign/reference/">
+  Spring Cloud OpenFeign
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-stream/reference/">
+  Spring Cloud Stream
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-task/reference/">
+  Spring Cloud Task
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-vault/reference/">
+  Spring Cloud Vault
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-zookeeper/reference/">
+  Spring Cloud Zookeeper
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+  Spring Data
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-data/cassandra/reference/">
+  Spring Data Cassandra
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/commons/reference/">
+  Spring Data Commons
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/couchbase/reference/">
+  Spring Data Couchbase
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/elasticsearch/reference/">
+  Spring Data Elasticsearch
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/jpa/reference/">
+  Spring Data JPA
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/keyvalue/reference/">
+  Spring Data KeyValue
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/ldap/reference/">
+  Spring Data LDAP
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/mongodb/reference/">
+  Spring Data MongoDB
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/neo4j/reference/">
+  Spring Data Neo4j
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/redis/reference/">
+  Spring Data Redis
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/relational/reference/">
+  Spring Data JDBC &amp; R2DBC
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/rest/reference/">
+  Spring Data REST
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-integration/reference/">
+  Spring Integration
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-batch/reference/">
+  Spring Batch
+</a>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+<a href="https://docs.spring.io/spring-security/reference/">
+  Spring Security
+</a>
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-authorization-server/reference/">
+  Spring Authorization Server
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-ldap/reference/">
+  Spring LDAP
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-security-kerberos/reference/">
+  Spring Security Kerberos
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-session/reference/">
+  Spring Session
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-vault/reference/">
+  Spring Vault
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-ai/reference/">
+  Spring AI
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-amqp/reference/">
+  Spring AMQP
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-cli/reference/">
+  Spring CLI
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-graphql/reference/">
+  Spring GraphQL
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-kafka/reference/">
+  Spring for Apache Kafka
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-modulith/reference/">
+  Spring Modulith
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-pulsar/reference/">
+  Spring for Apache Pulsar
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-shell/reference/">
+  Spring Shell
+</a>
+</li>
+    </ul>
+  </li
+  <li><a href="../../spring-projects.html">All Docs...</a></li>
+</ul>
+                </div>
+              </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="spring-links flex">
+        <img id="springlogo" src="../../_/img/spring-logo.svg" alt="Spring">
+        <p class="smallest antialiased">Copyright © 2005 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> Broadcom. All Rights Reserved. The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.<br /><a href="https://www.vmware.com/help/legal.html">Terms of Use</a> • <a href="https://www.vmware.com/help/privacy.html" rel="noopener noreferrer">Privacy</a> • <a href="https://spring.io/trademarks">Trademark Guidelines</a> <span id="thank-you-mobile">• <a href="https://spring.io/thank-you">Thank you</a></span> • <a href="https://www.vmware.com/help/privacy/california-privacy-rights.html">Your California Privacy Rights</a> • <a class="ot-sdk-show-settings">Cookie Settings</a> <span id="teconsent"></span></p>
+        <p class="smallest antialiased has-gray-text">Apache®, Apache Tomcat®, Apache Kafka®, Apache Cassandra&trade;, and Apache Geode&trade; are trademarks or registered trademarks of the Apache Software Foundation in the United States and/or other countries. Java&trade;, Java&trade; SE, Java&trade; EE, and OpenJDK&trade; are trademarks of Oracle and/or its affiliates. Kubernetes® is a registered trademark of the Linux Foundation in the United States and other countries. Linux® is the registered trademark of Linus Torvalds in the United States and other countries. Windows® and Microsoft® Azure are registered trademarks of Microsoft Corporation. “AWS” and “Amazon Web Services” are trademarks or registered trademarks of Amazon.com Inc. or its affiliates. All other trademarks and copyrights are property of their respective owners and are only mentioned for informative purposes. Other names may be trademarks of their respective owners.</p>
+    </div>
+    <div id="social-icons" class="flex jc-between">
+        <a href="https://www.youtube.com/user/SpringSourceDev" title="Youtube"><svg id="youtube-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle class="cls-1" cx="20" cy="20" r="20"/><path class="cls-2" d="M30.91,14.53a2.89,2.89,0,0,0-2-2C27.12,12,20,12,20,12s-7.12,0-8.9.47a2.9,2.9,0,0,0-2,2A30.56,30.56,0,0,0,8.63,20a30.44,30.44,0,0,0,.46,5.47,2.89,2.89,0,0,0,2,2C12.9,28,20,28,20,28s7.12,0,8.9-.47a2.87,2.87,0,0,0,2-2A30.56,30.56,0,0,0,31.37,20,28.88,28.88,0,0,0,30.91,14.53ZM17.73,23.41V16.59L23.65,20Z"/></svg></a>
+        <a href="https://github.com/spring-projects" title="GitHub"><svg id="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><path class="cls-1" d="M38,0a38,38,0,1,0,38,38A38,38,0,0,0,38,0Z"/></g><path class="cls-2" d="M38,15.59A22.95,22.95,0,0,0,30.71,60.3c1.15.21,1.57-.5,1.57-1.11s0-2,0-3.9c-6.38,1.39-7.73-3.07-7.73-3.07A6.09,6.09,0,0,0,22,48.86c-2.09-1.42.15-1.39.15-1.39a4.81,4.81,0,0,1,3.52,2.36c2,3.5,5.37,2.49,6.67,1.91a4.87,4.87,0,0,1,1.46-3.07c-5.09-.58-10.45-2.55-10.45-11.34a8.84,8.84,0,0,1,2.36-6.15,8.29,8.29,0,0,1,.23-6.07s1.92-.62,6.3,2.35a21.82,21.82,0,0,1,11.49,0c4.38-3,6.3-2.35,6.3-2.35a8.29,8.29,0,0,1,.23,6.07,8.84,8.84,0,0,1,2.36,6.15c0,8.81-5.37,10.75-10.48,11.32a5.46,5.46,0,0,1,1.56,4.25c0,3.07,0,5.54,0,6.29s.42,1.33,1.58,1.1A22.94,22.94,0,0,0,38,15.59Z"/></svg></a>
+        <a href="https://twitter.com/springcentral" title="Twitter"><svg id="twitter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><circle class="cls-1" cx="37.97" cy="37.97" r="37.97"/><path id="Twitter-2" data-name="Twitter" class="cls-2" d="M55.2,22.73a15.43,15.43,0,0,1-4.88,1.91,7.56,7.56,0,0,0-5.61-2.49A7.78,7.78,0,0,0,37,30a7.56,7.56,0,0,0,.2,1.79,21.63,21.63,0,0,1-15.84-8.23,8,8,0,0,0,2.37,10.52,7.66,7.66,0,0,1-3.48-1v.09A7.84,7.84,0,0,0,26.45,41a7.54,7.54,0,0,1-2,.28A7.64,7.64,0,0,1,23,41.09a7.71,7.71,0,0,0,7.18,5.47,15.21,15.21,0,0,1-9.55,3.37,15.78,15.78,0,0,1-1.83-.11,21.41,21.41,0,0,0,11.78,3.54c14.13,0,21.86-12,21.86-22.42,0-.34,0-.68,0-1a15.67,15.67,0,0,0,3.83-4.08,14.9,14.9,0,0,1-4.41,1.24A7.8,7.8,0,0,0,55.2,22.73Z"/></svg></a>
+    </div>
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/asciidoctor-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+
+<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <main class="modal__content" id="modal-1-content">
+                <div id="searchbox"></div>
+                <div id="counter"></div>
+                <div class="search-link-box">
+                    <a class="search-link" href="../../search.html">Search in all Spring Docs</a>
+                </div>
+                <div class="search-by">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/" aria-label="Search by Algolia">
+                        <img class="light" width="140" src="../../_/img/algolia-light.svg" />
+                        <img class="dark" width="140" src="../../_/img/algolia-dark.svg" />
+                    </a>
+                </div>
+                <div id="hits"></div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<script src="../../_/js/vendor/hotkeys.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.17.0/dist/algoliasearch-lite.umd.js" integrity="sha256-Lf9DrpGmcRip6OQzbcL6lnvNmoZNSKpyQX5pMlwatWE=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.54.1/dist/instantsearch.production.min.js" integrity="sha256-xYsZPDeNjYNTBWLvqD2Lxe98hOxcDgOHyMPfz4tVAbk=" crossorigin="anonymous"></script>
+<script async id="search-script" src="../../_/js/vendor/search.js" data-app-id="WB1FQYI187" data-api-key="c2e84f15fa630d534f1c62b1c413bb77" data-index-name="springdocs" data-stylesheet="../../_/css/vendor/search.css" data-page-version="4.1.1" data-page-generation="4.1" data-page-component="boot"></script>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"bffcb8a918ae4755926f76178bfbd26b","spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>

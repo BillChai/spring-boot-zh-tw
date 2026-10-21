@@ -1,0 +1,8 @@
+[
+  "```kotlin\nimport jakarta.jms.ConnectionFactory\n\nclass MyBean(connectionFactory: ConnectionFactory?)\n```",
+  "```java\nimport jakarta.jms.ConnectionFactory;\n\npublic class MyBean {\n\n\tpublic MyBean(ConnectionFactory connectionFactory) {\n\t\t// ...\n\t}\n\n}\n```",
+  "```kotlin\nimport jakarta.jms.ConnectionFactory\nimport org.springframework.beans.factory.annotation.Qualifier\n\nclass MyBean(@Qualifier(\"nonXaJmsConnectionFactory\") connectionFactory: ConnectionFactory?)\n```",
+  "```java\nimport jakarta.jms.ConnectionFactory;\n\nimport org.springframework.beans.factory.annotation.Qualifier;\n\npublic class MyBean {\n\n\tpublic MyBean(@Qualifier(\"nonXaJmsConnectionFactory\") ConnectionFactory connectionFactory) {\n\t\t// ...\n\t}\n\n}\n```",
+  "```kotlin\nimport jakarta.jms.ConnectionFactory\nimport org.springframework.beans.factory.annotation.Qualifier\n\nclass MyBean(@Qualifier(\"xaJmsConnectionFactory\") connectionFactory: ConnectionFactory?)\n```",
+  "```java\nimport jakarta.jms.ConnectionFactory;\n\nimport org.springframework.beans.factory.annotation.Qualifier;\n\npublic class MyBean {\n\n\tpublic MyBean(@Qualifier(\"xaJmsConnectionFactory\") ConnectionFactory connectionFactory) {\n\t\t// ...\n\t}\n\n}\n```"
+]

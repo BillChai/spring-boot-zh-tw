@@ -1,0 +1,107 @@
+{
+  "page": "boot/actuator--tracing.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/actuator/tracing.html",
+  "version": "4.1.1",
+  "html_sha256": "7bcf63acf66f2e0c01d6d48fee53ffd4ae0d5a25fbdc5521f0af9ed142e1c82f",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import org.apache.commons.logging.Log\nimport org.apache.commons.logging.LogFactory\nimport org.springframework.boot.autoconfigure.SpringBootApplication\nimport org.springframework.boot.runApplication\nimport org.springframework.web.bind.annotation.RequestMapping\nimport org.springframework.web.bind.annotation.RestController\n\n@RestController\n@SpringBootApplication\nclass MyApplication {\n\n\tprivate val logger: Log = LogFactory.getLog(MyApplication::class.java)\n\n\t@RequestMapping(\"/\")\n\tfun home(): String {\n\t\tlogger.info(\"home() has been called\")\n\t\treturn \"Hello, World!\"\n\t}\n\n}\n\nfun main(args: Array<String>) {\n\trunApplication<MyApplication>(*args)\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.apache.commons.logging.Log;\nimport org.apache.commons.logging.LogFactory;\n\nimport org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\nimport org.springframework.web.bind.annotation.RequestMapping;\nimport org.springframework.web.bind.annotation.RestController;\n\n@RestController\n@SpringBootApplication\npublic class MyApplication {\n\n\tprivate static final Log logger = LogFactory.getLog(MyApplication.class);\n\n\t@RequestMapping(\"/\")\n\tString home() {\n\t\tlogger.info(\"home() has been called\");\n\t\treturn \"Hello World!\";\n\t}\n\n\tpublic static void main(String[] args) {\n\t\tSpringApplication.run(MyApplication.class, args);\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "management.tracing.sampling.probability=1"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  tracing:\n    sampling:\n      probability: 1.0"
+    },
+    {
+      "language": "text",
+      "text": "Hello World!"
+    },
+    {
+      "language": "properties",
+      "text": "logging.pattern.correlation=[${spring.application.name:},%X{traceId:-},%X{spanId:-}] \nlogging.include-application-name=false"
+    },
+    {
+      "language": "yaml",
+      "text": "logging:\n  pattern:\n    correlation: \"[${spring.application.name:},%X{traceId:-},%X{spanId:-}] \"\n  include-application-name: false"
+    },
+    {
+      "language": "properties",
+      "text": "management.opentelemetry.tracing.limits.max-attributes=64\nmanagement.opentelemetry.tracing.limits.max-attribute-value-length=256"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  opentelemetry:\n    tracing:\n      limits:\n        max-attributes: 64\n        max-attribute-value-length: 256"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.micrometer.observation.Observation\nimport io.micrometer.observation.ObservationRegistry\nimport org.springframework.stereotype.Component\n\n@Component\nclass CustomObservation(private val observationRegistry: ObservationRegistry) {\n\n\tfun someOperation() {\n\t\tObservation.createNotStarted(\"some-operation\", observationRegistry)\n\t\t\t.lowCardinalityKeyValue(\"some-tag\", \"some-value\")\n\t\t\t.observe {\n\t\t\t\t// Business logic ...\n\t\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.micrometer.observation.Observation;\nimport io.micrometer.observation.ObservationRegistry;\n\nimport org.springframework.stereotype.Component;\n\n@Component\nclass CustomObservation {\n\n\tprivate final ObservationRegistry observationRegistry;\n\n\tCustomObservation(ObservationRegistry observationRegistry) {\n\t\tthis.observationRegistry = observationRegistry;\n\t}\n\n\tvoid someOperation() {\n\t\tObservation observation = Observation.createNotStarted(\"some-operation\", this.observationRegistry);\n\t\tobservation.lowCardinalityKeyValue(\"some-tag\", \"some-value\");\n\t\tobservation.observe(() -> {\n\t\t\t// Business logic ...\n\t\t});\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.micrometer.tracing.Tracer\nimport org.springframework.stereotype.Component\n\n@Component\nclass CreatingBaggage(private val tracer: Tracer) {\n\n\tfun doSomething() {\n\t\ttracer.createBaggageInScope(\"baggage1\", \"value1\").use {\n\t\t\t// Business logic\n\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.micrometer.tracing.BaggageInScope;\nimport io.micrometer.tracing.Tracer;\n\nimport org.springframework.stereotype.Component;\n\n@Component\nclass CreatingBaggage {\n\n\tprivate final Tracer tracer;\n\n\tCreatingBaggage(Tracer tracer) {\n\t\tthis.tracer = tracer;\n\t}\n\n\tvoid doSomething() {\n\t\ttry (BaggageInScope scope = this.tracer.createBaggageInScope(\"baggage1\", \"value1\")) {\n\t\t\t// Business logic\n\t\t}\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Tracing",
+    "Supported Tracers",
+    "Getting Started",
+    "Logging Correlation IDs",
+    "Propagating Traces",
+    "Tracer Implementations",
+    "OpenTelemetry With OTLP",
+    "OpenTelemetry With Zipkin",
+    "OpenZipkin Brave With Zipkin",
+    "Sampling",
+    "Span Limits",
+    "Integration with Micrometer Observation",
+    "Creating Custom Spans",
+    "Baggage",
+    "Tests"
+  ],
+  "links": {
+    "https://docs.micrometer.io/tracing/reference/1.7": "r1",
+    "https://opentelemetry.io/": "r2",
+    "https://opentelemetry.io/docs/reference/specification/protocol/": "r3",
+    "https://github.com/openzipkin/brave": "r4",
+    "https://zipkin.io/": "r5",
+    "https://docs.spring.io/spring-boot/4.1/tutorial/first-application/index.html": "r6",
+    "https://zipkin.io/pages/quickstart": "r7",
+    "http://localhost:8080": "r8",
+    "http://localhost:9411": "r9",
+    "https://logback.qos.ch/manual/mdc.html": "r10",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/observability.html#actuator.observability.context-propagation": "r11",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/rest-client.html#io.rest-client.resttemplate": "r12",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/rest-client.html#io.rest-client.restclient": "r13",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/rest-client.html#io.rest-client.webclient": "r14",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/client/RestTemplate.html": "r15",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/client/RestClient.html": "r16",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/function/client/WebClient.html": "r17",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/tracing/opentelemetry/autoconfigure/otlp/OtlpHttpSpanExporterBuilderCustomizer.html": "r18",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/tracing/opentelemetry/autoconfigure/otlp/OtlpGrpcSpanExporterBuilderCustomizer.html": "r19",
+    "https://opentelemetry.io/docs/specs/otel/trace/sdk_exporters/zipkin/": "r20",
+    "https://github.com/openzipkin-contrib/zipkin-otel": "r21",
+    "https://javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-trace/1.62.0/io/opentelemetry/sdk/trace/SpanLimits.html": "r22",
+    "https://javadoc.io/doc/io.micrometer/micrometer-tracing/1.7.1/io/micrometer/tracing/handler/TracingAwareMeterObservationHandler.html": "r23",
+    "https://javadoc.io/doc/io.micrometer/micrometer-observation/1.17.1/io/micrometer/observation/ObservationRegistry.html": "r24",
+    "https://docs.micrometer.io/tracing/reference/1.7/api": "r25",
+    "https://javadoc.io/doc/io.micrometer/micrometer-tracing/1.7.1/io/micrometer/tracing/Tracer.html": "r26",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/SpringBootTest.html": "r27",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html#testing.spring-boot-applications.tracing": "r28"
+  }
+}

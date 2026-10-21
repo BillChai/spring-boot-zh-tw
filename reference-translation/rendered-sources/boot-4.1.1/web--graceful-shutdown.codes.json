@@ -1,0 +1,6 @@
+[
+  "```properties\nspring.lifecycle.timeout-per-shutdown-phase=20s\n```",
+  "```yaml\nspring:\n  lifecycle:\n    timeout-per-shutdown-phase: \"20s\"\n```",
+  "```properties\nserver.shutdown=immediate\n```",
+  "```yaml\nserver:\n  shutdown: \"immediate\"\n```"
+]

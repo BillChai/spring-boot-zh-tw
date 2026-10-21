@@ -1,0 +1,43 @@
+{
+  "page": "boot/security--saml2.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/security/saml2.html",
+  "version": "4.1.1",
+  "html_sha256": "777b00bb1243b60b3667627cfc68a8beb5df0581e174a422659fad13817480a3",
+  "code_blocks": [
+    {
+      "language": "xml",
+      "text": "<repositories>\n\t<repository>\n\t\t<id>shibboleth-releases</id>\n\t\t<name>Shibboleth Releases Repository</name>\n\t\t<url>https://build.shibboleth.net/maven/releases</url>\n\t\t<snapshots>\n\t\t\t<enabled>false</enabled>\n\t\t</snapshots>\n\t</repository>\n</repositories>"
+    },
+    {
+      "language": "gradle",
+      "text": "repositories {\n    maven { url \"https://build.shibboleth.net/maven/releases\" }\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.security.saml2.relyingparty.registration.my-relying-party1.signing.credentials[0].private-key-location=path-to-private-key\nspring.security.saml2.relyingparty.registration.my-relying-party1.signing.credentials[0].certificate-location=path-to-certificate\nspring.security.saml2.relyingparty.registration.my-relying-party1.decryption.credentials[0].private-key-location=path-to-private-key\nspring.security.saml2.relyingparty.registration.my-relying-party1.decryption.credentials[0].certificate-location=path-to-certificate\nspring.security.saml2.relyingparty.registration.my-relying-party1.singlelogout.url=https://myapp/logout/saml2/slo\nspring.security.saml2.relyingparty.registration.my-relying-party1.singlelogout.response-url=https://remoteidp2.slo.url\nspring.security.saml2.relyingparty.registration.my-relying-party1.singlelogout.binding=POST\nspring.security.saml2.relyingparty.registration.my-relying-party1.assertingparty.verification.credentials[0].certificate-location=path-to-verification-cert\nspring.security.saml2.relyingparty.registration.my-relying-party1.assertingparty.entity-id=remote-idp-entity-id1\nspring.security.saml2.relyingparty.registration.my-relying-party1.assertingparty.sso-url=https://remoteidp1.sso.url\nspring.security.saml2.relyingparty.registration.my-relying-party2.signing.credentials[0].private-key-location=path-to-private-key\nspring.security.saml2.relyingparty.registration.my-relying-party2.signing.credentials[0].certificate-location=path-to-certificate\nspring.security.saml2.relyingparty.registration.my-relying-party2.decryption.credentials[0].private-key-location=path-to-private-key\nspring.security.saml2.relyingparty.registration.my-relying-party2.decryption.credentials[0].certificate-location=path-to-certificate\nspring.security.saml2.relyingparty.registration.my-relying-party2.assertingparty.verification.credentials[0].certificate-location=path-to-other-verification-cert\nspring.security.saml2.relyingparty.registration.my-relying-party2.assertingparty.entity-id=remote-idp-entity-id2\nspring.security.saml2.relyingparty.registration.my-relying-party2.assertingparty.sso-url=https://remoteidp2.sso.url\nspring.security.saml2.relyingparty.registration.my-relying-party2.assertingparty.singlelogout.url=https://remoteidp2.slo.url\nspring.security.saml2.relyingparty.registration.my-relying-party2.assertingparty.singlelogout.response-url=https://myapp/logout/saml2/slo\nspring.security.saml2.relyingparty.registration.my-relying-party2.assertingparty.singlelogout.binding=POST"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  security:\n    saml2:\n      relyingparty:\n        registration:\n          my-relying-party1:\n            signing:\n              credentials:\n              - private-key-location: \"path-to-private-key\"\n                certificate-location: \"path-to-certificate\"\n            decryption:\n              credentials:\n              - private-key-location: \"path-to-private-key\"\n                certificate-location: \"path-to-certificate\"\n            singlelogout:\n               url: \"https://myapp/logout/saml2/slo\"\n               response-url: \"https://remoteidp2.slo.url\"\n               binding: \"POST\"\n            assertingparty:\n              verification:\n                credentials:\n                - certificate-location: \"path-to-verification-cert\"\n              entity-id: \"remote-idp-entity-id1\"\n              sso-url: \"https://remoteidp1.sso.url\"\n\n          my-relying-party2:\n            signing:\n              credentials:\n              - private-key-location: \"path-to-private-key\"\n                certificate-location: \"path-to-certificate\"\n            decryption:\n              credentials:\n              - private-key-location: \"path-to-private-key\"\n                certificate-location: \"path-to-certificate\"\n            assertingparty:\n              verification:\n                credentials:\n                - certificate-location: \"path-to-other-verification-cert\"\n              entity-id: \"remote-idp-entity-id2\"\n              sso-url: \"https://remoteidp2.sso.url\"\n              singlelogout:\n                url: \"https://remoteidp2.slo.url\"\n                response-url: \"https://myapp/logout/saml2/slo\"\n                binding: \"POST\""
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity;\nimport org.springframework.security.web.SecurityFilterChain;\n\nimport static org.springframework.security.config.Customizer.withDefaults;\n\n@Configuration(proxyBeanMethods = false)\npublic class MySamlRelyingPartyConfiguration {\n\n\t@Bean\n\tpublic SecurityFilterChain securityFilterChain(HttpSecurity http) {\n\t\thttp.authorizeHttpRequests((requests) -> requests.anyRequest().authenticated());\n\t\thttp.saml2Login(withDefaults());\n\t\thttp.saml2Logout((saml2) -> {\n\t\t\tsaml2.logoutRequest((request) -> request.logoutUrl(\"/SLOService.saml2\"));\n\t\t\tsaml2.logoutResponse((response) -> response.logoutUrl(\"/SLOService.saml2\"));\n\t\t});\n\t\treturn http.build();\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "SAML 2.0",
+    "Build Configuration",
+    "Using Maven",
+    "Using Gradle",
+    "Relying Party"
+  ],
+  "links": {
+    "https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html": "r1",
+    "https://shibboleth.atlassian.net/wiki/spaces/DEV/pages/1123844333/Use+of+Maven+Central#Publishing-to-Maven-Central": "r2",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/saml2/autoconfigure/Saml2RelyingPartyProperties.html": "r3",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/saml2/provider/service/web/authentication/logout/Saml2LogoutRequestFilter.html": "r4",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/saml2/provider/service/web/authentication/logout/Saml2LogoutResponseFilter.html": "r5",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/web/SecurityFilterChain.html": "r6"
+  }
+}

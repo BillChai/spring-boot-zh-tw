@@ -1,0 +1,11 @@
+{
+  "page": "boot/testing--test-modules.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/testing/test-modules.html",
+  "version": "4.1.1",
+  "html_sha256": "af7527e920470c483299bb919aaede1959a98003795fe670cb61a5f1feb5b463",
+  "code_blocks": [],
+  "headings": [
+    "Test Modules"
+  ],
+  "links": {}
+}

@@ -1,0 +1,147 @@
+{
+  "page": "boot/messaging--jms.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/messaging/jms.html",
+  "version": "4.1.1",
+  "html_sha256": "1c6e68e93d83fe6f8ea27dfbb7e6c3adae067725c292a7f4c6b831d225b35aa9",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.activemq.embedded.enabled=false"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  activemq:\n    embedded:\n      enabled: false"
+    },
+    {
+      "language": "properties",
+      "text": "spring.activemq.broker-url=tcp://192.168.1.210:9876\nspring.activemq.user=admin\nspring.activemq.password=secret"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  activemq:\n    broker-url: \"tcp://192.168.1.210:9876\"\n    user: \"admin\"\n    password: \"secret\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.jms.cache.session-cache-size=5"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  jms:\n    cache:\n      session-cache-size: 5"
+    },
+    {
+      "language": "properties",
+      "text": "spring.activemq.pool.enabled=true\nspring.activemq.pool.max-connections=50"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  activemq:\n    pool:\n      enabled: true\n      max-connections: 50"
+    },
+    {
+      "language": "properties",
+      "text": "spring.artemis.mode=native\nspring.artemis.broker-url=tcp://192.168.1.210:9876\nspring.artemis.user=admin\nspring.artemis.password=secret"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  artemis:\n    mode: native\n    broker-url: \"tcp://192.168.1.210:9876\"\n    user: \"admin\"\n    password: \"secret\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.jms.cache.session-cache-size=5"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  jms:\n    cache:\n      session-cache-size: 5"
+    },
+    {
+      "language": "properties",
+      "text": "spring.artemis.pool.enabled=true\nspring.artemis.pool.max-connections=50"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  artemis:\n    pool:\n      enabled: true\n      max-connections: 50"
+    },
+    {
+      "language": "properties",
+      "text": "spring.jms.jndi-name=java:/MyConnectionFactory"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  jms:\n    jndi-name: \"java:/MyConnectionFactory\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.jms.core.JmsClient\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean(private val jmsClient: JmsClient) {\n\n\t// ...\n\n\tfun someMethod() {\n\t\tjmsClient.destination(\"myQueue\").send(\"hello\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.jms.core.JmsClient;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final JmsClient jmsClient;\n\n\tpublic MyBean(JmsClient jmsClient) {\n\t\tthis.jmsClient = jmsClient;\n\t}\n\n\t// ...\n\n\tpublic void someMethod() {\n\t\tthis.jmsClient.destination(\"myQueue\").send(\"hello\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.jms.annotation.JmsListener\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean {\n\n\t@JmsListener(destination = \"someQueue\")\n\tfun processMessage(content: String?) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.jms.annotation.JmsListener;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\t@JmsListener(destination = \"someQueue\")\n\tpublic void processMessage(String content) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import jakarta.jms.ConnectionFactory\nimport org.springframework.boot.jms.ConnectionFactoryUnwrapper\nimport org.springframework.boot.jms.autoconfigure.DefaultJmsListenerContainerFactoryConfigurer\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.jms.config.DefaultJmsListenerContainerFactory\n\n@Configuration(proxyBeanMethods = false)\nclass MyJmsConfiguration {\n\n\t@Bean\n\tfun myFactory(configurer: DefaultJmsListenerContainerFactoryConfigurer,\n\t\t\t\t  connectionFactory: ConnectionFactory): DefaultJmsListenerContainerFactory {\n\t\tval factory = DefaultJmsListenerContainerFactory()\n\t\tconfigurer.configure(factory, ConnectionFactoryUnwrapper.unwrapCaching(connectionFactory))\n\t\tfactory.setMessageConverter(MyMessageConverter())\n\t\treturn factory\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import jakarta.jms.ConnectionFactory;\n\nimport org.springframework.boot.jms.ConnectionFactoryUnwrapper;\nimport org.springframework.boot.jms.autoconfigure.DefaultJmsListenerContainerFactoryConfigurer;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.jms.config.DefaultJmsListenerContainerFactory;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyJmsConfiguration {\n\n\t@Bean\n\tpublic DefaultJmsListenerContainerFactory myFactory(DefaultJmsListenerContainerFactoryConfigurer configurer,\n\t\t\tConnectionFactory connectionFactory) {\n\t\tDefaultJmsListenerContainerFactory factory = new DefaultJmsListenerContainerFactory();\n\t\tconfigurer.configure(factory, ConnectionFactoryUnwrapper.unwrapCaching(connectionFactory));\n\t\tfactory.setMessageConverter(new MyMessageConverter());\n\t\treturn factory;\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.jms.annotation.JmsListener\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean {\n\n\t@JmsListener(destination = \"someQueue\", containerFactory = \"myFactory\")\n\tfun processMessage(content: String?) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.jms.annotation.JmsListener;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\t@JmsListener(destination = \"someQueue\", containerFactory = \"myFactory\")\n\tpublic void processMessage(String content) {\n\t\t// ...\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "JMS",
+    "ActiveMQ \"Classic\" Support",
+    "ActiveMQ Artemis Support",
+    "Using a JNDI ConnectionFactory",
+    "Sending a Message",
+    "Receiving a Message"
+  ],
+  "links": {
+    "https://jakarta.ee/specifications/messaging/3.1/apidocs/jakarta.messaging/jakarta/jms/ConnectionFactory.html": "r1",
+    "https://jakarta.ee/specifications/messaging/3.1/apidocs/jakarta.messaging/jakarta/jms/Connection.html": "r2",
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/jms.html": "r3",
+    "https://activemq.apache.org/components/classic": "r4",
+    "https://activemq.apache.org/vm-transport-reference.html": "r5",
+    "https://activemq.apache.org/how-do-i-embed-a-broker-inside-a-connection.html": "r6",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/connection/CachingConnectionFactory.html": "r7",
+    "https://javadoc.io/doc/org.messaginghub/pooled-jms/3.2.3/org/messaginghub/pooled/jms/JmsPoolConnectionFactory.html": "r8",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/activemq/autoconfigure/ActiveMQProperties.html": "r9",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/activemq/autoconfigure/ActiveMQConnectionFactoryCustomizer.html": "r10",
+    "https://activemq.apache.org/components/artemis/": "r11",
+    "https://javadoc.io/doc/org.apache.activemq/artemis-jms-server/2.53.0/org/apache/activemq/artemis/jms/server/config/JMSQueueConfiguration.html": "r12",
+    "https://javadoc.io/doc/org.apache.activemq/artemis-jms-server/2.53.0/org/apache/activemq/artemis/jms/server/config/TopicConfiguration.html": "r13",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/artemis/autoconfigure/ArtemisProperties.html": "r14",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/core/JmsClient.html": "r15",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/core/JmsMessagingTemplate.html": "r16",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/core/JmsTemplate.html": "r17",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/support/destination/DestinationResolver.html": "r18",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/support/converter/MessageConverter.html": "r19",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/annotation/JmsListener.html": "r20",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/config/JmsListenerContainerFactory.html": "r21",
+    "https://jakarta.ee/specifications/messaging/3.1/apidocs/jakarta.messaging/jakarta/jms/ExceptionListener.html": "r22",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jms/ConnectionFactoryUnwrapper.html": "r23",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/transaction/jta/JtaTransactionManager.html": "r24",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/transaction/annotation/Transactional.html": "r25",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/annotation/EnableJms.html": "r26",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jms/autoconfigure/DefaultJmsListenerContainerFactoryConfigurer.html": "r27",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/config/DefaultJmsListenerContainerFactory.html": "r28",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jms/autoconfigure/SimpleJmsListenerContainerFactoryConfigurer.html": "r29",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/config/SimpleJmsListenerContainerFactory.html": "r30",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/listener/DefaultMessageListenerContainer.html": "r31",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/listener/SimpleMessageListenerContainer.html": "r32",
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/jms/using.html#jms-mdp": "r33"
+  }
+}

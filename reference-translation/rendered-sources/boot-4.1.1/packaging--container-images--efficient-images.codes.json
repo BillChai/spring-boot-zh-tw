@@ -1,0 +1,3 @@
+[
+  "```yaml\n- \"dependencies\":\n  - BOOT-INF/lib/library1.jar\n  - BOOT-INF/lib/library2.jar\n- \"spring-boot-loader\":\n  - org/springframework/boot/loader/launch/JarLauncher.class\n  - ... <other classes>\n- \"snapshot-dependencies\":\n  - BOOT-INF/lib/library3-SNAPSHOT.jar\n- \"application\":\n  - META-INF/MANIFEST.MF\n  - BOOT-INF/classes/a/b/C.class\n```"
+]

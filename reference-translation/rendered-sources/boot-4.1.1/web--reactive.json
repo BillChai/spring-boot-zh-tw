@@ -1,0 +1,180 @@
+{
+  "page": "boot/web--reactive.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/web/reactive.html",
+  "version": "4.1.1",
+  "html_sha256": "34f629bbe9a47ebb7fd47fe56514adcb04e5ec51839d57b2e3482eb7a5721109",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.web.bind.annotation.DeleteMapping\nimport org.springframework.web.bind.annotation.GetMapping\nimport org.springframework.web.bind.annotation.PathVariable\nimport org.springframework.web.bind.annotation.RequestMapping\nimport org.springframework.web.bind.annotation.RestController\nimport reactor.core.publisher.Flux\nimport reactor.core.publisher.Mono\n\n@RestController\n@RequestMapping(\"/users\")\nclass MyRestController(private val userRepository: UserRepository, private val customerRepository: CustomerRepository) {\n\n\t@GetMapping(\"/{userId}\")\n\tfun getUser(@PathVariable userId: Long): Mono<User> {\n\t\treturn userRepository.findById(userId)\n\t}\n\n\t@GetMapping(\"/{userId}/customers\")\n\tfun getUserCustomers(@PathVariable userId: Long): Flux<Customer> {\n\t\treturn userRepository.findById(userId).flatMapMany { user: User ->\n\t\t\tcustomerRepository.findByUser(user)\n\t\t}\n\t}\n\n\t@DeleteMapping(\"/{userId}\")\n\tfun deleteUser(@PathVariable userId: Long): Mono<Void> {\n\t\treturn userRepository.deleteById(userId)\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import reactor.core.publisher.Flux;\nimport reactor.core.publisher.Mono;\n\nimport org.springframework.web.bind.annotation.DeleteMapping;\nimport org.springframework.web.bind.annotation.GetMapping;\nimport org.springframework.web.bind.annotation.PathVariable;\nimport org.springframework.web.bind.annotation.RequestMapping;\nimport org.springframework.web.bind.annotation.RestController;\n\n@RestController\n@RequestMapping(\"/users\")\npublic class MyRestController {\n\n\tprivate final UserRepository userRepository;\n\n\tprivate final CustomerRepository customerRepository;\n\n\tpublic MyRestController(UserRepository userRepository, CustomerRepository customerRepository) {\n\t\tthis.userRepository = userRepository;\n\t\tthis.customerRepository = customerRepository;\n\t}\n\n\t@GetMapping(\"/{userId}\")\n\tpublic Mono<User> getUser(@PathVariable Long userId) {\n\t\treturn this.userRepository.findById(userId);\n\t}\n\n\t@GetMapping(\"/{userId}/customers\")\n\tpublic Flux<Customer> getUserCustomers(@PathVariable Long userId) {\n\t\treturn this.userRepository.findById(userId).flatMapMany(this.customerRepository::findByUser);\n\t}\n\n\t@DeleteMapping(\"/{userId}\")\n\tpublic Mono<Void> deleteUser(@PathVariable Long userId) {\n\t\treturn this.userRepository.deleteById(userId);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.http.MediaType\nimport org.springframework.web.reactive.function.server.RequestPredicates.DELETE\nimport org.springframework.web.reactive.function.server.RequestPredicates.GET\nimport org.springframework.web.reactive.function.server.RequestPredicates.accept\nimport org.springframework.web.reactive.function.server.RouterFunction\nimport org.springframework.web.reactive.function.server.RouterFunctions\nimport org.springframework.web.reactive.function.server.ServerResponse\n\n@Configuration(proxyBeanMethods = false)\nclass MyRoutingConfiguration {\n\n\t@Bean\n\tfun monoRouterFunction(userHandler: MyUserHandler): RouterFunction<ServerResponse> {\n\t\treturn RouterFunctions.route(\n\t\t\tGET(\"/{user}\").and(ACCEPT_JSON), userHandler::getUser).andRoute(\n\t\t\tGET(\"/{user}/customers\").and(ACCEPT_JSON), userHandler::getUserCustomers).andRoute(\n\t\t\tDELETE(\"/{user}\").and(ACCEPT_JSON), userHandler::deleteUser)\n\t}\n\n\tcompanion object {\n\t\tprivate val ACCEPT_JSON = accept(MediaType.APPLICATION_JSON)\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.http.MediaType;\nimport org.springframework.web.reactive.function.server.RequestPredicate;\nimport org.springframework.web.reactive.function.server.RouterFunction;\nimport org.springframework.web.reactive.function.server.ServerResponse;\n\nimport static org.springframework.web.reactive.function.server.RequestPredicates.accept;\nimport static org.springframework.web.reactive.function.server.RouterFunctions.route;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyRoutingConfiguration {\n\n\tprivate static final RequestPredicate ACCEPT_JSON = accept(MediaType.APPLICATION_JSON);\n\n\t@Bean\n\tpublic RouterFunction<ServerResponse> monoRouterFunction(MyUserHandler userHandler) {\n\t\treturn route()\n\t\t\t\t.GET(\"/{user}\", ACCEPT_JSON, userHandler::getUser)\n\t\t\t\t.GET(\"/{user}/customers\", ACCEPT_JSON, userHandler::getUserCustomers)\n\t\t\t\t.DELETE(\"/{user}\", ACCEPT_JSON, userHandler::deleteUser)\n\t\t\t\t.build();\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.stereotype.Component\nimport org.springframework.web.reactive.function.server.ServerRequest\nimport org.springframework.web.reactive.function.server.ServerResponse\nimport reactor.core.publisher.Mono\n\n@Component\nclass MyUserHandler {\n\n\tfun getUser(request: ServerRequest?): Mono<ServerResponse> {\n\t\t...\n\t}\n\n\tfun getUserCustomers(request: ServerRequest?): Mono<ServerResponse> {\n\t\t...\n\t}\n\n\tfun deleteUser(request: ServerRequest?): Mono<ServerResponse> {\n\t\t...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import reactor.core.publisher.Mono;\n\nimport org.springframework.stereotype.Component;\nimport org.springframework.web.reactive.function.server.ServerRequest;\nimport org.springframework.web.reactive.function.server.ServerResponse;\n\n@Component\npublic class MyUserHandler {\n\n\tpublic Mono<ServerResponse> getUser(ServerRequest request) {\n\t\t...\n\t}\n\n\tpublic Mono<ServerResponse> getUserCustomers(ServerRequest request) {\n\t\t...\n\t}\n\n\tpublic Mono<ServerResponse> deleteUser(ServerRequest request) {\n\t\t...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.http.codec.CodecCustomizer\nimport org.springframework.context.annotation.Bean\nimport org.springframework.http.codec.CodecConfigurer\nimport org.springframework.http.codec.ServerSentEventHttpMessageReader\n\nclass MyCodecsConfiguration {\n\n\t@Bean\n\tfun myCodecCustomizer(): CodecCustomizer {\n\t\treturn CodecCustomizer { configurer: CodecConfigurer ->\n\t\t\tconfigurer.registerDefaults(false)\n\t\t\tconfigurer.customCodecs().register(ServerSentEventHttpMessageReader())\n\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.http.codec.CodecCustomizer;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.http.codec.ServerSentEventHttpMessageReader;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyCodecsConfiguration {\n\n\t@Bean\n\tpublic CodecCustomizer myCodecCustomizer() {\n\t\treturn (configurer) -> {\n\t\t\tconfigurer.registerDefaults(false);\n\t\t\tconfigurer.customCodecs().register(new ServerSentEventHttpMessageReader());\n\t\t\t// ...\n\t\t};\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.webflux.static-path-pattern=/resources/**"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  webflux:\n    static-path-pattern: \"/resources/**\""
+    },
+    {
+      "language": "json",
+      "text": "{\n\t\"type\": \"https://example.org/problems/unknown-project\",\n\t\"title\": \"Unknown project\",\n\t\"status\": 404,\n\t\"detail\": \"No project found for id 'spring-unknown'\",\n\t\"instance\": \"/projects/spring-unknown\"\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.autoconfigure.web.WebProperties\nimport org.springframework.boot.webflux.error.ErrorAttributes\nimport org.springframework.boot.webflux.autoconfigure.error.AbstractErrorWebExceptionHandler\nimport org.springframework.context.ApplicationContext\nimport org.springframework.http.HttpStatus\nimport org.springframework.http.MediaType\nimport org.springframework.http.codec.ServerCodecConfigurer\nimport org.springframework.stereotype.Component\nimport org.springframework.web.reactive.function.server.RouterFunction\nimport org.springframework.web.reactive.function.server.RouterFunctions\nimport org.springframework.web.reactive.function.server.ServerRequest\nimport org.springframework.web.reactive.function.server.ServerResponse\nimport reactor.core.publisher.Mono\n\n@Component\nclass MyErrorWebExceptionHandler(\n\t\terrorAttributes: ErrorAttributes, webProperties: WebProperties,\n\t\tapplicationContext: ApplicationContext, serverCodecConfigurer: ServerCodecConfigurer\n) : AbstractErrorWebExceptionHandler(errorAttributes, webProperties.resources, applicationContext) {\n\n\tinit {\n\t\tsetMessageReaders(serverCodecConfigurer.readers)\n\t\tsetMessageWriters(serverCodecConfigurer.writers)\n\t}\n\n\toverride fun getRoutingFunction(errorAttributes: ErrorAttributes): RouterFunction<ServerResponse> {\n\t\treturn RouterFunctions.route(this::acceptsXml, this::handleErrorAsXml)\n\t}\n\n\tprivate fun acceptsXml(request: ServerRequest): Boolean {\n\t\treturn request.headers().accept().contains(MediaType.APPLICATION_XML)\n\t}\n\n\tfun handleErrorAsXml(request: ServerRequest): Mono<ServerResponse> {\n\t\tval builder = ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR)\n\t\t// ... additional builder calls\n\t\treturn builder.build()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import reactor.core.publisher.Mono;\n\nimport org.springframework.boot.autoconfigure.web.WebProperties;\nimport org.springframework.boot.webflux.autoconfigure.error.AbstractErrorWebExceptionHandler;\nimport org.springframework.boot.webflux.error.ErrorAttributes;\nimport org.springframework.context.ApplicationContext;\nimport org.springframework.http.HttpStatus;\nimport org.springframework.http.MediaType;\nimport org.springframework.http.codec.ServerCodecConfigurer;\nimport org.springframework.stereotype.Component;\nimport org.springframework.web.reactive.function.server.RouterFunction;\nimport org.springframework.web.reactive.function.server.RouterFunctions;\nimport org.springframework.web.reactive.function.server.ServerRequest;\nimport org.springframework.web.reactive.function.server.ServerResponse;\nimport org.springframework.web.reactive.function.server.ServerResponse.BodyBuilder;\n\n@Component\npublic class MyErrorWebExceptionHandler extends AbstractErrorWebExceptionHandler {\n\n\tpublic MyErrorWebExceptionHandler(ErrorAttributes errorAttributes, WebProperties webProperties,\n\t\t\tApplicationContext applicationContext, ServerCodecConfigurer serverCodecConfigurer) {\n\t\tsuper(errorAttributes, webProperties.getResources(), applicationContext);\n\t\tsetMessageReaders(serverCodecConfigurer.getReaders());\n\t\tsetMessageWriters(serverCodecConfigurer.getWriters());\n\t}\n\n\t@Override\n\tprotected RouterFunction<ServerResponse> getRoutingFunction(ErrorAttributes errorAttributes) {\n\t\treturn RouterFunctions.route(this::acceptsXml, this::handleErrorAsXml);\n\t}\n\n\tprivate boolean acceptsXml(ServerRequest request) {\n\t\treturn request.headers().accept().contains(MediaType.APPLICATION_XML);\n\t}\n\n\tpublic Mono<ServerResponse> handleErrorAsXml(ServerRequest request) {\n\t\tBodyBuilder builder = ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR);\n\t\t// ... additional builder calls\n\t\treturn builder.build();\n\t}\n\n}"
+    },
+    {
+      "language": "text",
+      "text": "src/\n +- main/\n     +- java/\n     |   + <source code>\n     +- resources/\n         +- public/\n             +- error/\n             |   +- 404.html\n             +- <other public assets>"
+    },
+    {
+      "language": "text",
+      "text": "src/\n +- main/\n     +- java/\n     |   + <source code>\n     +- resources/\n         +- templates/\n             +- error/\n             |   +- 5xx.mustache\n             +- <other templates>"
+    },
+    {
+      "language": "properties",
+      "text": "spring.webflux.apiversion.default=1.0.0\nspring.webflux.apiversion.use.header=X-Version"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  webflux:\n    apiversion:\n      default: 1.0.0\n      use:\n        header: X-Version"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.web.server.WebServerFactoryCustomizer\nimport org.springframework.boot.web.server.reactive.ConfigurableReactiveWebServerFactory\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyWebServerFactoryCustomizer : WebServerFactoryCustomizer<ConfigurableReactiveWebServerFactory> {\n\n\toverride fun customize(server: ConfigurableReactiveWebServerFactory) {\n\t\tserver.setPort(9000)\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.web.server.WebServerFactoryCustomizer;\nimport org.springframework.boot.web.server.reactive.ConfigurableReactiveWebServerFactory;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyWebServerFactoryCustomizer implements WebServerFactoryCustomizer<ConfigurableReactiveWebServerFactory> {\n\n\t@Override\n\tpublic void customize(ConfigurableReactiveWebServerFactory server) {\n\t\tserver.setPort(9000);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.web.server.WebServerFactoryCustomizer\nimport org.springframework.boot.reactor.netty.NettyReactiveWebServerFactory\nimport org.springframework.stereotype.Component\nimport java.time.Duration\n\n@Component\nclass MyNettyWebServerFactoryCustomizer : WebServerFactoryCustomizer<NettyReactiveWebServerFactory> {\n\n\toverride fun customize(factory: NettyReactiveWebServerFactory) {\n\t\tfactory.addServerCustomizers({ server -> server.idleTimeout(Duration.ofSeconds(20)) })\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.time.Duration;\n\nimport org.springframework.boot.reactor.netty.NettyReactiveWebServerFactory;\nimport org.springframework.boot.web.server.WebServerFactoryCustomizer;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyNettyWebServerFactoryCustomizer implements WebServerFactoryCustomizer<NettyReactiveWebServerFactory> {\n\n\t@Override\n\tpublic void customize(NettyReactiveWebServerFactory factory) {\n\t\tfactory.addServerCustomizers((server) -> server.idleTimeout(Duration.ofSeconds(20)));\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Reactive Web Applications",
+    "The “Spring WebFlux Framework”",
+    "Spring WebFlux Auto-configuration",
+    "Spring WebFlux Conversion Service",
+    "HTTP Codecs with HttpMessageReaders and HttpMessageWriters",
+    "Static Content",
+    "Welcome Page",
+    "Template Engines",
+    "Error Handling",
+    "Custom Error Pages",
+    "Web Filters",
+    "API Versioning",
+    "Embedded Reactive Server Support",
+    "Customizing Reactive Servers",
+    "Programmatic Customization",
+    "Customizing ConfigurableReactiveWebServerFactory Directly",
+    "Reactive Server Resources Configuration"
+  ],
+  "links": {
+    "https://www.reactive-streams.org/": "r1",
+    "https://projectreactor.io/": "r2",
+    "https://docs.spring.io/spring-framework/reference/7.0/web/webflux.html": "r3",
+    "https://docs.spring.io/spring-framework/reference/7.0/web/webflux-functional.html": "r4",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/function/server/RouterFunction.html": "r5",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/function/client/WebClient.html": "r6",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/codec/HttpMessageReader.html": "r7",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/codec/HttpMessageWriter.html": "r8",
+    "https://docs.spring.io/spring-boot/4.1/reference/web/reactive.html#web.reactive.webflux.httpcodecs": "r9",
+    "https://docs.spring.io/spring-boot/4.1/reference/web/servlet.html#web.servlet.spring-mvc.static-content": "r10",
+    "https://docs.spring.io/spring-framework/reference/7.0/web/webflux/config.html": "r11",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html": "r12",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/config/WebFluxConfigurer.html": "r13",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/config/EnableWebFlux.html": "r14",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/server/reactive/HttpHandler.html": "r15",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webflux/autoconfigure/WebHttpHandlerBuilderCustomizer.html": "r16",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/server/adapter/WebHttpHandlerBuilder.html": "r17",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/convert/ConversionService.html": "r18",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDate.html": "r19",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalTime.html": "r20",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/OffsetTime.html": "r21",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/LocalDateTime.html": "r22",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/OffsetDateTime.html": "r23",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/ZonedDateTime.html": "r24",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/codec/CodecConfigurer.html": "r25",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/http/codec/CodecCustomizer.html": "r26",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/json.html#features.json.jackson.custom-serializers-and-deserializers": "r27",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/resource/ResourceWebHandler.html": "r28",
+    "https://www.webjars.org/": "r29",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/HandlerMapping.html": "r30",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/stereotype/Controller.html": "r31",
+    "https://freemarker.apache.org/docs/": "r32",
+    "https://www.thymeleaf.org": "r33",
+    "https://mustache.github.io/": "r34",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/server/WebExceptionHandler.html": "r35",
+    "https://docs.spring.io/spring-boot/4.1/reference/web/reactive.html#web.reactive.webflux.error-handling.error-pages": "r36",
+    "https://docs.spring.io/spring-framework/reference/7.0/web/webflux/ann-rest-exceptions.html": "r37",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webflux/error/ErrorAttributes.html": "r38",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webflux/error/ErrorWebExceptionHandler.html": "r39",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webflux/autoconfigure/error/AbstractErrorWebExceptionHandler.html": "r40",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webflux/autoconfigure/error/DefaultErrorWebExceptionHandler.html": "r41",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.supported.spring-webflux": "r42",
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/observability.html#observability.http-server.reactive": "r43",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/server/WebFilter.html": "r44",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/Ordered.html": "r45",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/annotation/Order.html": "r46",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/web/server/WebFilterChainProxy.html": "r47",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webflux/actuate/web/exchanges/HttpExchangesWebFilter.html": "r48",
+    "https://docs.spring.io/spring-framework/reference/7.0/web/webflux/controller/ann-requestmapping.html#webflux-ann-requestmapping-version": "r49",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/accept/ApiVersionResolver.html": "r50",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/accept/ApiVersionParser.html": "r51",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/accept/ApiVersionDeprecationHandler.html": "r52",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/rest-client.html#io.rest-client.apiversioning": "r53",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html": "r54",
+    "https://docs.spring.io/spring-boot/4.1/how-to/webserver.html#howto.webserver.configure-ssl": "r55",
+    "https://docs.spring.io/spring-boot/4.1/how-to/webserver.html#howto.webserver.enable-response-compression": "r56",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/web/server/autoconfigure/ServerProperties.html": "r57",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/web/server/WebServerFactoryCustomizer.html": "r58",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/web/server/reactive/ConfigurableReactiveWebServerFactory.html": "r59",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jetty/reactive/JettyReactiveWebServerFactory.html": "r60",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/reactor/netty/NettyReactiveWebServerFactory.html": "r61",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/tomcat/reactive/TomcatReactiveWebServerFactory.html": "r62",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/web/server/reactive/ReactiveWebServerFactory.html": "r63",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/client/ReactorResourceFactory.html": "r64",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/client/reactive/JettyResourceFactory.html": "r65",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/function/client/WebClient.Builder.html": "r66",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/rest-client.html#io.rest-client.webclient.runtime": "r67"
+  }
+}

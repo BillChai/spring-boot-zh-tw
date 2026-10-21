@@ -1,0 +1,13 @@
+{
+  "page": "boot/web--index.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/web/index.html",
+  "version": "4.1.1",
+  "html_sha256": "b55edac2ff9a7a9e6ea87e4d69c5f4073b00054b8d16c7a399ff967678924110",
+  "code_blocks": [],
+  "headings": [
+    "Web"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1/tutorial/first-application/index.html": "r1"
+  }
+}

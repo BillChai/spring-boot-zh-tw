@@ -1,0 +1,20 @@
+{
+  "retrieved_on": "2026-10-20",
+  "sources": [
+    {
+      "repository": "spring-boot",
+      "tag": "v4.1.1",
+      "archive_url": "https://codeload.github.com/spring-projects/spring-boot/tar.gz/refs/tags/v4.1.1",
+      "archive_sha256": "876baf8bf56a48599b8db531f8fb48401787fa87e8f9dc01208c96ba06ce4d52",
+      "files": 1044
+    }
+  ],
+  "rendered_reference_snapshot": {
+    "retrieved_on": "2026-10-21",
+    "version": "4.1.1",
+    "url_base": "https://docs.spring.io/spring-boot/4.1/reference/",
+    "pages": 78,
+    "directory": "rendered-sources/boot-4.1.1",
+    "hash_manifest": "rendered-sources/manifest.json"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "page": "boot/io--email.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/io/email.html",
+  "version": "4.1.1",
+  "html_sha256": "9aa2a2e9fa206ba1e14d8b1046673668ae002cc37100a9e62153cc788bddfa27",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.mail.properties[mail.smtp.connectiontimeout]=5000\nspring.mail.properties[mail.smtp.timeout]=3000\nspring.mail.properties[mail.smtp.writetimeout]=5000"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  mail:\n    properties:\n      \"[mail.smtp.connectiontimeout]\": 5000\n      \"[mail.smtp.timeout]\": 3000\n      \"[mail.smtp.writetimeout]\": 5000"
+    },
+    {
+      "language": "properties",
+      "text": "spring.mail.jndi-name=mail/Session"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  mail:\n    jndi-name: \"mail/Session\""
+    }
+  ],
+  "headings": [
+    "Sending Email"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/mail/javamail/JavaMailSender.html": "r1",
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/email.html": "r2",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/mail/autoconfigure/MailProperties.html": "r3",
+    "https://jakarta.ee/specifications/mail/2.1/apidocs/jakarta/mail/Session.html": "r4"
+  }
+}

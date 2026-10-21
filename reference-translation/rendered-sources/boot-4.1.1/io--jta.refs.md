@@ -1,0 +1,11 @@
+[r1]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/transaction/jta/JtaTransactionManager.html
+[r2]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/transaction/annotation/Transactional.html
+[r3]: https://jakarta.ee/specifications/messaging/3.1/apidocs/jakarta.messaging/jakarta/jms/ConnectionFactory.html
+[r4]: https://docs.spring.io/spring-boot/4.1/reference/data/sql.html#data.sql.datasource.jndi
+[r5]: https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html
+[r6]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/annotation/Qualifier.html
+[r7]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jms/XAConnectionFactoryWrapper.html
+[r8]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jdbc/XADataSourceWrapper.html
+[r9]: https://jakarta.ee/specifications/messaging/3.1/apidocs/jakarta.messaging/jakarta/jms/XAConnectionFactory.html
+[r10]: https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/XADataSource.html
+[r11]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html

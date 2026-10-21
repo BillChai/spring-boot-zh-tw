@@ -1,0 +1,11 @@
+[
+  "```json\n{\n\t\"configuredLevel\": \"DEBUG\"\n}\n```",
+  "```properties\nmanagement.opentelemetry.logging.export.otlp.endpoint=https://otlp.example.com:4318/v1/logs\n```",
+  "```yaml\nmanagement:\n  opentelemetry:\n    logging:\n      export:\n        otlp:\n          endpoint: \"https://otlp.example.com:4318/v1/logs\"\n```",
+  "```properties\nmanagement.opentelemetry.logging.export.schedule-delay=15s\n```",
+  "```yaml\nmanagement:\n  opentelemetry:\n    logging:\n      export:\n        schedule-delay: \"15s\"\n```",
+  "```properties\nmanagement.opentelemetry.logging.limits.max-attributes=64\nmanagement.opentelemetry.logging.limits.max-attribute-value-length=256\n```",
+  "```yaml\nmanagement:\n  opentelemetry:\n    logging:\n      limits:\n        max-attributes: 64\n        max-attribute-value-length: 256\n```",
+  "```kotlin\nimport io.opentelemetry.api.OpenTelemetry\nimport io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender\nimport org.springframework.beans.factory.InitializingBean\nimport org.springframework.stereotype.Component\n\n@Component\nclass OpenTelemetryAppenderInitializer(\n\tprivate val openTelemetry: OpenTelemetry\n) : InitializingBean {\n\n\toverride fun afterPropertiesSet() = OpenTelemetryAppender.install(openTelemetry)\n\n}\n```",
+  "```java\nimport io.opentelemetry.api.OpenTelemetry;\nimport io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender;\n\nimport org.springframework.beans.factory.InitializingBean;\nimport org.springframework.stereotype.Component;\n\n@Component\nclass OpenTelemetryAppenderInitializer implements InitializingBean {\n\n\tprivate final OpenTelemetry openTelemetry;\n\n\tOpenTelemetryAppenderInitializer(OpenTelemetry openTelemetry) {\n\t\tthis.openTelemetry = openTelemetry;\n\t}\n\n\t@Override\n\tpublic void afterPropertiesSet() {\n\t\tOpenTelemetryAppender.install(this.openTelemetry);\n\t}\n\n}\n```"
+]

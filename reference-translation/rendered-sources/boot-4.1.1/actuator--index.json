@@ -1,0 +1,11 @@
+{
+  "page": "boot/actuator--index.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/actuator/index.html",
+  "version": "4.1.1",
+  "html_sha256": "0d5c504f96ed09a6ff4d6f3fb39c4c8d3e45bd65fe54cc3ec454f98f6dba3d5a",
+  "code_blocks": [],
+  "headings": [
+    "Production-ready Features"
+  ],
+  "links": {}
+}

@@ -1,0 +1,18 @@
+{
+  "page": "boot/web--spring-hateoas.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/web/spring-hateoas.html",
+  "version": "4.1.1",
+  "html_sha256": "3ac228589ddbbb27eb9e189524654ef3a57bf1bff54d97f72422e316524d60ad",
+  "code_blocks": [],
+  "headings": [
+    "Spring HATEOAS"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-hateoas/docs/3.1.x/api/org/springframework/hateoas/config/EnableHypermediaSupport.html": "r1",
+    "https://docs.spring.io/spring-hateoas/docs/3.1.x/api/org/springframework/hateoas/client/LinkDiscoverers.html": "r2",
+    "https://javadoc.io/doc/tools.jackson.core/jackson-databind/3.1.5/tools/jackson/databind/json/JsonMapper.html": "r3",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jackson/autoconfigure/JsonMapperBuilderCustomizer.html": "r4",
+    "https://docs.spring.io/spring-hateoas/docs/3.1.x/api/org/springframework/hateoas/config/HypermediaMappingInformation.html": "r5",
+    "https://docs.spring.io/spring-hateoas/docs/3.1.x/api/org/springframework/hateoas/mediatype/hal/HalConfiguration.html": "r6"
+  }
+}

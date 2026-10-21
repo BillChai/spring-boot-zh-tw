@@ -1,0 +1,49 @@
+{
+  "page": "boot/io--spring-batch.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/io/spring-batch.html",
+  "version": "4.1.1",
+  "html_sha256": "e4471d4785300bb4fb80c5ac483c75f9760178de972fc0239a5dd87c6e04a816",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.batch.jdbc.table-prefix=CUSTOM_"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  batch:\n    jdbc:\n      table-prefix: \"CUSTOM_\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.batch.data.mongodb.schema.initialize=true"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  batch:\n    data:\n      mongodb:\n        schema:\n          initialize: true"
+    },
+    {
+      "language": "properties",
+      "text": "spring.batch.job.enabled=false"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  batch:\n    job:\n      enabled: false"
+    }
+  ],
+  "headings": [
+    "Spring Batch",
+    "Running Spring Batch Jobs on Startup"
+  ],
+  "links": {
+    "https://spring.io/projects/spring-batch": "r1",
+    "https://docs.spring.io/spring-batch/docs/6.0.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html": "r2",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html": "r3",
+    "https://docs.spring.io/spring-batch/docs/6.0.x/api/org/springframework/batch/core/configuration/support/DefaultBatchConfiguration.html": "r4",
+    "https://docs.spring.io/spring-batch/docs/6.0.x/api/org/springframework/batch/core/configuration/annotation/EnableJdbcJobRepository.html": "r5",
+    "https://docs.spring.io/spring-batch/docs/6.0.x/api/org/springframework/batch/core/configuration/annotation/EnableMongoJobRepository.html": "r6",
+    "https://docs.spring.io/spring-batch/docs/6.0.x/api/org/springframework/batch/core/job/Job.html": "r7",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/batch/autoconfigure/JobLauncherApplicationRunner.html": "r8",
+    "https://github.com/spring-projects/spring-boot/tree/v4.1.1/module/spring-boot-batch/src/main/java/org/springframework/boot/batch/autoconfigure/BatchAutoConfiguration.java": "r9",
+    "https://github.com/spring-projects/spring-boot/tree/v4.1.1/module/spring-boot-batch-jdbc/src/main/java/org/springframework/boot/batch/jdbc/autoconfigure/BatchJdbcAutoConfiguration.java": "r10",
+    "https://github.com/spring-projects/spring-boot/tree/v4.1.1/module/spring-boot-batch-data-mongodb/src/main/java/org/springframework/boot/batch/mongodb/autoconfigure/BatchDataMongoAutoConfiguration.java": "r11"
+  }
+}

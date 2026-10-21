@@ -1,0 +1,42 @@
+{
+  "page": "boot/packaging--container-images--dockerfiles.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/packaging/container-images/dockerfiles.html",
+  "version": "4.1.1",
+  "html_sha256": "447337cdc8e7c694e484f969c2b73ac72b97af02602e48ee11bdca288535cffb",
+  "code_blocks": [
+    {
+      "language": "shell",
+      "text": "$ java -Djarmode=tools -jar my-app.jar"
+    },
+    {
+      "language": "text",
+      "text": "Usage:\n  java -Djarmode=tools -jar my-app.jar\n\nAvailable commands:\n  extract      Extract the contents from the jar\n  list-layers  List layers from the jar that can be extracted\n  help         Help about any command"
+    },
+    {
+      "language": "dockerfile",
+      "text": "# Perform the extraction in a separate builder container\nFROM bellsoft/liberica-openjre-debian:25-cds AS builder\nWORKDIR /builder\n\n# This points to the built jar file in the target folder\n# Adjust this to 'build/libs/*.jar' if you're using Gradle\nARG JAR_FILE=target/*.jar\n\n# Copy the jar file to the working directory and rename it to application.jar\nCOPY ${JAR_FILE} application.jar\n\n# Extract the jar file using an efficient layout\nRUN java -Djarmode=tools -jar application.jar extract --layers --destination extracted\n\n# This is the runtime container\nFROM bellsoft/liberica-openjre-debian:25-cds\nWORKDIR /application\n\n# Copy the extracted jar contents from the builder container into the working directory in the runtime container\n# Every copy step creates a new docker layer\n# This allows docker to only pull the changes it really needs\nCOPY --from=builder /builder/extracted/dependencies/ ./\nCOPY --from=builder /builder/extracted/spring-boot-loader/ ./\nCOPY --from=builder /builder/extracted/snapshot-dependencies/ ./\nCOPY --from=builder /builder/extracted/application/ ./\n# Start the application jar - this is not the uber jar used by the builder\n# This jar only contains application code and references to the extracted jar files\n# This layout is efficient to start up and AOT cache (and CDS) friendly\nENTRYPOINT [\"java\", \"-jar\", \"application.jar\"]"
+    },
+    {
+      "language": "shell",
+      "text": "$ docker build --build-arg JAR_FILE=path/to/myapp.jar ."
+    },
+    {
+      "language": "dockerfile",
+      "text": "# Perform the extraction in a separate builder container\nFROM bellsoft/liberica-openjre-debian:25-cds AS builder\nWORKDIR /builder\n\n# This points to the built jar file in the target folder\n# Adjust this to 'build/libs/*.jar' if you're using Gradle\nARG JAR_FILE=target/*.jar\n\n# Copy the jar file to the working directory and rename it to application.jar\nCOPY ${JAR_FILE} application.jar\n\n# Extract the jar file using an efficient layout\nRUN java -Djarmode=tools -jar application.jar extract --layers --destination extracted\n\n# This is the runtime container\nFROM bellsoft/liberica-openjre-debian:25-cds\nWORKDIR /application\n\n# Copy the extracted jar contents from the builder container into the working directory in the runtime container\n# Every copy step creates a new docker layer\n# This allows docker to only pull the changes it really needs\nCOPY --from=builder /builder/extracted/dependencies/ ./\nCOPY --from=builder /builder/extracted/spring-boot-loader/ ./\nCOPY --from=builder /builder/extracted/snapshot-dependencies/ ./\nCOPY --from=builder /builder/extracted/application/ ./\n\n# Execute the AOT cache training run\nRUN java -XX:AOTCacheOutput=app.aot -Dspring.context.exit=onRefresh -jar application.jar\n\n# Start the application jar with AOT cache enabled - this is not the uber jar used by the builder\n# This jar only contains application code and references to the extracted jar files\n# This layout is efficient to start up and AOT cache friendly\nENTRYPOINT [\"java\", \"-XX:AOTCache=app.aot\", \"-jar\", \"application.jar\"]"
+    },
+    {
+      "language": "dockerfile",
+      "text": "# Perform the extraction in a separate builder container\nFROM bellsoft/liberica-openjre-debian:25-cds AS builder\nWORKDIR /builder\n\n# This points to the built jar file in the target folder\n# Adjust this to 'build/libs/*.jar' if you're using Gradle\nARG JAR_FILE=target/*.jar\n\n# Copy the jar file to the working directory and rename it to application.jar\nCOPY ${JAR_FILE} application.jar\n\n# Extract the jar file using an efficient layout\nRUN java -Djarmode=tools -jar application.jar extract --layers --destination extracted\n\n# This is the runtime container\nFROM bellsoft/liberica-openjre-debian:25-cds\nWORKDIR /application\n\n# Copy the extracted jar contents from the builder container into the working directory in the runtime container\n# Every copy step creates a new docker layer\n# This allows docker to only pull the changes it really needs\nCOPY --from=builder /builder/extracted/dependencies/ ./\nCOPY --from=builder /builder/extracted/spring-boot-loader/ ./\nCOPY --from=builder /builder/extracted/snapshot-dependencies/ ./\nCOPY --from=builder /builder/extracted/application/ ./\n\n# Execute the CDS training run\nRUN java -XX:ArchiveClassesAtExit=application.jsa -Dspring.context.exit=onRefresh -jar application.jar\n\n# Start the application jar with CDS enabled - this is not the uber jar used by the builder\n# This jar only contains application code and references to the extracted jar files\n# This layout is efficient to start up and CDS friendly\nENTRYPOINT [\"java\", \"-XX:SharedArchiveFile=application.jsa\", \"-jar\", \"application.jar\"]"
+    }
+  ],
+  "headings": [
+    "Dockerfiles",
+    "AOT cache",
+    "CDS"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/container-images/efficient-images.html#packaging.container-images.efficient-images.layering": "r1",
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/aot-cache.html#packaging.aot-cache.aot-cache": "r2",
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/aot-cache.html#packaging.aot-cache.cds": "r3"
+  }
+}

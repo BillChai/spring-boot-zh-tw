@@ -1,0 +1,189 @@
+{
+  "page": "boot/io--caching.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/io/caching.html",
+  "version": "4.1.1",
+  "html_sha256": "8fe6af49e9b93d08641cadaa42d3254bc9e1b747687e5d2599f84d48a2c98532",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.cache.annotation.Cacheable\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyMathService {\n\n\t@Cacheable(\"piDecimals\")\n\tfun computePiDecimal(precision: Int): Int {\n\t\t...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.cache.annotation.Cacheable;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyMathService {\n\n\t@Cacheable(\"piDecimals\")\n\tpublic int computePiDecimal(int precision) {\n\t\t...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.cache.autoconfigure.CacheManagerCustomizer\nimport org.springframework.cache.concurrent.ConcurrentMapCacheManager\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\n\n@Configuration(proxyBeanMethods = false)\nclass MyCacheManagerConfiguration {\n\n\t@Bean\n\tfun cacheManagerCustomizer(): CacheManagerCustomizer<ConcurrentMapCacheManager> {\n\t\treturn CacheManagerCustomizer { cacheManager ->\n\t\t\tcacheManager.isAllowNullValues = false\n\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.cache.autoconfigure.CacheManagerCustomizer;\nimport org.springframework.cache.concurrent.ConcurrentMapCacheManager;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyCacheManagerConfiguration {\n\n\t@Bean\n\tpublic CacheManagerCustomizer<ConcurrentMapCacheManager> cacheManagerCustomizer() {\n\t\treturn (cacheManager) -> cacheManager.setAllowNullValues(false);\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.cache.jcache.provider=com.example.MyCachingProvider\nspring.cache.jcache.config=classpath:example.xml"
+    },
+    {
+      "language": "yaml",
+      "text": "# Only necessary if more than one provider is present\nspring:\n  cache:\n    jcache:\n      provider: \"com.example.MyCachingProvider\"\n      config: \"classpath:example.xml\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.cache.infinispan.config=infinispan.xml"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  cache:\n    infinispan:\n      config: \"infinispan.xml\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.cache.cache-names=cache1,cache2\nspring.cache.couchbase.expiration=10m"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  cache:\n    cache-names: \"cache1,cache2\"\n    couchbase:\n      expiration: \"10m\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.cache.autoconfigure.CouchbaseCacheManagerBuilderCustomizer\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.data.couchbase.cache.CouchbaseCacheConfiguration\nimport java.time.Duration\n\n@Configuration(proxyBeanMethods = false)\nclass MyCouchbaseCacheManagerConfiguration {\n\n\t@Bean\n\tfun myCouchbaseCacheManagerBuilderCustomizer(): CouchbaseCacheManagerBuilderCustomizer {\n\t\treturn CouchbaseCacheManagerBuilderCustomizer { builder ->\n\t\t\tbuilder\n\t\t\t\t.withCacheConfiguration(\n\t\t\t\t\t\"cache1\", CouchbaseCacheConfiguration\n\t\t\t\t\t\t.defaultCacheConfig().entryExpiry(Duration.ofSeconds(10))\n\t\t\t\t)\n\t\t\t\t.withCacheConfiguration(\n\t\t\t\t\t\"cache2\", CouchbaseCacheConfiguration\n\t\t\t\t\t\t.defaultCacheConfig().entryExpiry(Duration.ofMinutes(1))\n\t\t\t\t)\n\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.time.Duration;\n\nimport org.springframework.boot.cache.autoconfigure.CouchbaseCacheManagerBuilderCustomizer;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.data.couchbase.cache.CouchbaseCacheConfiguration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyCouchbaseCacheManagerConfiguration {\n\n\t@Bean\n\tpublic CouchbaseCacheManagerBuilderCustomizer myCouchbaseCacheManagerBuilderCustomizer() {\n\t\treturn (builder) -> builder\n\t\t\t\t.withCacheConfiguration(\"cache1\", CouchbaseCacheConfiguration\n\t\t\t\t\t\t.defaultCacheConfig().entryExpiry(Duration.ofSeconds(10)))\n\t\t\t\t.withCacheConfiguration(\"cache2\", CouchbaseCacheConfiguration\n\t\t\t\t\t\t.defaultCacheConfig().entryExpiry(Duration.ofMinutes(1)));\n\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.cache.cache-names=cache1,cache2\nspring.cache.redis.time-to-live=10m"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  cache:\n    cache-names: \"cache1,cache2\"\n    redis:\n      time-to-live: \"10m\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.cache.autoconfigure.RedisCacheManagerBuilderCustomizer\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.data.redis.cache.RedisCacheConfiguration\nimport java.time.Duration\n\n@Configuration(proxyBeanMethods = false)\nclass MyRedisCacheManagerConfiguration {\n\n\t@Bean\n\tfun myRedisCacheManagerBuilderCustomizer(): RedisCacheManagerBuilderCustomizer {\n\t\treturn RedisCacheManagerBuilderCustomizer { builder ->\n\t\t\tbuilder\n\t\t\t\t.withCacheConfiguration(\n\t\t\t\t\t\"cache1\", RedisCacheConfiguration\n\t\t\t\t\t\t.defaultCacheConfig().entryTtl(Duration.ofSeconds(10))\n\t\t\t\t)\n\t\t\t\t.withCacheConfiguration(\n\t\t\t\t\t\"cache2\", RedisCacheConfiguration\n\t\t\t\t\t\t.defaultCacheConfig().entryTtl(Duration.ofMinutes(1))\n\t\t\t\t)\n\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.time.Duration;\n\nimport org.springframework.boot.cache.autoconfigure.RedisCacheManagerBuilderCustomizer;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.data.redis.cache.RedisCacheConfiguration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyRedisCacheManagerConfiguration {\n\n\t@Bean\n\tpublic RedisCacheManagerBuilderCustomizer myRedisCacheManagerBuilderCustomizer() {\n\t\treturn (builder) -> builder\n\t\t\t\t.withCacheConfiguration(\"cache1\", RedisCacheConfiguration\n\t\t\t\t\t\t.defaultCacheConfig().entryTtl(Duration.ofSeconds(10)))\n\t\t\t\t.withCacheConfiguration(\"cache2\", RedisCacheConfiguration\n\t\t\t\t\t\t.defaultCacheConfig().entryTtl(Duration.ofMinutes(1)));\n\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.cache.cache-names=cache1,cache2\nspring.cache.caffeine.spec=maximumSize=500,expireAfterAccess=600s"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  cache:\n    cache-names: \"cache1,cache2\"\n    caffeine:\n      spec: \"maximumSize=500,expireAfterAccess=600s\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.cache.autoconfigure.Cache2kBuilderCustomizer\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport java.util.concurrent.TimeUnit\n\n@Configuration(proxyBeanMethods = false)\nclass MyCache2kDefaultsConfiguration {\n\n\t@Bean\n\tfun myCache2kDefaultsCustomizer(): Cache2kBuilderCustomizer {\n\t\treturn Cache2kBuilderCustomizer { builder ->\n\t\t\tbuilder.entryCapacity(200)\n\t\t\t\t.expireAfterWrite(5, TimeUnit.MINUTES)\n\t\t}\n\t}\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.util.concurrent.TimeUnit;\n\nimport org.springframework.boot.cache.autoconfigure.Cache2kBuilderCustomizer;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyCache2kDefaultsConfiguration {\n\n\t@Bean\n\tpublic Cache2kBuilderCustomizer myCache2kDefaultsCustomizer() {\n\t\treturn (builder) -> builder.entryCapacity(200)\n\t\t\t\t.expireAfterWrite(5, TimeUnit.MINUTES);\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.cache.cache-names=cache1,cache2"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  cache:\n    cache-names: \"cache1,cache2\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.cache.type=none"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  cache:\n    type: \"none\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.cache.test.autoconfigure.AutoConfigureCache\nimport org.springframework.boot.test.context.SpringBootTest\n\n@SpringBootTest\n@AutoConfigureCache\nclass MyIntegrationTests {\n\n\t// Tests use a no-op cache manager\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.cache.test.autoconfigure.AutoConfigureCache;\nimport org.springframework.boot.test.context.SpringBootTest;\n\n@SpringBootTest\n@AutoConfigureCache\npublic class MyIntegrationTests {\n\n\t// Tests use a no-op cache manager\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.cache.type=none"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  cache:\n    type: \"none\""
+    }
+  ],
+  "headings": [
+    "Caching",
+    "Supported Cache Providers",
+    "Generic",
+    "JCache (JSR-107)",
+    "Hazelcast",
+    "Infinispan",
+    "Couchbase",
+    "Redis",
+    "Caffeine",
+    "Cache2k",
+    "Simple",
+    "None",
+    "Testing"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/cache.html": "r1",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/cache/annotation/EnableCaching.html": "r2",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/caching.html#io.caching.testing": "r3",
+    "https://javadoc.io/doc/javax.cache/cache-api/1.1.1/javax/cache/annotation/CacheResult.html": "r4",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/caching.html#io.caching.provider.simple": "r5",
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/cache/annotations.html#cache-annotations-put": "r6",
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/cache/annotations.html#cache-annotations-evict": "r7",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/cache/Cache.html": "r8",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/cache/CacheManager.html": "r9",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/cache/interceptor/CacheResolver.html": "r10",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/cache/annotation/CachingConfigurer.html": "r11",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/caching.html#io.caching.provider.generic": "r12",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/caching.html#io.caching.provider.jcache": "r13",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/caching.html#io.caching.provider.hazelcast": "r14",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/caching.html#io.caching.provider.infinispan": "r15",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/caching.html#io.caching.provider.couchbase": "r16",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/caching.html#io.caching.provider.redis": "r17",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/caching.html#io.caching.provider.caffeine": "r18",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/caching.html#io.caching.provider.cache2k": "r19",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/cache/autoconfigure/CacheManagerCustomizer.html": "r20",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/cache/concurrent/ConcurrentMapCacheManager.html": "r21",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/annotation/Order.html": "r22",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/Ordered.html": "r23",
+    "https://jcp.org/en/jsr/detail?id=107": "r24",
+    "https://javadoc.io/doc/javax.cache/cache-api/1.1.1/javax/cache/spi/CachingProvider.html": "r25",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/cache/jcache/JCacheCacheManager.html": "r26",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/hazelcast.html": "r27",
+    "https://docs.hazelcast.org/docs/5.5.0/javadoc/com/hazelcast/core/HazelcastInstance.html": "r28",
+    "https://javadoc.io/doc/javax.cache/cache-api/1.1.1/javax/cache/CacheManager.html": "r29",
+    "https://javadoc.io/doc/javax.cache/cache-api/1.1.1/javax/cache/configuration/Configuration.html": "r30",
+    "https://infinispan.org/": "r31",
+    "https://docs.jboss.org/infinispan/16.1/apidocs/org/infinispan/configuration/cache/ConfigurationBuilder.html": "r32",
+    "https://infinispan.org/docs/stable/titles/spring/spring.html": "r33",
+    "https://docs.spring.io/spring-boot/4.1/reference/data/nosql.html#data.nosql.couchbase": "r34",
+    "https://docs.spring.io/spring-data/couchbase/docs/6.1.x/api/org/springframework/data/couchbase/cache/CouchbaseCacheManager.html": "r35",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/cache/autoconfigure/CouchbaseCacheManagerBuilderCustomizer.html": "r36",
+    "https://redis.io/": "r37",
+    "https://docs.spring.io/spring-data/redis/docs/4.1.x/api/org/springframework/data/redis/cache/RedisCacheManager.html": "r38",
+    "https://docs.spring.io/spring-data/redis/docs/4.1.x/api/org/springframework/data/redis/cache/RedisCacheConfiguration.html": "r39",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r40",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/cache/autoconfigure/RedisCacheManagerBuilderCustomizer.html": "r41",
+    "https://github.com/ben-manes/caffeine": "r42",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/cache/caffeine/CaffeineCacheManager.html": "r43",
+    "https://javadoc.io/doc/com.github.ben-manes.caffeine/caffeine/3.2.4/com/github/benmanes/caffeine/cache/CaffeineSpec.html": "r44",
+    "https://javadoc.io/doc/com.github.ben-manes.caffeine/caffeine/3.2.4/com/github/benmanes/caffeine/cache/Caffeine.html": "r45",
+    "https://javadoc.io/doc/com.github.ben-manes.caffeine/caffeine/3.2.4/com/github/benmanes/caffeine/cache/CacheLoader.html": "r46",
+    "https://cache2k.org/": "r47",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/cache/autoconfigure/Cache2kBuilderCustomizer.html": "r48",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html": "r49",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html": "r50",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/SpringBootTest.html": "r51",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/cache/test/autoconfigure/AutoConfigureCache.html": "r52"
+  }
+}

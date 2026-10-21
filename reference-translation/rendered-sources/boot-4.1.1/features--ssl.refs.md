@@ -1,0 +1,17 @@
+[r1]: https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.typesafe-configuration-properties.conversion.base64
+[r2]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/ssl/JksSslBundleProperties.html
+[r3]: https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.typesafe-configuration-properties.relaxed-binding.maps-from-environment-variables
+[r4]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/ssl/PemSslBundleProperties.html
+[r5]: https://docs.spring.io/spring-boot/4.1/how-to/webserver.html#howto.webserver.configure-ssl
+[r6]: https://docs.spring.io/spring-boot/4.1/reference/data/index.html
+[r7]: https://docs.spring.io/spring-boot/4.1/reference/io/rest-client.html
+[r8]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/ssl/SslBundles.html
+[r9]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/ssl/SslBundle.html
+[r10]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/KeyStore.html
+[r11]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/net/ssl/KeyManagerFactory.html
+[r12]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/net/ssl/TrustManagerFactory.html
+[r13]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/net/ssl/KeyManager.html
+[r14]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/net/ssl/TrustManager.html
+[r15]: https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/net/ssl/SSLContext.html
+[r16]: https://letsencrypt.org/
+[r17]: https://certbot.eff.org/

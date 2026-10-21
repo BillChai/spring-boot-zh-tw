@@ -1,0 +1,15 @@
+{
+  "page": "boot/actuator--http-exchanges.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/actuator/http-exchanges.html",
+  "version": "4.1.1",
+  "html_sha256": "067f3d0d3e94a1ced30e48a288660694cf3fc06f8b32bbe96cb30a2cad76ef30",
+  "code_blocks": [],
+  "headings": [
+    "Recording HTTP Exchanges",
+    "Custom HTTP Exchange Recording"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/web/exchanges/HttpExchangeRepository.html": "r1",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/web/exchanges/InMemoryHttpExchangeRepository.html": "r2"
+  }
+}

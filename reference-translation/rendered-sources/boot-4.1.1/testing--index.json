@@ -1,0 +1,16 @@
+{
+  "page": "boot/testing--index.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/testing/index.html",
+  "version": "4.1.1",
+  "html_sha256": "5b4a60803fbd212ef82404240d57f11cd139da66883f081dca520bbff3e3da22",
+  "code_blocks": [
+    {
+      "language": "xml",
+      "text": "<dependency>\n\t<groupId>org.junit.vintage</groupId>\n\t<artifactId>junit-vintage-engine</artifactId>\n\t<scope>test</scope>\n\t<exclusions>\n\t\t<exclusion>\n\t\t\t<groupId>org.hamcrest</groupId>\n\t\t\t<artifactId>hamcrest-core</artifactId>\n\t\t</exclusion>\n\t</exclusions>\n</dependency>"
+    }
+  ],
+  "headings": [
+    "Testing"
+  ],
+  "links": {}
+}

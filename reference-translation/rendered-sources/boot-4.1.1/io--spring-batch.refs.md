@@ -1,0 +1,11 @@
+[r1]: https://spring.io/projects/spring-batch
+[r2]: https://docs.spring.io/spring-batch/docs/6.0.x/api/org/springframework/batch/core/configuration/annotation/EnableBatchProcessing.html
+[r3]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html
+[r4]: https://docs.spring.io/spring-batch/docs/6.0.x/api/org/springframework/batch/core/configuration/support/DefaultBatchConfiguration.html
+[r5]: https://docs.spring.io/spring-batch/docs/6.0.x/api/org/springframework/batch/core/configuration/annotation/EnableJdbcJobRepository.html
+[r6]: https://docs.spring.io/spring-batch/docs/6.0.x/api/org/springframework/batch/core/configuration/annotation/EnableMongoJobRepository.html
+[r7]: https://docs.spring.io/spring-batch/docs/6.0.x/api/org/springframework/batch/core/job/Job.html
+[r8]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/batch/autoconfigure/JobLauncherApplicationRunner.html
+[r9]: https://github.com/spring-projects/spring-boot/tree/v4.1.1/module/spring-boot-batch/src/main/java/org/springframework/boot/batch/autoconfigure/BatchAutoConfiguration.java
+[r10]: https://github.com/spring-projects/spring-boot/tree/v4.1.1/module/spring-boot-batch-jdbc/src/main/java/org/springframework/boot/batch/jdbc/autoconfigure/BatchJdbcAutoConfiguration.java
+[r11]: https://github.com/spring-projects/spring-boot/tree/v4.1.1/module/spring-boot-batch-data-mongodb/src/main/java/org/springframework/boot/batch/mongodb/autoconfigure/BatchDataMongoAutoConfiguration.java

@@ -1,0 +1,18 @@
+{
+  "page": "boot/packaging--checkpoint-restore.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/packaging/checkpoint-restore.html",
+  "version": "4.1.1",
+  "html_sha256": "2ea9f635d930fc62557ce645dbfb3afda928bd573b4dd11fd5a81df96e2e1517",
+  "code_blocks": [],
+  "headings": [
+    "Checkpoint and Restore With the JVM"
+  ],
+  "links": {
+    "https://wiki.openjdk.org/display/crac/Main": "r1",
+    "https://github.com/checkpoint-restore/criu": "r2",
+    "https://bell-sw.com/pages/downloads/?package=jdk-crac": "r3",
+    "https://www.azul.com/downloads/?package=jdk-crac#zulu": "r4",
+    "https://github.com/spring-projects/spring-lifecycle-smoke-tests/blob/ci/STATUS.adoc": "r5",
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/checkpoint-restore.html": "r6"
+  }
+}

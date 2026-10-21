@@ -1,0 +1,6 @@
+[
+  "```properties\nspring.mail.properties[mail.smtp.connectiontimeout]=5000\nspring.mail.properties[mail.smtp.timeout]=3000\nspring.mail.properties[mail.smtp.writetimeout]=5000\n```",
+  "```yaml\nspring:\n  mail:\n    properties:\n      \"[mail.smtp.connectiontimeout]\": 5000\n      \"[mail.smtp.timeout]\": 3000\n      \"[mail.smtp.writetimeout]\": 5000\n```",
+  "```properties\nspring.mail.jndi-name=mail/Session\n```",
+  "```yaml\nspring:\n  mail:\n    jndi-name: \"mail/Session\"\n```"
+]

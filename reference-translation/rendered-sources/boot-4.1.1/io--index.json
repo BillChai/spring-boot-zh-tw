@@ -1,0 +1,11 @@
+{
+  "page": "boot/io--index.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/io/index.html",
+  "version": "4.1.1",
+  "html_sha256": "ed074567cbf6cf1c1056701d1526c4ba21197336797151fbaf3ea222b2f954ec",
+  "code_blocks": [],
+  "headings": [
+    "IO"
+  ],
+  "links": {}
+}

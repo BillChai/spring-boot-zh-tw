@@ -1,0 +1,232 @@
+{
+  "page": "boot/io--grpc.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/io/grpc.html",
+  "version": "4.1.1",
+  "html_sha256": "79a5cdf672c5e3ab626ac9ea6b84548421c915d8ac9a931f304ff059d228d8a9",
+  "code_blocks": [
+    {
+      "language": "protobuf",
+      "text": "syntax = \"proto3\";\n\noption java_package = \"com.example.grpc.proto\";\noption java_multiple_files = true;\n\nservice HelloWorld {\n    rpc SayHello (HelloRequest) returns (HelloReply) {}\n}\n\nmessage HelloRequest {\n    string name = 1;\n}\n\nmessage HelloReply {\n    string message = 1;\n}"
+    },
+    {
+      "language": "xml",
+      "text": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n\txsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\n\t<modelVersion>4.0.0</modelVersion>\n    <parent>\n\t\t<groupId>org.springframework.boot</groupId>\n\t\t<artifactId>spring-boot-starter-parent</artifactId>\n\t\t<version>4.1.1</version>\n\t</parent>\n\t<groupId>com.example</groupId>\n\t<artifactId>myproject</artifactId>\n\t<version>0.0.1-SNAPSHOT</version>\n\n\t<build>\n\t\t<plugins>\n\t\t\t<plugin>\n\t\t\t\t<groupId>io.github.ascopes</groupId>\n\t\t\t\t<artifactId>protobuf-maven-plugin</artifactId>\n\t\t\t</plugin>\n\t\t\t<plugin>\n\t\t\t\t<groupId>org.springframework.boot</groupId>\n\t\t\t\t<artifactId>spring-boot-maven-plugin</artifactId>\n\t\t\t</plugin>\n\t\t</plugins>\n\t</build>\n\n</project>"
+    },
+    {
+      "language": "gradle",
+      "text": "plugins {\n\tid 'java'\n\tid 'org.springframework.boot' version '4.1.1'\n\tid 'io.spring.dependency-management' version '1.1.7'\n\tid 'com.google.protobuf' version '0.9.6'\n}\n\ngroup = 'com.example'\nversion = '0.0.1-SNAPSHOT'\n\njava {\n\ttoolchain {\n\t\tlanguageVersion = JavaLanguageVersion.of(17)\n\t}\n}\n\nrepositories {\n\tmavenCentral()\n}\n\nprotobuf {\n\tplugins {\n\t\tgrpc {}\n\t}\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.grpc.stub.StreamObserver\nimport org.springframework.grpc.server.service.GrpcService\n\n@GrpcService\nclass MyHelloWorldService : HelloWorldGrpc.HelloWorldImplBase() {\n\n\toverride fun sayHello(request: HelloRequest,  responseObserver: StreamObserver<HelloReply>) {\n\t\tval message = \"Hello '${request.getName()}'\"\n\t\tval reply = HelloReply.newBuilder().setMessage(message).build()\n\t\tresponseObserver.onNext(reply)\n\t\tresponseObserver.onCompleted()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.grpc.stub.StreamObserver;\n\nimport org.springframework.grpc.server.service.GrpcService;\n\n@GrpcService\npublic class MyHelloWorldService extends HelloWorldGrpc.HelloWorldImplBase {\n\n\t@Override\n\tpublic void sayHello(HelloRequest request, StreamObserver<HelloReply> responseObserver) {\n\t\tString message = \"Hello '%s'\".formatted(request.getName());\n\t\tHelloReply reply = HelloReply.newBuilder().setMessage(message).build();\n\t\tresponseObserver.onNext(reply);\n\t\tresponseObserver.onCompleted();\n\t}\n\n}"
+    },
+    {
+      "language": "shell",
+      "text": "$ grpcurl -d '{\"name\":\"Spring\"}' -plaintext localhost:9090 HelloWorld.SayHello"
+    },
+    {
+      "language": "json",
+      "text": "{\n  \"message\": \"Hello 'Spring'\"\n}"
+    },
+    {
+      "language": "xml",
+      "text": "<dependency>\n\t<groupId>org.springframework.boot</groupId>\n\t<artifactId>spring-boot-starter-grpc-server</artifactId>\n\t<exclusions>\n\t\t<!-- Exclude the gRPC Netty dependency -->\n\t\t<exclusion>\n\t\t\t<groupId>io.grpc</groupId>\n\t\t\t<artifactId>grpc-netty</artifactId>\n\t\t</exclusion>\n\t</exclusions>\n</dependency>\n<!-- Use gRPC Netty Shaded instead -->\n<dependency>\n\t<groupId>io.grpc</groupId>\n\t<artifactId>grpc-netty-shaded</artifactId>\n</dependency>"
+    },
+    {
+      "language": "gradle",
+      "text": "dependencies {\n\timplementation('org.springframework.boot:spring-boot-starter-grpc-server') {\n\t\t// Exclude the gRPC Netty dependency\n\t\texclude group: 'io.grpc', module: 'grpc-netty'\n\t}\n\t// Use gRPC Netty Shaded instead\n\timplementation \"io.grpc:grpc-netty-shaded\"\n}"
+    },
+    {
+      "language": "xml",
+      "text": "<dependency>\n\t<groupId>org.springframework.boot</groupId>\n\t<artifactId>spring-boot-starter-webmvc</artifactId>\n</dependency>\n<dependency>\n\t<groupId>org.springframework.boot</groupId>\n\t<artifactId>spring-boot-starter-grpc-server</artifactId>\n\t<exclusions>\n\t\t<!-- Exclude the gRPC Netty dependency -->\n\t\t<exclusion>\n\t\t\t<groupId>io.grpc</groupId>\n\t\t\t<artifactId>grpc-netty</artifactId>\n\t\t</exclusion>\n\t</exclusions>\n</dependency>\n<!-- Use gRPC Servlet Jakarta instead -->\n<dependency>\n\t<groupId>io.grpc</groupId>\n\t<artifactId>grpc-servlet-jakarta</artifactId>\n</dependency>"
+    },
+    {
+      "language": "gradle",
+      "text": "dependencies {\n\timplementation('org.springframework.boot:spring-boot-starter-webmvc') {\n\timplementation('org.springframework.boot:spring-boot-starter-grpc-server') {\n\t\t// Exclude the gRPC Netty dependency\n\t\texclude group: 'io.grpc', module: 'grpc-netty'\n\t}\n\t// Use gRPC Servlet Jakarta instead\n\timplementation \"io.grpc:grpc-servlet-jakarta\"\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.grpc.server.ssl.bundle=mysslbundle"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  grpc:\n    server:\n      ssl:\n        bundle: mysslbundle"
+    },
+    {
+      "language": "properties",
+      "text": "spring.grpc.server.health.service.myservice.include[0]=db\nspring.grpc.server.health.service.myservice.include[1]=redis"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  grpc:\n    server:\n      health:\n        service:\n          myservice:\n            include:\n            - db\n            - redis"
+    },
+    {
+      "language": "properties",
+      "text": "spring.grpc.server.health.schedule.period=5m\nspring.grpc.server.health.schedule.delay=2s"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  grpc:\n    server:\n      health:\n        schedule:\n          period: 5m\n          delay: 2s"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.grpc.server.autoconfigure.security.web.servlet.GrpcRequest\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.security.config.Customizer.withDefaults\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity\nimport org.springframework.security.web.SecurityFilterChain\n\n@Configuration(proxyBeanMethods = false)\nclass MySecurityConfiguration {\n\n\t@Bean\n\tfun securityFilterChain(http: HttpSecurity): SecurityFilterChain {\n\t\thttp.securityMatcher(GrpcRequest.toAnyService().excluding(\"special\"))\n\t\thttp.authorizeHttpRequests { requests -> requests.anyRequest().hasRole(\"GRPC_ADMIN\") }\n\t\thttp.httpBasic(withDefaults())\n\t\treturn http.build()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.grpc.server.autoconfigure.security.web.servlet.GrpcRequest;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity;\nimport org.springframework.security.web.SecurityFilterChain;\n\nimport static org.springframework.security.config.Customizer.withDefaults;\n\n@Configuration(proxyBeanMethods = false)\npublic class MySecurityConfiguration {\n\n\t@Bean\n\tpublic SecurityFilterChain securityFilterChain(HttpSecurity http) {\n\t\thttp.securityMatcher(GrpcRequest.toAnyService().excluding(\"special\"));\n\t\thttp.authorizeHttpRequests((requests) -> requests.anyRequest().hasRole(\"GRPC_ADMIN\"));\n\t\thttp.httpBasic(withDefaults());\n\t\treturn http.build();\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.autoconfigure.SpringBootApplication\nimport org.springframework.boot.docs.features.springapplication.MyApplication\nimport org.springframework.boot.runApplication\nimport org.springframework.grpc.client.ImportGrpcClients\n\n@SpringBootApplication(proxyBeanMethods = false)\n@ImportGrpcClients(target = \"hello\", types = [HelloWorldGrpc.HelloWorldBlockingStub::class])\nclass MyApplication\n\nfun main(args: Array<String>) {\n\trunApplication<MyApplication>(*args)\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\nimport org.springframework.grpc.client.ImportGrpcClients;\n\n@SpringBootApplication(proxyBeanMethods = false)\n@ImportGrpcClients(target = \"hello\", types = HelloWorldGrpc.HelloWorldBlockingStub.class)\npublic class MyApplication {\n\n\tpublic static void main(String[] args) {\n\t\tSpringApplication.run(MyApplication.class, args);\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.grpc.client.channel.myservice.target=static://grpc.example.com:9090\nspring.grpc.client.channel.myservice.inbound.keepalive.timeout=40s\nspring.grpc.client.channel.myservice.inbound.message.max-size=8MB"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  grpc:\n    client:\n      channel:\n        myservice:\n          target: static://grpc.example.com:9090\n          inbound:\n            keepalive:\n              timeout: 40s\n            message:\n              max-size: 8MB"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.ApplicationArguments\nimport org.springframework.boot.ApplicationRunner\n\n\nclass MyApplicationRunner(val helloStub: HelloWorldGrpc.HelloWorldBlockingStub) : ApplicationRunner {\n\n\toverride fun run(args: ApplicationArguments) {\n\t\tval request = HelloRequest.newBuilder().setName(\"Spring\").build()\n\t\tval reply: HelloReply = helloStub.sayHello(request)\n\t\tprintln(reply.getMessage())\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.ApplicationArguments;\nimport org.springframework.boot.ApplicationRunner;\nimport org.springframework.boot.docs.io.grpc.client.stubbeans.HelloWorldGrpc.HelloWorldBlockingStub;\nimport org.springframework.stereotype.Component;\n\n@Component\nclass MyApplicationRunner implements ApplicationRunner {\n\n\tprivate final HelloWorldBlockingStub helloStub;\n\n\tMyApplicationRunner(HelloWorldGrpc.HelloWorldBlockingStub helloStub) {\n\t\tthis.helloStub = helloStub;\n\t}\n\n\t@Override\n\tpublic void run(ApplicationArguments args) throws Exception {\n\t\tHelloRequest request = HelloRequest.newBuilder().setName(\"Spring\").build();\n\t\tHelloReply reply = this.helloStub.sayHello(request);\n\t\tSystem.out.println(reply.getMessage());\n\t}\n\n}"
+    },
+    {
+      "language": "xml",
+      "text": "<dependency>\n\t<groupId>org.springframework.boot</groupId>\n\t<artifactId>spring-boot-starter-grpc-client</artifactId>\n\t<exclusions>\n\t\t<!-- Exclude the gRPC Netty dependency -->\n\t\t<exclusion>\n\t\t\t<groupId>io.grpc</groupId>\n\t\t\t<artifactId>grpc-netty</artifactId>\n\t\t</exclusion>\n\t</exclusions>\n</dependency>\n<!-- Use gRPC Netty Shaded instead -->\n<dependency>\n\t<groupId>io.grpc</groupId>\n\t<artifactId>grpc-netty-shaded</artifactId>\n</dependency>"
+    },
+    {
+      "language": "gradle",
+      "text": "dependencies {\n\timplementation('org.springframework.boot:spring-boot-starter-grpc-client') {\n\t\t// Exclude the gRPC Netty dependency\n\t\texclude group: 'io.grpc', module: 'grpc-netty'\n\t}\n\t// Use gRPC Netty Shaded instead\n\timplementation \"io.grpc:grpc-netty-shaded\"\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.grpc.client.channel.myservice.target=static://grpc.example.com:9090\nspring.grpc.client.channel.myservice.ssl.enabled=true"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  grpc:\n    client:\n      channel:\n        myservice:\n          target: static://grpc.example.com:9090\n          ssl:\n            enabled: true"
+    },
+    {
+      "language": "properties",
+      "text": "spring.grpc.client.channel.myservice.target=static://grpc.example.com:9090\nspring.grpc.client.channel.myservice.ssl.bundle=mybundle"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  grpc:\n    client:\n      channel:\n        myservice:\n          target: static://grpc.example.com:9090\n          ssl:\n            bundle: mybundle"
+    },
+    {
+      "language": "properties",
+      "text": "spring.grpc.client.channel.myservice.bypass-certificate-validation=true"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  grpc:\n    client:\n      channel:\n        myservice:\n          bypass-certificate-validation: true"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.grpc.ManagedChannelBuilder\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.grpc.client.GrpcChannelBuilderCustomizer\nimport org.springframework.grpc.client.interceptor.security.BasicAuthenticationInterceptor\nimport java.util.function.Consumer\n\n@Configuration(proxyBeanMethods = false)\nclass MyGrpcConfiguration {\n\n\t@Bean\n\tfun helloChannelCustomizer(): GrpcChannelBuilderCustomizer<*> {\n\t\treturn GrpcChannelBuilderCustomizer.matching(\"hello\", { builder ->\n\t\t\tbuilder.intercept(BasicAuthenticationInterceptor(\"user\", \"password\"))\n\t\t})\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.grpc.client.GrpcChannelBuilderCustomizer;\nimport org.springframework.grpc.client.interceptor.security.BasicAuthenticationInterceptor;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyGrpcConfiguration {\n\n\t@Bean\n\tGrpcChannelBuilderCustomizer<?> helloChannelCustomizer() {\n\t\treturn GrpcChannelBuilderCustomizer.matching(\"hello\",\n\t\t\t\t(builder) -> builder.intercept(new BasicAuthenticationInterceptor(\"user\", \"password\")));\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.jooq.DSLContext\nimport org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.grpc.test.autoconfigure.AutoConfigureTestGrpcTransport\nimport org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.grpc.client.ImportGrpcClients\n\n@SpringBootTest\n@AutoConfigureTestGrpcTransport\n@ImportGrpcClients(types = [HelloWorldGrpc.HelloWorldBlockingStub::class])\nclass MyGrpcTests(@Autowired val helloStub: HelloWorldGrpc.HelloWorldBlockingStub) {\n\n\t@Test\n\tfun sayHello() {\n\t\tval request = HelloRequest.newBuilder().setName(\"Spring\").build()\n\t\tval reply = helloStub.sayHello(request)\n\t\tassertThat(reply.getMessage()).isEqualTo(\"Hello 'Spring'\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.grpc.test.autoconfigure.AutoConfigureTestGrpcTransport;\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.grpc.client.ImportGrpcClients;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\n@SpringBootTest\n@AutoConfigureTestGrpcTransport\n@ImportGrpcClients(types = HelloWorldGrpc.HelloWorldBlockingStub.class)\nclass MyGrpcTests {\n\n\t@Autowired\n\tprivate HelloWorldGrpc.HelloWorldBlockingStub helloStub;\n\n\t@Test\n\tvoid sayHello() {\n\t\tHelloRequest request = HelloRequest.newBuilder().setName(\"Spring\").build();\n\t\tHelloReply reply = this.helloStub.sayHello(request);\n\t\tassertThat(reply.getMessage()).isEqualTo(\"Hello 'Spring'\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.grpc.ManagedChannel\nimport io.grpc.netty.NettyChannelBuilder\nimport org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.springframework.boot.grpc.test.autoconfigure.LocalGrpcServerPort\nimport org.springframework.boot.test.context.SpringBootTest\n\n@SpringBootTest(properties = [\"spring.grpc.server.port=0\"])\nclass MyGrpcIntegrationTests {\n\n\t@LocalGrpcServerPort\n\tvar port = 0\n\n\t@Test\n\tfun sayHello() {\n\t\tval target = \"localhost:${port}\"\n\t\tval channel: ManagedChannel = NettyChannelBuilder.forTarget(target).usePlaintext().build()\n\t\ttry {\n\t\t\tval hello: HelloWorldGrpc.HelloWorldBlockingStub = HelloWorldGrpc.newBlockingStub(channel)\n\t\t\tval request = HelloRequest.newBuilder().setName(\"Spring\").build()\n\t\t\tassertThat(hello.sayHello(request).getMessage()).isEqualTo(\"Hello 'Spring'\")\n\t\t} finally {\n\t\t\tchannel.shutdown()\n\t\t}\n\t}\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.grpc.ManagedChannel;\nimport io.grpc.netty.NettyChannelBuilder;\nimport org.junit.jupiter.api.Test;\n\nimport org.springframework.boot.docs.io.grpc.testing.localserverport.HelloWorldGrpc.HelloWorldBlockingStub;\nimport org.springframework.boot.grpc.test.autoconfigure.LocalGrpcServerPort;\nimport org.springframework.boot.test.context.SpringBootTest;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\n@SpringBootTest(properties = \"spring.grpc.server.port=0\")\nclass MyGrpcIntegrationTests {\n\n\t@LocalGrpcServerPort\n\tprivate int port;\n\n\t@Test\n\tvoid sayHello() {\n\t\tString target = \"localhost:%s\".formatted(this.port);\n\t\tManagedChannel channel = NettyChannelBuilder.forTarget(target).usePlaintext().build();\n\t\ttry {\n\t\t\tHelloWorldBlockingStub hello = HelloWorldGrpc.newBlockingStub(channel);\n\t\t\tHelloRequest request = HelloRequest.newBuilder().setName(\"Spring\").build();\n\t\t\tassertThat(hello.sayHello(request).getMessage()).isEqualTo(\"Hello 'Spring'\");\n\t\t}\n\t\tfinally {\n\t\t\tchannel.shutdown();\n\t\t}\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "gRPC",
+    "Service Definitions",
+    "Generating Java Code",
+    "Using the Maven Plugin",
+    "Using the Gradle Plugin",
+    "Writing a gRPC Server Application",
+    "Switching to a Netty Shaded Server",
+    "Switching to a Servlet Container",
+    "SSL Support",
+    "Using an In-Process Server",
+    "Reflection",
+    "Server Health",
+    "Service Specific Health Mappings",
+    "Push Configuration",
+    "Securing gRPC Server Applications",
+    "Netty Based Servers",
+    "Servlet Container Based Servers",
+    "OAuth2 Resource Server",
+    "Writing a gRPC Client Application",
+    "Channel Properties",
+    "Using Stub Beans",
+    "Switching to Netty Shaded Client Transport",
+    "SSL Support",
+    "Standard one-way TLS",
+    "Mutual TLS",
+    "Using In-Process Channels",
+    "Observability",
+    "Channel Customization",
+    "Testing gRPC Applications",
+    "Using In-Process Test Transport",
+    "Testing With a Running Server"
+  ],
+  "links": {
+    "https://protobuf.dev/programming-guides/proto3/": "r1",
+    "https://ascopes.github.io/protobuf-maven-plugin": "r2",
+    "https://github.com/google/protobuf-gradle-plugin": "r3",
+    "https://javadoc.io/doc/io.grpc/grpc-api/1.83.1/io/grpc/BindableService.html": "r4",
+    "https://docs.spring.io/spring-grpc/reference/1.1/server.html#_create_a_grpc_service": "r5",
+    "https://docs.spring.io/spring-grpc/reference/1.1/api/java/org/springframework/grpc/server/service/GrpcService.html": "r6",
+    "https://github.com/fullstorydev/grpcurl": "r7",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/ssl.html": "r8",
+    "https://grpc.io/docs/guides/reflection/": "r9",
+    "https://github.com/grpc/grpc-proto/blob/master/grpc/health/v1/health.proto": "r10",
+    "https://docs.spring.io/spring-grpc/reference/1.1/api/java/org/springframework/grpc/server/security/GrpcSecurity.html": "r11",
+    "https://docs.spring.io/spring-grpc/reference/1.1/api/java/org/springframework/grpc/server/security/SecurityGrpcExceptionHandler.html": "r12",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/access/prepost/PreAuthorize.html": "r13",
+    "https://docs.spring.io/spring-grpc/reference/1.1/api/java/org/springframework/grpc/server/security/AuthenticationProcessInterceptor.html": "r14",
+    "https://docs.spring.io/spring-grpc/reference/1.1/server.html#_declarative_security_with_spring_security": "r15",
+    "https://docs.spring.io/spring-boot/4.1/reference/web/servlet.html": "r16",
+    "https://docs.spring.io/spring-boot/4.1/reference/web/spring-security.html#web.security.spring-mvc": "r17",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/grpc/server/autoconfigure/GrpcServerExecutorProvider.html": "r18",
+    "https://docs.spring.io/spring-grpc/reference/1.1/api/java/org/springframework/grpc/server/security/SecurityContextServerInterceptor.html": "r19",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/grpc/server/autoconfigure/security/web/servlet/GrpcRequest.html": "r20",
+    "https://oauth.net/2/": "r21",
+    "https://docs.spring.io/spring-boot/4.1/reference/security/oauth2.html#security.oauth2.server": "r22",
+    "https://docs.spring.io/spring-grpc/reference/1.1/api/java/org/springframework/grpc/client/ImportGrpcClients.html": "r23",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/grpc.html#io.grpc.server.in-process": "r24",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/binder/grpc/ObservationGrpcClientInterceptor.html": "r25",
+    "https://docs.spring.io/spring-grpc/reference/1.1/api/java/org/springframework/grpc/client/GrpcChannelBuilderCustomizer.html": "r26",
+    "https://javadoc.io/doc/io.grpc/grpc-api/1.83.1/io/grpc/ManagedChannelBuilder.html": "r27",
+    "https://docs.spring.io/spring-grpc/reference/1.1/client.html#_http_headers": "r28",
+    "https://docs.spring.io/spring-grpc/reference/1.1/api/java/org/springframework/grpc/client/interceptor/security/BearerTokenAuthenticationInterceptor.html": "r29",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/grpc/test/autoconfigure/AutoConfigureTestGrpcTransport.html": "r30",
+    "https://docs.spring.io/spring-grpc/reference/1.1/api/java/org/springframework/grpc/server/GrpcServerFactory.html": "r31",
+    "https://docs.spring.io/spring-grpc/reference/1.1/api/java/org/springframework/grpc/client/GrpcChannelFactory.html": "r32",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/grpc/test/autoconfigure/LocalGrpcServerPort.html": "r33"
+  }
+}

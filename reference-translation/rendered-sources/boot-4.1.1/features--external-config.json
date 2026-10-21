@@ -1,0 +1,549 @@
+{
+  "page": "boot/features--external-config.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html",
+  "version": "4.1.1",
+  "html_sha256": "a724a5a8ef3b451ead66c20208384288f2aa56f5f6cdec7473f2ef2134597659",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.beans.factory.annotation.Value\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean {\n\n\t@Value(\"\\${name}\")\n\tprivate val name: String? = null\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.beans.factory.annotation.Value;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\t@Value(\"${name}\")\n\tprivate String name;\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "shell",
+      "text": "$ SPRING_APPLICATION_JSON='{\"my\":{\"name\":\"test\"}}' java -jar myapp.jar"
+    },
+    {
+      "language": "shell",
+      "text": "$ java -Dspring.application.json='{\"my\":{\"name\":\"test\"}}' -jar myapp.jar"
+    },
+    {
+      "language": "shell",
+      "text": "$ java -jar myapp.jar --spring.application.json='{\"my\":{\"name\":\"test\"}}'"
+    },
+    {
+      "language": "shell",
+      "text": "$ java -jar myproject.jar --spring.config.name=myproject"
+    },
+    {
+      "language": "shell",
+      "text": "$ java -jar myproject.jar --spring.config.location=\\\n\toptional:classpath:/default.properties,\\\n\toptional:classpath:/override.properties"
+    },
+    {
+      "language": "text",
+      "text": "/cfg\n  application-live.properties\n/ext\n  application-live.properties\n  application-prod.properties"
+    },
+    {
+      "language": "properties",
+      "text": "spring.application.name=myapp\nspring.config.import=optional:file:./dev.properties"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  application:\n    name: \"myapp\"\n  config:\n    import: \"optional:file:./dev.properties\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.config.import=classpath:import.properties[encoding=utf-8]"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  config:\n    import: \"classpath:import.properties[encoding=utf-8]\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.config.import=optional:core/core.properties"
+    },
+    {
+      "language": "properties",
+      "text": "spring.config.import=optional:extra/extra.properties"
+    },
+    {
+      "language": "properties",
+      "text": "spring.config.import=my.properties\nmy.property=value"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  config:\n    import: \"my.properties\"\nmy:\n  property: \"value\""
+    },
+    {
+      "language": "properties",
+      "text": "my.property=value\nspring.config.import=my.properties"
+    },
+    {
+      "language": "yaml",
+      "text": "my:\n  property: \"value\"\nspring:\n  config:\n    import: \"my.properties\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.config.import=file:/etc/config/myconfig[.yaml]"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  config:\n    import: \"file:/etc/config/myconfig[.yaml]\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.config.import=file:/etc/config/myconfig[extension=.yaml]"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  config:\n    import: \"file:/etc/config/myconfig[extension=.yaml]\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.config.import=file:/etc/config/myconfig[extension=.yaml][encoding=utf-8]"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  config:\n    import: \"file:/etc/config/myconfig[extension=.yaml][encoding=utf-8]\""
+    },
+    {
+      "language": "properties",
+      "text": "my.name=Service1\nmy.cluster=Cluster1"
+    },
+    {
+      "language": "properties",
+      "text": "spring.config.import=env:MY_CONFIGURATION"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  config:\n    import: \"env:MY_CONFIGURATION\""
+    },
+    {
+      "language": "text",
+      "text": "etc/\n  config/\n    myapp/\n      username\n      password"
+    },
+    {
+      "language": "properties",
+      "text": "spring.config.import=optional:configtree:/etc/config/"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  config:\n    import: \"optional:configtree:/etc/config/\""
+    },
+    {
+      "language": "text",
+      "text": "etc/\n  config/\n    dbconfig/\n      db/\n        username\n        password\n    mqconfig/\n      mq/\n        username\n        password"
+    },
+    {
+      "language": "properties",
+      "text": "spring.config.import=optional:configtree:/etc/config/*/"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  config:\n    import: \"optional:configtree:/etc/config/*/\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.config.import=optional:configtree:/run/secrets/"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  config:\n    import: \"optional:configtree:/run/secrets/\""
+    },
+    {
+      "language": "properties",
+      "text": "app.name=MyApp\napp.description=${app.name} is a Spring Boot application written by ${username:Unknown}"
+    },
+    {
+      "language": "yaml",
+      "text": "app:\n  name: \"MyApp\"\n  description: \"${app.name} is a Spring Boot application written by ${username:Unknown}\""
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  application:\n    name: \"MyApp\"\n---\nspring:\n  application:\n    name: \"MyCloudApp\"\n  config:\n    activate:\n      on-cloud-platform: \"kubernetes\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.application.name=MyApp\n#---\nspring.application.name=MyCloudApp\nspring.config.activate.on-cloud-platform=kubernetes"
+    },
+    {
+      "language": "properties",
+      "text": "myprop=always-set\n#---\nspring.config.activate.on-cloud-platform=kubernetes\nspring.config.activate.on-profile=prod | staging\nmyotherprop=sometimes-set"
+    },
+    {
+      "language": "yaml",
+      "text": "myprop:\n  \"always-set\"\n---\nspring:\n  config:\n    activate:\n      on-cloud-platform: \"kubernetes\"\n      on-profile: \"prod | staging\"\nmyotherprop: \"sometimes-set\""
+    },
+    {
+      "language": "yaml",
+      "text": "environments:\n  dev:\n    url: \"https://dev.example.com\"\n    name: \"Developer Setup\"\n  prod:\n    url: \"https://another.example.com\"\n    name: \"My Cool App\""
+    },
+    {
+      "language": "properties",
+      "text": "environments.dev.url=https://dev.example.com\nenvironments.dev.name=Developer Setup\nenvironments.prod.url=https://another.example.com\nenvironments.prod.name=My Cool App"
+    },
+    {
+      "language": "yaml",
+      "text": " my:\n  servers:\n  - \"dev.example.com\"\n  - \"another.example.com\""
+    },
+    {
+      "language": "properties",
+      "text": "my.servers[0]=dev.example.com\nmy.servers[1]=another.example.com"
+    },
+    {
+      "language": "properties",
+      "text": "my.secret=${random.value}\nmy.number=${random.int}\nmy.bignumber=${random.long}\nmy.uuid=${random.uuid}\nmy.number-less-than-ten=${random.int(10)}\nmy.number-in-range=${random.int[1024,65536]}"
+    },
+    {
+      "language": "yaml",
+      "text": "my:\n  secret: \"${random.value}\"\n  number: \"${random.int}\"\n  bignumber: \"${random.long}\"\n  uuid: \"${random.uuid}\"\n  number-less-than-ten: \"${random.int(10)}\"\n  number-in-range: \"${random.int[1024,65536]}\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties\nimport java.net.InetAddress\n\n@ConfigurationProperties(\"my.service\")\nclass MyProperties {\n\n\tvar isEnabled = false\n\n\tvar remoteAddress: InetAddress? = null\n\n\tval security = Security()\n\n\tclass Security {\n\n\t\tvar username: String? = null\n\n\t\tvar password: String? = null\n\n\t\tvar roles: List<String> = ArrayList(setOf(\"USER\"))\n\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.net.InetAddress;\nimport java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.List;\n\nimport org.springframework.boot.context.properties.ConfigurationProperties;\n\n@ConfigurationProperties(\"my.service\")\npublic class MyProperties {\n\n\tprivate boolean enabled;\n\n\tprivate InetAddress remoteAddress;\n\n\tprivate final Security security = new Security();\n\n\t// getters / setters...\n\n\tpublic boolean isEnabled() {\n\t\treturn this.enabled;\n\t}\n\n\tpublic void setEnabled(boolean enabled) {\n\t\tthis.enabled = enabled;\n\t}\n\n\tpublic InetAddress getRemoteAddress() {\n\t\treturn this.remoteAddress;\n\t}\n\n\tpublic void setRemoteAddress(InetAddress remoteAddress) {\n\t\tthis.remoteAddress = remoteAddress;\n\t}\n\n\tpublic Security getSecurity() {\n\t\treturn this.security;\n\t}\n\n\tpublic static class Security {\n\n\t\tprivate String username;\n\n\t\tprivate String password;\n\n\t\tprivate List<String> roles = new ArrayList<>(Collections.singleton(\"USER\"));\n\n\t\t// getters / setters...\n\n\t\tpublic String getUsername() {\n\t\t\treturn this.username;\n\t\t}\n\n\t\tpublic void setUsername(String username) {\n\t\t\tthis.username = username;\n\t\t}\n\n\t\tpublic String getPassword() {\n\t\t\treturn this.password;\n\t\t}\n\n\t\tpublic void setPassword(String password) {\n\t\t\tthis.password = password;\n\t\t}\n\n\t\tpublic List<String> getRoles() {\n\t\t\treturn this.roles;\n\t\t}\n\n\t\tpublic void setRoles(List<String> roles) {\n\t\t\tthis.roles = roles;\n\t\t}\n\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties\nimport org.springframework.boot.context.properties.bind.DefaultValue\nimport java.net.InetAddress\n\n@ConfigurationProperties(\"my.service\")\nclass MyProperties(val enabled: Boolean, val remoteAddress: InetAddress,\n\t\tval security: Security) {\n\n\tclass Security(val username: String, val password: String,\n\t\t\t@param:DefaultValue(\"USER\") val roles: List<String>)\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.net.InetAddress;\nimport java.util.List;\n\nimport org.springframework.boot.context.properties.ConfigurationProperties;\nimport org.springframework.boot.context.properties.bind.DefaultValue;\n\n@ConfigurationProperties(\"my.service\")\npublic class MyProperties {\n\n\t// fields...\n\n\tprivate final boolean enabled;\n\n\tprivate final InetAddress remoteAddress;\n\n\tprivate final Security security;\n\n\n\tpublic MyProperties(boolean enabled, InetAddress remoteAddress, Security security) {\n\t\tthis.enabled = enabled;\n\t\tthis.remoteAddress = remoteAddress;\n\t\tthis.security = security;\n\t}\n\n\t// getters...\n\n\tpublic boolean isEnabled() {\n\t\treturn this.enabled;\n\t}\n\n\tpublic InetAddress getRemoteAddress() {\n\t\treturn this.remoteAddress;\n\t}\n\n\tpublic Security getSecurity() {\n\t\treturn this.security;\n\t}\n\n\tpublic static class Security {\n\n\t\t// fields...\n\n\t\tprivate final String username;\n\n\t\tprivate final String password;\n\n\t\tprivate final List<String> roles;\n\n\n\t\tpublic Security(String username, String password, @DefaultValue(\"USER\") List<String> roles) {\n\t\t\tthis.username = username;\n\t\t\tthis.password = password;\n\t\t\tthis.roles = roles;\n\t\t}\n\n\t\t// getters...\n\n\t\tpublic String getUsername() {\n\t\t\treturn this.username;\n\t\t}\n\n\t\tpublic String getPassword() {\n\t\t\treturn this.password;\n\t\t}\n\n\t\tpublic List<String> getRoles() {\n\t\t\treturn this.roles;\n\t\t}\n\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties\n\n@ConfigurationProperties(\"my\")\nclass MyProperties() {\n\n\tconstructor(name: String) : this() {\n\t\tthis.name = name\n\t}\n\n\t// vars...\n\n\tvar name: String? = null\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.context.properties.ConfigurationProperties;\n\n@ConfigurationProperties(\"my\")\npublic class MyProperties {\n\n\t// fields...\n\n\tfinal MyBean myBean;\n\n\tprivate String name;\n\n\n\t@Autowired\n\tpublic MyProperties(MyBean myBean) {\n\t\tthis.myBean = myBean;\n\t}\n\n\t// getters / setters...\n\n\n\tpublic String getName() {\n\t\treturn this.name;\n\t}\n\n\tpublic void setName(String name) {\n\t\tthis.name = name;\n\t}\n\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "my.service.enabled=true\nmy.service.security.username=admin"
+    },
+    {
+      "language": "yaml",
+      "text": "my:\n  service:\n    enabled: true\n    security:\n      username: admin"
+    },
+    {
+      "language": "properties",
+      "text": "my.service.enabled=true"
+    },
+    {
+      "language": "yaml",
+      "text": "my:\n  service:\n    enabled: true"
+    },
+    {
+      "language": "yaml",
+      "text": "my:\n  service:\n    enabled: true\n    security: {}"
+    },
+    {
+      "language": "properties",
+      "text": "my.service.enabled=true\nmy.service.security="
+    },
+    {
+      "language": "kotlin",
+      "text": "class MyProperties(val enabled: Boolean, val remoteAddress: InetAddress,\n\t\t@DefaultValue val security: Security) {\n\n\tclass Security(val username: String?, val password: String?,\n\t\t\t@param:DefaultValue(\"USER\") val roles: List<String>)\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "\tpublic MyProperties(boolean enabled, InetAddress remoteAddress, @DefaultValue Security security) {\n\t\tthis.enabled = enabled;\n\t\tthis.remoteAddress = remoteAddress;\n\t\tthis.security = security;\n\t}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.EnableConfigurationProperties\nimport org.springframework.context.annotation.Configuration\n\n@Configuration(proxyBeanMethods = false)\n@EnableConfigurationProperties(SomeProperties::class)\nclass MyConfiguration"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.context.properties.EnableConfigurationProperties;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\n@EnableConfigurationProperties(SomeProperties.class)\npublic class MyConfiguration {\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties\n\n@ConfigurationProperties(\"some.properties\")\nclass SomeProperties"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties;\n\n@ConfigurationProperties(\"some.properties\")\npublic class SomeProperties {\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.autoconfigure.SpringBootApplication\nimport org.springframework.boot.context.properties.ConfigurationPropertiesScan\n\n@SpringBootApplication\n@ConfigurationPropertiesScan(\"com.example.app\", \"com.example.another\")\nclass MyApplication"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.autoconfigure.SpringBootApplication;\nimport org.springframework.boot.context.properties.ConfigurationPropertiesScan;\n\n@SpringBootApplication\n@ConfigurationPropertiesScan({ \"com.example.app\", \"com.example.another\" })\npublic class MyApplication {\n\n}"
+    },
+    {
+      "language": "yaml",
+      "text": "my:\n  service:\n    remote-address: 192.168.1.1\n    security:\n      username: \"admin\"\n      roles:\n      - \"USER\"\n      - \"ADMIN\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.stereotype.Service\n\n@Service\nclass MyService(val properties: MyProperties) {\n\n\tfun openConnection() {\n\t\tval server = Server(properties.remoteAddress)\n\t\tserver.start()\n\t\t// ...\n\t}\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.stereotype.Service;\n\n@Service\npublic class MyService {\n\n\tprivate final MyProperties properties;\n\n\tpublic MyService(MyProperties properties) {\n\t\tthis.properties = properties;\n\t}\n\n\tpublic void openConnection() {\n\t\tServer server = new Server(this.properties.getRemoteAddress());\n\t\tserver.start();\n\t\t// ...\n\t}\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\n\n@Configuration(proxyBeanMethods = false)\nclass ThirdPartyConfiguration {\n\n\t@Bean\n\t@ConfigurationProperties(\"another\")\n\tfun anotherComponent(): AnotherComponent = AnotherComponent()\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class ThirdPartyConfiguration {\n\n\t@Bean\n\t@ConfigurationProperties(\"another\")\n\tpublic AnotherComponent anotherComponent() {\n\t\treturn new AnotherComponent();\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties\n\n@ConfigurationProperties(\"my.main-project.person\")\nclass MyPersonProperties {\n\n\tvar firstName: String? = null\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties;\n\n@ConfigurationProperties(\"my.main-project.person\")\npublic class MyPersonProperties {\n\n\tprivate String firstName;\n\n\tpublic String getFirstName() {\n\t\treturn this.firstName;\n\t}\n\n\tpublic void setFirstName(String firstName) {\n\t\tthis.firstName = firstName;\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "my.map[/key1]=value1\nmy.map[/key2]=value2\nmy.map./key3=value3"
+    },
+    {
+      "language": "yaml",
+      "text": "my:\n  map:\n    \"[/key1]\": \"value1\"\n    \"[/key2]\": \"value2\"\n    \"/key3\": \"value3\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties\n\n@ConfigurationProperties(\"my.props\")\nclass MyMapsProperties {\n\n\tval values: Map<String, String> = HashMap()\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.util.HashMap;\nimport java.util.Map;\n\nimport org.springframework.boot.context.properties.ConfigurationProperties;\n\n@ConfigurationProperties(\"my.props\")\npublic class MyMapsProperties {\n\n\tprivate final Map<String, String> values = new HashMap<>();\n\n\tpublic Map<String, String> getValues() {\n\t\treturn this.values;\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties\n\n@ConfigurationProperties(\"my\")\nclass MyProperties {\n\n\tval list: List<MyPojo> = ArrayList()\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.util.ArrayList;\nimport java.util.List;\n\nimport org.springframework.boot.context.properties.ConfigurationProperties;\n\n@ConfigurationProperties(\"my\")\npublic class MyProperties {\n\n\tprivate final List<MyPojo> list = new ArrayList<>();\n\n\tpublic List<MyPojo> getList() {\n\t\treturn this.list;\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "my.list[0].name=my name\nmy.list[0].description=my description\n#---\nspring.config.activate.on-profile=dev\nmy.list[0].name=my another name"
+    },
+    {
+      "language": "yaml",
+      "text": "my:\n  list:\n  - name: \"my name\"\n    description: \"my description\"\n---\nspring:\n  config:\n    activate:\n      on-profile: \"dev\"\nmy:\n  list:\n  - name: \"my another name\""
+    },
+    {
+      "language": "properties",
+      "text": "my.list[0].name=my name\nmy.list[0].description=my description\nmy.list[1].name=another name\nmy.list[1].description=another description\n#---\nspring.config.activate.on-profile=dev\nmy.list[0].name=my another name"
+    },
+    {
+      "language": "yaml",
+      "text": "my:\n  list:\n  - name: \"my name\"\n    description: \"my description\"\n  - name: \"another name\"\n    description: \"another description\"\n---\nspring:\n  config:\n    activate:\n      on-profile: \"dev\"\nmy:\n  list:\n  - name: \"my another name\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties\n\n@ConfigurationProperties(\"my\")\nclass MyProperties {\n\n\tval map: Map<String, MyPojo> = LinkedHashMap()\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.util.LinkedHashMap;\nimport java.util.Map;\n\nimport org.springframework.boot.context.properties.ConfigurationProperties;\n\n@ConfigurationProperties(\"my\")\npublic class MyProperties {\n\n\tprivate final Map<String, MyPojo> map = new LinkedHashMap<>();\n\n\tpublic Map<String, MyPojo> getMap() {\n\t\treturn this.map;\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "my.map.key1.name=my name 1\nmy.map.key1.description=my description 1\n#---\nspring.config.activate.on-profile=dev\nmy.map.key1.name=dev name 1\nmy.map.key2.name=dev name 2\nmy.map.key2.description=dev description 2"
+    },
+    {
+      "language": "yaml",
+      "text": "my:\n  map:\n    key1:\n      name: \"my name 1\"\n      description: \"my description 1\"\n---\nspring:\n  config:\n    activate:\n      on-profile: \"dev\"\nmy:\n  map:\n    key1:\n      name: \"dev name 1\"\n    key2:\n      name: \"dev name 2\"\n      description: \"dev description 2\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties\nimport org.springframework.boot.convert.DurationUnit\nimport java.time.Duration\nimport java.time.temporal.ChronoUnit\n\n@ConfigurationProperties(\"my\")\nclass MyProperties {\n\n\t@DurationUnit(ChronoUnit.SECONDS)\n\tvar sessionTimeout = Duration.ofSeconds(30)\n\n\tvar readTimeout = Duration.ofMillis(1000)\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.time.Duration;\nimport java.time.temporal.ChronoUnit;\n\nimport org.springframework.boot.context.properties.ConfigurationProperties;\nimport org.springframework.boot.convert.DurationUnit;\n\n@ConfigurationProperties(\"my\")\npublic class MyProperties {\n\n\t@DurationUnit(ChronoUnit.SECONDS)\n\tprivate Duration sessionTimeout = Duration.ofSeconds(30);\n\n\tprivate Duration readTimeout = Duration.ofMillis(1000);\n\n\t// getters / setters...\n\n\tpublic Duration getSessionTimeout() {\n\t\treturn this.sessionTimeout;\n\t}\n\n\tpublic void setSessionTimeout(Duration sessionTimeout) {\n\t\tthis.sessionTimeout = sessionTimeout;\n\t}\n\n\tpublic Duration getReadTimeout() {\n\t\treturn this.readTimeout;\n\t}\n\n\tpublic void setReadTimeout(Duration readTimeout) {\n\t\tthis.readTimeout = readTimeout;\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties\nimport org.springframework.boot.context.properties.bind.DefaultValue\nimport org.springframework.boot.convert.DurationUnit\nimport java.time.Duration\nimport java.time.temporal.ChronoUnit\n\n@ConfigurationProperties(\"my\")\nclass MyProperties(@param:DurationUnit(ChronoUnit.SECONDS) @param:DefaultValue(\"30s\") val sessionTimeout: Duration,\n\t\t@param:DefaultValue(\"1000ms\") val readTimeout: Duration)"
+    },
+    {
+      "language": "java",
+      "text": "import java.time.Duration;\nimport java.time.temporal.ChronoUnit;\n\nimport org.springframework.boot.context.properties.ConfigurationProperties;\nimport org.springframework.boot.context.properties.bind.DefaultValue;\nimport org.springframework.boot.convert.DurationUnit;\n\n@ConfigurationProperties(\"my\")\npublic class MyProperties {\n\n\t// fields...\n\tprivate final Duration sessionTimeout;\n\n\tprivate final Duration readTimeout;\n\n\tpublic MyProperties(@DurationUnit(ChronoUnit.SECONDS) @DefaultValue(\"30s\") Duration sessionTimeout,\n\t\t\t@DefaultValue(\"1000ms\") Duration readTimeout) {\n\t\tthis.sessionTimeout = sessionTimeout;\n\t\tthis.readTimeout = readTimeout;\n\t}\n\n\t// getters...\n\n\tpublic Duration getSessionTimeout() {\n\t\treturn this.sessionTimeout;\n\t}\n\n\tpublic Duration getReadTimeout() {\n\t\treturn this.readTimeout;\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties\nimport org.springframework.boot.convert.DataSizeUnit\nimport org.springframework.util.unit.DataSize\nimport org.springframework.util.unit.DataUnit\n\n@ConfigurationProperties(\"my\")\nclass MyProperties {\n\n\t@DataSizeUnit(DataUnit.MEGABYTES)\n\tvar bufferSize = DataSize.ofMegabytes(2)\n\n\tvar sizeThreshold = DataSize.ofBytes(512)\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties;\nimport org.springframework.boot.convert.DataSizeUnit;\nimport org.springframework.util.unit.DataSize;\nimport org.springframework.util.unit.DataUnit;\n\n@ConfigurationProperties(\"my\")\npublic class MyProperties {\n\n\t@DataSizeUnit(DataUnit.MEGABYTES)\n\tprivate DataSize bufferSize = DataSize.ofMegabytes(2);\n\n\tprivate DataSize sizeThreshold = DataSize.ofBytes(512);\n\n\t// getters/setters...\n\n\tpublic DataSize getBufferSize() {\n\t\treturn this.bufferSize;\n\t}\n\n\tpublic void setBufferSize(DataSize bufferSize) {\n\t\tthis.bufferSize = bufferSize;\n\t}\n\n\tpublic DataSize getSizeThreshold() {\n\t\treturn this.sizeThreshold;\n\t}\n\n\tpublic void setSizeThreshold(DataSize sizeThreshold) {\n\t\tthis.sizeThreshold = sizeThreshold;\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties\nimport org.springframework.boot.context.properties.bind.DefaultValue\nimport org.springframework.boot.convert.DataSizeUnit\nimport org.springframework.util.unit.DataSize\nimport org.springframework.util.unit.DataUnit\n\n@ConfigurationProperties(\"my\")\nclass MyProperties(@param:DataSizeUnit(DataUnit.MEGABYTES) @param:DefaultValue(\"2MB\") val bufferSize: DataSize,\n\t\t@param:DefaultValue(\"512B\") val sizeThreshold: DataSize)"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties;\nimport org.springframework.boot.context.properties.bind.DefaultValue;\nimport org.springframework.boot.convert.DataSizeUnit;\nimport org.springframework.util.unit.DataSize;\nimport org.springframework.util.unit.DataUnit;\n\n@ConfigurationProperties(\"my\")\npublic class MyProperties {\n\n\t// fields...\n\tprivate final DataSize bufferSize;\n\n\tprivate final DataSize sizeThreshold;\n\n\tpublic MyProperties(@DataSizeUnit(DataUnit.MEGABYTES) @DefaultValue(\"2MB\") DataSize bufferSize,\n\t\t\t@DefaultValue(\"512B\") DataSize sizeThreshold) {\n\t\tthis.bufferSize = bufferSize;\n\t\tthis.sizeThreshold = sizeThreshold;\n\t}\n\n\t// getters...\n\n\tpublic DataSize getBufferSize() {\n\t\treturn this.bufferSize;\n\t}\n\n\tpublic DataSize getSizeThreshold() {\n\t\treturn this.sizeThreshold;\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "my.property=base64:SGVsbG8gV29ybGQ="
+    },
+    {
+      "language": "yaml",
+      "text": "my:\n  property: base64:SGVsbG8gV29ybGQ="
+    },
+    {
+      "language": "kotlin",
+      "text": "import jakarta.validation.constraints.NotNull\nimport org.springframework.boot.context.properties.ConfigurationProperties\nimport org.springframework.validation.annotation.Validated\nimport java.net.InetAddress\n\n@ConfigurationProperties(\"my.service\")\n@Validated\nclass MyProperties {\n\n\tvar remoteAddress: @NotNull InetAddress? = null\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.net.InetAddress;\n\nimport jakarta.validation.constraints.NotNull;\n\nimport org.springframework.boot.context.properties.ConfigurationProperties;\nimport org.springframework.validation.annotation.Validated;\n\n@ConfigurationProperties(\"my.service\")\n@Validated\npublic class MyProperties {\n\n\t@NotNull\n\tprivate InetAddress remoteAddress;\n\n\t// getters/setters...\n\n\tpublic InetAddress getRemoteAddress() {\n\t\treturn this.remoteAddress;\n\t}\n\n\tpublic void setRemoteAddress(InetAddress remoteAddress) {\n\t\tthis.remoteAddress = remoteAddress;\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import jakarta.validation.Valid\nimport jakarta.validation.constraints.NotEmpty\nimport jakarta.validation.constraints.NotNull\nimport org.springframework.boot.context.properties.ConfigurationProperties\nimport org.springframework.validation.annotation.Validated\nimport java.net.InetAddress\n\n@ConfigurationProperties(\"my.service\")\n@Validated\nclass MyProperties {\n\n\tvar remoteAddress: @NotNull InetAddress? = null\n\n\t@Valid\n\tval security = Security()\n\n\tclass Security {\n\n\t\t@NotEmpty\n\t\tvar username: String? = null\n\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.net.InetAddress;\n\nimport jakarta.validation.Valid;\nimport jakarta.validation.constraints.NotEmpty;\nimport jakarta.validation.constraints.NotNull;\n\nimport org.springframework.boot.context.properties.ConfigurationProperties;\nimport org.springframework.validation.annotation.Validated;\n\n@ConfigurationProperties(\"my.service\")\n@Validated\npublic class MyProperties {\n\n\t@NotNull\n\tprivate InetAddress remoteAddress;\n\n\t@Valid\n\tprivate final Security security = new Security();\n\n\t// getters/setters...\n\n\tpublic InetAddress getRemoteAddress() {\n\t\treturn this.remoteAddress;\n\t}\n\n\tpublic void setRemoteAddress(InetAddress remoteAddress) {\n\t\tthis.remoteAddress = remoteAddress;\n\t}\n\n\tpublic Security getSecurity() {\n\t\treturn this.security;\n\t}\n\n\tpublic static class Security {\n\n\t\t@NotEmpty\n\t\tprivate String username;\n\n\t\t// getters/setters...\n\n\t\tpublic String getUsername() {\n\t\t\treturn this.username;\n\t\t}\n\n\t\tpublic void setUsername(String username) {\n\t\t\tthis.username = username;\n\t\t}\n\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Externalized Configuration",
+    "Accessing Command Line Properties",
+    "JSON Application Properties",
+    "External Application Properties",
+    "Optional Locations",
+    "Wildcard Locations",
+    "Profile Specific Files",
+    "Importing Additional Data",
+    "Using “Fixed” and “Import Relative” Locations",
+    "Property Ordering",
+    "Importing Extensionless Files",
+    "File attributes",
+    "Using Environment Variables",
+    "Using Configuration Trees",
+    "Property Placeholders",
+    "Working With Multi-Document Files",
+    "Activation Properties",
+    "Encrypting Properties",
+    "Working With YAML",
+    "Mapping YAML to Properties",
+    "Directly Loading YAML",
+    "Configuring Random Values",
+    "Configuring System Environment Properties",
+    "Type-safe Configuration Properties",
+    "JavaBean Properties Binding",
+    "Constructor Binding",
+    "@DefaultValue and Binding",
+    "Default Values",
+    "Enabling @ConfigurationProperties-annotated Types",
+    "Using @ConfigurationProperties-annotated Types",
+    "Third-party Configuration",
+    "Relaxed Binding",
+    "Binding Maps",
+    "Binding From Environment Variables",
+    "Binding Maps From Environment Variables",
+    "Caching",
+    "Merging Complex Types",
+    "Properties Conversion",
+    "Converting Durations",
+    "Converting Periods",
+    "Converting Data Sizes",
+    "Converting Base64 Data",
+    "@ConfigurationProperties Validation",
+    "@ConfigurationProperties vs. @Value"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/annotation/Value.html": "r1",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html": "r2",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.typesafe-configuration-properties": "r3",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/ConfigurationProperties.html": "r4",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/PropertySource.html": "r5",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/SpringApplication.html#setDefaultProperties(java.util.Map)": "r6",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/PropertySource.html": "r7",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html": "r8",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/env/RandomValuePropertySource.html": "r9",
+    "https://jakarta.ee/specifications/servlet/6.1/apidocs/jakarta.servlet/jakarta/servlet/ServletContext.html": "r10",
+    "https://jakarta.ee/specifications/servlet/6.1/apidocs/jakarta.servlet/jakarta/servlet/ServletConfig.html": "r11",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/SpringBootTest.html": "r12",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html#testing.spring-boot-applications.autoconfigured-tests": "r13",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/context/DynamicPropertySource.html": "r14",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/context/TestPropertySource.html": "r15",
+    "https://docs.spring.io/spring-boot/4.1/reference/using/devtools.html#using.devtools.globalsettings": "r16",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.files": "r17",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.files.profile-specific": "r18",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.typesafe-configuration-properties.relaxed-binding.environment-variables": "r19",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/stereotype/Component.html": "r20",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/endpoints.html": "r21",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/SpringApplication.html": "r22",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/PropertySourcesPropertyResolver.html": "r23",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.files.optional-prefix": "r24",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/config/ConfigDataLocationNotFoundException.html": "r25",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.files.importing": "r26",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.files.location-groups": "r27",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.files.configtree": "r28",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/config/ConfigDataLocationResolver.html": "r29",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/config/ConfigDataLoader.html": "r30",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.files.importing-extensionless": "r31",
+    "https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#populate-a-volume-with-data-stored-in-a-configmap": "r32",
+    "https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-files-from-a-pod": "r33",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html": "r34",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.typesafe-configuration-properties.relaxed-binding": "r35",
+    "https://docs.spring.io/spring-boot/4.1/how-to/properties-and-configuration.html#howto.properties-and-configuration.short-command-line-arguments": "r36",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.files.activation-properties": "r37",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/cloud/CloudPlatform.html": "r38",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/EnvironmentPostProcessor.html": "r39",
+    "https://docs.spring.io/spring-boot/4.1/how-to/application.html#howto.application.customize-the-environment-or-application-context": "r40",
+    "https://cloud.spring.io/spring-cloud-vault/": "r41",
+    "https://www.vaultproject.io/": "r42",
+    "https://yaml.org": "r43",
+    "https://github.com/snakeyaml/snakeyaml": "r44",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html": "r45",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html": "r46",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/bind/Binder.html": "r47",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/config/YamlPropertiesFactoryBean.html": "r48",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Properties.html": "r49",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/config/YamlMapFactoryBean.html": "r50",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html": "r51",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/env/YamlPropertySourceLoader.html": "r52",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.typesafe-configuration-properties.vs-value-annotation": "r53",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/autoconfigure/SecurityProperties.html": "r54",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/bind/Name.html": "r55",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/bind/ConstructorBinding.html": "r56",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/annotation/Autowired.html": "r57",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/EnableConfigurationProperties.html": "r58",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r59",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Import.html": "r60",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html": "r61",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/bind/DefaultValue.html": "r62",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Condition.html": "r63",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/ConfigurationPropertiesScan.html": "r64",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/SpringBootApplication.html": "r65",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/EnvironmentAware.html": "r66",
+    "https://docs.spring.io/spring-boot/4.1/specification/configuration-metadata/index.html": "r67",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html": "r68",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/source/ConfigurationPropertyCaching.html": "r69",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/convert/ConversionService.html": "r70",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/config/CustomEditorConfigurer.html": "r71",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/ConfigurationPropertiesBinding.html": "r72",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html": "r73",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/convert/DurationUnit.html": "r74",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html#parse(java.lang.CharSequence)": "r75",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html": "r76",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Period.html": "r77",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/convert/PeriodUnit.html": "r78",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Period.html#parse(java.lang.CharSequence)": "r79",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/util/unit/DataSize.html": "r80",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/convert/DataSizeUnit.html": "r81",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/validation/annotation/Validated.html": "r82",
+    "https://jakarta.ee/specifications/bean-validation/3.1/apidocs/jakarta/validation/Valid.html": "r83",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/validation/Validator.html": "r84",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.typesafe-configuration-properties.vs-value-annotation.note": "r85"
+  }
+}

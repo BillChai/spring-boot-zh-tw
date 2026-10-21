@@ -1,0 +1,23 @@
+name: Check documentation
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python3 reference-translation/tools/catalog.py
+      - run: python3 reference-translation/tools/validate.py --require-boot-complete
+      - run: npm --prefix site ci
+      - run: npm --prefix site run build
+        env:
+          BASE_PATH: /spring-boot-zh-tw/

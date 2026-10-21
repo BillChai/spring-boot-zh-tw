@@ -1,0 +1,57 @@
+{
+  "page": "boot/actuator--loggers.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/actuator/loggers.html",
+  "version": "4.1.1",
+  "html_sha256": "edc988ff97c89fc0aafe9a5845ea103e468d1a170adac32b488c1d4bce798c47",
+  "code_blocks": [
+    {
+      "language": "json",
+      "text": "{\n\t\"configuredLevel\": \"DEBUG\"\n}"
+    },
+    {
+      "language": "properties",
+      "text": "management.opentelemetry.logging.export.otlp.endpoint=https://otlp.example.com:4318/v1/logs"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  opentelemetry:\n    logging:\n      export:\n        otlp:\n          endpoint: \"https://otlp.example.com:4318/v1/logs\""
+    },
+    {
+      "language": "properties",
+      "text": "management.opentelemetry.logging.export.schedule-delay=15s"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  opentelemetry:\n    logging:\n      export:\n        schedule-delay: \"15s\""
+    },
+    {
+      "language": "properties",
+      "text": "management.opentelemetry.logging.limits.max-attributes=64\nmanagement.opentelemetry.logging.limits.max-attribute-value-length=256"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  opentelemetry:\n    logging:\n      limits:\n        max-attributes: 64\n        max-attribute-value-length: 256"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.opentelemetry.api.OpenTelemetry\nimport io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender\nimport org.springframework.beans.factory.InitializingBean\nimport org.springframework.stereotype.Component\n\n@Component\nclass OpenTelemetryAppenderInitializer(\n\tprivate val openTelemetry: OpenTelemetry\n) : InitializingBean {\n\n\toverride fun afterPropertiesSet() = OpenTelemetryAppender.install(openTelemetry)\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.opentelemetry.api.OpenTelemetry;\nimport io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender;\n\nimport org.springframework.beans.factory.InitializingBean;\nimport org.springframework.stereotype.Component;\n\n@Component\nclass OpenTelemetryAppenderInitializer implements InitializingBean {\n\n\tprivate final OpenTelemetry openTelemetry;\n\n\tOpenTelemetryAppenderInitializer(OpenTelemetry openTelemetry) {\n\t\tthis.openTelemetry = openTelemetry;\n\t}\n\n\t@Override\n\tpublic void afterPropertiesSet() {\n\t\tOpenTelemetryAppender.install(this.openTelemetry);\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Loggers",
+    "Configure a Logger",
+    "OpenTelemetry"
+  ],
+  "links": {
+    "https://javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-logs/1.62.0/io/opentelemetry/sdk/logs/export/BatchLogRecordProcessor.html": "r1",
+    "https://javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-logs/1.62.0/io/opentelemetry/sdk/logs/LogLimits.html": "r2",
+    "https://github.com/open-telemetry/opentelemetry-java-instrumentation/tree/main/instrumentation/logback/logback-appender-1.0/library": "r3",
+    "https://github.com/open-telemetry/opentelemetry-java-instrumentation/tree/main/instrumentation/log4j/log4j-appender-2.17/library": "r4",
+    "https://github.com/open-telemetry/opentelemetry-java-instrumentation": "r5",
+    "https://javadoc.io/doc/io.opentelemetry/opentelemetry-api/1.62.0/io/opentelemetry/api/OpenTelemetry.html": "r6"
+  }
+}

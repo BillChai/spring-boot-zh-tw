@@ -1,0 +1,11 @@
+{
+  "page": "boot/data--index.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/data/index.html",
+  "version": "4.1.1",
+  "html_sha256": "f8201ee7b48ce6e7d4978651cf7f4678716907cf111bad04515d9aa388def4f1",
+  "code_blocks": [],
+  "headings": [
+    "Data"
+  ],
+  "links": {}
+}

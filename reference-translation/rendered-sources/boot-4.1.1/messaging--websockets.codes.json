@@ -1,0 +1,3 @@
+[
+  "```xml\n<dependency>\n\t<groupId>jakarta.websocket</groupId>\n\t<artifactId>jakarta.websocket-api</artifactId>\n</dependency>\n```"
+]

@@ -1,0 +1,19 @@
+{
+  "page": "boot/messaging--websockets.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/messaging/websockets.html",
+  "version": "4.1.1",
+  "html_sha256": "aaa58d1f3f9a4cf830f1391d4a7e7b81eca5c9962c9b77cacbdd161d0e25860f",
+  "code_blocks": [
+    {
+      "language": "xml",
+      "text": "<dependency>\n\t<groupId>jakarta.websocket</groupId>\n\t<artifactId>jakarta.websocket-api</artifactId>\n</dependency>"
+    }
+  ],
+  "headings": [
+    "WebSockets"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/reference/7.0/web/websocket.html": "r1",
+    "https://docs.spring.io/spring-framework/reference/7.0/web/webflux-websocket.html": "r2"
+  }
+}

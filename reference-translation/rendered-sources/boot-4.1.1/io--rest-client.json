@@ -1,0 +1,274 @@
+{
+  "page": "boot/io--rest-client.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/io/rest-client.html",
+  "version": "4.1.1",
+  "html_sha256": "f72a0a8006daaa1926d668cd6098a6d1fb7d29009413032ed48b74950cec5393",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.stereotype.Service\nimport org.springframework.web.reactive.function.client.WebClient\nimport reactor.core.publisher.Mono\n\n@Service\nclass MyService(webClientBuilder: WebClient.Builder) {\n\n\tprivate val webClient: WebClient\n\n\tinit {\n\t\twebClient = webClientBuilder.baseUrl(\"https://example.org\").build()\n\t}\n\n\tfun someRestCall(name: String): Mono<Details> {\n\t\treturn webClient.get().uri(\"/{name}/details\", name)\n\t\t\t\t.retrieve().bodyToMono(Details::class.java)\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import reactor.core.publisher.Mono;\n\nimport org.springframework.stereotype.Service;\nimport org.springframework.web.reactive.function.client.WebClient;\n\n@Service\npublic class MyService {\n\n\tprivate final WebClient webClient;\n\n\tpublic MyService(WebClient.Builder webClientBuilder) {\n\t\tthis.webClient = webClientBuilder.baseUrl(\"https://example.org\").build();\n\t}\n\n\tpublic Mono<Details> someRestCall(String name) {\n\t\treturn this.webClient.get().uri(\"/{name}/details\", name).retrieve().bodyToMono(Details.class);\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.http.clients.reactive.connector=jetty"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  http:\n    clients:\n      reactive:\n        connector: jetty"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.http.client.reactive.ClientHttpConnectorBuilder\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport java.net.ProxySelector\n\n@Configuration(proxyBeanMethods = false)\nclass MyConnectorHttpConfiguration {\n\n\t@Bean\n\tfun clientHttpConnectorBuilder(proxySelector: ProxySelector): ClientHttpConnectorBuilder<*> {\n\t\treturn ClientHttpConnectorBuilder.jdk().withHttpClientCustomizer { builder -> builder.proxy(proxySelector) }\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.net.ProxySelector;\n\nimport org.springframework.boot.http.client.reactive.ClientHttpConnectorBuilder;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyConnectorHttpConfiguration {\n\n\t@Bean\n\tClientHttpConnectorBuilder<?> clientHttpConnectorBuilder(ProxySelector proxySelector) {\n\t\treturn ClientHttpConnectorBuilder.jdk().withHttpClientCustomizer((builder) -> builder.proxy(proxySelector));\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.webclient.autoconfigure.WebClientSsl\nimport org.springframework.stereotype.Service\nimport org.springframework.web.reactive.function.client.WebClient\nimport reactor.core.publisher.Mono\n\n@Service\nclass MyService(webClientBuilder: WebClient.Builder, ssl: WebClientSsl) {\n\n\tprivate val webClient: WebClient\n\n\tinit {\n\t\twebClient = webClientBuilder.baseUrl(\"https://example.org\")\n\t\t\t\t.apply(ssl.fromBundle(\"mybundle\")).build()\n\t}\n\n\tfun someRestCall(name: String): Mono<Details> {\n\t\treturn webClient.get().uri(\"/{name}/details\", name)\n\t\t\t\t.retrieve().bodyToMono(Details::class.java)\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import reactor.core.publisher.Mono;\n\nimport org.springframework.boot.webclient.autoconfigure.WebClientSsl;\nimport org.springframework.stereotype.Service;\nimport org.springframework.web.reactive.function.client.WebClient;\n\n@Service\npublic class MyService {\n\n\tprivate final WebClient webClient;\n\n\tpublic MyService(WebClient.Builder webClientBuilder, WebClientSsl ssl) {\n\t\tthis.webClient = webClientBuilder.baseUrl(\"https://example.org\").apply(ssl.fromBundle(\"mybundle\")).build();\n\t}\n\n\tpublic Mono<Details> someRestCall(String name) {\n\t\treturn this.webClient.get().uri(\"/{name}/details\", name).retrieve().bodyToMono(Details.class);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.docs.io.restclient.restclient.ssl.Details\nimport org.springframework.stereotype.Service\nimport org.springframework.web.client.RestClient\n\n@Service\nclass MyService(restClientBuilder: RestClient.Builder) {\n\n\tprivate val restClient: RestClient\n\n\tinit {\n\t\trestClient = restClientBuilder.baseUrl(\"https://example.org\").build()\n\t}\n\n\tfun someRestCall(name: String): Details {\n\t\treturn restClient.get().uri(\"/{name}/details\", name)\n\t\t\t\t.retrieve().body(Details::class.java)!!\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.stereotype.Service;\nimport org.springframework.web.client.RestClient;\n\n@Service\npublic class MyService {\n\n\tprivate final RestClient restClient;\n\n\tpublic MyService(RestClient.Builder restClientBuilder) {\n\t\tthis.restClient = restClientBuilder.baseUrl(\"https://example.org\").build();\n\t}\n\n\tpublic Details someRestCall(String name) {\n\t\treturn this.restClient.get().uri(\"/{name}/details\", name).retrieve().body(Details.class);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.docs.io.restclient.restclient.ssl.settings.Details\nimport org.springframework.boot.restclient.autoconfigure.RestClientSsl\nimport org.springframework.stereotype.Service\nimport org.springframework.web.client.RestClient\n\n@Service\nclass MyService(restClientBuilder: RestClient.Builder, ssl: RestClientSsl) {\n\n\tprivate val restClient: RestClient\n\n\tinit {\n\t\trestClient = restClientBuilder.baseUrl(\"https://example.org\")\n\t\t\t\t.apply(ssl.fromBundle(\"mybundle\")).build()\n\t}\n\n\tfun someRestCall(name: String): Details {\n\t\treturn restClient.get().uri(\"/{name}/details\", name)\n\t\t\t\t.retrieve().body(Details::class.java)!!\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.restclient.autoconfigure.RestClientSsl;\nimport org.springframework.stereotype.Service;\nimport org.springframework.web.client.RestClient;\n\n@Service\npublic class MyService {\n\n\tprivate final RestClient restClient;\n\n\tpublic MyService(RestClient.Builder restClientBuilder, RestClientSsl ssl) {\n\t\tthis.restClient = restClientBuilder.baseUrl(\"https://example.org\").apply(ssl.fromBundle(\"mybundle\")).build();\n\t}\n\n\tpublic Details someRestCall(String name) {\n\t\treturn this.restClient.get().uri(\"/{name}/details\", name).retrieve().body(Details.class);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.http.client.ClientHttpRequestFactoryBuilder;\nimport org.springframework.boot.http.client.HttpClientSettings\nimport org.springframework.boot.ssl.SslBundles\nimport org.springframework.stereotype.Service\nimport org.springframework.web.client.RestClient\nimport java.time.Duration\n\n@Service\nclass MyService(restClientBuilder: RestClient.Builder, sslBundles: SslBundles) {\n\n\tprivate val restClient: RestClient\n\n\tinit {\n\t\tval settings = HttpClientSettings.defaults()\n\t\t\t\t.withReadTimeout(Duration.ofMinutes(2))\n\t\t\t\t.withSslBundle(sslBundles.getBundle(\"mybundle\"))\n\t\tval requestFactory = ClientHttpRequestFactoryBuilder.detect().build(settings);\n\t\trestClient = restClientBuilder\n\t\t\t\t.baseUrl(\"https://example.org\")\n\t\t\t\t.requestFactory(requestFactory).build()\n\t}\n\n\tfun someRestCall(name: String): Details {\n\t\treturn restClient.get().uri(\"/{name}/details\", name).retrieve().body(Details::class.java)!!\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.time.Duration;\n\nimport org.springframework.boot.http.client.ClientHttpRequestFactoryBuilder;\nimport org.springframework.boot.http.client.HttpClientSettings;\nimport org.springframework.boot.ssl.SslBundles;\nimport org.springframework.http.client.ClientHttpRequestFactory;\nimport org.springframework.stereotype.Service;\nimport org.springframework.web.client.RestClient;\n\n@Service\npublic class MyService {\n\n\tprivate final RestClient restClient;\n\n\tpublic MyService(RestClient.Builder restClientBuilder, SslBundles sslBundles) {\n\t\tHttpClientSettings settings = HttpClientSettings.ofSslBundle(sslBundles.getBundle(\"mybundle\"))\n\t\t\t.withReadTimeout(Duration.ofMinutes(2));\n\t\tClientHttpRequestFactory requestFactory = ClientHttpRequestFactoryBuilder.detect().build(settings);\n\t\tthis.restClient = restClientBuilder.baseUrl(\"https://example.org\").requestFactory(requestFactory).build();\n\t}\n\n\tpublic Details someRestCall(String name) {\n\t\treturn this.restClient.get().uri(\"/{name}/details\", name).retrieve().body(Details.class);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.restclient.RestTemplateBuilder\nimport org.springframework.stereotype.Service\nimport org.springframework.web.client.RestTemplate\n\n@Service\nclass MyService(restTemplateBuilder: RestTemplateBuilder) {\n\n\tprivate val restTemplate: RestTemplate\n\n\tinit {\n\t\trestTemplate = restTemplateBuilder.build()\n\t}\n\n\tfun someRestCall(name: String): Details {\n\t\treturn restTemplate.getForObject(\"/{name}/details\", Details::class.java, name)!!\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.restclient.RestTemplateBuilder;\nimport org.springframework.stereotype.Service;\nimport org.springframework.web.client.RestTemplate;\n\n@Service\npublic class MyService {\n\n\tprivate final RestTemplate restTemplate;\n\n\tpublic MyService(RestTemplateBuilder restTemplateBuilder) {\n\t\tthis.restTemplate = restTemplateBuilder.build();\n\t}\n\n\tpublic Details someRestCall(String name) {\n\t\treturn this.restTemplate.getForObject(\"/{name}/details\", Details.class, name);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.apache.hc.client5.http.classic.HttpClient\nimport org.apache.hc.client5.http.impl.classic.HttpClientBuilder\nimport org.apache.hc.client5.http.impl.routing.DefaultProxyRoutePlanner\nimport org.apache.hc.client5.http.routing.HttpRoutePlanner\nimport org.apache.hc.core5.http.HttpException\nimport org.apache.hc.core5.http.HttpHost\nimport org.apache.hc.core5.http.protocol.HttpContext\nimport org.springframework.boot.restclient.RestTemplateCustomizer\nimport org.springframework.http.client.HttpComponentsClientHttpRequestFactory\nimport org.springframework.web.client.RestTemplate\n\nclass MyRestTemplateCustomizer : RestTemplateCustomizer {\n\n\toverride fun customize(restTemplate: RestTemplate) {\n\t\tval routePlanner: HttpRoutePlanner = CustomRoutePlanner(HttpHost(\"proxy.example.com\"))\n\t\tval httpClient: HttpClient = HttpClientBuilder.create().setRoutePlanner(routePlanner).build()\n\t\trestTemplate.requestFactory = HttpComponentsClientHttpRequestFactory(httpClient)\n\t}\n\n\tinternal class CustomRoutePlanner(proxy: HttpHost?) : DefaultProxyRoutePlanner(proxy) {\n\n\t\t@Throws(HttpException::class)\n\t\tpublic override fun determineProxy(target: HttpHost, context: HttpContext): HttpHost? {\n\t\t\tif (target.hostName == \"192.168.0.5\") {\n\t\t\t\treturn null\n\t\t\t}\n\t\t\treturn  super.determineProxy(target, context)\n\t\t}\n\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.apache.hc.client5.http.classic.HttpClient;\nimport org.apache.hc.client5.http.impl.classic.HttpClientBuilder;\nimport org.apache.hc.client5.http.impl.routing.DefaultProxyRoutePlanner;\nimport org.apache.hc.client5.http.routing.HttpRoutePlanner;\nimport org.apache.hc.core5.http.HttpException;\nimport org.apache.hc.core5.http.HttpHost;\nimport org.apache.hc.core5.http.protocol.HttpContext;\n\nimport org.springframework.boot.restclient.RestTemplateCustomizer;\nimport org.springframework.http.client.HttpComponentsClientHttpRequestFactory;\nimport org.springframework.web.client.RestTemplate;\n\npublic class MyRestTemplateCustomizer implements RestTemplateCustomizer {\n\n\t@Override\n\tpublic void customize(RestTemplate restTemplate) {\n\t\tHttpRoutePlanner routePlanner = new CustomRoutePlanner(new HttpHost(\"proxy.example.com\"));\n\t\tHttpClient httpClient = HttpClientBuilder.create().setRoutePlanner(routePlanner).build();\n\t\trestTemplate.setRequestFactory(new HttpComponentsClientHttpRequestFactory(httpClient));\n\t}\n\n\tstatic class CustomRoutePlanner extends DefaultProxyRoutePlanner {\n\n\t\tCustomRoutePlanner(HttpHost proxy) {\n\t\t\tsuper(proxy);\n\t\t}\n\n\t\t@Override\n\t\tprotected HttpHost determineProxy(HttpHost target, HttpContext context) throws HttpException {\n\t\t\tif (target.getHostName().equals(\"192.168.0.5\")) {\n\t\t\t\treturn null;\n\t\t\t}\n\t\t\treturn super.determineProxy(target, context);\n\t\t}\n\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.restclient.autoconfigure.RestTemplateBuilderConfigurer\nimport org.springframework.boot.restclient.RestTemplateBuilder\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport java.time.Duration\n\n@Configuration(proxyBeanMethods = false)\nclass MyRestTemplateBuilderConfiguration {\n\n\t@Bean\n\tfun restTemplateBuilder(configurer: RestTemplateBuilderConfigurer): RestTemplateBuilder {\n\t\treturn configurer.configure(RestTemplateBuilder()).connectTimeout(Duration.ofSeconds(5))\n\t\t\t.readTimeout(Duration.ofSeconds(2))\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.time.Duration;\n\nimport org.springframework.boot.restclient.RestTemplateBuilder;\nimport org.springframework.boot.restclient.autoconfigure.RestTemplateBuilderConfigurer;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyRestTemplateBuilderConfiguration {\n\n\t@Bean\n\tpublic RestTemplateBuilder restTemplateBuilder(RestTemplateBuilderConfigurer configurer) {\n\t\treturn configurer.configure(new RestTemplateBuilder())\n\t\t\t.connectTimeout(Duration.ofSeconds(5))\n\t\t\t.readTimeout(Duration.ofSeconds(2));\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.docs.io.restclient.resttemplate.Details\nimport org.springframework.boot.ssl.SslBundles\nimport org.springframework.boot.restclient.RestTemplateBuilder\nimport org.springframework.stereotype.Service\nimport org.springframework.web.client.RestTemplate\n\n@Service\nclass MyService(restTemplateBuilder: RestTemplateBuilder, sslBundles: SslBundles) {\n\n    private val restTemplate: RestTemplate\n\n    init {\n        restTemplate = restTemplateBuilder.sslBundle(sslBundles.getBundle(\"mybundle\")).build()\n    }\n\n    fun someRestCall(name: String): Details {\n        return restTemplate.getForObject(\"/{name}/details\", Details::class.java, name)!!\n    }\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.docs.io.restclient.resttemplate.Details;\nimport org.springframework.boot.restclient.RestTemplateBuilder;\nimport org.springframework.boot.ssl.SslBundles;\nimport org.springframework.stereotype.Service;\nimport org.springframework.web.client.RestTemplate;\n\n@Service\npublic class MyService {\n\n\tprivate final RestTemplate restTemplate;\n\n\tpublic MyService(RestTemplateBuilder restTemplateBuilder, SslBundles sslBundles) {\n\t\tthis.restTemplate = restTemplateBuilder.sslBundle(sslBundles.getBundle(\"mybundle\")).build();\n\t}\n\n\tpublic Details someRestCall(String name) {\n\t\treturn this.restTemplate.getForObject(\"/{name}/details\", Details.class, name);\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.http.clients.imperative.factory=jetty"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  http:\n    clients:\n      imperative:\n        factory: jetty"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.http.client.ClientHttpRequestFactoryBuilder\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport java.net.ProxySelector\n\n@Configuration(proxyBeanMethods = false)\nclass MyClientHttpConfiguration {\n\n\t@Bean\n\tfun clientHttpRequestFactoryBuilder(proxySelector: ProxySelector): ClientHttpRequestFactoryBuilder<*> {\n\t\treturn ClientHttpRequestFactoryBuilder.jdk()\n\t\t\t\t.withHttpClientCustomizer { builder -> builder.proxy(proxySelector) }\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.net.ProxySelector;\n\nimport org.springframework.boot.http.client.ClientHttpRequestFactoryBuilder;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyClientHttpConfiguration {\n\n\t@Bean\n\tClientHttpRequestFactoryBuilder<?> clientHttpRequestFactoryBuilder(ProxySelector proxySelector) {\n\t\treturn ClientHttpRequestFactoryBuilder.jdk()\n\t\t\t.withHttpClientCustomizer((builder) -> builder.proxy(proxySelector));\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.web.bind.annotation.RequestBody\nimport org.springframework.web.service.annotation.HttpExchange\nimport org.springframework.web.service.annotation.PostExchange\n\n@HttpExchange(url = \"https://echo.zuplo.io\")\ninterface EchoService {\n\n\t@PostExchange\n\tfun echo(@RequestBody message: Map<String, String>): Map<*, *>\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.util.Map;\n\nimport org.springframework.web.bind.annotation.RequestBody;\nimport org.springframework.web.service.annotation.HttpExchange;\nimport org.springframework.web.service.annotation.PostExchange;\n\n@HttpExchange(url = \"https://echo.zuplo.io\")\npublic interface EchoService {\n\n\t@PostExchange\n\tMap<?, ?> echo(@RequestBody Map<String, String> message);\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.autoconfigure.SpringBootApplication\nimport org.springframework.boot.runApplication\nimport org.springframework.web.service.registry.ImportHttpServices\n\n@SpringBootApplication\n@ImportHttpServices(basePackages = [\"com.example.myclients\"])\nclass MyApplication\n\nfun main(args: Array<String>) {\n\trunApplication<MyApplication>(*args)\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\nimport org.springframework.web.service.registry.ImportHttpServices;\n\n@SpringBootApplication\n@ImportHttpServices(basePackages = \"com.example.myclients\")\npublic class MyApplication {\n\n\tpublic static void main(String[] args) {\n\t\tSpringApplication.run(MyApplication.class, args);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.web.bind.annotation.RequestBody\nimport org.springframework.web.service.annotation.HttpExchange\nimport org.springframework.web.service.annotation.PostExchange\n\ninterface EchoService {\n\n\t@PostExchange\n\tfun echo(@RequestBody message: Map<String, String>): Map<*, *>\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.util.Map;\n\nimport org.springframework.web.bind.annotation.RequestBody;\nimport org.springframework.web.service.annotation.PostExchange;\n\npublic interface EchoService {\n\n\t@PostExchange\n\tMap<?, ?> echo(@RequestBody Map<String, String> message);\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.autoconfigure.SpringBootApplication\nimport org.springframework.boot.runApplication\nimport org.springframework.web.service.registry.ImportHttpServices\n\n@SpringBootApplication\n@ImportHttpServices(group = \"echo\", basePackages = [\"com.example.myclients\"])\nclass MyApplication\n\nfun main(args: Array<String>) {\n\trunApplication<MyApplication>(*args)\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\nimport org.springframework.web.service.registry.ImportHttpServices;\n\n@SpringBootApplication\n@ImportHttpServices(group = \"echo\", basePackages = \"com.example.myclients\")\npublic class MyApplication {\n\n\tpublic static void main(String[] args) {\n\t\tSpringApplication.run(MyApplication.class, args);\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.http.serviceclient.echo.base-url=https://echo.zuplo.io"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  http:\n    serviceclient:\n      echo:\n        base-url: \"https://echo.zuplo.io\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.autoconfigure.SpringBootApplication\nimport org.springframework.boot.runApplication\nimport org.springframework.web.service.registry.ImportHttpServices\n\n@SpringBootApplication\n@ImportHttpServices(group = \"echo\", types = [EchoService::class])\n@ImportHttpServices(group = \"other\", types = [OtherService::class])\nclass MyApplication\n\nfun main(args: Array<String>) {\n\trunApplication<MyApplication>(*args)\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\nimport org.springframework.web.service.registry.ImportHttpServices;\n\n@SpringBootApplication\n@ImportHttpServices(group = \"echo\", types = EchoService.class)\n@ImportHttpServices(group = \"other\", types = OtherService.class)\npublic class MyApplication {\n\n\tpublic static void main(String[] args) {\n\t\tSpringApplication.run(MyApplication.class, args);\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.http.clients.connect-timeout=1s\nspring.http.serviceclient.echo.base-url=https://echo.zuplo.io\nspring.http.serviceclient.echo.connect-timeout=2s\nspring.http.serviceclient.echo.read-timeout=2s"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  http:\n    clients:\n      connect-timeout: 1s\n    serviceclient:\n      echo:\n        base-url: \"https://echo.zuplo.io\"\n        connect-timeout: 2s\n        read-timeout: 2s"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.web.client.support.RestClientHttpServiceGroupConfigurer\n\n@Configuration(proxyBeanMethods = false)\nclass MyHttpServiceGroupConfiguration {\n\n\t@Bean\n\tfun myHttpServiceGroupConfigurer(): RestClientHttpServiceGroupConfigurer {\n\t\treturn RestClientHttpServiceGroupConfigurer { groups ->\n\t\t\tgroups.forEachClient { group, clientBuilder ->\n\t\t\t\tval groupName = group.name()\n\t\t\t\tclientBuilder.defaultHeader(\"service-group\", groupName)\n\t\t\t}\n\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.web.client.support.RestClientHttpServiceGroupConfigurer;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyHttpServiceGroupConfiguration {\n\n\t@Bean\n\tRestClientHttpServiceGroupConfigurer myHttpServiceGroupConfigurer() {\n\t\treturn (groups) -> groups.forEachClient((group, clientBuilder) -> {\n\t\t\tString groupName = group.name();\n\t\t\tclientBuilder.defaultHeader(\"service-group\", groupName);\n\t\t});\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.http.clients.connect-timeout=2s\nspring.http.clients.read-timeout=1s\nspring.http.clients.redirects=dont-follow"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  http:\n    clients:\n      connect-timeout: 2s\n      read-timeout: 1s\n      redirects: dont-follow"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.http.client.ClientHttpRequestFactoryBuilder\nimport org.springframework.boot.http.client.HttpClientSettings\nimport org.springframework.boot.http.client.InetAddressFilter\nimport org.springframework.http.client.ClientHttpRequestFactory\nimport org.springframework.stereotype.Service\nimport org.springframework.web.client.RestClient\n\n@Service\nclass MyService {\n\n\tprivate val restClient: RestClient\n\n\tinit {\n\t\tval onlyExternalAddresses = InetAddressFilter.externalAddresses()\n\t\tval settings = HttpClientSettings.defaults().withInetAddressFilter(onlyExternalAddresses)\n\t\tval requestFactory: ClientHttpRequestFactory = ClientHttpRequestFactoryBuilder.jdk().build(settings)\n\t\trestClient = RestClient.builder().requestFactory(requestFactory).baseUrl(\"https://example.org\").build()\n\t}\n\n\tfun someRestCall(name: String?): Details {\n\t\treturn restClient.get().uri(\"/{name}/details\", name)\n\t\t\t.retrieve().body(Details::class.java)!!\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.http.client.ClientHttpRequestFactoryBuilder;\nimport org.springframework.boot.http.client.HttpClientSettings;\nimport org.springframework.boot.http.client.InetAddressFilter;\nimport org.springframework.http.client.ClientHttpRequestFactory;\nimport org.springframework.stereotype.Service;\nimport org.springframework.web.client.RestClient;\n\n@Service\npublic class MyService {\n\n\tprivate final RestClient restClient;\n\n\tpublic MyService() {\n\t\tInetAddressFilter onlyExternalAddresses = InetAddressFilter.externalAddresses();\n\t\tHttpClientSettings settings = HttpClientSettings.defaults().withInetAddressFilter(onlyExternalAddresses);\n\t\tClientHttpRequestFactory requestFactory = ClientHttpRequestFactoryBuilder.jdk().build(settings);\n\t\tthis.restClient = RestClient.builder().requestFactory(requestFactory).baseUrl(\"https://example.org\").build();\n\t}\n\n\tpublic Details someRestCall(String name) {\n\t\treturn this.restClient.get().uri(\"/{name}/details\", name).retrieve().body(Details.class);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.http.client.InetAddressFilter\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\n\n@Configuration(proxyBeanMethods = false)\nclass MyHttpClientConfiguration {\n\n\t@Bean\n\tfun httpClientInetAddressFilter(): InetAddressFilter {\n\t\treturn InetAddressFilter.of(\"192.168.1.0/24\").andNot(\"192.168.1.1\", \"192.168.1.10\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.http.client.InetAddressFilter;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyHttpClientConfiguration {\n\n\t@Bean\n\tpublic InetAddressFilter httpClientInetAddressFilter() {\n\t\treturn InetAddressFilter.of(\"192.168.1.0/24\").andNot(\"192.168.1.1\", \"192.168.1.10\");\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Calling REST Services",
+    "WebClient",
+    "WebClient Runtime",
+    "Global HTTP Connector Configuration",
+    "WebClient Customization",
+    "WebClient SSL Support",
+    "RestClient",
+    "RestClient Customization",
+    "RestClient SSL Support",
+    "RestTemplate",
+    "RestTemplate Customization",
+    "RestTemplate SSL Support",
+    "HTTP Client Detection for RestClient and RestTemplate",
+    "Global HTTP Client Configuration",
+    "API Versioning",
+    "HTTP Service Interface Clients",
+    "Importing HTTP Services",
+    "Service Client Groups",
+    "Configuration Properties",
+    "Customization",
+    "Advanced Configuration",
+    "Applying Global Configuration to All HTTP Clients",
+    "InetAddress Filtering and SSRF Protection"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/function/client/WebClient.html": "r1",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/client/RestClient.html": "r2",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/client/RestTemplate.html": "r3",
+    "https://docs.spring.io/spring-framework/reference/7.0/web/webflux-webclient.html": "r4",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/rest-client.html#io.rest-client.restclient": "r5",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/function/client/WebClient.Builder.html": "r6",
+    "https://docs.spring.io/spring-boot/4.1/reference/web/reactive.html#web.reactive.webflux.httpcodecs": "r7",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/client/reactive/ClientHttpConnector.html": "r8",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/client/ReactorResourceFactory.html": "r9",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/client/reactive/JettyResourceFactory.html": "r10",
+    "https://docs.spring.io/spring-framework/reference/7.0/web/webflux-webclient/client-builder.html": "r11",
+    "https://javadoc.jetty.org/jetty-12/org/eclipse/jetty/client/HttpClient.html": "r12",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/rest-client.html#io.rest-client.global-configuration": "r13",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/http/client/autoconfigure/reactive/ClientHttpConnectorBuilderCustomizer.html": "r14",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/http/client/reactive/ClientHttpConnectorBuilder.html": "r15",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/ProxySelector.html": "r16",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webclient/WebClientCustomizer.html": "r17",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webclient/autoconfigure/WebClientSsl.html": "r18",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/ssl.html#features.ssl.bundles": "r19",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/client/RestClient.Builder.html": "r20",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/converter/HttpMessageConverters.html": "r21",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/client/ClientHttpRequestFactory.html": "r22",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/restclient/RestClientCustomizer.html": "r23",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/rest-client.html#io.rest-client.clienthttprequestfactory.configuration": "r24",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/restclient/autoconfigure/RestClientSsl.html": "r25",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/http/client/HttpClientSettings.html": "r26",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/http/client/ClientHttpRequestFactoryBuilder.html": "r27",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/restclient/RestTemplateBuilder.html": "r28",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/http/converter/autoconfigure/HttpMessageConverters.html": "r29",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/restclient/RestTemplateCustomizer.html": "r30",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/restclient/autoconfigure/RestTemplateBuilderConfigurer.html": "r31",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/http/client/autoconfigure/ClientHttpRequestFactoryBuilderCustomizer.html": "r32",
+    "https://docs.spring.io/spring-boot/4.1/reference/web/servlet.html#web.servlet.spring-mvc.api-versioning": "r33",
+    "https://docs.spring.io/spring-boot/4.1/reference/web/reactive.html#web.reactive.webflux.api-versioning": "r34",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/service/annotation/HttpExchange.html": "r35",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/service/annotation/GetExchange.html": "r36",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/service/annotation/PostExchange.html": "r37",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/service/annotation/DeleteExchange.html": "r38",
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/rest-clients.html#rest-http-service-client": "r39",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/service/registry/ImportHttpServices.html": "r40",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/client/support/RestClientHttpServiceGroupConfigurer.html": "r41",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/function/client/support/WebClientHttpServiceGroupConfigurer.html": "r42",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/service/registry/AbstractHttpServiceRegistrar.html": "r43",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Import.html": "r44",
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/rest-clients.html#rest-http-service-client-group-config": "r45",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/http/client/InetAddressFilter.html": "r46",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r47"
+  }
+}

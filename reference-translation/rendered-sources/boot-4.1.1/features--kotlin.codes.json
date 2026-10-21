@@ -1,0 +1,5 @@
+[
+  "```kotlin\nimport org.springframework.boot.autoconfigure.SpringBootApplication\nimport org.springframework.boot.runApplication\n\n@SpringBootApplication\nclass MyApplication\n\nfun main(args: Array<String>) {\n\trunApplication<MyApplication>(*args)\n}\n```",
+  "```kotlin\nrunApplication<MyApplication>(*args) {\n\tsetBannerMode(OFF)\n}\n```",
+  "```kotlin\n@ConfigurationProperties(\"example.kotlin\")\ndata class KotlinExampleProperties(\n\t\tval name: String,\n\t\tval description: String,\n\t\tval myService: MyService\n) {\n\n\tdata class MyService(\n\t\t\tval apiToken: String,\n\t\t\tval uri: URI\n\t)\n}\n```"
+]

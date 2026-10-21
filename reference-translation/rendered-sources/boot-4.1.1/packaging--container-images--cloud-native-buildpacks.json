@@ -1,0 +1,17 @@
+{
+  "page": "boot/packaging--container-images--cloud-native-buildpacks.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/packaging/container-images/cloud-native-buildpacks.html",
+  "version": "4.1.1",
+  "html_sha256": "a49d85003294f4c3a6720bee563bc08106aecfbd25b9e71c586e3727698f2524",
+  "code_blocks": [],
+  "headings": [
+    "Cloud Native Buildpacks"
+  ],
+  "links": {
+    "https://buildpacks.io": "r1",
+    "https://docs.spring.io/spring-boot/4.1/maven-plugin/build-image.html#build-image": "r2",
+    "https://docs.spring.io/spring-boot/4.1/gradle-plugin/packaging-oci-image.html": "r3",
+    "https://github.com/paketo-buildpacks/spring-boot": "r4",
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/container-images/efficient-images.html#packaging.container-images.efficient-images.layering": "r5"
+  }
+}

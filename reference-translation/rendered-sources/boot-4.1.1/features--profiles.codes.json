@@ -1,0 +1,16 @@
+[
+  "```kotlin\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.context.annotation.Profile\n\n@Configuration(proxyBeanMethods = false)\n@Profile(\"production\")\nclass ProductionConfiguration {\n\n\t// ...\n\n}\n```",
+  "```java\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.context.annotation.Profile;\n\n@Configuration(proxyBeanMethods = false)\n@Profile(\"production\")\npublic class ProductionConfiguration {\n\n\t// ...\n\n}\n```",
+  "```properties\nspring.profiles.active=dev,hsqldb\n```",
+  "```yaml\nspring:\n  profiles:\n    active: \"dev,hsqldb\"\n```",
+  "```properties\nspring.profiles.default=none\n```",
+  "```yaml\nspring:\n  profiles:\n    default: \"none\"\n```",
+  "```properties\nspring.profiles.active=prod\n#---\nspring.config.activate.on-profile=prod\nspring.profiles.active=metrics\n```",
+  "```yaml\n# this document is valid\nspring:\n  profiles:\n    active: \"prod\"\n---\n# this document is invalid\nspring:\n  config:\n    activate:\n      on-profile: \"prod\"\n  profiles:\n    active: \"metrics\"\n```",
+  "> ```properties\n> spring.profiles.validate=false\n> ```",
+  "> ```yaml\n> spring:\n>   profiles:\n>     validate: false\n> ```",
+  "```properties\nspring.profiles.include[0]=common\nspring.profiles.include[1]=local\n```",
+  "```yaml\nspring:\n  profiles:\n    include:\n      - \"common\"\n      - \"local\"\n```",
+  "```properties\nspring.profiles.group.production[0]=proddb\nspring.profiles.group.production[1]=prodmq\n```",
+  "```yaml\nspring:\n  profiles:\n    group:\n      production:\n      - \"proddb\"\n      - \"prodmq\"\n```"
+]

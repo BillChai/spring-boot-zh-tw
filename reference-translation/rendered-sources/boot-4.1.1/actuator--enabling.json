@@ -1,0 +1,22 @@
+{
+  "page": "boot/actuator--enabling.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/actuator/enabling.html",
+  "version": "4.1.1",
+  "html_sha256": "a4e9f294ab2f9d3ad00b8f360d95f47592a7ccfbc934e19a9ecd21ebb165b30c",
+  "code_blocks": [
+    {
+      "language": "xml",
+      "text": "<dependencies>\n\t<dependency>\n\t\t<groupId>org.springframework.boot</groupId>\n\t\t<artifactId>spring-boot-starter-actuator</artifactId>\n\t</dependency>\n</dependencies>"
+    },
+    {
+      "language": "gradle",
+      "text": "dependencies {\n\timplementation 'org.springframework.boot:spring-boot-starter-actuator'\n}"
+    }
+  ],
+  "headings": [
+    "Enabling Production-ready Features"
+  ],
+  "links": {
+    "https://github.com/spring-projects/spring-boot/tree/v4.1.1/module/spring-boot-actuator": "r1"
+  }
+}

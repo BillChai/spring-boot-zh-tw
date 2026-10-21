@@ -1,0 +1,4 @@
+[
+  "```shell\n$ mvn -Pnative package\n```",
+  "```shell\n$ java -Dspring.aot.enabled=true -jar myapplication.jar\n\n........ Starting AOT-processed MyApplication ...\n```"
+]

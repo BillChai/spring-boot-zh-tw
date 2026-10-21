@@ -1,0 +1,119 @@
+{
+  "page": "boot/messaging--amqp.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/messaging/amqp.html",
+  "version": "4.1.1",
+  "html_sha256": "54101f8a6ec23e89031d84b3b3a18f1daaa30ee7423a0427ac01a78c34f6d3bd",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.rabbitmq.host=localhost\nspring.rabbitmq.port=5672\nspring.rabbitmq.username=admin\nspring.rabbitmq.password=secret"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  rabbitmq:\n    host: \"localhost\"\n    port: 5672\n    username: \"admin\"\n    password: \"secret\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.rabbitmq.addresses=amqp://admin:secret@localhost"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  rabbitmq:\n    addresses: \"amqp://admin:secret@localhost\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.amqp.core.AmqpAdmin\nimport org.springframework.amqp.core.AmqpTemplate\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean(private val amqpAdmin: AmqpAdmin, private val amqpTemplate: AmqpTemplate) {\n\n\t// ...\n\n\tfun someMethod() {\n\t\tamqpAdmin.getQueueInfo(\"someQueue\")\n\t}\n\n\tfun someOtherMethod() {\n\t\tamqpTemplate.convertAndSend(\"hello\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.amqp.core.AmqpAdmin;\nimport org.springframework.amqp.core.AmqpTemplate;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final AmqpAdmin amqpAdmin;\n\n\tprivate final AmqpTemplate amqpTemplate;\n\n\tpublic MyBean(AmqpAdmin amqpAdmin, AmqpTemplate amqpTemplate) {\n\t\tthis.amqpAdmin = amqpAdmin;\n\t\tthis.amqpTemplate = amqpTemplate;\n\t}\n\n\t// ...\n\n\tpublic void someMethod() {\n\t\tthis.amqpAdmin.getQueueInfo(\"someQueue\");\n\t}\n\n\tpublic void someOtherMethod() {\n\t\tthis.amqpTemplate.convertAndSend(\"hello\");\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.rabbitmq.template.retry.enabled=true\nspring.rabbitmq.template.retry.initial-interval=2s"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  rabbitmq:\n    template:\n      retry:\n        enabled: true\n        initial-interval: \"2s\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.rabbitmq.stream.name=my-stream"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  rabbitmq:\n    stream:\n      name: \"my-stream\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.amqp.rabbit.annotation.RabbitListener\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean {\n\n\t@RabbitListener(queues = [\"someQueue\"])\n\tfun processMessage(content: String?) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.amqp.rabbit.annotation.RabbitListener;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\t@RabbitListener(queues = \"someQueue\")\n\tpublic void processMessage(String content) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory\nimport org.springframework.amqp.rabbit.connection.CachingConnectionFactory\nimport org.springframework.amqp.rabbit.connection.ConnectionFactory\nimport org.springframework.boot.amqp.autoconfigure.SimpleRabbitListenerContainerFactoryConfigurer\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\n\n@Configuration(proxyBeanMethods = false)\nclass MyRabbitConfiguration {\n\n\t@Bean\n\tfun myFactory(configurer: SimpleRabbitListenerContainerFactoryConfigurer): SimpleRabbitListenerContainerFactory {\n\t\tval factory = SimpleRabbitListenerContainerFactory()\n\t\tval connectionFactory = getCustomConnectionFactory()\n\t\tconfigurer.configure(factory, connectionFactory)\n\t\tfactory.setMessageConverter(MyMessageConverter())\n\t\treturn factory\n\t}\n\n\tfun getCustomConnectionFactory() : ConnectionFactory {\n\t\treturn ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;\nimport org.springframework.amqp.rabbit.connection.ConnectionFactory;\nimport org.springframework.boot.amqp.autoconfigure.SimpleRabbitListenerContainerFactoryConfigurer;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyRabbitConfiguration {\n\n\t@Bean\n\tpublic SimpleRabbitListenerContainerFactory myFactory(SimpleRabbitListenerContainerFactoryConfigurer configurer) {\n\t\tSimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();\n\t\tConnectionFactory connectionFactory = getCustomConnectionFactory();\n\t\tconfigurer.configure(factory, connectionFactory);\n\t\tfactory.setMessageConverter(new MyMessageConverter());\n\t\treturn factory;\n\t}\n\n\tprivate ConnectionFactory getCustomConnectionFactory() {\n\t\treturn ...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.amqp.rabbit.annotation.RabbitListener\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean {\n\n\t@RabbitListener(queues = [\"someQueue\"], containerFactory = \"myFactory\")\n\tfun processMessage(content: String?) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.amqp.rabbit.annotation.RabbitListener;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\t@RabbitListener(queues = \"someQueue\", containerFactory = \"myFactory\")\n\tpublic void processMessage(String content) {\n\t\t// ...\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "AMQP",
+    "RabbitMQ Support",
+    "Sending a Message",
+    "Sending a Message To A Stream",
+    "SSL",
+    "Receiving a Message"
+  ],
+  "links": {
+    "https://www.rabbitmq.com/": "r1",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/amqp/autoconfigure/RabbitProperties.html": "r2",
+    "https://rabbitmq.github.io/rabbitmq-java-client/api/current/com/rabbitmq/client/ConnectionFactory.html": "r3",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/amqp/autoconfigure/ConnectionFactoryCustomizer.html": "r4",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/rabbit/connection/ConnectionNameStrategy.html": "r5",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/rabbit/connection/CachingConnectionFactory.html": "r6",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/rabbit/core/RabbitTemplate.html": "r7",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/amqp/autoconfigure/RabbitTemplateCustomizer.html": "r8",
+    "https://spring.io/blog/2010/06/14/understanding-amqp-the-protocol-used-by-rabbitmq/": "r9",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/core/AmqpTemplate.html": "r10",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/core/AmqpAdmin.html": "r11",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/rabbit/core/RabbitMessagingTemplate.html": "r12",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/support/converter/MessageConverter.html": "r13",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/core/Queue.html": "r14",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/retry/RetryTemplate.html": "r15",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/amqp/autoconfigure/RabbitTemplateRetrySettingsCustomizer.html": "r16",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/amqp/autoconfigure/RabbitTemplateConfigurer.html": "r17",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/rabbit/support/micrometer/RabbitTemplateObservationConvention.html": "r18",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/rabbit/stream/support/converter/StreamMessageConverter.html": "r19",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/rabbit/stream/producer/ProducerCustomizer.html": "r20",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/rabbit/stream/micrometer/RabbitStreamTemplateObservationConvention.html": "r21",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/rabbit/stream/producer/RabbitStreamTemplate.html": "r22",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/amqp/autoconfigure/RabbitStreamTemplateConfigurer.html": "r23",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/ssl.html#features.ssl.bundles": "r24",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/rabbit/annotation/RabbitListener.html": "r25",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/rabbit/listener/RabbitListenerContainerFactory.html": "r26",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/rabbit/config/SimpleRabbitListenerContainerFactory.html": "r27",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/rabbit/retry/MessageRecoverer.html": "r28",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/rabbit/support/micrometer/RabbitListenerObservationConvention.html": "r29",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/rabbit/annotation/EnableRabbit.html": "r30",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/amqp/autoconfigure/SimpleRabbitListenerContainerFactoryConfigurer.html": "r31",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/amqp/autoconfigure/DirectRabbitListenerContainerFactoryConfigurer.html": "r32",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/rabbit/config/DirectRabbitListenerContainerFactory.html": "r33",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/rabbit/retry/RejectAndDontRequeueRecoverer.html": "r34",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/retry/RetryPolicy.html": "r35",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/amqp/autoconfigure/RabbitListenerRetrySettingsCustomizer.html": "r36",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/AmqpRejectAndDontRequeueException.html": "r37"
+  }
+}

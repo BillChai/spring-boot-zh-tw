@@ -1,0 +1,286 @@
+{
+  "page": "boot/data--sql.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/data/sql.html",
+  "version": "4.1.1",
+  "html_sha256": "60bb4e2091d590daa04918061924ddea64e5458d4643edce246859cdb9c41481",
+  "code_blocks": [
+    {
+      "language": "xml",
+      "text": "<dependency>\n\t<groupId>org.springframework.boot</groupId>\n\t<artifactId>spring-boot-starter-data-jpa</artifactId>\n</dependency>\n<dependency>\n\t<groupId>org.hsqldb</groupId>\n\t<artifactId>hsqldb</artifactId>\n\t<scope>runtime</scope>\n</dependency>"
+    },
+    {
+      "language": "properties",
+      "text": "spring.datasource.url=jdbc:mysql://localhost/test\nspring.datasource.username=dbuser\nspring.datasource.password=dbpass"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  datasource:\n    url: \"jdbc:mysql://localhost/test\"\n    username: \"dbuser\"\n    password: \"dbpass\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.datasource.tomcat.max-wait=10000\nspring.datasource.tomcat.max-active=50\nspring.datasource.tomcat.test-on-borrow=true"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  datasource:\n    tomcat:\n      max-wait: 10000\n      max-active: 50\n      test-on-borrow: true"
+    },
+    {
+      "language": "properties",
+      "text": "spring.datasource.jndi-name=java:jboss/datasources/customers"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  datasource:\n    jndi-name: \"java:jboss/datasources/customers\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.datasource.connection-fetch=lazy"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  datasource:\n    connection-fetch: \"lazy\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.jdbc.core.JdbcTemplate\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean(private val jdbcTemplate: JdbcTemplate) {\n\n\tfun doSomething() {\n\t\tjdbcTemplate.execute(\"delete from customer\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.jdbc.core.JdbcTemplate;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final JdbcTemplate jdbcTemplate;\n\n\tpublic MyBean(JdbcTemplate jdbcTemplate) {\n\t\tthis.jdbcTemplate = jdbcTemplate;\n\t}\n\n\tpublic void doSomething() {\n\t\tthis.jdbcTemplate ...\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.jdbc.template.max-rows=500"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  jdbc:\n    template:\n      max-rows: 500"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.jdbc.core.simple.JdbcClient\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean(private val jdbcClient: JdbcClient) {\n\n\tfun doSomething() {\n\t\tjdbcClient.sql(\"delete from customer\").update()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.jdbc.core.simple.JdbcClient;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final JdbcClient jdbcClient;\n\n\tpublic MyBean(JdbcClient jdbcClient) {\n\t\tthis.jdbcClient = jdbcClient;\n\t}\n\n\tpublic void doSomething() {\n\t\tthis.jdbcClient ...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import jakarta.persistence.Column\nimport jakarta.persistence.Entity\nimport jakarta.persistence.GeneratedValue\nimport jakarta.persistence.Id\nimport java.io.Serializable\n\n@Entity\nclass City : Serializable {\n\n\t@Id\n\t@GeneratedValue\n\tprivate val id: Long? = null\n\n\t@Column(nullable = false)\n\tvar name: String? = null\n\t\tprivate set\n\n\t// ... etc\n\t@Column(nullable = false)\n\tvar state: String? = null\n\t\tprivate set\n\n\t// ... additional members, often include @OneToMany mappings\n\n\tprotected constructor() {\n\t\t// no-args constructor required by JPA spec\n\t\t// this one is protected since it should not be used directly\n\t}\n\n\tconstructor(name: String?, state: String?) {\n\t\tthis.name = name\n\t\tthis.state = state\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.io.Serializable;\n\nimport jakarta.persistence.Column;\nimport jakarta.persistence.Entity;\nimport jakarta.persistence.GeneratedValue;\nimport jakarta.persistence.Id;\n\n@Entity\npublic class City implements Serializable {\n\n\t@Id\n\t@GeneratedValue\n\tprivate Long id;\n\n\t@Column(nullable = false)\n\tprivate String name;\n\n\t@Column(nullable = false)\n\tprivate String state;\n\n\t// ... additional members, often include @OneToMany mappings\n\n\tprotected City() {\n\t\t// no-args constructor required by JPA spec\n\t\t// this one is protected since it should not be used directly\n\t}\n\n\tpublic City(String name, String state) {\n\t\tthis.name = name;\n\t\tthis.state = state;\n\t}\n\n\tpublic String getName() {\n\t\treturn this.name;\n\t}\n\n\tpublic String getState() {\n\t\treturn this.state;\n\t}\n\n\t// ... etc\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.docs.data.sql.jpaandspringdata.entityclasses.City\nimport org.springframework.data.domain.Page\nimport org.springframework.data.domain.Pageable\nimport org.springframework.data.repository.Repository\n\ninterface CityRepository : Repository<City, Long> {\n\n\tfun findAll(pageable: Pageable?): Page<City>?\n\n\tfun findByNameAndStateAllIgnoringCase(name: String?, state: String?): City?\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.docs.data.sql.jpaandspringdata.entityclasses.City;\nimport org.springframework.data.domain.Page;\nimport org.springframework.data.domain.Pageable;\nimport org.springframework.data.repository.Repository;\n\npublic interface CityRepository extends Repository<City, Long> {\n\n\tPage<City> findAll(Pageable pageable);\n\n\tCity findByNameAndStateAllIgnoringCase(String name, String state);\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.docs.data.sql.jpaandspringdata.entityclasses.Country\nimport org.springframework.data.domain.Page\nimport org.springframework.data.domain.Pageable\nimport org.springframework.data.repository.Repository\nimport org.springframework.data.repository.history.RevisionRepository\n\ninterface CountryRepository :\n\t\tRevisionRepository<Country, Long, Int>,\n\t\tRepository<Country, Long> {\n\n\tfun findAll(pageable: Pageable?): Page<Country>?\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.docs.data.sql.jpaandspringdata.entityclasses.Country;\nimport org.springframework.data.domain.Page;\nimport org.springframework.data.domain.Pageable;\nimport org.springframework.data.repository.Repository;\nimport org.springframework.data.repository.history.RevisionRepository;\n\npublic interface CountryRepository extends RevisionRepository<Country, Long, Integer>, Repository<Country, Long> {\n\n\tPage<Country> findAll(Pageable pageable);\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.jpa.hibernate.ddl-auto=create-drop"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  jpa:\n    hibernate.ddl-auto: \"create-drop\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.jpa.properties.hibernate.globally_quoted_identifiers=true"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  jpa:\n    properties:\n      hibernate:\n        \"globally_quoted_identifiers\": \"true\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.context.annotation.Profile\nimport org.springframework.core.Ordered\nimport org.springframework.core.annotation.Order\nimport org.springframework.security.config.Customizer\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity\nimport org.springframework.security.web.SecurityFilterChain\n\n@Profile(\"dev\")\n@Configuration(proxyBeanMethods = false)\nclass DevProfileSecurityConfiguration {\n\n\t@Bean\n\t@Order(Ordered.HIGHEST_PRECEDENCE)\n\tfun h2ConsoleSecurityFilterChain(http: HttpSecurity): SecurityFilterChain {\n\t\treturn http.authorizeHttpRequests(yourCustomAuthorization())\n\t\t\t.csrf { csrf -> csrf.disable() }\n\t\t\t.headers { headers -> headers.frameOptions { frameOptions -> frameOptions.sameOrigin() } }\n\t\t\t.build()\n\t}\n\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.context.annotation.Profile;\nimport org.springframework.core.Ordered;\nimport org.springframework.core.annotation.Order;\nimport org.springframework.security.config.Customizer;\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity;\nimport org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;\nimport org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;\nimport org.springframework.security.web.SecurityFilterChain;\n\n@Profile(\"dev\")\n@Configuration(proxyBeanMethods = false)\npublic class DevProfileSecurityConfiguration {\n\n\t@Bean\n\t@Order(Ordered.HIGHEST_PRECEDENCE)\n\tSecurityFilterChain h2ConsoleSecurityFilterChain(HttpSecurity http) {\n\t\thttp.securityMatcher(PathRequest.toH2Console());\n\t\thttp.authorizeHttpRequests(yourCustomAuthorization());\n\t\thttp.csrf(CsrfConfigurer::disable);\n\t\thttp.headers((headers) -> headers.frameOptions(FrameOptionsConfig::sameOrigin));\n\t\treturn http.build();\n\t}\n\n\n}"
+    },
+    {
+      "language": "xml",
+      "text": "<plugin>\n\t<groupId>org.jooq</groupId>\n\t<artifactId>jooq-codegen-maven</artifactId>\n\t<executions>\n\t\t...\n\t</executions>\n\t<dependencies>\n\t\t<dependency>\n\t\t\t<groupId>com.h2database</groupId>\n\t\t\t<artifactId>h2</artifactId>\n\t\t\t<version>${h2.version}</version>\n\t\t</dependency>\n\t</dependencies>\n\t<configuration>\n\t\t<jdbc>\n\t\t\t<driver>org.h2.Driver</driver>\n\t\t\t<url>jdbc:h2:~/yourdatabase</url>\n\t\t</jdbc>\n\t\t<generator>\n\t\t\t...\n\t\t</generator>\n\t</configuration>\n</plugin>"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.jooq.DSLContext\nimport org.springframework.stereotype.Component\nimport java.util.GregorianCalendar\n\n@Component\nclass MyBean(private val create: DSLContext) {\n\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.util.GregorianCalendar;\nimport java.util.List;\n\nimport org.jooq.DSLContext;\n\nimport org.springframework.stereotype.Component;\n\nimport static org.springframework.boot.docs.data.sql.jooq.dslcontext.Tables.AUTHOR;\n\n@Component\npublic class MyBean {\n\n\tprivate final DSLContext create;\n\n\tpublic MyBean(DSLContext dslContext) {\n\t\tthis.create = dslContext;\n\t}\n\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "\tfun authorsBornAfter1980(): List<GregorianCalendar> {\n\t\treturn create.selectFrom<Tables.TAuthorRecord>(Tables.AUTHOR)\n\t\t\t.where(Tables.AUTHOR?.DATE_OF_BIRTH?.greaterThan(GregorianCalendar(1980, 0, 1)))\n\t\t\t.fetch(Tables.AUTHOR?.DATE_OF_BIRTH)\n\t}"
+    },
+    {
+      "language": "java",
+      "text": "\tpublic List<GregorianCalendar> authorsBornAfter1980() {\n\t\treturn this.create.selectFrom(AUTHOR)\n\t\t\t.where(AUTHOR.DATE_OF_BIRTH.greaterThan(new GregorianCalendar(1980, 0, 1)))\n\t\t\t.fetch(AUTHOR.DATE_OF_BIRTH);"
+    },
+    {
+      "language": "properties",
+      "text": "spring.r2dbc.url=r2dbc:postgresql://localhost/test\nspring.r2dbc.username=dbuser\nspring.r2dbc.password=dbpass"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  r2dbc:\n    url: \"r2dbc:postgresql://localhost/test\"\n    username: \"dbuser\"\n    password: \"dbpass\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.r2dbc.spi.ConnectionFactoryOptions\nimport org.springframework.boot.r2dbc.autoconfigure.ConnectionFactoryOptionsBuilderCustomizer\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\n\n@Configuration(proxyBeanMethods = false)\nclass MyR2dbcConfiguration {\n\n\t@Bean\n\tfun connectionFactoryPortCustomizer(): ConnectionFactoryOptionsBuilderCustomizer {\n\t\treturn ConnectionFactoryOptionsBuilderCustomizer { builder ->\n\t\t\tbuilder.option(ConnectionFactoryOptions.PORT, 5432)\n\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.r2dbc.spi.ConnectionFactoryOptions;\n\nimport org.springframework.boot.r2dbc.autoconfigure.ConnectionFactoryOptionsBuilderCustomizer;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyR2dbcConfiguration {\n\n\t@Bean\n\tpublic ConnectionFactoryOptionsBuilderCustomizer connectionFactoryPortCustomizer() {\n\t\treturn (builder) -> builder.option(ConnectionFactoryOptions.PORT, 5432);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.r2dbc.postgresql.PostgresqlConnectionFactoryProvider\nimport org.springframework.boot.r2dbc.autoconfigure.ConnectionFactoryOptionsBuilderCustomizer\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\n\n@Configuration(proxyBeanMethods = false)\nclass MyPostgresR2dbcConfiguration {\n\n\t@Bean\n\tfun postgresCustomizer(): ConnectionFactoryOptionsBuilderCustomizer {\n\t\tval options: MutableMap<String, String> = HashMap()\n\t\toptions[\"lock_timeout\"] = \"30s\"\n\t\toptions[\"statement_timeout\"] = \"60s\"\n\t\treturn ConnectionFactoryOptionsBuilderCustomizer { builder ->\n\t\t\tbuilder.option(PostgresqlConnectionFactoryProvider.OPTIONS, options)\n\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.util.HashMap;\nimport java.util.Map;\n\nimport io.r2dbc.postgresql.PostgresqlConnectionFactoryProvider;\n\nimport org.springframework.boot.r2dbc.autoconfigure.ConnectionFactoryOptionsBuilderCustomizer;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyPostgresR2dbcConfiguration {\n\n\t@Bean\n\tpublic ConnectionFactoryOptionsBuilderCustomizer postgresCustomizer() {\n\t\tMap<String, String> options = new HashMap<>();\n\t\toptions.put(\"lock_timeout\", \"30s\");\n\t\toptions.put(\"statement_timeout\", \"60s\");\n\t\treturn (builder) -> builder.option(PostgresqlConnectionFactoryProvider.OPTIONS, options);\n\t}\n\n}"
+    },
+    {
+      "language": "xml",
+      "text": "<dependency>\n\t<groupId>io.r2dbc</groupId>\n\t<artifactId>r2dbc-h2</artifactId>\n\t<scope>runtime</scope>\n</dependency>"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.r2dbc.core.DatabaseClient\nimport org.springframework.stereotype.Component\nimport reactor.core.publisher.Flux\n\n@Component\nclass MyBean(private val databaseClient: DatabaseClient) {\n\n\t// ...\n\n\tfun someMethod(): Flux<Map<String, Any>> {\n\t\treturn databaseClient.sql(\"select * from user\").fetch().all()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.util.Map;\n\nimport reactor.core.publisher.Flux;\n\nimport org.springframework.r2dbc.core.DatabaseClient;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final DatabaseClient databaseClient;\n\n\tpublic MyBean(DatabaseClient databaseClient) {\n\t\tthis.databaseClient = databaseClient;\n\t}\n\n\t// ...\n\n\tpublic Flux<Map<String, Object>> someMethod() {\n\t\treturn this.databaseClient.sql(\"select * from user\").fetch().all();\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.data.repository.Repository\nimport reactor.core.publisher.Mono\n\ninterface CityRepository : Repository<City, Long> {\n\n\tfun findByNameAndStateAllIgnoringCase(name: String, state: String): Mono<City>\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import reactor.core.publisher.Mono;\n\nimport org.springframework.data.repository.Repository;\n\npublic interface CityRepository extends Repository<City, Long> {\n\n\tMono<City> findByNameAndStateAllIgnoringCase(String name, String state);\n\n}"
+    }
+  ],
+  "headings": [
+    "SQL Databases",
+    "Configure a DataSource",
+    "Embedded Database Support",
+    "Connection to a Production Database",
+    "DataSource Configuration",
+    "Supported Connection Pools",
+    "Connection to a JNDI DataSource",
+    "Lazy Connection Proxy",
+    "Using JdbcTemplate",
+    "Using JdbcClient",
+    "JPA and Spring Data JPA",
+    "Entity Classes",
+    "Spring Data JPA Repositories",
+    "Spring Data Envers Repositories",
+    "Creating and Dropping JPA Databases",
+    "Open EntityManager in View",
+    "Spring Data JDBC",
+    "Using H2’s Web Console",
+    "Changing the H2 Console’s Path",
+    "Accessing the H2 Console in a Secured Application",
+    "Using jOOQ",
+    "Code Generation",
+    "Using DSLContext",
+    "jOOQ SQL Dialect",
+    "Customizing jOOQ",
+    "Using R2DBC",
+    "Embedded Database Support",
+    "Using DatabaseClient",
+    "Spring Data R2DBC Repositories"
+  ],
+  "links": {
+    "https://spring.io/projects/spring-framework": "r1",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jdbc/core/simple/JdbcClient.html": "r2",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html": "r3",
+    "https://spring.io/projects/spring-data": "r4",
+    "https://docs.spring.io/spring-data/commons/docs/4.1.x/api/org/springframework/data/repository/Repository.html": "r5",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html": "r6",
+    "https://docs.spring.io/spring-boot/4.1/how-to/data-access.html#howto.data-access.configure-custom-datasource": "r7",
+    "https://docs.spring.io/spring-boot/4.1/how-to/data-initialization.html": "r8",
+    "https://www.h2database.com": "r9",
+    "https://hsqldb.org/": "r10",
+    "https://db.apache.org/derby/": "r11",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Driver.html": "r12",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jdbc/autoconfigure/DataSourceProperties.html": "r13",
+    "https://docs.spring.io/spring-boot/4.1/reference/data/sql.html#data.sql.datasource.connection-pool": "r14",
+    "https://tomcat.apache.org/tomcat-11.0-doc/jdbc-pool.html#Common_Attributes": "r15",
+    "https://github.com/brettwooldridge/HikariCP": "r16",
+    "https://commons.apache.org/proper/commons-dbcp/": "r17",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jdbc/DataSourceBuilder.html": "r18",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jdbc/datasource/SimpleDriverDataSource.html": "r19",
+    "https://www.h2database.com/javadoc/org/h2/jdbcx/JdbcDataSource.html": "r20",
+    "https://jdbc.postgresql.org/documentation/publicapi/org/postgresql/ds/PGSimpleDataSource.html": "r21",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jdbc/datasource/LazyConnectionDataSourceProxy.html": "r22",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jdbc/core/namedparam/NamedParameterJdbcTemplate.html": "r23",
+    "https://spring.io/guides/gs/accessing-data-jpa/": "r24",
+    "https://spring.io": "r25",
+    "https://spring.io/projects/spring-data-jpa": "r26",
+    "https://hibernate.org/orm/documentation/": "r27",
+    "https://docs.spring.io/spring-boot/4.1/reference/using/auto-configuration.html#using.auto-configuration.packages": "r28",
+    "https://jakarta.ee/specifications/persistence/3.2/apidocs/jakarta.persistence/jakarta/persistence/Entity.html": "r29",
+    "https://jakarta.ee/specifications/persistence/3.2/apidocs/jakarta.persistence/jakarta/persistence/Embeddable.html": "r30",
+    "https://jakarta.ee/specifications/persistence/3.2/apidocs/jakarta.persistence/jakarta/persistence/MappedSuperclass.html": "r31",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/persistence/autoconfigure/EntityScan.html": "r32",
+    "https://docs.spring.io/spring-boot/4.1/how-to/data-access.html#howto.data-access.separate-entity-definitions-from-spring-configuration": "r33",
+    "https://docs.spring.io/spring-data/jpa/docs/4.1.x/api/org/springframework/data/jpa/repository/Query.html": "r34",
+    "https://docs.spring.io/spring-data/commons/docs/4.1.x/api/org/springframework/data/repository/CrudRepository.html": "r35",
+    "https://docs.spring.io/spring-data/jpa/docs/4.1.x/api/org/springframework/data/jpa/repository/config/EnableJpaRepositories.html": "r36",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jpa/EntityManagerFactoryBuilder.html": "r37",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/task/AsyncTaskExecutor.html": "r38",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/SmartInitializingSingleton.html": "r39",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/ObjectProvider.html": "r40",
+    "https://docs.spring.io/spring-data/jpa/reference/4.1": "r41",
+    "https://spring.io/projects/spring-data-envers": "r42",
+    "https://docs.spring.io/spring-data/commons/docs/4.1.x/api/org/springframework/data/repository/history/RevisionRepository.html": "r43",
+    "https://docs.spring.io/spring-data/jpa/reference/4.1/envers.html": "r44",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html": "r45",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/orm/jpa/support/OpenEntityManagerInViewInterceptor.html": "r46",
+    "https://docs.spring.io/spring-data/jdbc/docs/4.1.x/api/org/springframework/data/jdbc/repository/query/Query.html": "r47",
+    "https://docs.spring.io/spring-data/jdbc/docs/4.1.x/api/org/springframework/data/jdbc/repository/config/EnableJdbcRepositories.html": "r48",
+    "https://docs.spring.io/spring-data/jdbc/docs/4.1.x/api/org/springframework/data/jdbc/repository/config/AbstractJdbcConfiguration.html": "r49",
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/aot.html": "r50",
+    "https://docs.spring.io/spring-data/relational/reference/4.1": "r51",
+    "https://www.h2database.com/html/quickstart.html#h2_console": "r52",
+    "https://docs.spring.io/spring-boot/4.1/reference/using/devtools.html": "r53",
+    "https://docs.spring.io/spring-security/reference/7.1/features/exploits/csrf.html": "r54",
+    "https://docs.spring.io/spring-security/reference/7.1/features/exploits/headers.html#headers-frame-options": "r55",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/web/SecurityFilterChain.html": "r56",
+    "https://www.jooq.org/": "r57",
+    "https://www.datageekery.com/": "r58",
+    "https://www.jooq.org/doc/3.21.7/manual-single-page/#jooq-in-7-steps-step3": "r59",
+    "https://www.jooq.org/javadoc/3.21.7/org/jooq/DSLContext.html": "r60",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jooq/autoconfigure/DefaultConfigurationCustomizer.html": "r61",
+    "https://www.jooq.org/javadoc/3.21.7/org/jooq/Configuration.html": "r62",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r63",
+    "https://r2dbc.io": "r64",
+    "https://r2dbc.io/spec/1.0.0.RELEASE/api/io/r2dbc/spi/Connection.html": "r65",
+    "https://r2dbc.io/spec/1.0.0.RELEASE/api/io/r2dbc/spi/ConnectionFactory.html": "r66",
+    "https://docs.spring.io/spring-boot/4.1/how-to/data-initialization.html#howto.data-initialization.using-basic-sql-scripts": "r67",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/r2dbc/autoconfigure/ConnectionFactoryOptionsBuilderCustomizer.html": "r68",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html": "r69",
+    "https://docs.spring.io/spring-boot/4.1/reference/data/sql.html#data.sql.datasource.embedded": "r70",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/r2dbc/core/DatabaseClient.html": "r71",
+    "https://spring.io/projects/spring-data-r2dbc": "r72",
+    "https://docs.spring.io/spring-data/r2dbc/docs/4.1.x/api/org/springframework/data/r2dbc/repository/Query.html": "r73"
+  }
+}

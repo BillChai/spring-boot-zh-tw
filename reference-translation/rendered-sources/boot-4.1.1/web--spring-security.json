@@ -1,0 +1,55 @@
+{
+  "page": "boot/web--spring-security.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/web/spring-security.html",
+  "version": "4.1.1",
+  "html_sha256": "e20b02132616658aa00900ecbbbf6609628cb4edf3ac3f591b0abfe4a15d39cd",
+  "code_blocks": [
+    {
+      "language": "text",
+      "text": "Using generated security password: 78fa095d-3f4c-48b1-ad50-e24c31d5cf35\n\nThis generated password is for development use only. Your security configuration must be updated before running your application in production."
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.security.autoconfigure.web.reactive.PathRequest;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.security.config.web.server.ServerHttpSecurity;\nimport org.springframework.security.web.server.SecurityWebFilterChain;\n\nimport static org.springframework.security.config.Customizer.withDefaults;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyWebFluxSecurityConfiguration {\n\n\t@Bean\n\tpublic SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {\n\t\thttp.authorizeExchange((exchange) -> {\n\t\t\texchange.matchers(PathRequest.toStaticResources().atCommonLocations()).permitAll();\n\t\t\texchange.pathMatchers(\"/foo\", \"/bar\").authenticated();\n\t\t});\n\t\thttp.formLogin(withDefaults());\n\t\treturn http.build();\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Spring Security",
+    "MVC Security",
+    "WebFlux Security",
+    "OAuth2",
+    "SAML 2.0"
+  ],
+  "links": {
+    "https://spring.io/projects/spring-security": "r1",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/config/annotation/method/configuration/EnableMethodSecurity.html": "r2",
+    "https://docs.spring.io/spring-security/reference/7.1/servlet/authorization/method-security.html": "r3",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/core/userdetails/UserDetailsService.html": "r4",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/core/userdetails/ReactiveUserDetailsService.html": "r5",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/autoconfigure/SecurityProperties.User.html": "r6",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/authentication/DefaultAuthenticationEventPublisher.html": "r7",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/authentication/AuthenticationEventPublisher.html": "r8",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/autoconfigure/SecurityAutoConfiguration.html": "r9",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/autoconfigure/UserDetailsServiceAutoConfiguration.html": "r10",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/web/SecurityFilterChain.html": "r11",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/authentication/AuthenticationProvider.html": "r12",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/authentication/AuthenticationManager.html": "r13",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/provisioning/InMemoryUserDetailsManager.html": "r14",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/autoconfigure/actuate/web/servlet/EndpointRequest.html": "r15",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/web/util/matcher/RequestMatcher.html": "r16",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/autoconfigure/web/servlet/PathRequest.html": "r17",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/autoconfigure/web/reactive/ReactiveWebSecurityAutoConfiguration.html": "r18",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/autoconfigure/ReactiveUserDetailsServiceAutoConfiguration.html": "r19",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/web/server/WebFilterChainProxy.html": "r20",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/authentication/ReactiveAuthenticationManager.html": "r21",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/core/userdetails/MapReactiveUserDetailsService.html": "r22",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/web/server/SecurityWebFilterChain.html": "r23",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/autoconfigure/actuate/web/reactive/EndpointRequest.html": "r24",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/web/server/util/matcher/ServerWebExchangeMatcher.html": "r25",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/autoconfigure/web/reactive/PathRequest.html": "r26",
+    "https://oauth.net/2/": "r27",
+    "https://docs.spring.io/spring-boot/4.1/reference/security/oauth2.html#security.oauth2": "r28",
+    "https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html": "r29",
+    "https://docs.spring.io/spring-boot/4.1/reference/security/saml2.html#security.saml2": "r30"
+  }
+}

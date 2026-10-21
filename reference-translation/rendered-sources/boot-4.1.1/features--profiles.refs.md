@@ -1,0 +1,14 @@
+[r1]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/stereotype/Component.html
+[r2]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html
+[r3]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/ConfigurationProperties.html
+[r4]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Profile.html
+[r5]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/EnableConfigurationProperties.html
+[r6]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html
+[r7]: https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.files.profile-specific
+[r8]: https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.files.activation-properties
+[r9]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/PropertySource.html
+[r10]: https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.order
+[r11]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/SpringApplication.html
+[r12]: https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.typesafe-configuration-properties.merging-complex-types
+[r13]: https://docs.spring.io/spring-boot/4.1/reference/features/profiles.html#features.profiles.groups
+[r14]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/ConfigurableEnvironment.html

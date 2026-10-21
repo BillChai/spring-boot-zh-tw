@@ -1,0 +1,3623 @@
+<!DOCTYPE html>
+<html lang="en">
+  <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-domain-script="018ee325-b3a7-7753-937b-b8b3e643b1a7"></script><script>function OptanonWrapper() {}</script><script>function setGTM(w, d, s, l, i) { w[l] = w[l] || []; w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js"}); var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != "dataLayer" ? "&l=" + l : ""; j.async = true; j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl; f.parentNode.insertBefore(j, f); } if (document.cookie.indexOf("OptanonConsent") > -1 && document.cookie.indexOf("groups=") > -1) { setGTM(window, document, "script", "dataLayer", "GTM-W8CQ8TL"); } else { waitForOnetrustActiveGroups(); } var timer; function waitForOnetrustActiveGroups() { if (document.cookie.indexOf("OptanonConsent") > -1 && document.cookie.indexOf("groups=") > -1) { clearTimeout(timer); setGTM(window, document, "script", "dataLayer", "GTM-W8CQ8TL"); } else { timer = setTimeout(waitForOnetrustActiveGroups, 250); }}</script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Logging :: Spring Boot</title>
+    <link rel="canonical" href="https://docs.spring.io/spring-boot/reference/features/logging.html">
+    <link rel="prev" href="profiles.html">
+    <link rel="next" href="internationalization.html">
+    <meta name="generator" content="Antora 3.2.1">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/onetrust.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="v0.4.26"> 
+    <meta name="version" content="4.1.1">
+    <meta name="generation" content="4.1">
+    <meta name="versioned-url" content="https://docs.spring.io/spring-boot/4.1/reference/features/logging.html">
+    <meta name="component" content="boot">
+    <meta name="latest-version" content="true">
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://spring.io">
+        <img
+          id="springlogo"
+          class="block"
+          src="../../_/img/spring-logo.svg"
+          alt="Spring"
+        />
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Why Spring</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/why-spring">Overview</a>
+            <li class="navbar-item navbar-item-special-3">Trending</li>
+            <a class="navbar-item" href="https://spring.io/ai">Generative AI</a>
+            <a class="navbar-item" href="https://spring.io/cloud">Cloud</a>
+            <li class="navbar-item navbar-item-special-3">Architecture Patterns</li>
+            <a class="navbar-item" href="https://spring.io/microservices">Microservices</a>
+            <a class="navbar-item" href="https://spring.io/reactive">Reactive</a>
+            <a class="navbar-item" href="https://spring.io/event-driven">Event Driven</a>
+            <li class="navbar-item navbar-item-special-3">Application Types</li>
+            <a class="navbar-item" href="https://spring.io/web-applications">Web Applications</a>
+            <a class="navbar-item" href="https://spring.io/serverless">Serverless</a>
+            <a class="navbar-item" href="https://spring.io/batch">Batch</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Learn</a>
+          <div class="navbar-dropdown">
+            <li class="navbar-item navbar-item-special-3">Getting Started</li>
+            <a class="navbar-item" href="https://spring.io/quickstart">Quickstart</a>
+            <a class="navbar-item" href="https://spring.io/guides">Guides</a>
+            <li class="navbar-item navbar-item-special-3">Academy</li>
+            <a class="navbar-item" href="https://spring.academy/courses">Courses
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg>
+            </a>
+            <a class="navbar-item" href="https://spring.academy/learning-path">Get Certified
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Projects</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://spring.io/projects">Overview</a>
+            <li class="navbar-item navbar-item-special-3">Projects</li>
+            <a class="navbar-item" href="https://spring.io/projects/spring-boot">Spring Boot</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-framework">Spring Framework</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-cloud">Spring Cloud</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-ai">Spring AI</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-data">Spring Data</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-integration">Spring Integration</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-batch">Spring Batch</a>
+            <a class="navbar-item" href="https://spring.io/projects/spring-security">Spring Security</a>
+            <li class="navbar-item navbar-item-special-3">Foundational Projects</li>
+            <a class="navbar-item" href="https://micrometer.io">Micrometer
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg>
+            </a>
+            <a class="navbar-item" href="https://projectreactor.io">Reactor
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg>
+            </a>
+            <li class="navbar-item navbar-item-special-3">Development Tools</li>
+            <a class="navbar-item" href="https://spring.io/tools">Spring Tools</a>
+            <a class="navbar-item navbar-item-special-2" href="https://start.spring.io">Spring Initializr
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/blog">Blog</a>
+            <a class="navbar-item" href="https://spring.io/projects#release-calendar">Release Calendar</a>
+            <a class="navbar-item" href="https://spring.io/projects/generations">Version Mappings</a>
+            <a class="navbar-item" href="https://spring.io/projects/release-highlights">Release Highlights</a>
+            <a class="navbar-item" href="https://spring.io/security">Security Advisories</a>
+            <li class="navbar-item navbar-item-special-3">GitHub Orgs</li>
+            <a class="navbar-item" href="https://github.com/spring-projects">Spring Projects
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg>
+            </a>
+            <a class="navbar-item" href="https://github.com/spring-cloud">Spring Cloud
+              <svg class="external-link-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><polyline points="15 10.94 15 15 1 15 1 1 5.06 1" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><polyline points="8.93 1 15 1 15 7.07" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></polyline><line x1="15" y1="1" x2="8" y2="8" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="2"></line></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Community</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://spring.io/community">Overview</a>
+            <a class="navbar-item" href="https://spring.io/events">Events</a>
+            <a class="navbar-item" href="https://spring.io/authors">Authors</a>
+          </div>
+        </div>
+
+        <div class="navbar-item has-dropdown is-hoverable is-enterprise">
+          <a class="navbar-link" href="#">Enterprise</a>
+          <div class="navbar-dropdown lg is-right">
+            <a class="navbar-item" href="https://enterprise.spring.io/">Overview</a>
+            <a class="navbar-item" href="https://enterprise.spring.io/lts-releases">Long-term Support</a>
+            <a class="navbar-item" href="https://enterprise.spring.io/spring-application-advisor">Automated Upgrades</a>
+            <a class="navbar-item" href="https://enterprise.spring.io/enterprise-extensions">Governance and Compliance</a>
+            <a class="navbar-item" href="https://enterprise.spring.io/enterprise-components">Modern App Development</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <label class="theme-toggler">
+      <input
+        type="checkbox"
+        type="checkbox"
+        id="switch-theme-checkbox"
+        name="switch-theme-checkbox"
+      />
+      <span class="icon"><svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="moon"
+          class="svg-inline--fa fa-moon moon"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 384 512"
+        ><path
+            fill="currentColor"
+            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z"
+          ></path>
+        </svg>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="sun"
+          class="svg-inline--fa fa-sun sun"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+        ><path
+            fill="currentColor"
+            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z"
+          ></path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+!function (theme) {
+  if (theme === 'dark') {
+    document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+  }
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="boot" data-version="4.1.1">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">Spring Boot</span>
+  <span class="version">4.1.1</span>
+  <button class="browse-version" id="browse-version">
+    <svg
+      height="24px"
+      id="Layer_1"
+      style="enable-background:new 0 0 512 512;"
+      version="1.1"
+      viewBox="0 0 512 512"
+      width="24px"
+      xml:space="preserve"
+    ><g><path
+          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
+        ></path><path
+          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
+        ></path><path
+          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
+        ></path></g></svg>
+  </button>
+  <div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    <span>Search</span>
+    <span class="search-key"></span>
+  </button>
+</div>
+</div><ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link navtree-icon-home"  href="../../index.html">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link navtree-icon-book"  href="../../documentation.html">Documentation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link navtree-icon-question"  href="../../community.html">Community</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link navtree-icon-server"  href="../../system-requirements.html">System Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link navtree-icon-gift"  href="../../installing.html">Installing Spring Boot</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link navtree-icon-rocket"  href="../../upgrading.html">Upgrading Spring Boot</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../tutorial/index.html">Tutorials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../tutorial/first-application/index.html">Developing Your First Spring Boot Application</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../index.html">Reference</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../using/index.html">Developing with Spring Boot</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/build-systems.html">Build Systems</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/structuring-your-code.html">Structuring Your Code</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/configuration-classes.html">Configuration Classes</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/auto-configuration.html">Auto-configuration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/spring-beans-and-dependency-injection.html">Spring Beans and Dependency Injection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/using-the-springbootapplication-annotation.html">Using the @SpringBootApplication Annotation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/running-your-application.html">Running Your Application</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/devtools.html">Developer Tools</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../using/packaging-for-production.html">Packaging Your Application for Production</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="index.html">Core Features</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="spring-application.html">SpringApplication</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="external-config.html">Externalized Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="profiles.html">Profiles</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link"  href="logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="internationalization.html">Internationalization</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="aop.html">Aspect-Oriented Programming</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="json.html">JSON</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="task-execution-and-scheduling.html">Task Execution and Scheduling</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="dev-services.html">Development-time Services</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="developing-auto-configuration.html">Creating Your Own Auto-configuration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="kotlin.html">Kotlin Support</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="ssl.html">SSL</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../web/index.html">Web</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../web/servlet.html">Servlet Web Applications</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../web/reactive.html">Reactive Web Applications</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../web/graceful-shutdown.html">Graceful Shutdown</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../web/spring-security.html">Spring Security</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../web/spring-session.html">Spring Session</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../web/spring-graphql.html">Spring for GraphQL</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../web/spring-hateoas.html">Spring HATEOAS</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../data/index.html">Data</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../data/sql.html">SQL Databases</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../data/nosql.html">Working with NoSQL Technologies</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../io/index.html">IO</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/caching.html">Caching</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/spring-batch.html">Spring Batch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/grpc.html">gRPC</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/hazelcast.html">Hazelcast</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/quartz.html">Quartz Scheduler</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/email.html">Sending Email</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/validation.html">Validation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/rest-client.html">Calling REST Services</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/webservices.html">Web Services</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../io/jta.html">Distributed Transactions With JTA</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../messaging/index.html">Messaging</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../messaging/jms.html">JMS</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../messaging/amqp.html">AMQP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../messaging/kafka.html">Apache Kafka Support</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../messaging/pulsar.html">Apache Pulsar Support</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../messaging/rsocket.html">RSocket</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../messaging/spring-integration.html">Spring Integration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../messaging/websockets.html">WebSockets</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../security/index.html">Security</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../security/oauth2.html">OAuth2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../security/saml2.html">SAML 2.0</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../testing/index.html">Testing</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../testing/test-modules.html">Test Modules</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../testing/test-scope-dependencies.html">Test Scope Dependencies</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../testing/spring-applications.html">Testing Spring Applications</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../testing/spring-boot-applications.html">Testing Spring Boot Applications</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../testing/testcontainers.html">Testcontainers</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../testing/test-utilities.html">Test Utilities</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../packaging/index.html">Packaging Spring Boot Applications</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../packaging/efficient.html">Efficient Deployments</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../packaging/aot-cache.html">AOT Cache</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../packaging/aot.html">Ahead-of-Time Processing With the JVM</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../packaging/native-image/index.html">GraalVM Native Images</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link"  href="../packaging/native-image/introducing-graalvm-native-images.html">Introducing GraalVM Native Images</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link"  href="../packaging/native-image/advanced-topics.html">Advanced Native Images Topics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../packaging/checkpoint-restore.html">Checkpoint and Restore With the JVM</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../packaging/container-images/index.html">Container Images</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link"  href="../packaging/container-images/efficient-images.html">Efficient Container Images</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link"  href="../packaging/container-images/dockerfiles.html">Dockerfiles</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link"  href="../packaging/container-images/cloud-native-buildpacks.html">Cloud Native Buildpacks</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../actuator/index.html">Production-ready Features</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/enabling.html">Enabling Production-ready Features</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/endpoints.html">Endpoints</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/monitoring.html">Monitoring and Management Over HTTP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/jmx.html">Monitoring and Management over JMX</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/observability.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/loggers.html">Loggers</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/metrics.html">Metrics</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/tracing.html">Tracing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/auditing.html">Auditing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/http-exchanges.html">Recording HTTP Exchanges</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/process-monitoring.html">Process Monitoring</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../actuator/cloud-foundry.html">Cloud Foundry Support</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../how-to/index.html">How-to Guides</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/application.html">Spring Boot Application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/properties-and-configuration.html">Properties and Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/webserver.html">Embedded Web Servers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/spring-mvc.html">Spring MVC</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/jersey.html">Jersey</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/http-clients.html">HTTP Clients</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/logging.html">Logging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/data-access.html">Data Access</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/data-initialization.html">Database Initialization</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/nosql.html">NoSQL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/messaging.html">Messaging</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/batch.html">Batch Applications</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/actuator.html">Actuator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/security.html">Security</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/hotswapping.html">Hot Swapping</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/testing.html">Testing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/build.html">Build</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/aot.html">Ahead-of-Time Processing</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../how-to/native-image/index.html">GraalVM Native Applications</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../how-to/native-image/developing-your-first-application.html">Developing Your First GraalVM Native Application</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../how-to/native-image/testing-native-applications.html">Testing GraalVM Native Images</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/aot-cache.html">AOT Cache</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../how-to/deployment/index.html">Deploying Spring Boot Applications</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../how-to/deployment/traditional-deployment.html">Traditional Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../how-to/deployment/cloud.html">Deploying to the Cloud</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../how-to/deployment/installing.html">Installing Spring Boot Applications</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../how-to/docker-compose.html">Docker Compose</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../build-tool-plugin/index.html">Build Tool Plugins</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../maven-plugin/index.html">Maven Plugin</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/using.html">Using the Plugin</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/goals.html">Goals</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/packaging.html">Packaging Executable Archives</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/build-image.html">Packaging OCI Images</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/run.html">Running your Application with Maven</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/aot.html">Ahead-of-Time Processing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/integration-tests.html">Running Integration Tests</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/build-info.html">Integrating with Actuator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../maven-plugin/help.html">Help Information</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../gradle-plugin/index.html">Gradle Plugin</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/getting-started.html">Getting Started</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/managing-dependencies.html">Managing Dependencies</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/packaging.html">Packaging Executable Archives</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/packaging-oci-image.html">Packaging OCI Images</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/publishing.html">Publishing your Application</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/running.html">Running your Application with Gradle</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/aot.html">Ahead-of-Time Processing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/integrating-with-actuator.html">Integrating with Actuator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../gradle-plugin/reacting.html">Reacting to Other Plugins</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../build-tool-plugin/antlib.html">Spring Boot AntLib Module</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../build-tool-plugin/other-build-systems.html">Supporting Other Build Systems</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../cli/index.html">Spring Boot CLI</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../cli/installation.html">Installing the CLI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../cli/using-the-cli.html">Using the CLI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Rest APIs</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../api/rest/actuator/index.html">Actuator</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/auditevents.html">Audit Events (<code>auditevents</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/beans.html">Beans (<code>beans</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/caches.html">Caches (<code>caches</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/conditions.html">Conditions Evaluation Report (<code>conditions</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/configprops.html">Configuration Properties (<code>configprops</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/env.html">Environment (<code>env</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/flyway.html">Flyway (<code>flyway</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/health.html">Health (<code>health</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/heapdump.html">Heap Dump (<code>heapdump</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/httpexchanges.html">HTTP Exchanges (<code>httpexchanges</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/info.html">Info (<code>info</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/integrationgraph.html">Spring Integration Graph (<code>integrationgraph</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/liquibase.html">Liquibase (<code>liquibase</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/logfile.html">Log File (<code>logfile</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/loggers.html">Loggers (<code>loggers</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/mappings.html">Mappings (<code>mappings</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/metrics.html">Metrics (<code>metrics</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/prometheus.html">Prometheus (<code>prometheus</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/quartz.html">Quartz (<code>quartz</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/sbom.html">Software Bill of Materials (<code>sbom</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/scheduledtasks.html">Scheduled Tasks (<code>scheduledtasks</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/sessions.html">Sessions (<code>sessions</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/shutdown.html">Shutdown (<code>shutdown</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/startup.html">Application Startup (<code>startup</code>)</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../api/rest/actuator/threaddump.html">Thread Dump (<code>threaddump</code>)</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Java APIs</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link link-external"  target="_blank" href="../../api/java/index.html">Spring Boot</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link link-external"  target="_blank" href="../../gradle-plugin/api/java/index.html">Gradle Plugin</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link link-external"  target="_blank" href="../../maven-plugin/api/java/index.html">Maven Plugin</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kotlin APIs</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link link-external"  target="_blank" href="../../api/kotlin/index.html">Spring Boot</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Specifications</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../specification/configuration-metadata/index.html">Configuration Metadata</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/configuration-metadata/format.html">Metadata Format</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/configuration-metadata/manual-hints.html">Providing Manual Hints</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/configuration-metadata/annotation-processor.html">Generating Your Own Metadata by Using the Annotation Processor</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../specification/executable-jar/index.html">The Executable Jar Format</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/executable-jar/nested-jars.html">Nested JARs</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/executable-jar/jarfile-class.html">Spring Boot&#8217;s &#8220;NestedJarFile&#8221; Class</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/executable-jar/launching.html">Launching Executable Jars</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/executable-jar/property-launcher.html">PropertiesLauncher Features</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/executable-jar/restrictions.html">Executable Jar Restrictions</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../specification/executable-jar/alternatives.html">Alternative Single Jar Solutions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Appendix</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../appendix/application-properties/index.html">Common Application Properties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../appendix/deprecated-application-properties/index.html">Deprecated Application Properties</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/index.html">Auto-configuration Classes</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-activemq.html">spring-boot-activemq</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-actuator-autoconfigure.html">spring-boot-actuator-autoconfigure</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-amqp.html">spring-boot-amqp</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-artemis.html">spring-boot-artemis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-autoconfigure.html">spring-boot-autoconfigure</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-batch.html">spring-boot-batch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-batch-data-mongodb.html">spring-boot-batch-data-mongodb</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-batch-jdbc.html">spring-boot-batch-jdbc</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-cache.html">spring-boot-cache</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-cassandra.html">spring-boot-cassandra</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-cloudfoundry.html">spring-boot-cloudfoundry</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-couchbase.html">spring-boot-couchbase</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-cassandra.html">spring-boot-data-cassandra</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-commons.html">spring-boot-data-commons</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-couchbase.html">spring-boot-data-couchbase</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-elasticsearch.html">spring-boot-data-elasticsearch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-jdbc.html">spring-boot-data-jdbc</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-jpa.html">spring-boot-data-jpa</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-ldap.html">spring-boot-data-ldap</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-mongodb.html">spring-boot-data-mongodb</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-neo4j.html">spring-boot-data-neo4j</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-r2dbc.html">spring-boot-data-r2dbc</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-redis.html">spring-boot-data-redis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-data-rest.html">spring-boot-data-rest</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-devtools.html">spring-boot-devtools</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-elasticsearch.html">spring-boot-elasticsearch</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-flyway.html">spring-boot-flyway</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-freemarker.html">spring-boot-freemarker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-graphql.html">spring-boot-graphql</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-groovy-templates.html">spring-boot-groovy-templates</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-grpc-client.html">spring-boot-grpc-client</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-grpc-server.html">spring-boot-grpc-server</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-gson.html">spring-boot-gson</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-h2console.html">spring-boot-h2console</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-hateoas.html">spring-boot-hateoas</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-hazelcast.html">spring-boot-hazelcast</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-health.html">spring-boot-health</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-hibernate.html">spring-boot-hibernate</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-http-client.html">spring-boot-http-client</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-http-codec.html">spring-boot-http-codec</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-http-converter.html">spring-boot-http-converter</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-integration.html">spring-boot-integration</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jackson.html">spring-boot-jackson</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jackson2.html">spring-boot-jackson2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jdbc.html">spring-boot-jdbc</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jersey.html">spring-boot-jersey</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jetty.html">spring-boot-jetty</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jms.html">spring-boot-jms</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jooq.html">spring-boot-jooq</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-jsonb.html">spring-boot-jsonb</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-kafka.html">spring-boot-kafka</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-kotlinx-serialization-json.html">spring-boot-kotlinx-serialization-json</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-ldap.html">spring-boot-ldap</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-liquibase.html">spring-boot-liquibase</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-mail.html">spring-boot-mail</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-micrometer-metrics.html">spring-boot-micrometer-metrics</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-micrometer-observation.html">spring-boot-micrometer-observation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-micrometer-tracing.html">spring-boot-micrometer-tracing</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-micrometer-tracing-brave.html">spring-boot-micrometer-tracing-brave</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-micrometer-tracing-opentelemetry.html">spring-boot-micrometer-tracing-opentelemetry</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-mongodb.html">spring-boot-mongodb</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-mustache.html">spring-boot-mustache</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-neo4j.html">spring-boot-neo4j</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-netty.html">spring-boot-netty</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-opentelemetry.html">spring-boot-opentelemetry</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-persistence.html">spring-boot-persistence</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-pulsar.html">spring-boot-pulsar</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-quartz.html">spring-boot-quartz</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-r2dbc.html">spring-boot-r2dbc</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-reactor.html">spring-boot-reactor</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-reactor-netty.html">spring-boot-reactor-netty</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-restclient.html">spring-boot-restclient</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-resttestclient.html">spring-boot-resttestclient</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-rsocket.html">spring-boot-rsocket</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-security.html">spring-boot-security</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-security-oauth2-authorization-server.html">spring-boot-security-oauth2-authorization-server</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-security-oauth2-client.html">spring-boot-security-oauth2-client</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-security-oauth2-resource-server.html">spring-boot-security-oauth2-resource-server</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-security-saml2.html">spring-boot-security-saml2</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-sendgrid.html">spring-boot-sendgrid</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-servlet.html">spring-boot-servlet</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-session.html">spring-boot-session</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-session-data-redis.html">spring-boot-session-data-redis</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-session-jdbc.html">spring-boot-session-jdbc</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-testcontainers.html">spring-boot-testcontainers</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-thymeleaf.html">spring-boot-thymeleaf</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-tomcat.html">spring-boot-tomcat</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-transaction.html">spring-boot-transaction</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-validation.html">spring-boot-validation</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-webclient.html">spring-boot-webclient</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-webflux.html">spring-boot-webflux</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-webmvc.html">spring-boot-webmvc</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-webservices.html">spring-boot-webservices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-websocket.html">spring-boot-websocket</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/auto-configuration-classes/spring-boot-zipkin.html">spring-boot-zipkin</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../appendix/test-auto-configuration/index.html">Test Auto-configuration Annotations</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/test-auto-configuration/slices.html">Test Slices</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../appendix/dependency-versions/index.html">Dependency Versions</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/dependency-versions/coordinates.html">Managed Dependency Coordinates</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link"  href="../../appendix/dependency-versions/properties.html">Version Properties</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+<div class="search">
+  <button class="DocSearch-Button search-button">
+    <svg enable-background="new 0 0 32 32" id="Glyph" version="1.1" viewBox="0 0 32 32" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <path d="M27.414,24.586l-5.077-5.077C23.386,17.928,24,16.035,24,14c0-5.514-4.486-10-10-10S4,8.486,4,14  s4.486,10,10,10c2.035,0,3.928-0.614,5.509-1.663l5.077,5.077c0.78,0.781,2.048,0.781,2.828,0  C28.195,26.633,28.195,25.367,27.414,24.586z M7,14c0-3.86,3.14-7,7-7s7,3.14,7,7s-3.14,7-7,7S7,17.86,7,14z" id="XMLID_223_"/>
+    </svg>
+    <span>Search</span>
+    <span class="search-key"></span>
+  </button>
+</div>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title="Logging"
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/spring-projects/spring-boot/blob/v4.1.1/documentation/spring-boot-docs/src/docs/antora/modules/reference/pages/features/logging.adoc">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Edit this Page
+        </a>
+              <a href="https://github.com/spring-projects/spring-boot" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css"><![CDATA[
+              .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+        <a href="https://stackoverflow.com/tags/spring-boot">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path
+              d="M290.7 311L95 269.7 86.8 309l195.7 41zm51-87L188.2 95.7l-25.5 30.8 153.5 128.3zm-31.2 39.7L129.2 179l-16.7 36.5L293.7 300zM262 32l-32 24 119.3 160.3 32-24zm20.5 328h-200v39.7h200zm39.7 80H42.7V320h-40v160h359.5V320h-40z"
+            ></path></svg>
+          Stack Overflow
+        </a>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li id="copy-url" title="Copy versioned URL"></li>
+      <li><a href="../../index.html">Spring Boot</a></li>
+      <li><a href="../index.html">Reference</a></li>
+      <li><a href="index.html">Core Features</a></li>
+      <li><a href="logging.html">Logging</a></li>
+    </ul>
+  </nav>
+</div><h1 id="page-title" class="page">Logging</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring Boot uses <a href="https://commons.apache.org/logging">Commons Logging</a> for all internal logging but leaves the underlying log implementation open.
+Default configurations are provided for <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.logging/java/util/logging/package-summary.html">Java Util Logging</a>, <a href="https://logging.apache.org/log4j/2.x/">Log4j2</a>, and <a href="https://logback.qos.ch/">Logback</a>.
+In each case, loggers are pre-configured to use console output with optional file output also available.</p>
+</div>
+<div class="paragraph">
+<p>By default, if you use the starters, Logback is used for logging.
+Appropriate Logback routing is also included to ensure that dependent libraries that use Java Util Logging, Commons Logging, Log4J, or SLF4J all work correctly.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+There are a lot of logging frameworks available for Java.
+Do not worry if the above list seems confusing.
+Generally, you do not need to change your logging dependencies and the Spring Boot defaults work just fine.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+When you deploy your application to a servlet container or application server, logging performed with the Java Util Logging API is not routed into your application&#8217;s logs.
+This prevents logging performed by the container or other applications that have been deployed to it from appearing in your application&#8217;s logs.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.logging.log-format"><a class="anchor" href="#features.logging.log-format"></a>Log Format</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The default log output from Spring Boot resembles the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">2026-08-17T10:51:28.508Z  INFO 11390 --- [myapp] [           main] o.s.b.d.f.logexample.MyApplication       : Starting MyApplication using Java 25.0.4 with PID 11390 (/opt/apps/myapp.jar started by myuser in /opt/apps/)
+2026-08-17T10:51:28.527Z  INFO 11390 --- [myapp] [           main] o.s.b.d.f.logexample.MyApplication       : No active profile set, falling back to 1 default profile: "default"
+2026-08-17T10:51:33.118Z  INFO 11390 --- [myapp] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-08-17T10:51:33.232Z  INFO 11390 --- [myapp] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-08-17T10:51:33.239Z  INFO 11390 --- [myapp] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-08-17T10:51:33.461Z  INFO 11390 --- [myapp] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 4632 ms
+2026-08-17T10:51:35.255Z  INFO 11390 --- [myapp] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-08-17T10:51:35.286Z  INFO 11390 --- [myapp] [           main] o.s.b.d.f.logexample.MyApplication       : Started MyApplication in 8.572 seconds (process running for 10.155)
+                                                                                                                                                      2026-08-17T10:51:35.315Z  INFO 11390 --- [myapp] [ionShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-08-17T10:51:35.346Z  INFO 11390 --- [myapp] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following items are output:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Date and Time: Millisecond precision and easily sortable.</p>
+</li>
+<li>
+<p>Log Level: <code>ERROR</code>, <code>WARN</code>, <code>INFO</code>, <code>DEBUG</code>, or <code>TRACE</code>.</p>
+</li>
+<li>
+<p>Process ID.</p>
+</li>
+<li>
+<p>A <code>---</code> separator to distinguish the start of actual log messages.</p>
+</li>
+<li>
+<p>Application name: Enclosed in square brackets (logged by default only if <code>spring.application.name</code> is set)</p>
+</li>
+<li>
+<p>Application group: Enclosed in square brackets (logged by default only if <code>spring.application.group</code> is set)</p>
+</li>
+<li>
+<p>Thread name: Enclosed in square brackets (may be truncated for console output).</p>
+</li>
+<li>
+<p>Correlation ID: If tracing is enabled (not shown in the sample above)</p>
+</li>
+<li>
+<p>Logger name: This is usually the source class name (often abbreviated).</p>
+</li>
+<li>
+<p>The log message.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Logback does not have a <code>FATAL</code> level.
+It is mapped to <code>ERROR</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you have a <code>spring.application.name</code> property but don&#8217;t want it logged you can set <code>logging.include-application-name</code> to <code>false</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you have a <code>spring.application.group</code> property but don&#8217;t want it logged you can set <code>logging.include-application-group</code> to <code>false</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+For more details about correlation IDs, please <a href="../actuator/tracing.html#actuator.micrometer-tracing.logging" class="xref page">see this documentation</a>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.logging.console-output"><a class="anchor" href="#features.logging.console-output"></a>Console Output</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The default log configuration echoes messages to the console as they are written.
+By default, <code>ERROR</code>-level, <code>WARN</code>-level, and <code>INFO</code>-level messages are logged.
+You can also enable a &#8220;debug&#8221; mode by starting your application with a <code>--debug</code> flag.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">$ java -jar myapp.jar --debug</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+You can also specify <code>debug=true</code> in your <code>application.properties</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When the debug mode is enabled, a selection of core loggers (embedded container, Hibernate, and Spring Boot) are configured to output more information.
+Enabling the debug mode does <em>not</em> configure your application to log all messages with <code>DEBUG</code> level.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can enable a &#8220;trace&#8221; mode by starting your application with a <code>--trace</code> flag (or <code>trace=true</code> in your <code>application.properties</code>).
+Doing so enables trace logging for a selection of core loggers (embedded container, Hibernate schema generation, and the whole Spring portfolio).</p>
+</div>
+<div class="paragraph">
+<p>If you want to disable console-based logging, you can set the <code>logging.console.enabled</code> property to <code>false</code>.</p>
+</div>
+<div class="sect2">
+<h3 id="features.logging.console-output.color-coded"><a class="anchor" href="#features.logging.console-output.color-coded"></a>Color-coded Output</h3>
+<div class="paragraph">
+<p>If your terminal supports ANSI, color output is used to aid readability.
+You can set <code>spring.output.ansi.enabled</code> to a <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/ansi/AnsiOutput.Enabled.html" class="apiref">supported value</a> to override the auto-detection.</p>
+</div>
+<div class="paragraph">
+<p>Color coding is configured by using the <code>%clr</code> conversion word.
+In its simplest form, the converter colors the output according to the log level, as shown in the following example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">%clr(%5p)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following table describes the mapping of log levels to colors:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Level</th>
+<th class="tableblock halign-left valign-top">Color</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>FATAL</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Red</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ERROR</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Red</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>WARN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yellow</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>INFO</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Green</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>DEBUG</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Green</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>TRACE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Green</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Alternatively, you can specify the color and styles that should be used by providing them as options to the conversion.
+For example, to make the text yellow and bold, use the following setting:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">%clr(%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX}){yellow,bold}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following text colors are supported:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>black</code></p>
+</li>
+<li>
+<p><code>blue</code></p>
+</li>
+<li>
+<p><code>bright_black</code></p>
+</li>
+<li>
+<p><code>bright_blue</code></p>
+</li>
+<li>
+<p><code>bright_cyan</code></p>
+</li>
+<li>
+<p><code>bright_green</code></p>
+</li>
+<li>
+<p><code>bright_magenta</code></p>
+</li>
+<li>
+<p><code>bright_red</code></p>
+</li>
+<li>
+<p><code>bright_white</code></p>
+</li>
+<li>
+<p><code>bright_yellow</code></p>
+</li>
+<li>
+<p><code>cyan</code></p>
+</li>
+<li>
+<p><code>green</code></p>
+</li>
+<li>
+<p><code>magenta</code></p>
+</li>
+<li>
+<p><code>red</code></p>
+</li>
+<li>
+<p><code>white</code></p>
+</li>
+<li>
+<p><code>yellow</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following background colors are supported:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>bg_black</code></p>
+</li>
+<li>
+<p><code>bg_blue</code></p>
+</li>
+<li>
+<p><code>bg_bright_black</code></p>
+</li>
+<li>
+<p><code>bg_bright_blue</code></p>
+</li>
+<li>
+<p><code>bg_bright_cyan</code></p>
+</li>
+<li>
+<p><code>bg_bright_green</code></p>
+</li>
+<li>
+<p><code>bg_bright_magenta</code></p>
+</li>
+<li>
+<p><code>bg_bright_red</code></p>
+</li>
+<li>
+<p><code>bg_bright_white</code></p>
+</li>
+<li>
+<p><code>bg_bright_yellow</code></p>
+</li>
+<li>
+<p><code>bg_cyan</code></p>
+</li>
+<li>
+<p><code>bg_green</code></p>
+</li>
+<li>
+<p><code>bg_magenta</code></p>
+</li>
+<li>
+<p><code>bg_red</code></p>
+</li>
+<li>
+<p><code>bg_white</code></p>
+</li>
+<li>
+<p><code>bg_yellow</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following styles are supported:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>bold</code></p>
+</li>
+<li>
+<p><code>faint</code></p>
+</li>
+<li>
+<p><code>italic</code></p>
+</li>
+<li>
+<p><code>normal</code></p>
+</li>
+<li>
+<p><code>reverse</code></p>
+</li>
+<li>
+<p><code>underline</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.logging.file-output"><a class="anchor" href="#features.logging.file-output"></a>File Output</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>By default, Spring Boot logs only to the console and does not write log files.
+If you want to write log files in addition to the console output, you need to set a <code>logging.file.name</code> or <code>logging.file.path</code> property (for example, in your <code>application.properties</code>).
+If both properties are set, <code>logging.file.path</code> is ignored and only <code>logging.file.name</code> is used.</p>
+</div>
+<div class="paragraph">
+<p>The following table shows how the <code>logging.*</code> properties can be used together:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Logging properties</caption>
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 16.6666%;">
+<col style="width: 66.6668%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><code>logging.file.name</code></th>
+<th class="tableblock halign-left valign-top"><code>logging.file.path</code></th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>(none)</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>(none)</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Console only logging.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specific file (for example, <code>my.log</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>(none)</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Writes to the location specified by <code>logging.file.name</code>.
+  The location can be absolute or relative to the current directory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>(none)</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specific directory (for example, <code>/var/log</code>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Writes <code>spring.log</code> to the directory specified by <code>logging.file.path</code>.
+  The directory can be absolute or relative to the current directory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specific file</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specific directory</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Writes to the location specified by <code>logging.file.name</code> and ignores <code>logging.file.path</code>.
+  The location can be absolute or relative to the current directory.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Log files rotate when they reach 10 MB and, as with console output, <code>ERROR</code>-level, <code>WARN</code>-level, and <code>INFO</code>-level messages are logged by default.
+Note that Log4J2 requires <code>logging.file.path</code> to be set with such configuration.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Logging properties are independent of the actual logging infrastructure.
+As a result, specific configuration keys (such as <code>logback.configurationFile</code> for Logback) are not managed by spring Boot.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.logging.file-rotation"><a class="anchor" href="#features.logging.file-rotation"></a>File Rotation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you are using Logback or Log4j2, it is possible to fine-tune log rotation settings using your <code>application.properties</code> or <code>application.yaml</code> file.
+For all other logging system, you will need to configure rotation settings directly yourself.</p>
+</div>
+<div class="paragraph">
+<p>The following rotation policy properties are supported for Logback:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.logback.rollingpolicy.file-name-pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The filename pattern used to create log archives.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.logback.rollingpolicy.clean-history-on-start</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If log archive cleanup should occur when the application starts.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.logback.rollingpolicy.max-file-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum size of log file before it is archived.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.logback.rollingpolicy.total-size-cap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum amount of size log archives can take before being deleted.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.logback.rollingpolicy.max-history</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum number of archive log files to keep (defaults to 7).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>If you are using Log4j2, the following rotation policy properties are available:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.log4j2.rollingpolicy.file-name-pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The filename pattern used to create log archives.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.log4j2.rollingpolicy.max-file-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum size of log file before it is archived (defaults to 10MB).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.log4j2.rollingpolicy.max-history</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum number of archive log files to keep (defaults to 7).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.log4j2.rollingpolicy.strategy</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Rolling policy strategy (defaults to 'size').</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.log4j2.rollingpolicy.cron</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cron expression used when the strategy is 'cron' (default to every day at midnight).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.log4j2.rollingpolicy.time-interval</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time based triggering interval when the strategy is 'time' or 'size-and-time' (default to 1).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.log4j2.rollingpolicy.time-modulate</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to align the next rollover time to occur at the top of the interval when the strategy is time based (defaults to <code>false</code>).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.logging.log-levels"><a class="anchor" href="#features.logging.log-levels"></a>Log Levels</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>All the supported logging systems can have the logger levels set in the Spring <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a> (for example, in <code>application.properties</code>) by using <code>logging.level.&lt;logger-name&gt;=&lt;level&gt;</code> where <code>level</code> is one of TRACE, DEBUG, INFO, WARN, ERROR, FATAL, or OFF.
+The <code>root</code> logger can be configured by using <code>logging.level.root</code>.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows potential logging settings in <code>application.properties</code>:</p>
+</div>
+<div id="_tabs_1" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_1_properties" class="tab">
+<p>Properties</p>
+</li>
+<li id="_tabs_1_yaml" class="tab">
+<p>YAML</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_1_properties--panel" class="tabpanel" aria-labelledby="_tabs_1_properties">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">logging.level.root=warn
+logging.level.org.springframework.web=debug
+logging.level.org.hibernate=error</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_1_yaml--panel" class="tabpanel" aria-labelledby="_tabs_1_yaml">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">logging:
+  level:
+    root: "warn"
+    org.springframework.web: "debug"
+    org.hibernate: "error"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>It is also possible to set logging levels using environment variables.
+For example, <code>LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB=DEBUG</code> will set <code>org.springframework.web</code> to <code>DEBUG</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The above approach will only work for package level logging.
+Since relaxed binding <a href="external-config.html#features.external-config.typesafe-configuration-properties.relaxed-binding.maps-from-environment-variables" class="xref page">always converts environment variables to lowercase</a>, it is not possible to configure logging for an individual class in this way.
+If you need to configure logging for a class, you can use <a href="external-config.html#features.external-config.application-json" class="xref page">the <code>SPRING_APPLICATION_JSON</code></a> variable.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.logging.log-groups"><a class="anchor" href="#features.logging.log-groups"></a>Log Groups</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It is often useful to be able to group related loggers together so that they can all be configured at the same time.
+For example, you might commonly change the logging levels for <em>all</em> Tomcat related loggers, but you can not easily remember top level packages.</p>
+</div>
+<div class="paragraph">
+<p>To help with this, Spring Boot allows you to define logging groups in your Spring <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a>.
+For example, here is how you could define a &#8220;tomcat&#8221; group by adding it to your <code>application.properties</code>:</p>
+</div>
+<div id="_tabs_2" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_2_properties" class="tab">
+<p>Properties</p>
+</li>
+<li id="_tabs_2_yaml" class="tab">
+<p>YAML</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_2_properties--panel" class="tabpanel" aria-labelledby="_tabs_2_properties">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">logging.group.tomcat=org.apache.catalina,org.apache.coyote,org.apache.tomcat</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_2_yaml--panel" class="tabpanel" aria-labelledby="_tabs_2_yaml">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">logging:
+  group:
+    tomcat: "org.apache.catalina,org.apache.coyote,org.apache.tomcat"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Once defined, you can change the level for all the loggers in the group with a single line:</p>
+</div>
+<div id="_tabs_3" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_3_properties" class="tab">
+<p>Properties</p>
+</li>
+<li id="_tabs_3_yaml" class="tab">
+<p>YAML</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_3_properties--panel" class="tabpanel" aria-labelledby="_tabs_3_properties">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">logging.level.tomcat=trace</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_3_yaml--panel" class="tabpanel" aria-labelledby="_tabs_3_yaml">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">logging:
+  level:
+    tomcat: "trace"</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Spring Boot includes the following pre-defined logging groups that can be used out-of-the-box:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Loggers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">web</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>org.springframework.core.codec</code>, <code>org.springframework.http</code>, <code>org.springframework.web</code>, <code>org.springframework.boot.actuate.endpoint.web</code>, <code>org.springframework.boot.web.servlet.ServletContextInitializerBeans</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sql</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>org.springframework.jdbc.core</code>, <code>org.hibernate.SQL</code>, <a href="https://www.jooq.org/javadoc/3.21.7/org/jooq/tools/LoggerListener.html" class="apiref"><code>LoggerListener</code></a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.logging.shutdown-hook"><a class="anchor" href="#features.logging.shutdown-hook"></a>Using a Log Shutdown Hook</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In order to release logging resources when your application terminates, a shutdown hook that will trigger log system cleanup when the JVM exits is provided.
+This shutdown hook is registered automatically unless your application is deployed as a war file.
+If your application has complex context hierarchies the shutdown hook may not meet your needs.
+If it does not, disable the shutdown hook and investigate the options provided directly by the underlying logging system.
+For example, Logback offers <a href="https://logback.qos.ch/manual/loggingSeparation.html">context selectors</a> which allow each Logger to be created in its own context.
+You can use the <code>logging.register-shutdown-hook</code> property to disable the shutdown hook.
+Setting it to <code>false</code> will disable the registration.
+You can set the property in your <code>application.properties</code> or <code>application.yaml</code> file:</p>
+</div>
+<div id="_tabs_4" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_4_properties" class="tab">
+<p>Properties</p>
+</li>
+<li id="_tabs_4_yaml" class="tab">
+<p>YAML</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_4_properties--panel" class="tabpanel" aria-labelledby="_tabs_4_properties">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">logging.register-shutdown-hook=false</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_4_yaml--panel" class="tabpanel" aria-labelledby="_tabs_4_yaml">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">logging:
+  register-shutdown-hook: false</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.logging.custom-log-configuration"><a class="anchor" href="#features.logging.custom-log-configuration"></a>Custom Log Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The various logging systems can be activated by including the appropriate libraries on the classpath and can be further customized by providing a suitable configuration file in the root of the classpath or in a location specified by the following Spring <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a> property: <code>logging.config</code>.</p>
+</div>
+<div class="paragraph">
+<p>You can force Spring Boot to use a particular logging system by using the <code>org.springframework.boot.logging.LoggingSystem</code> system property.
+The value should be the fully qualified class name of a <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/logging/LoggingSystem.html" class="apiref"><code>LoggingSystem</code></a> implementation.
+You can also disable Spring Boot&#8217;s logging configuration entirely by using a value of <code>none</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Since logging is initialized <strong>before</strong> the <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html" class="apiref"><code>ApplicationContext</code></a> is created, it is not possible to control logging from <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/PropertySources.html" class="apiref"><code>@PropertySources</code></a> in Spring <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html" class="apiref"><code>@Configuration</code></a> files.
+The only way to change the logging system or disable it entirely is through System properties.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Depending on your logging system, the following files are loaded:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Logging System</th>
+<th class="tableblock halign-left valign-top">Customization</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Logback</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logback-spring.xml</code>, <code>logback-spring.groovy</code>, <code>logback.xml</code>, or <code>logback.groovy</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Log4j2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>log4j2-spring.xml</code> or <code>log4j2.xml</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JDK (Java Util Logging)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.properties</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When possible, we recommend that you use the <code>-spring</code> variants for your logging configuration (for example, <code>logback-spring.xml</code> rather than <code>logback.xml</code>).
+If you use standard configuration locations, Spring cannot completely control log initialization.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+There are known classloading issues with Java Util Logging that cause problems when running from an 'executable jar'.
+We recommend that you avoid it when running from an 'executable jar' if at all possible.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To help with the customization, some other properties are transferred from the Spring <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a> to System properties.
+This allows the properties to be consumed by logging system configuration. For example, setting <code>logging.file.name</code> in <code>application.properties</code> or <code>LOGGING_FILE_NAME</code> as an environment variable will result in the <code>LOG_FILE</code> System property being set.
+The properties that are transferred are described in the following table:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Spring Environment</th>
+<th class="tableblock halign-left valign-top">System Property</th>
+<th class="tableblock halign-left valign-top">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.exception-conversion-word</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOG_EXCEPTION_CONVERSION_WORD</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The conversion word used when logging exceptions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.file.name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOG_FILE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If defined, it is used in the default log configuration.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.file.path</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOG_PATH</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If defined, it is used in the default log configuration.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.pattern.console</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CONSOLE_LOG_PATTERN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The log pattern to use on the console (stdout).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.pattern.dateformat</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOG_DATEFORMAT_PATTERN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Appender pattern for log date format.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.charset.console</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CONSOLE_LOG_CHARSET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The charset to use for console logging.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.threshold.console</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CONSOLE_LOG_THRESHOLD</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The log level threshold to use for console logging.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.pattern.file</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>FILE_LOG_PATTERN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The log pattern to use in a file (if <code>LOG_FILE</code> is enabled).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.charset.file</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>FILE_LOG_CHARSET</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The charset to use for file logging (if <code>LOG_FILE</code> is enabled).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.threshold.file</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>FILE_LOG_THRESHOLD</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The log level threshold to use for file logging.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.pattern.level</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOG_LEVEL_PATTERN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The format to use when rendering the log level (default <code>%5p</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.structured.format.console</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CONSOLE_LOG_STRUCTURED_FORMAT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The structured logging format to use for console logging.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.structured.format.file</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>FILE_LOG_STRUCTURED_FORMAT</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The structured logging format to use for file logging.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>PID</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The current process ID (discovered if possible and when not already defined as an OS environment variable).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>If you use Logback, the following properties are also transferred:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Spring Environment</th>
+<th class="tableblock halign-left valign-top">System Property</th>
+<th class="tableblock halign-left valign-top">Comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.logback.rollingpolicy.file-name-pattern</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOGBACK_ROLLINGPOLICY_FILE_NAME_PATTERN</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pattern for rolled-over log file names (default <code>${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.logback.rollingpolicy.clean-history-on-start</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOGBACK_ROLLINGPOLICY_CLEAN_HISTORY_ON_START</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Whether to clean the archive log files on startup.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.logback.rollingpolicy.max-file-size</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOGBACK_ROLLINGPOLICY_MAX_FILE_SIZE</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum log file size.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.logback.rollingpolicy.total-size-cap</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOGBACK_ROLLINGPOLICY_TOTAL_SIZE_CAP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Total size of log backups to be kept.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.logback.rollingpolicy.max-history</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>LOGBACK_ROLLINGPOLICY_MAX_HISTORY</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Maximum number of archive log files to keep.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>All the supported logging systems can consult System properties when parsing their configuration files.
+See the default configurations in <code>spring-boot.jar</code> for examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot/src/main/resources/org/springframework/boot/logging/logback/defaults.xml">Logback</a></p>
+</li>
+<li>
+<p><a href="https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot/src/main/resources/org/springframework/boot/logging/log4j2/log4j2.xml">Log4j 2</a></p>
+</li>
+<li>
+<p><a href="https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot/src/main/resources/org/springframework/boot/logging/java/logging-file.properties">Java Util logging</a></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you want to use a placeholder in a logging property, you should use <a href="external-config.html#features.external-config.files.property-placeholders" class="xref page">Spring Boot&#8217;s syntax</a> and not the syntax of the underlying framework.
+Notably, if you use Logback, you should use <code>:</code> as the delimiter between a property name and its default value and not use <code>:-</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>You can add MDC and other ad-hoc content to log lines by overriding only the <code>LOG_LEVEL_PATTERN</code> (or <code>logging.pattern.level</code> with Logback).
+For example, if you use <code>logging.pattern.level=user:%X{user} %5p</code>, then the default log format contains an MDC entry for "user", if it exists, as shown in the following example.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">2019-08-30 12:30:04.031 user:someone INFO 22174 --- [  nio-8080-exec-0] demo.Controller
+Handling authenticated request</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.logging.structured"><a class="anchor" href="#features.logging.structured"></a>Structured Logging</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Structured logging is a technique where the log output is written in a well-defined, often machine-readable format.
+Spring Boot supports structured logging and has support for the following JSON formats out of the box:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#features.logging.structured.ecs">Elastic Common Schema (ECS)</a></p>
+</li>
+<li>
+<p><a href="#features.logging.structured.gelf">Graylog Extended Log Format (GELF)</a></p>
+</li>
+<li>
+<p><a href="#features.logging.structured.logstash">Logstash</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To enable structured logging, set the property <code>logging.structured.format.console</code> (for console output) or <code>logging.structured.format.file</code> (for file output) to the id of the format you want to use.</p>
+</div>
+<div class="paragraph">
+<p>If you are using <a href="#features.logging.custom-log-configuration">Custom Log Configuration</a>, update your configuration to respect <code>CONSOLE_LOG_STRUCTURED_FORMAT</code> and <code>FILE_LOG_STRUCTURED_FORMAT</code> system properties.
+Take <code>CONSOLE_LOG_STRUCTURED_FORMAT</code> for example:</p>
+</div>
+<div id="_tabs_5" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_5_logback" class="tab">
+<p>Logback</p>
+</li>
+<li id="_tabs_5_log4j2" class="tab">
+<p>Log4j2</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_5_logback--panel" class="tabpanel" aria-labelledby="_tabs_5_logback">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;!-- replace your encoder with StructuredLogEncoder --&gt;
+&lt;encoder class="org.springframework.boot.logging.logback.StructuredLogEncoder"&gt;
+	&lt;format&gt;${CONSOLE_LOG_STRUCTURED_FORMAT}&lt;/format&gt;
+	&lt;charset&gt;${CONSOLE_LOG_CHARSET}&lt;/charset&gt;
+&lt;/encoder&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also refer to the default configurations included in Spring Boot:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot/src/main/resources/org/springframework/boot/logging/logback/structured-console-appender.xml">Logback Structured Console Appender</a></p>
+</li>
+<li>
+<p><a href="https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot/src/main/resources/org/springframework/boot/logging/logback/structured-file-appender.xml">Logback Structured File Appender</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div id="_tabs_5_log4j2--panel" class="tabpanel" aria-labelledby="_tabs_5_log4j2">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;!-- replace your PatternLayout with StructuredLogLayout --&gt;
+&lt;StructuredLogLayout format="${sys:CONSOLE_LOG_STRUCTURED_FORMAT}" charset="${sys:CONSOLE_LOG_CHARSET}"/&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can also refer to the default configurations included in Spring Boot:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot/src/main/resources/org/springframework/boot/logging/log4j2/log4j2.xml">Log4j2 Console Appender</a></p>
+</li>
+<li>
+<p><a href="https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot/src/main/resources/org/springframework/boot/logging/log4j2/log4j2-file.xml">Log4j2 Console and File Appender</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.logging.structured.ecs"><a class="anchor" href="#features.logging.structured.ecs"></a>Elastic Common Schema</h3>
+<div class="paragraph">
+<p><a href="https://www.elastic.co/guide/en/ecs/8.11/ecs-reference.html">Elastic Common Schema</a> is a JSON based logging format.</p>
+</div>
+<div class="paragraph">
+<p>To enable the Elastic Common Schema log format, set the appropriate <code>format</code> property to <code>ecs</code>:</p>
+</div>
+<div id="_tabs_6" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_6_properties" class="tab">
+<p>Properties</p>
+</li>
+<li id="_tabs_6_yaml" class="tab">
+<p>YAML</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_6_properties--panel" class="tabpanel" aria-labelledby="_tabs_6_properties">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">logging.structured.format.console=ecs
+logging.structured.format.file=ecs</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_6_yaml--panel" class="tabpanel" aria-labelledby="_tabs_6_yaml">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">logging:
+  structured:
+    format:
+      console: ecs
+      file: ecs</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>A log line looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{"@timestamp":"2024-01-01T10:15:00.067462556Z","log":{"level":"INFO","logger":"org.example.Application"},"process":{"pid":39599,"thread":{"name":"main"}},"service":{"name":"simple"},"message":"No active profile set, falling back to 1 default profile: \"default\"","ecs":{"version":"8.11"}}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This format also adds every key value pair contained in the MDC to the JSON object.
+You can also use the <a href="https://www.slf4j.org/manual.html#fluent">SLF4J fluent logging API</a> to add key value pairs to the logged JSON object with the <a href="https://www.slf4j.org/apidocs/org/slf4j/spi/LoggingEventBuilder.html#addKeyValue(java.lang.String,java.lang.Object)">addKeyValue</a> method.</p>
+</div>
+<div class="paragraph">
+<p>The <code>service</code> values can be customized using <code>logging.structured.ecs.service</code> properties:</p>
+</div>
+<div id="_tabs_7" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_7_properties" class="tab">
+<p>Properties</p>
+</li>
+<li id="_tabs_7_yaml" class="tab">
+<p>YAML</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_7_properties--panel" class="tabpanel" aria-labelledby="_tabs_7_properties">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">logging.structured.ecs.service.name=MyService
+logging.structured.ecs.service.version=1
+logging.structured.ecs.service.environment=Production
+logging.structured.ecs.service.node-name=Primary</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_7_yaml--panel" class="tabpanel" aria-labelledby="_tabs_7_yaml">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">logging:
+  structured:
+    ecs:
+      service:
+        name: MyService
+        version: 1.0
+        environment: Production
+        node-name: Primary</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>logging.structured.ecs.service.name</code> will default to <code>spring.application.name</code> if not specified.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>logging.structured.ecs.service.version</code> will default to <code>spring.application.version</code> if not specified.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.logging.structured.gelf"><a class="anchor" href="#features.logging.structured.gelf"></a>Graylog Extended Log Format (GELF)</h3>
+<div class="paragraph">
+<p><a href="https://go2docs.graylog.org/current/getting_in_log_data/gelf.html">Graylog Extended Log Format</a> is a JSON based logging format for the Graylog log analytics platform.</p>
+</div>
+<div class="paragraph">
+<p>To enable the Graylog Extended Log Format, set the appropriate <code>format</code> property to <code>gelf</code>:</p>
+</div>
+<div id="_tabs_8" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_8_properties" class="tab">
+<p>Properties</p>
+</li>
+<li id="_tabs_8_yaml" class="tab">
+<p>YAML</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_8_properties--panel" class="tabpanel" aria-labelledby="_tabs_8_properties">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">logging.structured.format.console=gelf
+logging.structured.format.file=gelf</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_8_yaml--panel" class="tabpanel" aria-labelledby="_tabs_8_yaml">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">logging:
+  structured:
+    format:
+      console: gelf
+      file: gelf</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>A log line looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{"version":"1.1","short_message":"No active profile set, falling back to 1 default profile: \"default\"","timestamp":1725958035.857,"level":6,"_level_name":"INFO","_process_pid":47649,"_process_thread_name":"main","_log_logger":"org.example.Application"}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This format also adds every key value pair contained in the MDC to the JSON object.
+You can also use the <a href="https://www.slf4j.org/manual.html#fluent">SLF4J fluent logging API</a> to add key value pairs to the logged JSON object with the <a href="https://www.slf4j.org/apidocs/org/slf4j/spi/LoggingEventBuilder.html#addKeyValue(java.lang.String,java.lang.Object)">addKeyValue</a> method.</p>
+</div>
+<div class="paragraph">
+<p>Several fields can be customized using <code>logging.structured.gelf</code> properties:</p>
+</div>
+<div id="_tabs_9" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_9_properties" class="tab">
+<p>Properties</p>
+</li>
+<li id="_tabs_9_yaml" class="tab">
+<p>YAML</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_9_properties--panel" class="tabpanel" aria-labelledby="_tabs_9_properties">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">logging.structured.gelf.host=MyService
+logging.structured.gelf.service.version=1</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_9_yaml--panel" class="tabpanel" aria-labelledby="_tabs_9_yaml">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">logging:
+  structured:
+    gelf:
+      host: MyService
+      service:
+        version: 1.0</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>logging.structured.gelf.host</code> will default to <code>spring.application.name</code> if not specified.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>logging.structured.gelf.service.version</code> will default to <code>spring.application.version</code> if not specified.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.logging.structured.logstash"><a class="anchor" href="#features.logging.structured.logstash"></a>Logstash JSON format</h3>
+<div class="paragraph">
+<p>The <a href="https://github.com/logfellow/logstash-logback-encoder?tab=readme-ov-file#standard-fields">Logstash JSON format</a> is a JSON based logging format.</p>
+</div>
+<div class="paragraph">
+<p>To enable the Logstash JSON log format, set the appropriate <code>format</code> property to <code>logstash</code>:</p>
+</div>
+<div id="_tabs_10" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_10_properties" class="tab">
+<p>Properties</p>
+</li>
+<li id="_tabs_10_yaml" class="tab">
+<p>YAML</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_10_properties--panel" class="tabpanel" aria-labelledby="_tabs_10_properties">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">logging.structured.format.console=logstash
+logging.structured.format.file=logstash</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_10_yaml--panel" class="tabpanel" aria-labelledby="_tabs_10_yaml">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">logging:
+  structured:
+    format:
+      console: logstash
+      file: logstash</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>A log line looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{"@timestamp":"2024-01-01T10:15:00.111037681+02:00","@version":"1","message":"No active profile set, falling back to 1 default profile: \"default\"","logger_name":"org.example.Application","thread_name":"main","level":"INFO","level_value":20000}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This format also adds every key value pair contained in the MDC to the JSON object.
+You can also use the <a href="https://www.slf4j.org/manual.html#fluent">SLF4J fluent logging API</a> to add key value pairs to the logged JSON object with the <a href="https://www.slf4j.org/apidocs/org/slf4j/spi/LoggingEventBuilder.html#addKeyValue(java.lang.String,java.lang.Object)">addKeyValue</a> method.</p>
+</div>
+<div class="paragraph">
+<p>If you add <a href="https://www.slf4j.org/api/org/slf4j/Marker.html">markers</a>, these will show up in a <code>tags</code> string array in the JSON.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.logging.structured.customizing-json"><a class="anchor" href="#features.logging.structured.customizing-json"></a>Customizing Structured Logging JSON</h3>
+<div class="paragraph">
+<p>Spring Boot attempts to pick sensible defaults for the JSON names and values output for structured logging.
+Sometimes, however, you may want to make small adjustments to the JSON for your own needs.
+For example, it&#8217;s possible that you might want to change some of the names to match the expectations of your log ingestion system.
+You might also want to filter out certain members since you don&#8217;t find them useful.</p>
+</div>
+<div class="paragraph">
+<p>The following properties allow you to change the way that structured logging JSON is written:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.structured.json.include</code> &amp; <code>logging.structured.json.exclude</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filters specific paths from the JSON</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.structured.json.rename</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Renames a specific member in the JSON</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.structured.json.add</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Adds additional members to the JSON</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For example, the following will exclude <code>log.level</code>, rename <code>process.id</code> to <code>procid</code> and add a fixed <code>corpname</code> field:</p>
+</div>
+<div id="_tabs_11" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_11_properties" class="tab">
+<p>Properties</p>
+</li>
+<li id="_tabs_11_yaml" class="tab">
+<p>YAML</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_11_properties--panel" class="tabpanel" aria-labelledby="_tabs_11_properties">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">logging.structured.json.exclude=log.level
+logging.structured.json.rename.process.id=procid
+logging.structured.json.add.corpname=mycorp</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_11_yaml--panel" class="tabpanel" aria-labelledby="_tabs_11_yaml">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">logging:
+  structured:
+    json:
+      exclude: log.level
+      rename:
+        process.id: procid
+      add:
+        corpname: mycorp</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+For more advanced customizations, you can use the <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/logging/structured/StructuredLoggingJsonMembersCustomizer.html" class="apiref"><code>StructuredLoggingJsonMembersCustomizer</code></a> interface.
+You can reference one or more implementations using the <code>logging.structured.json.customizer</code> property.
+You can also declare implementations by listing them in a <code>META-INF/spring.factories</code> file.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.logging.structured.customizing-stack-traces"><a class="anchor" href="#features.logging.structured.customizing-stack-traces"></a>Customizing Structured Logging Stack Traces</h3>
+<div class="paragraph">
+<p>Complete stack traces are included in the JSON output whenever a message is logged with an exception.
+This amount of information may be costly to process by your log ingestion system, so you may want to tune the way that stack traces are printed.</p>
+</div>
+<div class="paragraph">
+<p>To do this, you can use one or more of the following properties:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Property</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.structured.json.stacktrace.root</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Use <code>last</code> to print the root item last (same as Java) or <code>first</code> to print the root item first.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.structured.json.stacktrace.max-length</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum length that should be printed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.structured.json.stacktrace.max-throwable-depth</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum number of frames to print per stack trace (including common and suppressed frames)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.structured.json.stacktrace.include-common-frames</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If common frames should be included or removed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>logging.structured.json.stacktrace.include-hashes</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If a hash of the stack trace should be included</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For example, the following will use root first stack traces, limit their length, and include hashes.</p>
+</div>
+<div id="_tabs_12" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_12_properties" class="tab">
+<p>Properties</p>
+</li>
+<li id="_tabs_12_yaml" class="tab">
+<p>YAML</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_12_properties--panel" class="tabpanel" aria-labelledby="_tabs_12_properties">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">logging.structured.json.stacktrace.root=first
+logging.structured.json.stacktrace.max-length=1024
+logging.structured.json.stacktrace.include-common-frames=true
+logging.structured.json.stacktrace.include-hashes=true</code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_12_yaml--panel" class="tabpanel" aria-labelledby="_tabs_12_yaml">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">logging:
+  structured:
+    json:
+      stacktrace:
+        root: first
+        max-length: 1024
+        include-common-frames: true
+        include-hashes: true</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you need complete control over stack trace printing you can set <code>logging.structured.json.stacktrace.printer</code> to the name of a <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/logging/StackTracePrinter.html" class="apiref"><code>StackTracePrinter</code></a> implementation.
+You can also set it to <code>logging-system</code> to force regular logging system stack trace output to be used.</p>
+</div>
+<div class="paragraph">
+<p>Your <code>StackTracePrinter</code> implementation can also include a constructor argument that accepts a <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/logging/StandardStackTracePrinter.html" class="apiref"><code>StandardStackTracePrinter</code></a> if it wishes to apply further customization to the stack trace printer created from the properties.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.logging.structured.other-formats"><a class="anchor" href="#features.logging.structured.other-formats"></a>Supporting Other Structured Logging Formats</h3>
+<div class="paragraph">
+<p>The structured logging support in Spring Boot is extensible, allowing you to define your own custom format.
+To do this, implement the <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/logging/structured/StructuredLogFormatter.html" class="apiref"><code>StructuredLogFormatter</code></a> interface. The generic type argument has to be <a href="https://logback.qos.ch/apidocs/ch.qos.logback.core/ch/qos/logback/classic/spi/ILoggingEvent.html" class="apiref"><code>ILoggingEvent</code></a> when using Logback and <a href="https://logging.apache.org/log4j/2.x/javadoc/log4j-core/org/apache/logging/log4j/core/LogEvent.html" class="apiref"><code>LogEvent</code></a> when using Log4j2 (that means your implementation is tied to a specific logging system).
+Your implementation is then called with the log event and returns the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" class="apiref"><code>String</code></a> to be logged, as seen in this example:</p>
+</div>
+<div id="_tabs_13" class="openblock tabs is-sync is-loading">
+<div class="content">
+<div class="ulist tablist">
+<ul>
+<li id="_tabs_13_java" class="tab">
+<p>Java</p>
+</li>
+<li id="_tabs_13_kotlin" class="tab">
+<p>Kotlin</p>
+</li>
+</ul>
+</div>
+<div id="_tabs_13_java--panel" class="tabpanel" aria-labelledby="_tabs_13_java">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java"><span class="fold-block is-hidden-folded">import ch.qos.logback.classic.spi.ILoggingEvent;
+
+import org.springframework.boot.logging.structured.StructuredLogFormatter;
+
+</span><span class="fold-block">class MyCustomFormat implements StructuredLogFormatter&lt;ILoggingEvent&gt; {
+
+	@Override
+	public String format(ILoggingEvent event) {
+		return "time=" + event.getInstant() + " level=" + event.getLevel() + " message=" + event.getMessage() + "\n";
+	}
+
+}</span></code></pre>
+</div>
+</div>
+</div>
+<div id="_tabs_13_kotlin--panel" class="tabpanel" aria-labelledby="_tabs_13_kotlin">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-kotlin hljs" data-lang="kotlin"><span class="fold-block is-hidden-folded">import ch.qos.logback.classic.spi.ILoggingEvent
+import org.springframework.boot.logging.structured.StructuredLogFormatter
+
+</span><span class="fold-block">class MyCustomFormat : StructuredLogFormatter&lt;ILoggingEvent&gt; {
+
+	override fun format(event: ILoggingEvent): String {
+		return "time=${event.instant} level=${event.level} message=${event.message}\n"
+	}
+
+}</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see in the example, you can return any format, it doesn&#8217;t have to be JSON.</p>
+</div>
+<div class="paragraph">
+<p>To enable your custom format, set the property <code>logging.structured.format.console</code> or <code>logging.structured.format.file</code> to the fully qualified class name of your implementation.</p>
+</div>
+<div class="paragraph">
+<p>Your implementation can use some constructor parameters, which are injected automatically.
+Please see the JavaDoc of <a href="https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/logging/structured/StructuredLogFormatter.html" class="apiref"><code>StructuredLogFormatter</code></a> for more details.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.logging.logback-extensions"><a class="anchor" href="#features.logging.logback-extensions"></a>Logback Extensions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring Boot includes a number of extensions to Logback that can help with advanced configuration.
+You can use these extensions in your <code>logback-spring.xml</code> configuration file.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Because the standard <code>logback.xml</code> configuration file is loaded too early, you cannot use extensions in it.
+You need to either use <code>logback-spring.xml</code> or define a <code>logging.config</code> property.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+The extensions cannot be used with Logback&#8217;s <a href="https://logback.qos.ch/manual/configuration.html#autoScan">configuration scanning</a>.
+If you attempt to do so, making changes to the configuration file results in an error similar to one of the following being logged:
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">ERROR in ch.qos.logback.core.joran.spi.Interpreter@4:71 - no applicable action for [springProperty], current ElementPath is [[configuration][springProperty]]
+ERROR in ch.qos.logback.core.joran.spi.Interpreter@4:71 - no applicable action for [springProfile], current ElementPath is [[configuration][springProfile]]</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.logging.logback-extensions.profile-specific"><a class="anchor" href="#features.logging.logback-extensions.profile-specific"></a>Profile-specific Configuration</h3>
+<div class="paragraph">
+<p>The <code>&lt;springProfile&gt;</code> tag lets you optionally include or exclude sections of configuration based on the active Spring profiles.
+Profile sections are supported anywhere within the <code>&lt;configuration&gt;</code> element.
+Use the <code>name</code> attribute to specify which profile accepts the configuration.
+The <code>&lt;springProfile&gt;</code> tag can contain a profile name (for example <code>staging</code>) or a profile expression.
+A profile expression allows for more complicated profile logic to be expressed, for example <code>production &amp; (eu-central | eu-west)</code>.
+Check the <a href="https://docs.spring.io/spring-framework/reference/7.0/core/beans/environment.html#beans-definition-profiles-java">Spring Framework reference guide</a> for more details.
+The following listing shows three sample profiles:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;springProfile name="staging"&gt;
+	&lt;!-- configuration to be enabled when the "staging" profile is active --&gt;
+&lt;/springProfile&gt;
+
+&lt;springProfile name="dev | staging"&gt;
+	&lt;!-- configuration to be enabled when the "dev" or "staging" profiles are active --&gt;
+&lt;/springProfile&gt;
+
+&lt;springProfile name="!production"&gt;
+	&lt;!-- configuration to be enabled when the "production" profile is not active --&gt;
+&lt;/springProfile&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.logging.logback-extensions.environment-properties"><a class="anchor" href="#features.logging.logback-extensions.environment-properties"></a>Environment Properties</h3>
+<div class="paragraph">
+<p>The <code>&lt;springProperty&gt;</code> tag lets you expose properties from the Spring <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a> for use within Logback.
+Doing so can be useful if you want to access values from your <code>application.properties</code> file in your Logback configuration.
+The tag works in a similar way to Logback&#8217;s standard <code>&lt;property&gt;</code> tag.
+However, rather than specifying a direct <code>value</code>, you specify the <code>source</code> of the property (from the <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a>).
+If you need to store the property somewhere other than in <code>local</code> scope, you can use the <code>scope</code> attribute.
+If you need a fallback value (in case the property is not set in the <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a>), you can use the <code>defaultValue</code> attribute.
+The following example shows how to expose properties for use within Logback:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;springProperty scope="context" name="fluentHost" source="myapp.fluentd.host"
+		defaultValue="localhost"/&gt;
+&lt;appender name="FLUENT" class="ch.qos.logback.more.appenders.DataFluentAppender"&gt;
+	&lt;remoteHost&gt;${fluentHost}&lt;/remoteHost&gt;
+	...
+&lt;/appender&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The <code>source</code> must be specified in kebab case (such as <code>my.property-name</code>).
+However, properties can be added to the <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a> by using the relaxed rules.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="features.logging.log4j2-extensions"><a class="anchor" href="#features.logging.log4j2-extensions"></a>Log4j2 Extensions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Spring Boot includes a number of extensions to Log4j2 that can help with advanced configuration.
+You can use these extensions in any <code>log4j2-spring.xml</code> configuration file.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Because the standard <code>log4j2.xml</code> configuration file is loaded too early, you cannot use extensions in it.
+You need to either use <code>log4j2-spring.xml</code> or define a <code>logging.config</code> property.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The extensions supersede the <a href="https://logging.apache.org/log4j/2.x/log4j-spring-boot.html">Spring Boot support</a> provided by Log4J.
+You should make sure not to include the <code>org.apache.logging.log4j:log4j-spring-boot</code> module in your build.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="features.logging.log4j2-extensions.profile-specific"><a class="anchor" href="#features.logging.log4j2-extensions.profile-specific"></a>Profile-specific Configuration</h3>
+<div class="paragraph">
+<p>The <code>&lt;SpringProfile&gt;</code> tag lets you optionally include or exclude sections of configuration based on the active Spring profiles.
+Profile sections are supported anywhere within the <code>&lt;Configuration&gt;</code> element.
+Use the <code>name</code> attribute to specify which profile accepts the configuration.
+The <code>&lt;SpringProfile&gt;</code> tag can contain a profile name (for example <code>staging</code>) or a profile expression.
+A profile expression allows for more complicated profile logic to be expressed, for example <code>production &amp; (eu-central | eu-west)</code>.
+Check the <a href="https://docs.spring.io/spring-framework/reference/7.0/core/beans/environment.html#beans-definition-profiles-java">Spring Framework reference guide</a> for more details.
+The following listing shows three sample profiles:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;SpringProfile name="staging"&gt;
+	&lt;!-- configuration to be enabled when the "staging" profile is active --&gt;
+&lt;/SpringProfile&gt;
+
+&lt;SpringProfile name="dev | staging"&gt;
+	&lt;!-- configuration to be enabled when the "dev" or "staging" profiles are active --&gt;
+&lt;/SpringProfile&gt;
+
+&lt;SpringProfile name="!production"&gt;
+	&lt;!-- configuration to be enabled when the "production" profile is not active --&gt;
+&lt;/SpringProfile&gt;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.logging.log4j2-extensions.environment-properties-lookup"><a class="anchor" href="#features.logging.log4j2-extensions.environment-properties-lookup"></a>Environment Properties Lookup</h3>
+<div class="paragraph">
+<p>If you want to refer to properties from your Spring <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a> within your Log4j2 configuration you can use <code>spring:</code> prefixed <a href="https://logging.apache.org/log4j/2.x/manual/lookups.html">lookups</a>.
+Doing so can be useful if you want to access values from your <code>application.properties</code> file in your Log4j2 configuration.</p>
+</div>
+<div class="paragraph">
+<p>The following example shows how to set Log4j2 properties named <code>applicationName</code> and <code>applicationGroup</code> that read <code>spring.application.name</code> and <code>spring.application.group</code> from the Spring <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;Properties&gt;
+	&lt;Property name="applicationName"&gt;${spring:spring.application.name}&lt;/Property&gt;
+	&lt;Property name="applicationGroup"&gt;${spring:spring.application.group}&lt;/Property&gt;
+&lt;/Properties&gt;</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The lookup key should be specified in kebab case (such as <code>my.property-name</code>).
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="features.logging.log4j2-extensions.environment-property-source"><a class="anchor" href="#features.logging.log4j2-extensions.environment-property-source"></a>Log4j2 System Properties</h3>
+<div class="paragraph">
+<p>Log4j2 supports a number of <a href="https://logging.apache.org/log4j/2.x/manual/systemproperties.html">System Properties</a> that can be used to configure various items.
+For example, the <code>log4j2.skipJansi</code> system property can be used to configure if the <a href="https://logging.apache.org/log4j/2.x/javadoc/log4j-core/org/apache/logging/log4j/core/appender/ConsoleAppender.html" class="apiref"><code>ConsoleAppender</code></a> will try to use a <a href="https://github.com/fusesource/jansi">Jansi</a> output stream on Windows.</p>
+</div>
+<div class="paragraph">
+<p>All system properties that are loaded after the Log4j2 initialization can be obtained from the Spring <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a>.
+For example, you could add <code>log4j2.skipJansi=false</code> to your <code>application.properties</code> file to have the <a href="https://logging.apache.org/log4j/2.x/javadoc/log4j-core/org/apache/logging/log4j/core/appender/ConsoleAppender.html" class="apiref"><code>ConsoleAppender</code></a> use Jansi on Windows.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The Spring <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a> is only considered when system properties and OS environment variables do not contain the value being loaded.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+System properties that are loaded during early Log4j2 initialization cannot reference the Spring <a href="https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html" class="apiref"><code>Environment</code></a>.
+For example, the property Log4j2 uses to allow the default Log4j2 implementation to be chosen is used before the Spring Environment is available.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="profiles.html">Profiles</a></span>
+  <span class="next"><a href="internationalization.html">Internationalization</a></span>
+</nav>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+              <div class="colset">
+                <div class="col-left">
+
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../../index.html">Spring Boot</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Stable
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="logging.html">
+      4.1.1
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../4.0/reference/features/logging.html">
+      4.0.8
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../3.5/reference/features/logging.html">
+      3.5.16
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../3.4/reference/features/logging.html">
+      3.4.13
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../3.3/reference/features/logging.html">
+      3.3.13
+    </a>
+  </li>
+</ul>                        </div>
+                        <div class="version-item">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Preview
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../../4.2/reference/features/logging.html">
+      4.2.0-M2
+    </a>
+  </li>
+</ul>                        </div>
+                        <div class="version-item">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Snapshot
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../../4.2-SNAPSHOT/reference/features/logging.html">
+      4.2.0-SNAPSHOT
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../4.0-SNAPSHOT/reference/features/logging.html">
+      4.0.10-SNAPSHOT
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+                </div>
+                <div class="col-right">
+                  <ul class="projects">
+  <li>
+    Related Spring Documentation
+    <ul class="projects-list">
+        <li>
+<a href="https://docs.spring.io/spring-boot/">
+  Spring Boot
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-framework/reference/">
+  Spring Framework
+</a>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+  Spring Cloud
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-build/reference/">
+  Spring Cloud Build
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-bus/reference/">
+  Spring Cloud Bus
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-circuitbreaker/reference/">
+  Spring Cloud Circuit Breaker
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-commons/reference/">
+  Spring Cloud Commons
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-config/reference/">
+  Spring Cloud Config
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-consul/reference/">
+  Spring Cloud Consul
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-contract/reference/">
+  Spring Cloud Contract
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-function/reference/">
+  Spring Cloud Function
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-gateway/reference/">
+  Spring Cloud Gateway
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-kubernetes/reference/">
+  Spring Cloud Kubernetes
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-netflix/reference/">
+  Spring Cloud Netflix
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-openfeign/reference/">
+  Spring Cloud OpenFeign
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-stream/reference/">
+  Spring Cloud Stream
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-task/reference/">
+  Spring Cloud Task
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-vault/reference/">
+  Spring Cloud Vault
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-cloud-zookeeper/reference/">
+  Spring Cloud Zookeeper
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+  Spring Data
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-data/cassandra/reference/">
+  Spring Data Cassandra
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/commons/reference/">
+  Spring Data Commons
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/couchbase/reference/">
+  Spring Data Couchbase
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/elasticsearch/reference/">
+  Spring Data Elasticsearch
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/jpa/reference/">
+  Spring Data JPA
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/keyvalue/reference/">
+  Spring Data KeyValue
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/ldap/reference/">
+  Spring Data LDAP
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/mongodb/reference/">
+  Spring Data MongoDB
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/neo4j/reference/">
+  Spring Data Neo4j
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/redis/reference/">
+  Spring Data Redis
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/relational/reference/">
+  Spring Data JDBC &amp; R2DBC
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-data/rest/reference/">
+  Spring Data REST
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-integration/reference/">
+  Spring Integration
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-batch/reference/">
+  Spring Batch
+</a>
+</li>
+        <li>
+<a class="anchor"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+<a href="https://docs.spring.io/spring-security/reference/">
+  Spring Security
+</a>
+<ul>
+    <li>
+<a href="https://docs.spring.io/spring-authorization-server/reference/">
+  Spring Authorization Server
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-ldap/reference/">
+  Spring LDAP
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-security-kerberos/reference/">
+  Spring Security Kerberos
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-session/reference/">
+  Spring Session
+</a>
+</li>
+    <li>
+<a href="https://docs.spring.io/spring-vault/reference/">
+  Spring Vault
+</a>
+</li>
+</ul>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-ai/reference/">
+  Spring AI
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-amqp/reference/">
+  Spring AMQP
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-cli/reference/">
+  Spring CLI
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-graphql/reference/">
+  Spring GraphQL
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-kafka/reference/">
+  Spring for Apache Kafka
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-modulith/reference/">
+  Spring Modulith
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-pulsar/reference/">
+  Spring for Apache Pulsar
+</a>
+</li>
+        <li>
+<a href="https://docs.spring.io/spring-shell/reference/">
+  Spring Shell
+</a>
+</li>
+    </ul>
+  </li
+  <li><a href="../../spring-projects.html">All Docs...</a></li>
+</ul>
+                </div>
+              </div>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="spring-links flex">
+        <img id="springlogo" src="../../_/img/spring-logo.svg" alt="Spring">
+        <p class="smallest antialiased">Copyright © 2005 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> Broadcom. All Rights Reserved. The term "Broadcom" refers to Broadcom Inc. and/or its subsidiaries.<br /><a href="https://www.vmware.com/help/legal.html">Terms of Use</a> • <a href="https://www.vmware.com/help/privacy.html" rel="noopener noreferrer">Privacy</a> • <a href="https://spring.io/trademarks">Trademark Guidelines</a> <span id="thank-you-mobile">• <a href="https://spring.io/thank-you">Thank you</a></span> • <a href="https://www.vmware.com/help/privacy/california-privacy-rights.html">Your California Privacy Rights</a> • <a class="ot-sdk-show-settings">Cookie Settings</a> <span id="teconsent"></span></p>
+        <p class="smallest antialiased has-gray-text">Apache®, Apache Tomcat®, Apache Kafka®, Apache Cassandra&trade;, and Apache Geode&trade; are trademarks or registered trademarks of the Apache Software Foundation in the United States and/or other countries. Java&trade;, Java&trade; SE, Java&trade; EE, and OpenJDK&trade; are trademarks of Oracle and/or its affiliates. Kubernetes® is a registered trademark of the Linux Foundation in the United States and other countries. Linux® is the registered trademark of Linus Torvalds in the United States and other countries. Windows® and Microsoft® Azure are registered trademarks of Microsoft Corporation. “AWS” and “Amazon Web Services” are trademarks or registered trademarks of Amazon.com Inc. or its affiliates. All other trademarks and copyrights are property of their respective owners and are only mentioned for informative purposes. Other names may be trademarks of their respective owners.</p>
+    </div>
+    <div id="social-icons" class="flex jc-between">
+        <a href="https://www.youtube.com/user/SpringSourceDev" title="Youtube"><svg id="youtube-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle class="cls-1" cx="20" cy="20" r="20"/><path class="cls-2" d="M30.91,14.53a2.89,2.89,0,0,0-2-2C27.12,12,20,12,20,12s-7.12,0-8.9.47a2.9,2.9,0,0,0-2,2A30.56,30.56,0,0,0,8.63,20a30.44,30.44,0,0,0,.46,5.47,2.89,2.89,0,0,0,2,2C12.9,28,20,28,20,28s7.12,0,8.9-.47a2.87,2.87,0,0,0,2-2A30.56,30.56,0,0,0,31.37,20,28.88,28.88,0,0,0,30.91,14.53ZM17.73,23.41V16.59L23.65,20Z"/></svg></a>
+        <a href="https://github.com/spring-projects" title="GitHub"><svg id="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><path class="cls-1" d="M38,0a38,38,0,1,0,38,38A38,38,0,0,0,38,0Z"/></g><path class="cls-2" d="M38,15.59A22.95,22.95,0,0,0,30.71,60.3c1.15.21,1.57-.5,1.57-1.11s0-2,0-3.9c-6.38,1.39-7.73-3.07-7.73-3.07A6.09,6.09,0,0,0,22,48.86c-2.09-1.42.15-1.39.15-1.39a4.81,4.81,0,0,1,3.52,2.36c2,3.5,5.37,2.49,6.67,1.91a4.87,4.87,0,0,1,1.46-3.07c-5.09-.58-10.45-2.55-10.45-11.34a8.84,8.84,0,0,1,2.36-6.15,8.29,8.29,0,0,1,.23-6.07s1.92-.62,6.3,2.35a21.82,21.82,0,0,1,11.49,0c4.38-3,6.3-2.35,6.3-2.35a8.29,8.29,0,0,1,.23,6.07,8.84,8.84,0,0,1,2.36,6.15c0,8.81-5.37,10.75-10.48,11.32a5.46,5.46,0,0,1,1.56,4.25c0,3.07,0,5.54,0,6.29s.42,1.33,1.58,1.1A22.94,22.94,0,0,0,38,15.59Z"/></svg></a>
+        <a href="https://twitter.com/springcentral" title="Twitter"><svg id="twitter-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><circle class="cls-1" cx="37.97" cy="37.97" r="37.97"/><path id="Twitter-2" data-name="Twitter" class="cls-2" d="M55.2,22.73a15.43,15.43,0,0,1-4.88,1.91,7.56,7.56,0,0,0-5.61-2.49A7.78,7.78,0,0,0,37,30a7.56,7.56,0,0,0,.2,1.79,21.63,21.63,0,0,1-15.84-8.23,8,8,0,0,0,2.37,10.52,7.66,7.66,0,0,1-3.48-1v.09A7.84,7.84,0,0,0,26.45,41a7.54,7.54,0,0,1-2,.28A7.64,7.64,0,0,1,23,41.09a7.71,7.71,0,0,0,7.18,5.47,15.21,15.21,0,0,1-9.55,3.37,15.78,15.78,0,0,1-1.83-.11,21.41,21.41,0,0,0,11.78,3.54c14.13,0,21.86-12,21.86-22.42,0-.34,0-.68,0-1a15.67,15.67,0,0,0,3.83-4.08,14.9,14.9,0,0,1-4.41,1.24A7.8,7.8,0,0,0,55.2,22.73Z"/></svg></a>
+    </div>
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/asciidoctor-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+
+<div class="modal micromodal-slide" id="modal-1" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+            <main class="modal__content" id="modal-1-content">
+                <div id="searchbox"></div>
+                <div id="counter"></div>
+                <div class="search-link-box">
+                    <a class="search-link" href="../../search.html">Search in all Spring Docs</a>
+                </div>
+                <div class="search-by">
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.algolia.com/" aria-label="Search by Algolia">
+                        <img class="light" width="140" src="../../_/img/algolia-light.svg" />
+                        <img class="dark" width="140" src="../../_/img/algolia-dark.svg" />
+                    </a>
+                </div>
+                <div id="hits"></div>
+            </main>
+        </div>
+    </div>
+</div>
+
+<script src="../../_/js/vendor/hotkeys.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.17.0/dist/algoliasearch-lite.umd.js" integrity="sha256-Lf9DrpGmcRip6OQzbcL6lnvNmoZNSKpyQX5pMlwatWE=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.54.1/dist/instantsearch.production.min.js" integrity="sha256-xYsZPDeNjYNTBWLvqD2Lxe98hOxcDgOHyMPfz4tVAbk=" crossorigin="anonymous"></script>
+<script async id="search-script" src="../../_/js/vendor/search.js" data-app-id="WB1FQYI187" data-api-key="c2e84f15fa630d534f1c62b1c413bb77" data-index-name="springdocs" data-stylesheet="../../_/css/vendor/search.css" data-page-version="4.1.1" data-page-generation="4.1" data-page-component="boot"></script>
+  <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"bffcb8a918ae4755926f76178bfbd26b","spa":2}' crossorigin="anonymous"></script>
+</body>
+</html>

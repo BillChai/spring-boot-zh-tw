@@ -1,0 +1,15 @@
+[r1]: https://docs.spring.io/spring-boot/4.1/how-to/native-image/developing-your-first-application.html
+[r2]: https://docs.spring.io/spring-boot/4.1/reference/packaging/native-image/introducing-graalvm-native-images.html#packaging.native-image.introducing-graalvm-native-images.understanding-aot-processing
+[r3]: https://www.graalvm.org/25/reference-manual/native-image/metadata/Compatibility/
+[r4]: https://docs.spring.io/spring-boot/4.1/reference/packaging/native-image/introducing-graalvm-native-images.html#packaging.native-image.introducing-graalvm-native-images.key-differences-with-jvm-deployments
+[r5]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Profile.html
+[r6]: https://docs.spring.io/spring-boot/4.1/how-to/aot.html#howto.aot.conditions
+[r7]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnProperty.html
+[r8]: https://docs.spring.io/spring-boot/4.1/reference/packaging/native-image/advanced-topics.html#packaging.native-image.advanced.custom-hints
+[r9]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html
+[r10]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html
+[r11]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/config/BeanDefinition.html
+[r12]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/aot/BeanInstanceSupplier.html
+[r13]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/annotation/Autowired.html
+[r14]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContextInitializer.html
+[r15]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html

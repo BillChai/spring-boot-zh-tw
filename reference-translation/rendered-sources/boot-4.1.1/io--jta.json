@@ -1,0 +1,51 @@
+{
+  "page": "boot/io--jta.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/io/jta.html",
+  "version": "4.1.1",
+  "html_sha256": "d315a88b98375b80b7670492d4837c23c93ab1d668e8a205e6e582dc0132972f",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import jakarta.jms.ConnectionFactory\n\nclass MyBean(connectionFactory: ConnectionFactory?)"
+    },
+    {
+      "language": "java",
+      "text": "import jakarta.jms.ConnectionFactory;\n\npublic class MyBean {\n\n\tpublic MyBean(ConnectionFactory connectionFactory) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import jakarta.jms.ConnectionFactory\nimport org.springframework.beans.factory.annotation.Qualifier\n\nclass MyBean(@Qualifier(\"nonXaJmsConnectionFactory\") connectionFactory: ConnectionFactory?)"
+    },
+    {
+      "language": "java",
+      "text": "import jakarta.jms.ConnectionFactory;\n\nimport org.springframework.beans.factory.annotation.Qualifier;\n\npublic class MyBean {\n\n\tpublic MyBean(@Qualifier(\"nonXaJmsConnectionFactory\") ConnectionFactory connectionFactory) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import jakarta.jms.ConnectionFactory\nimport org.springframework.beans.factory.annotation.Qualifier\n\nclass MyBean(@Qualifier(\"xaJmsConnectionFactory\") connectionFactory: ConnectionFactory?)"
+    },
+    {
+      "language": "java",
+      "text": "import jakarta.jms.ConnectionFactory;\n\nimport org.springframework.beans.factory.annotation.Qualifier;\n\npublic class MyBean {\n\n\tpublic MyBean(@Qualifier(\"xaJmsConnectionFactory\") ConnectionFactory connectionFactory) {\n\t\t// ...\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Distributed Transactions With JTA",
+    "Using a Jakarta EE Managed Transaction Manager",
+    "Mixing XA and Non-XA JMS Connections",
+    "Supporting an Embedded Transaction Manager"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/transaction/jta/JtaTransactionManager.html": "r1",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/transaction/annotation/Transactional.html": "r2",
+    "https://jakarta.ee/specifications/messaging/3.1/apidocs/jakarta.messaging/jakarta/jms/ConnectionFactory.html": "r3",
+    "https://docs.spring.io/spring-boot/4.1/reference/data/sql.html#data.sql.datasource.jndi": "r4",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html": "r5",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/annotation/Qualifier.html": "r6",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jms/XAConnectionFactoryWrapper.html": "r7",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jdbc/XADataSourceWrapper.html": "r8",
+    "https://jakarta.ee/specifications/messaging/3.1/apidocs/jakarta.messaging/jakarta/jms/XAConnectionFactory.html": "r9",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/XADataSource.html": "r10",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html": "r11"
+  }
+}

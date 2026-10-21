@@ -1,0 +1,11 @@
+[r1]: https://hazelcast.com/
+[r2]: https://docs.hazelcast.org/docs/5.5.0/javadoc/com/hazelcast/core/HazelcastInstance.html
+[r3]: https://docs.hazelcast.org/docs/5.5.0/javadoc/com/hazelcast/client/config/ClientConfig.html
+[r4]: https://docs.hazelcast.org/docs/5.5.0/javadoc/com/hazelcast/config/Config.html
+[r5]: https://docs.hazelcast.org/docs/latest/manual/html-single/
+[r6]: https://docs.hazelcast.org/docs/5.5.0/javadoc/com/hazelcast/spring/context/SpringAware.html
+[r7]: https://docs.hazelcast.org/docs/5.5.0/javadoc/com/hazelcast/core/ManagedContext.html
+[r8]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/hazelcast/autoconfigure/HazelcastConfigCustomizer.html
+[r9]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/annotation/Order.html
+[r10]: https://docs.spring.io/spring-boot/4.1/reference/io/caching.html#io.caching.provider.hazelcast
+[r11]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/cache/CacheManager.html

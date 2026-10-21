@@ -1,0 +1,20 @@
+{
+  "page": "boot/testing--test-scope-dependencies.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/testing/test-scope-dependencies.html",
+  "version": "4.1.1",
+  "html_sha256": "8fa8948b5dee74aa6cdd6c589bfb27e4af4617d56a1094e0a703eb1b24f7b111",
+  "code_blocks": [],
+  "headings": [
+    "Test Scope Dependencies"
+  ],
+  "links": {
+    "https://junit.org": "r1",
+    "https://docs.spring.io/spring-framework/reference/7.0/testing/integration.html": "r2",
+    "https://assertj.github.io/doc/": "r3",
+    "https://github.com/hamcrest/JavaHamcrest": "r4",
+    "https://site.mockito.org/": "r5",
+    "https://github.com/skyscreamer/JSONassert": "r6",
+    "https://github.com/jayway/JsonPath": "r7",
+    "https://github.com/awaitility/awaitility": "r8"
+  }
+}

@@ -1,0 +1,8 @@
+[
+  "```properties\nspring.quartz.job-store-type=jdbc\n```",
+  "```yaml\nspring:\n  quartz:\n    job-store-type: \"jdbc\"\n```",
+  "```properties\nspring.quartz.jdbc.initialize-schema=always\n```",
+  "```yaml\nspring:\n  quartz:\n    jdbc:\n      initialize-schema: \"always\"\n```",
+  "```kotlin\nimport org.quartz.JobExecutionContext\nimport org.springframework.scheduling.quartz.QuartzJobBean\n\nclass MySampleJob : QuartzJobBean() {\n\n\t// fields ...\n\n\tprivate var myService: MyService? = null\n\n\tprivate var name: String? = null\n\n\t// Inject \"MyService\" bean\n\tfun setMyService(myService: MyService?) {\n\t\tthis.myService = myService\n\t}\n\n\t// Inject the \"name\" job data property\n\tfun setName(name: String?) {\n\t\tthis.name = name\n\t}\n\n\toverride fun executeInternal(context: JobExecutionContext) {\n\t\tmyService!!.someMethod(context.fireTime, name)\n\t}\n\n}\n```",
+  "```java\nimport org.quartz.JobExecutionContext;\nimport org.quartz.JobExecutionException;\n\nimport org.springframework.scheduling.quartz.QuartzJobBean;\n\npublic class MySampleJob extends QuartzJobBean {\n\n\t// fields ...\n\n\tprivate MyService myService;\n\n\tprivate String name;\n\n\t// Inject \"MyService\" bean\n\tpublic void setMyService(MyService myService) {\n\t\tthis.myService = myService;\n\t}\n\n\t// Inject the \"name\" job data property\n\tpublic void setName(String name) {\n\t\tthis.name = name;\n\t}\n\n\t@Override\n\tprotected void executeInternal(JobExecutionContext context) throws JobExecutionException {\n\t\tthis.myService.someMethod(context.getFireTime(), this.name);\n\t}\n\n}\n```"
+]

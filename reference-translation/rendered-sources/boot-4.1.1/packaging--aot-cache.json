@@ -1,0 +1,34 @@
+{
+  "page": "boot/packaging--aot-cache.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/packaging/aot-cache.html",
+  "version": "4.1.1",
+  "html_sha256": "1d1717b4f953e250ae2566fe3441c5db1c4922fcde9f68092ab3e66c5a2149ed",
+  "code_blocks": [
+    {
+      "language": "shell",
+      "text": "$ java -Djarmode=tools -jar my-app.jar extract --destination application\n$ cd application\n$ java -XX:AOTCacheOutput=app.aot -Dspring.context.exit=onRefresh -jar my-app.jar"
+    },
+    {
+      "language": "shell",
+      "text": "$ java -XX:AOTCache=app.aot -jar my-app.jar"
+    },
+    {
+      "language": "shell",
+      "text": "$ java -Djarmode=tools -jar my-app.jar extract --destination application\n$ cd application\n$ java -XX:ArchiveClassesAtExit=application.jsa -Dspring.context.exit=onRefresh -jar my-app.jar"
+    },
+    {
+      "language": "shell",
+      "text": "$ java -XX:SharedArchiveFile=application.jsa -jar my-app.jar"
+    }
+  ],
+  "headings": [
+    "AOT Cache",
+    "AOT Cache",
+    "CDS"
+  ],
+  "links": {
+    "https://openjdk.org/jeps/483": "r1",
+    "https://docs.spring.io/spring-boot/4.1/how-to/aot-cache.html": "r2",
+    "https://docs.oracle.com/en/java/javase/17/vm/class-data-sharing.html": "r3"
+  }
+}

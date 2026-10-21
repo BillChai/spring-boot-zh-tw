@@ -1,0 +1,23 @@
+{
+  "page": "boot/features--internationalization.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/features/internationalization.html",
+  "version": "4.1.1",
+  "html_sha256": "78c7fdcaf13c26766c629e3de9cadc68b80441dd8cea34a53b74a545586334b0",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.messages.basename=messages, config.i18n.messages\nspring.messages.common-messages=classpath:my-common-messages.properties\nspring.messages.fallback-to-system-locale=false"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  messages:\n    basename: \"messages, config.i18n.messages\"\n    common-messages: \"classpath:my-common-messages.properties\"\n    fallback-to-system-locale: false"
+    }
+  ],
+  "headings": [
+    "Internationalization"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/MessageSource.html": "r1",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/context/MessageSourceProperties.html": "r2"
+  }
+}

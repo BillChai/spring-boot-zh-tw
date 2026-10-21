@@ -1,0 +1,14 @@
+{
+  "page": "boot/packaging--container-images--index.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/packaging/container-images/index.html",
+  "version": "4.1.1",
+  "html_sha256": "f08f0a04879b6ad9c1ae6aeb2dfea46d2155a7602d5eb380c3e64dcf906bcfae",
+  "code_blocks": [],
+  "headings": [
+    "Container Images"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/container-images/dockerfiles.html": "r1",
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/container-images/cloud-native-buildpacks.html": "r2"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "repository": "https://github.com/spring-io/antora-ui-spring",
+  "commit": "00618195cca8f5e6cae541163dc011650b1973c3",
+  "license": "MPL-2.0",
+  "files": "Unmodified vars.css, doc.css, highlight.css and referenced home icons; adapted layout/styles in site/style.css."
+}

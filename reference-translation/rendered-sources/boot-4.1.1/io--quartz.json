@@ -1,0 +1,52 @@
+{
+  "page": "boot/io--quartz.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/io/quartz.html",
+  "version": "4.1.1",
+  "html_sha256": "5f328ccd44d83488cdd11311923d6499efe9f644073c2bf79f3a6015dff51fef",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.quartz.job-store-type=jdbc"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  quartz:\n    job-store-type: \"jdbc\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.quartz.jdbc.initialize-schema=always"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  quartz:\n    jdbc:\n      initialize-schema: \"always\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.quartz.JobExecutionContext\nimport org.springframework.scheduling.quartz.QuartzJobBean\n\nclass MySampleJob : QuartzJobBean() {\n\n\t// fields ...\n\n\tprivate var myService: MyService? = null\n\n\tprivate var name: String? = null\n\n\t// Inject \"MyService\" bean\n\tfun setMyService(myService: MyService?) {\n\t\tthis.myService = myService\n\t}\n\n\t// Inject the \"name\" job data property\n\tfun setName(name: String?) {\n\t\tthis.name = name\n\t}\n\n\toverride fun executeInternal(context: JobExecutionContext) {\n\t\tmyService!!.someMethod(context.fireTime, name)\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.quartz.JobExecutionContext;\nimport org.quartz.JobExecutionException;\n\nimport org.springframework.scheduling.quartz.QuartzJobBean;\n\npublic class MySampleJob extends QuartzJobBean {\n\n\t// fields ...\n\n\tprivate MyService myService;\n\n\tprivate String name;\n\n\n\t// Inject \"MyService\" bean\n\tpublic void setMyService(MyService myService) {\n\t\tthis.myService = myService;\n\t}\n\n\t// Inject the \"name\" job data property\n\tpublic void setName(String name) {\n\t\tthis.name = name;\n\t}\n\n\t@Override\n\tprotected void executeInternal(JobExecutionContext context) throws JobExecutionException {\n\t\tthis.myService.someMethod(context.getFireTime(), this.name);\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Quartz Scheduler"
+  ],
+  "links": {
+    "https://www.quartz-scheduler.org/": "r1",
+    "https://javadoc.io/doc/org.quartz-scheduler/quartz/2.5.2/org/quartz/Scheduler.html": "r2",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/scheduling/quartz/SchedulerFactoryBean.html": "r3",
+    "https://javadoc.io/doc/org.quartz-scheduler/quartz/2.5.2/org/quartz/JobDetail.html": "r4",
+    "https://javadoc.io/doc/org.quartz-scheduler/quartz/2.5.2/org/quartz/JobBuilder.html": "r5",
+    "https://javadoc.io/doc/org.quartz-scheduler/quartz/2.5.2/org/quartz/Calendar.html": "r6",
+    "https://javadoc.io/doc/org.quartz-scheduler/quartz/2.5.2/org/quartz/Trigger.html": "r7",
+    "https://javadoc.io/doc/org.quartz-scheduler/quartz/2.5.2/org/quartz/spi/JobStore.html": "r8",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html": "r9",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r10",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/quartz/autoconfigure/QuartzDataSource.html": "r11",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/transaction/TransactionManager.html": "r12",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/quartz/autoconfigure/QuartzTransactionManager.html": "r13",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/quartz/autoconfigure/SchedulerFactoryBeanCustomizer.html": "r14",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html": "r15"
+  }
+}

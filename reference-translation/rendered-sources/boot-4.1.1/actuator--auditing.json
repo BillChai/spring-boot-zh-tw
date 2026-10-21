@@ -1,0 +1,20 @@
+{
+  "page": "boot/actuator--auditing.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/actuator/auditing.html",
+  "version": "4.1.1",
+  "html_sha256": "a2bcf7834f7235f5aae18b00a445046541c689fec4add5ad6dd286185e8bf693",
+  "code_blocks": [],
+  "headings": [
+    "Auditing",
+    "Custom Auditing"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/audit/AuditEventRepository.html": "r1",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/audit/InMemoryAuditEventRepository.html": "r2",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/security/AbstractAuthenticationAuditListener.html": "r3",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/security/AbstractAuthorizationAuditListener.html": "r4",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/audit/listener/AuditApplicationEvent.html": "r5",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationEventPublisher.html": "r6",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationEventPublisherAware.html": "r7"
+  }
+}

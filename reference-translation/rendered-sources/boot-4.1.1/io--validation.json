@@ -1,0 +1,29 @@
+{
+  "page": "boot/io--validation.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/io/validation.html",
+  "version": "4.1.1",
+  "html_sha256": "350ee0dcf2e94f6c3d10524c0c940b62fe02ac808ea0a4251cd0bbe2658fe763",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import jakarta.validation.constraints.Size\nimport org.springframework.stereotype.Service\nimport org.springframework.validation.annotation.Validated\n\n@Service\n@Validated\nclass MyBean {\n\n\tfun findByCodeAndAuthor(code: @Size(min = 8, max = 10) String?, author: Author?): Archive? {\n\t\treturn null\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import jakarta.validation.constraints.Size;\n\nimport org.springframework.stereotype.Service;\nimport org.springframework.validation.annotation.Validated;\n\n@Service\n@Validated\npublic class MyBean {\n\n\tpublic Archive findByCodeAndAuthor(@Size(min = 8, max = 10) String code, Author author) {\n\t\treturn ...\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Validation"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/validation/annotation/Validated.html": "r1",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/MessageSource.html": "r2",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/internationalization.html": "r3",
+    "https://jakarta.ee/specifications/bean-validation/3.1/apidocs/jakarta/validation/Configuration.html": "r4",
+    "https://jakarta.ee/specifications/bean-validation/3.1/apidocs/jakarta/validation/ValidatorFactory.html": "r5",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/validation/autoconfigure/ValidationConfigurationCustomizer.html": "r6",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/annotation/Order.html": "r7",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/Ordered.html": "r8"
+  }
+}

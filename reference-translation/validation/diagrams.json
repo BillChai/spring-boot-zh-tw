@@ -1,0 +1,247 @@
+[
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 1,
+    "code": "flowchart TD\n    App[\"你的業務程式\"] --> Boot[\"Spring Boot：組裝、預設設定、啟動與維運\"]\n    Boot --> Framework[\"Spring Framework：容器、DI、AOP、交易、Web\"]\n    Boot --> Domain[\"按需求加入的 Spring 專案\"]\n    Domain --> Data[\"Data：資料存取\"]\n    Domain --> Security[\"Security：身分驗證與授權\"]\n    Domain --> Message[\"Integration、AMQP、Kafka、Pulsar\"]\n    Domain --> Jobs[\"Batch、Cloud、AI 等\"]\n    Framework --> Libraries[\"JVM、驅動程式、伺服器與其他函式庫\"]\n"
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 2,
+    "code": "flowchart LR\n    Config[\"設定或組態類別\"] --> Container[\"IoC 容器\"]\n    Impl[\"OrderNotifier 的實作 Bean\"] --> Container\n    Container --> Service[\"建立 OrderService 並注入依賴\"]\n    Test[\"測試用替身\"] -. \"單元測試直接傳入\" .-> Service\n"
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 3,
+    "code": "sequenceDiagram\n    participant U as 用戶端\n    participant S as 安全過濾器鏈\n    participant W as Spring MVC\n    participant C as Controller\n    participant P as Service 交易代理\n    participant D as 資料存取\n    U->>S: HTTP 請求\n    S->>W: 驗證與授權通過後\n    W->>C: 路由、參數綁定\n    C->>P: 呼叫業務方法\n    P->>D: 在設定的交易邊界內存取資料\n    D-->>P: 結果\n    P-->>C: 完成交易後回傳\n    C-->>W: 回應資料\n    W-->>U: HTTP 回應\n"
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 4,
+    "code": "flowchart TD\n    Need[\"資料存取需求\"] --> Rel{\"主要使用關聯式資料庫？\"}\n    Rel -->|是| Style{\"要理解哪種程式設計模型？\"}\n    Style --> ORM[\"物件關聯對映：JPA\"]\n    Style --> Aggregate[\"聚合與關聯式映射：Data JDBC\"]\n    Style --> SQL[\"直接控制 SQL：Framework JDBC 工具\"]\n    Style --> Reactive[\"Reactive 驅動與流程：R2DBC\"]\n    Rel -->|否| Store[\"依資料模型選擇 MongoDB、Redis、Neo4j 等整合\"]\n"
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 5,
+    "code": "flowchart LR\n    Request[\"使用者請求\"] --> Auth[\"Security：你是誰、能做什麼\"]\n    Auth --> App[\"業務程式：這筆資料是否屬於你\"]\n    Session[\"Session：工作階段狀態\"] <--> Auth\n    App --> Secret[\"Vault 或 CredHub：應用程式需要的秘密資料\"]\n"
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 6,
+    "code": "flowchart TD\n    Problem[\"我想把工作移到背景\"] --> Q{\"真正需要的能力？\"}\n    Q --> Trigger[\"固定時間觸發：排程\"]\n    Q --> Message[\"跨程序傳送與接收訊息：訊息整合\"]\n    Q --> Flow[\"多個系統的轉換與路由：Integration\"]\n    Q --> Batch[\"大量資料、分段處理、記錄執行狀態：Batch\"]\n    Trigger -. \"可以啟動\" .-> Batch\n    Message -. \"可以銜接\" .-> Flow\n"
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 7,
+    "code": "flowchart TB\n    subgraph Mono[\"單一應用程式內的模組邊界\"]\n        Orders[\"訂單模組\"] --> Stock[\"庫存模組的公開介面\"]\n        Orders --> Billing[\"帳務模組的公開介面\"]\n        Check[\"Modulith：分析、驗證與測試模組\"] -.-> Orders\n    end\n    subgraph Distributed[\"拆成獨立服務後新增的問題\"]\n        Network[\"網路失敗與逾時\"]\n        Discover[\"服務位置與設定\"]\n        Consistency[\"跨服務資料一致性\"]\n    end\n    Mono -. \"若未來需要拆分\" .-> Distributed\n"
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 8,
+    "code": "flowchart LR\n    Work[\"一筆請求或背景工作\"] --> Observe[\"Observation：觀測操作\"]\n    Observe --> Metrics[\"Metrics：次數、時間與分布\"]\n    Observe --> Traces[\"Tracing：操作之間的關聯\"]\n    Metrics --> Monitor[\"指標後端\"]\n    Traces --> TraceBackend[\"追蹤後端\"]\n"
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 9,
+    "code": "flowchart LR\n    Shell[\"Shell 命令\"] --> Service[\"共用業務服務\"]\n    Web[\"Web API\"] --> Service\n    AI[\"AI 應用的已授權工具呼叫\"] --> Service\n    Service --> Rule[\"同一組業務規則與資料存取\"]\n"
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 10,
+    "code": "flowchart LR\n    DI[\"容器與 DI\"] --> Config[\"Boot 設定與自動設定\"]\n    Config --> API[\"Web 與資料存取\"]\n    API --> Quality[\"測試與安全\"]\n    Quality --> Ops[\"觀測與維運\"]\n    Ops --> Special[\"按需求選讀領域專案\"]\n"
+  },
+  {
+    "file": "boot/actuator--endpoints.md",
+    "index": 1,
+    "code": "flowchart LR\n    A[端點] --> B{有效 access 是否為 none}\n    B -->|是| X[端點從上下文移除]\n    B -->|否| O[依 unrestricted 或 read-only 保留允許的操作]\n    O --> C{該技術 exposure 納入嗎}\n    C -->|否| Y[未透過 HTTP 或 JMX 公開]\n    C -->|是| D{安全性規則允許請求嗎}\n    D -->|否| Z[拒絕請求]\n    D -->|是| E[呼叫操作]\n"
+  },
+  {
+    "file": "boot/actuator--endpoints.md",
+    "index": 2,
+    "code": "flowchart TD\n    L[Liveness：實例自身是否仍能正常運作] -->|失敗| R[Kubernetes 可能重新啟動實例]\n    Q[Readiness：現在是否適合接收流量] -->|失敗| T[Kubernetes 停止將流量導向此實例]\n    D[共用資料庫故障] -. 不宜直接作為存活性依據 .-> L\n    D -. 是否納入須依故障處理策略判斷 .-> Q\n"
+  },
+  {
+    "file": "boot/actuator--metrics.md",
+    "index": 1,
+    "code": "flowchart LR\n    A[JVM 與框架自動插樁] --> R[Spring 管理的 MeterRegistry]\n    B[自訂 MeterBinder] --> R\n    F[MeterFilter 與共用標籤] --> R\n    R --> P[Prometheus 端點]\n    S[Prometheus] -->|定期抓取| P\n    R --> O[OTLP Registry]\n    O -->|推送| C[Collector]\n    R --> D[其他監控系統 Registry]\n"
+  },
+  {
+    "file": "boot/actuator--observability.md",
+    "index": 1,
+    "code": "flowchart TD\n    O[Observation] --> M[指標：低基數標籤]\n    O --> T[追蹤：低基數與高基數標籤]\n    M --> R[Micrometer MeterRegistry]\n    R --> B[指標後端]\n    T --> X[Micrometer Tracing]\n    X --> E[追蹤 Exporter]\n    E --> C[追蹤後端]\n    L[日誌框架] --> A[另外設定的 Appender 或橋接器]\n    A --> P[OpenTelemetry 日誌管線]\n"
+  },
+  {
+    "file": "boot/actuator--tracing.md",
+    "index": 1,
+    "code": "flowchart LR\n    A[HTTP 請求] --> B[Observation]\n    B --> C[Micrometer Tracing]\n    C --> D[Brave 或 OpenTelemetry]\n    D --> E[追蹤後端]\n    C --> F[MDC 的 traceId 與 spanId]\n    F --> G[帶關聯 ID 的日誌]\n    C --> H[自動設定的 HTTP client builder]\n    H --> I[將追蹤上下文傳給下一個服務]\n"
+  },
+  {
+    "file": "boot/data--nosql.md",
+    "index": 1,
+    "code": "flowchart TD\n  P[連線屬性與憑證] --> C[各資料庫用戶端]\n  C --> T[Template：操作抽象]\n  T --> R[Repository：介面與查詢方法]\n  X[Customizer 或自訂 Bean] --> C\n  X --> T\n"
+  },
+  {
+    "file": "boot/data--sql.md",
+    "index": 1,
+    "code": "flowchart LR\n  J[JdbcClient 或 JdbcTemplate 或 JPA] --> D[DataSource]\n  D --> P[JDBC 連線池]\n  P --> DB[(關聯式資料庫)]\n  R[DatabaseClient 或 R2DBC Repository] --> F[ConnectionFactory]\n  F --> DB\n"
+  },
+  {
+    "file": "boot/features--aop.md",
+    "index": 1,
+    "code": "sequenceDiagram\n    participant Caller as 呼叫端\n    participant Proxy as Spring 代理\n    participant Target as 目標 Bean\n    Caller->>Proxy: 呼叫方法\n    Proxy->>Proxy: 執行適用的攔截邏輯\n    Proxy->>Target: 呼叫目標方法\n    Target-->>Proxy: 結果或例外\n    Proxy-->>Caller: 經過適用的後續處理\n"
+  },
+  {
+    "file": "boot/features--dev-services.md",
+    "index": 1,
+    "code": "flowchart TD\n    A[開發時啟動應用程式] --> B{容器設定方式}\n    B --> C[Docker Compose 檔案]\n    B --> D[Testcontainers 測試設定]\n    C --> E[啟動或辨識既有容器]\n    D --> E\n    E --> F[取得主機與映射連接埠]\n    F --> G[建立 ConnectionDetails Bean]\n    G --> H[自動設定用戶端連線]\n"
+  },
+  {
+    "file": "boot/features--developing-auto-configuration.md",
+    "index": 1,
+    "code": "flowchart TD\n    A[AutoConfiguration.imports 列出候選設定] --> B{所需類別存在？}\n    B -->|否| X[略過此自動設定]\n    B -->|是| C{使用者已提供同型別 Bean？}\n    C -->|是| D[保留使用者設定]\n    C -->|否| E[註冊預設 Bean 定義]\n    E --> F[依 Bean 依賴關係建立實例]\n"
+  },
+  {
+    "file": "boot/features--external-config.md",
+    "index": 1,
+    "code": "flowchart TD\n    A[檔案／環境變數／命令列] --> B[PropertySource 優先順序]\n    B --> C[Environment 中的有效屬性值]\n    C --> D[Binder：寬鬆名稱與型別轉換]\n    D --> E[ConfigurationProperties 物件]\n    E --> F[驗證與注入業務元件]\n    G[物件欄位或建構子的預設值] --> E\n"
+  },
+  {
+    "file": "boot/features--external-config.md",
+    "index": 2,
+    "code": "flowchart LR\n    A[低優先順序清單：兩個項目] --> C[高優先順序清單取代整份清單]\n    B[高優先順序清單：一個項目] --> C\n    D[低優先順序 Map：key1] --> F[Map 可合併不同鍵與屬性]\n    E[高優先順序 Map：key1 部分值與 key2] --> F\n"
+  },
+  {
+    "file": "boot/features--logging.md",
+    "index": 1,
+    "code": "flowchart LR\n    A[應用程式與依賴函式庫] --> B[日誌介面與轉接]\n    B --> C[Logback 或 Log4j2]\n    D[Spring Environment] --> E[Boot 日誌初始化]\n    E --> C\n    C --> F[主控台或檔案]\n    C --> G[ECS／GELF／Logstash JSON]\n"
+  },
+  {
+    "file": "boot/features--profiles.md",
+    "index": 1,
+    "code": "flowchart TD\n    Active[\"active=production\"] --> Production[\"啟用 production\"]\n    Production --> Group[\"展開 production 群組\"]\n    Group --> DB[\"啟用 proddb\"]\n    Group --> MQ[\"啟用 prodmq\"]\n    Include[\"include=common,local\"] --> Extra[\"額外加入 common、local\"]\n    Production --> Result[\"形成啟用的 profile 集合\"]\n    DB --> Result\n    MQ --> Result\n    Extra --> Result\n"
+  },
+  {
+    "file": "boot/features--spring-application.md",
+    "index": 1,
+    "code": "flowchart TD\n    A[準備 Environment 與 Context] --> B[載入 Bean 定義]\n    B --> C[重新整理 Context]\n    C --> D[Liveness CORRECT]\n    D --> E[執行 ApplicationRunner 與 CommandLineRunner]\n    E --> F[ApplicationReadyEvent]\n    F --> G[Readiness ACCEPTING_TRAFFIC]\n"
+  },
+  {
+    "file": "boot/features--ssl.md",
+    "index": 1,
+    "code": "flowchart LR\n    Files[\"JKS、PKCS12 或 PEM 素材\"] --> Bundle[\"具名 SSL bundle\"]\n    Bundle --> Server[\"Web 伺服器連線設定\"]\n    Bundle --> Client[\"支援 bundle 的用戶端設定\"]\n    Bundle --> API[\"SslBundles API\"]\n    API --> Context[\"建立 SSLContext\"]\n    Renewal[\"外部工具續期憑證\"] -. \"檔案更新且啟用 reload\" .-> Bundle\n"
+  },
+  {
+    "file": "boot/features--task-execution-and-scheduling.md",
+    "index": 1,
+    "code": "flowchart TD\n    Tasks[\"需要執行非同步工作\"] --> Regular[\"一般 Async 工作\"]\n    Tasks --> Web[\"MVC、WebFlux、GraphQL 整合\"]\n    Tasks --> Startup[\"Bean 背景初始化\"]\n    Regular --> Config[\"檢查 AsyncConfigurer 與工作執行設定\"]\n    Web --> Named[\"applicationTaskExecutor\"]\n    Startup --> Bootstrap[\"bootstrapExecutor，否則 applicationTaskExecutor\"]\n    Named --> Type[\"MVC 與 WebFlux 要求 AsyncTaskExecutor 型別\"]\n"
+  },
+  {
+    "file": "boot/io--caching.md",
+    "index": 1,
+    "code": "flowchart TD\n  A[呼叫帶有快取註解的方法] --> B{快取中有相符的鍵？}\n  B -->|有| C[直接回傳快取值]\n  B -->|沒有| D[執行原始方法]\n  D --> E[將結果存入快取]\n  E --> F[回傳結果]\n"
+  },
+  {
+    "file": "boot/io--grpc.md",
+    "index": 1,
+    "code": "flowchart LR\n  P[proto 服務與訊息契約] --> G[建置外掛產生程式碼]\n  G --> C[用戶端 Stub Bean]\n  G --> B[伺服器基底類別]\n  B --> S[實作服務並註冊 Bean]\n  C --> T[gRPC 通道]\n  T --> S\n"
+  },
+  {
+    "file": "boot/io--rest-client.md",
+    "index": 1,
+    "code": "flowchart TD\n  I[HTTP Service 介面：定義契約] --> C[RestClient 或 WebClient：發送請求]\n  P[群組屬性：URL、逾時、SSL] --> C\n  G[全域用戶端設定] --> C\n  C --> H[底層 HTTP 程式庫與連線資源]\n  H --> S[遠端 REST 服務]\n"
+  },
+  {
+    "file": "boot/messaging--amqp.md",
+    "index": 1,
+    "code": "flowchart TD\n    Delivery[\"訊息送至監聽器\"] --> Process[\"執行處理邏輯\"]\n    Process --> Result{\"成功？\"}\n    Result -->|是| Success[\"依確認設定完成處理\"]\n    Result -->|否| Retry[\"依 listener 重試設定處理\"]\n    Retry --> Reject[\"耗盡後依 recoverer 拒絕等處理\"]\n    Retry --> Requeue[\"未啟用重試時，仍須檢查 requeue 行為\"]\n    Requeue -. \"預設可能再次投遞\" .-> Delivery\n"
+  },
+  {
+    "file": "boot/packaging--aot-cache.md",
+    "index": 1,
+    "code": "flowchart LR\n    Jar[\"解開後的應用程式\"] --> Train[\"訓練執行\"]\n    Train --> Cache[\"產生 AOT 快取\"]\n    Cache --> Launch[\"啟動時指定快取檔案\"]\n    Jar --> Launch\n    Change[\"應用程式或 Java 版本更新\"] --> Retrain[\"重新評估並產生快取\"]\n    Retrain --> Train\n"
+  },
+  {
+    "file": "boot/packaging--container-images--efficient-images.md",
+    "index": 1,
+    "code": "flowchart TB\n    D[\"正式版依賴：通常較少變動\"] --> L[\"Spring Boot Loader\"]\n    L --> S[\"Snapshot 依賴\"]\n    S --> A[\"應用程式類別與資源：通常較常變動\"]\n    A --> Rebuild[\"只改業務程式時，盡量重用前面的層\"]\n"
+  },
+  {
+    "file": "boot/packaging--native-image--introducing-graalvm-native-images.md",
+    "index": 1,
+    "code": "flowchart LR\n    Source[\"應用程式與設定\"] --> AOT[\"Spring AOT：分析 Bean 定義\"]\n    AOT --> Java[\"初始化原始碼\"]\n    AOT --> Proxy[\"代理位元組碼\"]\n    AOT --> Hints[\"反射、資源等 hints\"]\n    Java --> Native[\"GraalVM Native Image 建置\"]\n    Proxy --> Native\n    Hints --> Native\n    Native --> Binary[\"特定平台的可執行檔\"]\n"
+  },
+  {
+    "file": "boot/security--oauth2.md",
+    "index": 1,
+    "code": "flowchart LR\n    Client[\"Client：代表使用者或自己取得授權\"] --> AS[\"Authorization Server：驗證授權流程並核發 token\"]\n    AS --> Token[\"存取 token\"]\n    Token --> Client\n    Client -->|\"攜帶 token 呼叫\"| RS[\"Resource Server：驗證 token 並保護資源\"]\n    RS -. \"使用 JWT 金鑰或 introspection 等設定\" .-> AS\n"
+  },
+  {
+    "file": "boot/testing--spring-boot-applications.md",
+    "index": 1,
+    "code": "flowchart TD\n    Q{需要驗證什麼} -->|一般業務邏輯| U[一般單元測試：直接建立物件]\n    Q -->|特定框架層| S[切片測試：WebMvcTest 或 DataJpaTest 等]\n    Q -->|整個應用程式設定| B[SpringBootTest]\n    B -->|不需真實網路| M[MOCK 環境]\n    B -->|需要真實 HTTP 行為| R[RANDOM_PORT]\n    R --> T[注意伺服器交易不會隨測試交易回滾]\n"
+  },
+  {
+    "file": "boot/testing--testcontainers.md",
+    "index": 1,
+    "code": "sequenceDiagram\n    participant S as Spring 測試上下文\n    participant C as 容器 Bean\n    participant A as 應用程式 Bean\n    S->>C: 建立並啟動容器\n    S->>A: 建立依賴容器的 Bean\n    Note over S,A: 同一快取上下文可供多個測試類別使用\n    S->>A: 銷毀 Bean 並完成清理\n    S->>C: 停止容器\n"
+  },
+  {
+    "file": "boot/using--auto-configuration.md",
+    "index": 1,
+    "code": "flowchart TD\n    Start[\"評估某一項自動設定\"] --> Classpath{\"所需類別是否存在？\"}\n    Classpath -->|\"否\"| Skip[\"不套用\"]\n    Classpath -->|\"是\"| Conditions{\"其他條件是否成立？\"}\n    Conditions -->|\"否\"| Skip\n    Conditions -->|\"是\"| Beans{\"該設定是否要求缺少某個 Bean？\"}\n    Beans -->|\"要求且 Bean 已存在\"| Backoff[\"保留使用者提供的 Bean\"]\n    Beans -->|\"條件允許建立\"| Default[\"提供預設 Bean\"]\n"
+  },
+  {
+    "file": "boot/using--build-systems.md",
+    "index": 1,
+    "code": "flowchart LR\n    BOM[\"BOM<br/>協調版本\"]\n    Starter[\"Starter<br/>選入依賴集合\"]\n    Classpath[\"實際 classpath\"]\n    Auto[\"Auto-configuration<br/>依條件組裝元件\"]\n    BOM --> Classpath\n    Starter --> Classpath\n    Classpath --> Auto\n"
+  },
+  {
+    "file": "boot/using--configuration-classes.md",
+    "index": 1,
+    "code": "flowchart TB\n    Main[\"主要設定類別\"]\n    Extra[\"其他設定類別\"]\n    Scanned[\"掃描到的 Spring 元件\"]\n    Legacy[\"既有 XML 設定\"]\n    Main -->|\"@Import\"| Extra\n    Main -->|\"@ComponentScan\"| Scanned\n    Main -->|\"@ImportResource\"| Legacy\n"
+  },
+  {
+    "file": "boot/using--devtools.md",
+    "index": 1,
+    "code": "flowchart LR\n    Base[\"Base classloader<br/>第三方依賴：保留\"]\n    Old[\"舊 Restart classloader<br/>應用程式類別\"]\n    Change[\"編譯後 classpath 變更\"]\n    New[\"新 Restart classloader<br/>重新載入應用程式類別\"]\n    Change -->|\"丟棄\"| Old\n    Change -->|\"建立\"| New\n    Base -->|\"仍可供使用\"| New\n"
+  },
+  {
+    "file": "boot/using--devtools.md",
+    "index": 2,
+    "code": "sequenceDiagram\n    participant IDE as 本機 IDE\n    participant Client as 遠端 DevTools 用戶端\n    participant Server as 遠端開發應用程式\n    IDE->>IDE: 編譯並更新 classpath\n    Client->>Client: 偵測變更與等待靜默期間\n    Client->>Server: 上傳變更資源\n    Server->>Server: 必要時 restart\n"
+  },
+  {
+    "file": "boot/using--running-your-application.md",
+    "index": 1,
+    "code": "flowchart LR\n    IDE[\"IDE 執行 main\"]\n    Maven[\"mvn spring-boot:run\"]\n    Gradle[\"gradle bootRun\"]\n    Jar[\"java -jar\"]\n    App[\"Spring Boot 應用程式\"]\n    IDE --> App\n    Maven --> App\n    Gradle --> App\n    Jar --> App\n"
+  },
+  {
+    "file": "boot/using--spring-beans-and-dependency-injection.md",
+    "index": 1,
+    "code": "flowchart LR\n    Scan[\"元件掃描\"] --> Register[\"註冊 MyAccountService 定義\"]\n    Register --> Resolve[\"解析建構子需要的 RiskAssessor\"]\n    Resolve --> Construct[\"呼叫建構子\"]\n    Construct --> Service[\"可使用的 Service Bean\"]\n"
+  },
+  {
+    "file": "boot/using--structuring-your-code.md",
+    "index": 1,
+    "code": "flowchart TB\n    Root[\"com.example.myapplication<br/>MyApplication\"]\n    Customer[\"customer 子套件\"]\n    Order[\"order 子套件\"]\n    Other[\"com.example.other<br/>不在此預設子樹\"]\n    Root -->|\"向下掃描\"| Customer\n    Root -->|\"向下掃描\"| Order\n    Root -.->|\"需額外設定才涵蓋\"| Other\n"
+  },
+  {
+    "file": "boot/using--using-the-springbootapplication-annotation.md",
+    "index": 1,
+    "code": "flowchart TB\n    Main[\"@SpringBootApplication\"]\n    Main --> Config[\"@SpringBootConfiguration\"]\n    Main --> Auto[\"@EnableAutoConfiguration\"]\n    Main --> Scan[\"@ComponentScan\"]\n    Config --> Beans[\"明確設定 Bean\"]\n    Auto --> Defaults[\"依條件提供預設組態\"]\n    Scan --> Components[\"發現應用程式元件\"]\n"
+  },
+  {
+    "file": "boot/web--servlet.md",
+    "index": 1,
+    "code": "flowchart TD\n  A[Boot MVC 自動設定] --> B[設定屬性：調整既有行為]\n  A --> C[WebMvcConfigurer：增加攔截器與格式化器等]\n  A --> D[WebMvcRegistrations：替換特定核心元件]\n  E[EnableWebMvc：自行掌控 MVC 設定] --> F[不再使用 Boot MVC 自動設定]\n"
+  },
+  {
+    "file": "boot/web--spring-graphql.md",
+    "index": 1,
+    "code": "flowchart LR\n  H[HTTP 或 WebSocket 或 RSocket] --> G[GraphQL 執行引擎]\n  S[Schema 型別與查詢定義] --> G\n  G --> D[DataFetcher]\n  D --> C[Controller 註解方法]\n  D --> R[Spring Data 儲存庫]\n"
+  },
+  {
+    "file": "boot/web--spring-security.md",
+    "index": 1,
+    "code": "flowchart LR\n  R[HTTP 請求] --> F[SecurityFilterChain 或 SecurityWebFilterChain]\n  F --> A[身分驗證]\n  A --> U[UserDetailsService 或其他驗證提供者]\n  A --> Z[授權規則]\n  Z --> C[應用程式端點]\n"
+  }
+]

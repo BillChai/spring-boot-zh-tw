@@ -1,0 +1,32 @@
+{
+  "page": "boot/io--hazelcast.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/io/hazelcast.html",
+  "version": "4.1.1",
+  "html_sha256": "665eacacf616d27697a6984ca982408f7b93309268d0e24ebf12a77104dd3aa7",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.hazelcast.config=classpath:config/my-hazelcast.xml"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  hazelcast:\n    config: \"classpath:config/my-hazelcast.xml\""
+    }
+  ],
+  "headings": [
+    "Hazelcast"
+  ],
+  "links": {
+    "https://hazelcast.com/": "r1",
+    "https://docs.hazelcast.org/docs/5.5.0/javadoc/com/hazelcast/core/HazelcastInstance.html": "r2",
+    "https://docs.hazelcast.org/docs/5.5.0/javadoc/com/hazelcast/client/config/ClientConfig.html": "r3",
+    "https://docs.hazelcast.org/docs/5.5.0/javadoc/com/hazelcast/config/Config.html": "r4",
+    "https://docs.hazelcast.org/docs/latest/manual/html-single/": "r5",
+    "https://docs.hazelcast.org/docs/5.5.0/javadoc/com/hazelcast/spring/context/SpringAware.html": "r6",
+    "https://docs.hazelcast.org/docs/5.5.0/javadoc/com/hazelcast/core/ManagedContext.html": "r7",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/hazelcast/autoconfigure/HazelcastConfigCustomizer.html": "r8",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/annotation/Order.html": "r9",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/caching.html#io.caching.provider.hazelcast": "r10",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/cache/CacheManager.html": "r11"
+  }
+}

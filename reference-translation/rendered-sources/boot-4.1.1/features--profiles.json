@@ -1,0 +1,87 @@
+{
+  "page": "boot/features--profiles.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/features/profiles.html",
+  "version": "4.1.1",
+  "html_sha256": "9f1a85ad0afda8cc120865513bdcbf4a672baf3acf0aa1594e5e573ef33d9783",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.context.annotation.Configuration\nimport org.springframework.context.annotation.Profile\n\n@Configuration(proxyBeanMethods = false)\n@Profile(\"production\")\nclass ProductionConfiguration {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.context.annotation.Configuration;\nimport org.springframework.context.annotation.Profile;\n\n@Configuration(proxyBeanMethods = false)\n@Profile(\"production\")\npublic class ProductionConfiguration {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.profiles.active=dev,hsqldb"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  profiles:\n    active: \"dev,hsqldb\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.profiles.default=none"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  profiles:\n    default: \"none\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.profiles.active=prod\n#---\nspring.config.activate.on-profile=prod\nspring.profiles.active=metrics"
+    },
+    {
+      "language": "yaml",
+      "text": "# this document is valid\nspring:\n  profiles:\n    active: \"prod\"\n---\n# this document is invalid\nspring:\n  config:\n    activate:\n      on-profile: \"prod\"\n  profiles:\n    active: \"metrics\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.profiles.validate=false"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  profiles:\n    validate: false"
+    },
+    {
+      "language": "properties",
+      "text": "spring.profiles.include[0]=common\nspring.profiles.include[1]=local"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  profiles:\n    include:\n      - \"common\"\n      - \"local\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.profiles.group.production[0]=proddb\nspring.profiles.group.production[1]=prodmq"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  profiles:\n    group:\n      production:\n      - \"proddb\"\n      - \"prodmq\""
+    }
+  ],
+  "headings": [
+    "Profiles",
+    "Adding Active Profiles",
+    "Profile Groups",
+    "Programmatically Setting Profiles",
+    "Profile-specific Configuration Files"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/stereotype/Component.html": "r1",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html": "r2",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/ConfigurationProperties.html": "r3",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Profile.html": "r4",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/EnableConfigurationProperties.html": "r5",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html": "r6",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.files.profile-specific": "r7",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.files.activation-properties": "r8",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/PropertySource.html": "r9",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.order": "r10",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/SpringApplication.html": "r11",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.typesafe-configuration-properties.merging-complex-types": "r12",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/profiles.html#features.profiles.groups": "r13",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/ConfigurableEnvironment.html": "r14"
+  }
+}

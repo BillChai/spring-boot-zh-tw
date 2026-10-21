@@ -1,0 +1,14 @@
+{
+  "page": "boot/messaging--index.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/messaging/index.html",
+  "version": "4.1.1",
+  "html_sha256": "174194ed950bfdda9a06931ef038aabd9182c158e2b5baced188b4ae63125dc0",
+  "code_blocks": [],
+  "headings": [
+    "Messaging"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jms/core/JmsClient.html": "r1",
+    "https://docs.spring.io/spring-amqp/docs/4.1.x/api/org/springframework/amqp/rabbit/core/RabbitTemplate.html": "r2"
+  }
+}

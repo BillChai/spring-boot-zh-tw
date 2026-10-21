@@ -1,0 +1,3 @@
+[
+  "> ```xml\n> <dependency>\n> \t<groupId>org.junit.vintage</groupId>\n> \t<artifactId>junit-vintage-engine</artifactId>\n> \t<scope>test</scope>\n> \t<exclusions>\n> \t\t<exclusion>\n> \t\t\t<groupId>org.hamcrest</groupId>\n> \t\t\t<artifactId>hamcrest-core</artifactId>\n> \t\t</exclusion>\n> \t</exclusions>\n> </dependency>\n> ```"
+]

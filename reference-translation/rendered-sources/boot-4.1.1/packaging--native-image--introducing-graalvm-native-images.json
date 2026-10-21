@@ -1,0 +1,41 @@
+{
+  "page": "boot/packaging--native-image--introducing-graalvm-native-images.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/packaging/native-image/introducing-graalvm-native-images.html",
+  "version": "4.1.1",
+  "html_sha256": "fa4b9c77b8ee21d64b2157332fb885637be9341c32e2a2a9fce746ed8030f9f3",
+  "code_blocks": [
+    {
+      "language": "java",
+      "text": "import org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyConfiguration {\n\n\t@Bean\n\tpublic MyBean myBean() {\n\t\treturn new MyBean();\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.beans.factory.aot.BeanInstanceSupplier;\nimport org.springframework.beans.factory.config.BeanDefinition;\nimport org.springframework.beans.factory.support.RootBeanDefinition;\n\n/**\n * Bean definitions for {@link MyConfiguration}.\n */\npublic class MyConfiguration__BeanDefinitions {\n\n\t/**\n\t * Get the bean definition for 'myConfiguration'.\n\t */\n\tpublic static BeanDefinition getMyConfigurationBeanDefinition() {\n\t\tClass<?> beanType = MyConfiguration.class;\n\t\tRootBeanDefinition beanDefinition = new RootBeanDefinition(beanType);\n\t\tbeanDefinition.setInstanceSupplier(MyConfiguration::new);\n\t\treturn beanDefinition;\n\t}\n\n\t/**\n\t * Get the bean instance supplier for 'myBean'.\n\t */\n\tprivate static BeanInstanceSupplier<MyBean> getMyBeanInstanceSupplier() {\n\t\treturn BeanInstanceSupplier.<MyBean>forFactoryMethod(MyConfiguration.class, \"myBean\")\n\t\t\t.withGenerator((registeredBean) -> registeredBean.getBeanFactory().getBean(MyConfiguration.class).myBean());\n\t}\n\n\t/**\n\t * Get the bean definition for 'myBean'.\n\t */\n\tpublic static BeanDefinition getMyBeanBeanDefinition() {\n\t\tClass<?> beanType = MyBean.class;\n\t\tRootBeanDefinition beanDefinition = new RootBeanDefinition(beanType);\n\t\tbeanDefinition.setInstanceSupplier(getMyBeanInstanceSupplier());\n\t\treturn beanDefinition;\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Introducing GraalVM Native Images",
+    "Key Differences with JVM Deployments",
+    "Understanding Spring Ahead-of-Time Processing",
+    "Source Code Generation",
+    "Hint File Generation",
+    "Proxy Class Generation"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1/how-to/native-image/developing-your-first-application.html": "r1",
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/native-image/introducing-graalvm-native-images.html#packaging.native-image.introducing-graalvm-native-images.understanding-aot-processing": "r2",
+    "https://www.graalvm.org/25/reference-manual/native-image/metadata/Compatibility/": "r3",
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/native-image/introducing-graalvm-native-images.html#packaging.native-image.introducing-graalvm-native-images.key-differences-with-jvm-deployments": "r4",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Profile.html": "r5",
+    "https://docs.spring.io/spring-boot/4.1/how-to/aot.html#howto.aot.conditions": "r6",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnProperty.html": "r7",
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/native-image/advanced-topics.html#packaging.native-image.advanced.custom-hints": "r8",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html": "r9",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r10",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/config/BeanDefinition.html": "r11",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/aot/BeanInstanceSupplier.html": "r12",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/annotation/Autowired.html": "r13",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContextInitializer.html": "r14",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html": "r15"
+  }
+}

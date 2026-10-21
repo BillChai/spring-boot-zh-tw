@@ -1,0 +1,121 @@
+{
+  "page": "boot/security--oauth2.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/security/oauth2.html",
+  "version": "4.1.1",
+  "html_sha256": "dd996e3942d51c01effaef3862fa0c4e1a81dbb859b8a9a0bd5bd3879921afa4",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.security.oauth2.client.registration.my-client.client-id=abcd\nspring.security.oauth2.client.registration.my-client.client-secret=password\nspring.security.oauth2.client.registration.my-client.provider=example\nspring.security.oauth2.client.registration.example.client-id=abcd\nspring.security.oauth2.client.registration.example.client-secret=password"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  security:\n    oauth2:\n      client:\n        registration:\n          my-client:\n            client-id: \"abcd\"\n            client-secret: \"password\"\n            provider: \"example\"\n          example:\n            client-id: \"abcd\"\n            client-secret: \"password\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.security.oauth2.client.registration.my-login-client.client-id=abcd\nspring.security.oauth2.client.registration.my-login-client.client-secret=password\nspring.security.oauth2.client.registration.my-login-client.client-name=Client for OpenID Connect\nspring.security.oauth2.client.registration.my-login-client.provider=my-oauth-provider\nspring.security.oauth2.client.registration.my-login-client.scope=openid,profile,email,phone,address\nspring.security.oauth2.client.registration.my-login-client.redirect-uri={baseUrl}/login/oauth2/code/{registrationId}\nspring.security.oauth2.client.registration.my-login-client.client-authentication-method=client_secret_basic\nspring.security.oauth2.client.registration.my-login-client.authorization-grant-type=authorization_code\nspring.security.oauth2.client.registration.my-client-1.client-id=abcd\nspring.security.oauth2.client.registration.my-client-1.client-secret=password\nspring.security.oauth2.client.registration.my-client-1.client-name=Client for user scope\nspring.security.oauth2.client.registration.my-client-1.provider=my-oauth-provider\nspring.security.oauth2.client.registration.my-client-1.scope=user\nspring.security.oauth2.client.registration.my-client-1.redirect-uri={baseUrl}/authorized/user\nspring.security.oauth2.client.registration.my-client-1.client-authentication-method=client_secret_basic\nspring.security.oauth2.client.registration.my-client-1.authorization-grant-type=authorization_code\nspring.security.oauth2.client.registration.my-client-2.client-id=abcd\nspring.security.oauth2.client.registration.my-client-2.client-secret=password\nspring.security.oauth2.client.registration.my-client-2.client-name=Client for email scope\nspring.security.oauth2.client.registration.my-client-2.provider=my-oauth-provider\nspring.security.oauth2.client.registration.my-client-2.scope=email\nspring.security.oauth2.client.registration.my-client-2.redirect-uri={baseUrl}/authorized/email\nspring.security.oauth2.client.registration.my-client-2.client-authentication-method=client_secret_basic\nspring.security.oauth2.client.registration.my-client-2.authorization-grant-type=authorization_code\nspring.security.oauth2.client.provider.my-oauth-provider.authorization-uri=https://my-auth-server.com/oauth2/authorize\nspring.security.oauth2.client.provider.my-oauth-provider.token-uri=https://my-auth-server.com/oauth2/token\nspring.security.oauth2.client.provider.my-oauth-provider.user-info-uri=https://my-auth-server.com/userinfo\nspring.security.oauth2.client.provider.my-oauth-provider.user-info-authentication-method=header\nspring.security.oauth2.client.provider.my-oauth-provider.jwk-set-uri=https://my-auth-server.com/oauth2/jwks\nspring.security.oauth2.client.provider.my-oauth-provider.user-name-attribute=name"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  security:\n    oauth2:\n      client:\n        registration:\n          my-login-client:\n            client-id: \"abcd\"\n            client-secret: \"password\"\n            client-name: \"Client for OpenID Connect\"\n            provider: \"my-oauth-provider\"\n            scope: \"openid,profile,email,phone,address\"\n            redirect-uri: \"{baseUrl}/login/oauth2/code/{registrationId}\"\n            client-authentication-method: \"client_secret_basic\"\n            authorization-grant-type: \"authorization_code\"\n\n          my-client-1:\n            client-id: \"abcd\"\n            client-secret: \"password\"\n            client-name: \"Client for user scope\"\n            provider: \"my-oauth-provider\"\n            scope: \"user\"\n            redirect-uri: \"{baseUrl}/authorized/user\"\n            client-authentication-method: \"client_secret_basic\"\n            authorization-grant-type: \"authorization_code\"\n\n          my-client-2:\n            client-id: \"abcd\"\n            client-secret: \"password\"\n            client-name: \"Client for email scope\"\n            provider: \"my-oauth-provider\"\n            scope: \"email\"\n            redirect-uri: \"{baseUrl}/authorized/email\"\n            client-authentication-method: \"client_secret_basic\"\n            authorization-grant-type: \"authorization_code\"\n\n        provider:\n          my-oauth-provider:\n            authorization-uri: \"https://my-auth-server.com/oauth2/authorize\"\n            token-uri: \"https://my-auth-server.com/oauth2/token\"\n            user-info-uri: \"https://my-auth-server.com/userinfo\"\n            user-info-authentication-method: \"header\"\n            jwk-set-uri: \"https://my-auth-server.com/oauth2/jwks\"\n            user-name-attribute: \"name\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.security.oauth2.client.provider.oidc-provider.issuer-uri=https://dev-123456.oktapreview.com/oauth2/default/"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  security:\n    oauth2:\n      client:\n        provider:\n          oidc-provider:\n            issuer-uri: \"https://dev-123456.oktapreview.com/oauth2/default/\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity\nimport org.springframework.security.config.annotation.web.configuration.EnableWebSecurity\nimport org.springframework.security.config.annotation.web.invoke\nimport org.springframework.security.web.SecurityFilterChain\n\n@Configuration(proxyBeanMethods = false)\n@EnableWebSecurity\nopen class MyOAuthClientConfiguration {\n\n\t@Bean\n\topen fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {\n\t\thttp {\n\t\t\tauthorizeHttpRequests {\n\t\t\t\tauthorize(anyRequest, authenticated)\n\t\t\t}\n\t\t\toauth2Login {\n\t\t\t\tredirectionEndpoint {\n\t\t\t\t\tbaseUri = \"/login/oauth2/callback/*\"\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\treturn http.build()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity;\nimport org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;\nimport org.springframework.security.web.SecurityFilterChain;\n\n@Configuration(proxyBeanMethods = false)\n@EnableWebSecurity\npublic class MyOAuthClientConfiguration {\n\n\t@Bean\n\tpublic SecurityFilterChain securityFilterChain(HttpSecurity http) {\n\t\thttp.authorizeHttpRequests((requests) ->\n\t\t\trequests.anyRequest().authenticated()\n\t\t);\n\t\thttp.oauth2Login((login) ->\n\t\t\tlogin.redirectionEndpoint((endpoint) ->\n\t\t\t\tendpoint.baseUri(\"/login/oauth2/callback/*\")\n\t\t\t)\n\t\t);\n\t\treturn http.build();\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "spring.security.oauth2.client.registration.my-client.client-id=abcd\nspring.security.oauth2.client.registration.my-client.client-secret=password\nspring.security.oauth2.client.registration.my-client.provider=google\nspring.security.oauth2.client.registration.google.client-id=abcd\nspring.security.oauth2.client.registration.google.client-secret=password"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  security:\n    oauth2:\n      client:\n        registration:\n          my-client:\n            client-id: \"abcd\"\n            client-secret: \"password\"\n            provider: \"google\"\n          google:\n            client-id: \"abcd\"\n            client-secret: \"password\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.security.oauth2.resourceserver.jwt.jwk-set-uri=https://example.com/oauth2/default/v1/keys"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  security:\n    oauth2:\n      resourceserver:\n        jwt:\n          jwk-set-uri: \"https://example.com/oauth2/default/v1/keys\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.security.oauth2.resourceserver.jwt.issuer-uri=https://dev-123456.oktapreview.com/oauth2/default/"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  security:\n    oauth2:\n      resourceserver:\n        jwt:\n          issuer-uri: \"https://dev-123456.oktapreview.com/oauth2/default/\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.security.oauth2.resourceserver.jwt.audiences[0]=my-audience"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  security:\n    oauth2:\n      resourceserver:\n        jwt:\n          audiences:\n            - \"my-audience\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.security.oauth2.resourceserver.opaquetoken.introspection-uri=https://example.com/check-token\nspring.security.oauth2.resourceserver.opaquetoken.client-id=my-client-id\nspring.security.oauth2.resourceserver.opaquetoken.client-secret=my-client-secret"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  security:\n    oauth2:\n      resourceserver:\n        opaquetoken:\n          introspection-uri: \"https://example.com/check-token\"\n          client-id: \"my-client-id\"\n          client-secret: \"my-client-secret\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.security.oauth2.authorizationserver.client.my-client-1.registration.client-id=abcd\nspring.security.oauth2.authorizationserver.client.my-client-1.registration.client-secret={noop}secret1\nspring.security.oauth2.authorizationserver.client.my-client-1.registration.client-authentication-methods[0]=client_secret_basic\nspring.security.oauth2.authorizationserver.client.my-client-1.registration.authorization-grant-types[0]=authorization_code\nspring.security.oauth2.authorizationserver.client.my-client-1.registration.authorization-grant-types[1]=refresh_token\nspring.security.oauth2.authorizationserver.client.my-client-1.registration.redirect-uris[0]=https://my-client-1.com/login/oauth2/code/abcd\nspring.security.oauth2.authorizationserver.client.my-client-1.registration.redirect-uris[1]=https://my-client-1.com/authorized\nspring.security.oauth2.authorizationserver.client.my-client-1.registration.scopes[0]=openid\nspring.security.oauth2.authorizationserver.client.my-client-1.registration.scopes[1]=profile\nspring.security.oauth2.authorizationserver.client.my-client-1.registration.scopes[2]=email\nspring.security.oauth2.authorizationserver.client.my-client-1.registration.scopes[3]=phone\nspring.security.oauth2.authorizationserver.client.my-client-1.registration.scopes[4]=address\nspring.security.oauth2.authorizationserver.client.my-client-1.require-authorization-consent=true\nspring.security.oauth2.authorizationserver.client.my-client-1.token.authorization-code-time-to-live=5m\nspring.security.oauth2.authorizationserver.client.my-client-1.token.access-token-time-to-live=10m\nspring.security.oauth2.authorizationserver.client.my-client-1.token.access-token-format=reference\nspring.security.oauth2.authorizationserver.client.my-client-1.token.reuse-refresh-tokens=false\nspring.security.oauth2.authorizationserver.client.my-client-1.token.refresh-token-time-to-live=30m\nspring.security.oauth2.authorizationserver.client.my-client-2.registration.client-id=efgh\nspring.security.oauth2.authorizationserver.client.my-client-2.registration.client-secret={noop}secret2\nspring.security.oauth2.authorizationserver.client.my-client-2.registration.client-authentication-methods[0]=client_secret_jwt\nspring.security.oauth2.authorizationserver.client.my-client-2.registration.authorization-grant-types[0]=client_credentials\nspring.security.oauth2.authorizationserver.client.my-client-2.registration.scopes[0]=user.read\nspring.security.oauth2.authorizationserver.client.my-client-2.registration.scopes[1]=user.write\nspring.security.oauth2.authorizationserver.client.my-client-2.jwk-set-uri=https://my-client-2.com/jwks\nspring.security.oauth2.authorizationserver.client.my-client-2.token-endpoint-authentication-signing-algorithm=RS256"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  security:\n    oauth2:\n      authorizationserver:\n        client:\n          my-client-1:\n            registration:\n              client-id: \"abcd\"\n              client-secret: \"{noop}secret1\"\n              client-authentication-methods:\n                - \"client_secret_basic\"\n              authorization-grant-types:\n                - \"authorization_code\"\n                - \"refresh_token\"\n              redirect-uris:\n                - \"https://my-client-1.com/login/oauth2/code/abcd\"\n                - \"https://my-client-1.com/authorized\"\n              scopes:\n                - \"openid\"\n                - \"profile\"\n                - \"email\"\n                - \"phone\"\n                - \"address\"\n            require-authorization-consent: true\n            token:\n              authorization-code-time-to-live: 5m\n              access-token-time-to-live: 10m\n              access-token-format: \"reference\"\n              reuse-refresh-tokens: false\n              refresh-token-time-to-live: 30m\n          my-client-2:\n            registration:\n              client-id: \"efgh\"\n              client-secret: \"{noop}secret2\"\n              client-authentication-methods:\n                - \"client_secret_jwt\"\n              authorization-grant-types:\n                - \"client_credentials\"\n              scopes:\n                - \"user.read\"\n                - \"user.write\"\n            jwk-set-uri: \"https://my-client-2.com/jwks\"\n            token-endpoint-authentication-signing-algorithm: \"RS256\""
+    }
+  ],
+  "headings": [
+    "OAuth2",
+    "Client",
+    "OAuth2 Client Registration for Common Providers",
+    "Resource Server",
+    "Authorization Server"
+  ],
+  "links": {
+    "https://oauth.net/2/": "r1",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/oauth2/client/autoconfigure/OAuth2ClientProperties.html": "r2",
+    "https://docs.spring.io/spring-boot/4.1/reference/security/oauth2.html#security.oauth2.client.common-providers": "r3",
+    "https://openid.net/specs/openid-connect-discovery-1_0.html": "r4",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/oauth2/client/web/OAuth2LoginAuthenticationFilter.html": "r5",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/web/SecurityFilterChain.html": "r6",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/oauth2/client/InMemoryOAuth2AuthorizedClientService.html": "r7",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/oauth2/client/JdbcOAuth2AuthorizedClientService.html": "r8",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/oauth2/client/OAuth2AuthorizedClientService.html": "r9",
+    "https://docs.spring.io/spring-boot/4.1/reference/security/oauth2.html#security.oauth2.client": "r10",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/oauth2/jwt/JwtDecoder.html": "r11",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/oauth2/jwt/ReactiveJwtDecoder.html": "r12",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/oauth2/server/resource/introspection/SpringOpaqueTokenIntrospector.html": "r13",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/oauth2/server/resource/introspection/SpringReactiveOpaqueTokenIntrospector.html": "r14",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/oauth2/server/resource/autoconfigure/SpringOpaqueTokenIntrospectorBuilderCustomizer.html": "r15",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/oauth2/server/resource/autoconfigure/reactive/SpringReactiveOpaqueTokenIntrospectorBuilderCustomizer.html": "r16",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/oauth2/server/resource/introspection/OpaqueTokenIntrospector.html": "r17",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/oauth2/server/resource/introspection/ReactiveOpaqueTokenIntrospector.html": "r18",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/crypto/password/PasswordEncoder.html": "r19",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/oauth2/server/authorization/client/RegisteredClientRepository.html": "r20",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/oauth2/server/authorization/settings/AuthorizationServerSettings.html": "r21",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/oauth2/server/authorization/client/InMemoryRegisteredClientRepository.html": "r22",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/oauth2/server/authorization/client/JdbcRegisteredClientRepository.html": "r23",
+    "https://docs.spring.io/spring-security/reference/7.1/servlet/oauth2/authorization-server/getting-started.html": "r24"
+  }
+}

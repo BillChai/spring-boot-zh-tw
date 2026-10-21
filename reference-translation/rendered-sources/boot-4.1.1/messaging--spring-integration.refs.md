@@ -1,0 +1,11 @@
+[r1]: https://spring.io/projects/spring-integration
+[r2]: https://docs.spring.io/spring-integration/docs/7.1.x/api/org/springframework/integration/config/EnableIntegration.html
+[r3]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/scheduling/TaskScheduler.html
+[r4]: https://docs.spring.io/spring-boot/4.1/reference/features/task-execution-and-scheduling.html
+[r5]: https://docs.spring.io/spring-integration/docs/7.1.x/api/org/springframework/integration/scheduling/PollerMetadata.html
+[r6]: https://docs.spring.io/spring-integration/docs/7.1.x/api/org/springframework/integration/rsocket/IntegrationRSocketEndpoint.html
+[r7]: https://docs.spring.io/spring-integration/docs/7.1.x/api/org/springframework/integration/rsocket/outbound/RSocketOutboundGateway.html
+[r8]: https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/messaging/handler/annotation/MessageMapping.html
+[r9]: https://docs.spring.io/spring-integration/docs/7.1.x/api/org/springframework/integration/rsocket/ClientRSocketConnector.html
+[r10]: https://github.com/spring-projects/spring-boot/tree/v4.1.1/module/spring-boot-integration/src/main/java/org/springframework/boot/integration/autoconfigure/IntegrationAutoConfiguration.java
+[r11]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/integration/autoconfigure/IntegrationProperties.html

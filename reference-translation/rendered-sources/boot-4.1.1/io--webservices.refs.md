@@ -1,0 +1,9 @@
+[r1]: https://docs.spring.io/spring-ws/docs/5.0.x/api/org/springframework/ws/server/endpoint/annotation/Endpoint.html
+[r2]: https://docs.spring.io/spring-ws/docs/5.0.x/reference/html
+[r3]: https://docs.spring.io/spring-ws/docs/5.0.x/api/org/springframework/ws/wsdl/wsdl11/SimpleWsdl11Definition.html
+[r4]: https://docs.spring.io/spring-ws/docs/5.0.x/api/org/springframework/xml/xsd/SimpleXsdSchema.html
+[r5]: https://docs.spring.io/spring-ws/docs/5.0.x/reference/html#client-web-service-template
+[r6]: https://docs.spring.io/spring-ws/docs/5.0.x/api/org/springframework/ws/client/core/WebServiceTemplate.html
+[r7]: https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webservices/client/WebServiceTemplateBuilder.html
+[r8]: https://docs.spring.io/spring-ws/docs/5.0.x/api/org/springframework/ws/transport/WebServiceMessageSender.html
+[r9]: https://docs.spring.io/spring-boot/4.1/reference/io/rest-client.html#io.rest-client.clienthttprequestfactory.configuration

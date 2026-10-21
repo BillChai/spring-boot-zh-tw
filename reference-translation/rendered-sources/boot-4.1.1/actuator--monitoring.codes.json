@@ -1,0 +1,18 @@
+[
+  "```properties\nmanagement.endpoints.web.base-path=/manage\n```",
+  "```yaml\nmanagement:\n  endpoints:\n    web:\n      base-path: \"/manage\"\n```",
+  "```properties\nmanagement.endpoints.web.base-path=/\nmanagement.endpoints.web.path-mapping.health=healthcheck\n```",
+  "```yaml\nmanagement:\n  endpoints:\n    web:\n      base-path: \"/\"\n      path-mapping:\n        health: \"healthcheck\"\n```",
+  "```properties\nmanagement.server.port=8081\n```",
+  "```yaml\nmanagement:\n  server:\n    port: 8081\n```",
+  "```properties\nserver.port=8443\nserver.ssl.enabled=true\nserver.ssl.key-store=classpath:store.jks\nserver.ssl.key-password=secret\nmanagement.server.port=8080\nmanagement.server.ssl.enabled=false\n```",
+  "```yaml\nserver:\n  port: 8443\n  ssl:\n    enabled: true\n    key-store: \"classpath:store.jks\"\n    key-password: \"secret\"\nmanagement:\n  server:\n    port: 8080\n    ssl:\n      enabled: false\n```",
+  "```properties\nserver.port=8443\nserver.ssl.enabled=true\nserver.ssl.key-store=classpath:main.jks\nserver.ssl.key-password=secret\nmanagement.server.port=8080\nmanagement.server.ssl.enabled=true\nmanagement.server.ssl.key-store=classpath:management.jks\nmanagement.server.ssl.key-password=secret\n```",
+  "```yaml\nserver:\n  port: 8443\n  ssl:\n    enabled: true\n    key-store: \"classpath:main.jks\"\n    key-password: \"secret\"\nmanagement:\n  server:\n    port: 8080\n    ssl:\n      enabled: true\n      key-store: \"classpath:management.jks\"\n      key-password: \"secret\"\n```",
+  "```properties\nmanagement.server.port=8081\nmanagement.server.address=127.0.0.1\n```",
+  "```yaml\nmanagement:\n  server:\n    port: 8081\n    address: \"127.0.0.1\"\n```",
+  "```properties\nmanagement.server.port=-1\n```",
+  "```yaml\nmanagement:\n  server:\n    port: -1\n```",
+  "```properties\nmanagement.endpoints.web.exposure.exclude=*\n```",
+  "```yaml\nmanagement:\n  endpoints:\n    web:\n      exposure:\n        exclude: \"*\"\n```"
+]

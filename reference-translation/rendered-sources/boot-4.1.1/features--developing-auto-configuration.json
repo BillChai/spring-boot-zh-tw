@@ -1,0 +1,161 @@
+{
+  "page": "boot/features--developing-auto-configuration.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/features/developing-auto-configuration.html",
+  "version": "4.1.1",
+  "html_sha256": "6e3204c728e07f33e1c9fcd8903add259e53be71abfc763c254d807de06f63e5",
+  "code_blocks": [
+    {
+      "language": "text",
+      "text": "com.mycorp.libx.autoconfigure.LibXAutoConfiguration\ncom.mycorp.libx.autoconfigure.LibXWebAutoConfiguration"
+    },
+    {
+      "language": "text",
+      "text": "com.mycorp.libx.autoconfigure.LibXAutoConfiguration=com.mycorp.libx.autoconfigure.core.LibXAutoConfiguration"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.autoconfigure.AutoConfiguration\nimport org.springframework.boot.autoconfigure.condition.ConditionalOnClass\nimport org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\n\n@AutoConfiguration\n// Some conditions ...\nclass MyAutoConfiguration {\n\n\t// Auto-configured beans ...\n\t@Configuration(proxyBeanMethods = false)\n\t@ConditionalOnClass(SomeService::class)\n\tclass SomeServiceConfiguration {\n\n\t\t@Bean\n\t\t@ConditionalOnMissingBean\n\t\tfun someService(): SomeService {\n\t\t\treturn SomeService()\n\t\t}\n\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.autoconfigure.AutoConfiguration;\nimport org.springframework.boot.autoconfigure.condition.ConditionalOnClass;\nimport org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@AutoConfiguration\n// Some conditions ...\npublic final class MyAutoConfiguration {\n\n\t// Auto-configured beans ...\n\n\t@Configuration(proxyBeanMethods = false)\n\t@ConditionalOnClass(SomeService.class)\n\tstatic class SomeServiceConfiguration {\n\n\t\t@Bean\n\t\t@ConditionalOnMissingBean\n\t\tSomeService someService() {\n\t\t\treturn new SomeService();\n\t\t}\n\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.autoconfigure.AutoConfiguration\nimport org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean\nimport org.springframework.context.annotation.Bean\n\n@AutoConfiguration\nclass MyAutoConfiguration {\n\n\t@Bean\n\t@ConditionalOnMissingBean\n\tfun someService(): SomeService {\n\t\treturn SomeService()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.autoconfigure.AutoConfiguration;\nimport org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;\nimport org.springframework.context.annotation.Bean;\n\n@AutoConfiguration\npublic final class MyAutoConfiguration {\n\n\t@Bean\n\t@ConditionalOnMissingBean\n\tSomeService someService() {\n\t\treturn new SomeService();\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "\tval contextRunner = ApplicationContextRunner()\n\t\t.withConfiguration(AutoConfigurations.of(MyServiceAutoConfiguration::class.java))"
+    },
+    {
+      "language": "java",
+      "text": "\tprivate final ApplicationContextRunner contextRunner = new ApplicationContextRunner()\n\t\t.withConfiguration(AutoConfigurations.of(MyServiceAutoConfiguration.class));"
+    },
+    {
+      "language": "kotlin",
+      "text": "\t@Test\n\tfun defaultServiceBacksOff() {\n\t\tcontextRunner.withUserConfiguration(UserConfiguration::class.java)\n\t\t\t.run { context: AssertableApplicationContext ->\n\t\t\t\tassertThat(context).hasSingleBean(MyService::class.java)\n\t\t\t\tassertThat(context).getBean(\"myCustomService\")\n\t\t\t\t\t.isSameAs(context.getBean(MyService::class.java))\n\t\t\t}\n\t}\n\n\t@Configuration(proxyBeanMethods = false)\n\tinternal class UserConfiguration {\n\n\t\t@Bean\n\t\tfun myCustomService(): MyService {\n\t\t\treturn MyService(\"mine\")\n\t\t}\n\n\t}"
+    },
+    {
+      "language": "java",
+      "text": "\t@Test\n\tvoid defaultServiceBacksOff() {\n\t\tthis.contextRunner.withUserConfiguration(UserConfiguration.class).run((context) -> {\n\t\t\tassertThat(context).hasSingleBean(MyService.class);\n\t\t\tassertThat(context).getBean(\"myCustomService\").isSameAs(context.getBean(MyService.class));\n\t\t});\n\t}\n\n\t@Configuration(proxyBeanMethods = false)\n\tstatic class UserConfiguration {\n\n\t\t@Bean\n\t\tMyService myCustomService() {\n\t\t\treturn new MyService(\"mine\");\n\t\t}\n\n\t}"
+    },
+    {
+      "language": "kotlin",
+      "text": "\t@Test\n\tfun serviceNameCanBeConfigured() {\n\t\tcontextRunner.withPropertyValues(\"user.name=test123\").run { context: AssertableApplicationContext ->\n\t\t\tassertThat(context).hasSingleBean(MyService::class.java)\n\t\t\tassertThat(context.getBean(MyService::class.java).name).isEqualTo(\"test123\")\n\t\t}\n\t}"
+    },
+    {
+      "language": "java",
+      "text": "\t@Test\n\tvoid serviceNameCanBeConfigured() {\n\t\tthis.contextRunner.withPropertyValues(\"user.name=test123\").run((context) -> {\n\t\t\tassertThat(context).hasSingleBean(MyService.class);\n\t\t\tassertThat(context.getBean(MyService.class).getName()).isEqualTo(\"test123\");\n\t\t});\n\t}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test\nimport org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener\nimport org.springframework.boot.logging.LogLevel\nimport org.springframework.boot.test.context.assertj.AssertableApplicationContext\nimport org.springframework.boot.test.context.runner.ApplicationContextRunner\n\nclass MyConditionEvaluationReportingTests {\n\n\t@Test\n\tfun autoConfigTest() {\n\t\tApplicationContextRunner()\n\t\t\t.withInitializer(ConditionEvaluationReportLoggingListener.forLogLevel(LogLevel.INFO))\n\t\t\t.run { context: AssertableApplicationContext? ->\n\t\t\t\t// Test something...\n\t\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener;\nimport org.springframework.boot.logging.LogLevel;\nimport org.springframework.boot.test.context.runner.ApplicationContextRunner;\n\nclass MyConditionEvaluationReportingTests {\n\n\t@Test\n\tvoid autoConfigTest() {\n\t\tnew ApplicationContextRunner()\n\t\t\t.withInitializer(ConditionEvaluationReportLoggingListener.forLogLevel(LogLevel.INFO))\n\t\t\t.run((context) -> {\n\t\t\t\t// Test something...\n\t\t\t});\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "\t@Test\n\tfun serviceIsIgnoredIfLibraryIsNotPresent() {\n\t\tcontextRunner.withClassLoader(FilteredClassLoader(MyService::class.java))\n\t\t\t.run { context: AssertableApplicationContext? ->\n\t\t\t\tassertThat(context).doesNotHaveBean(\"myService\")\n\t\t\t}\n\t}"
+    },
+    {
+      "language": "java",
+      "text": "\t@Test\n\tvoid serviceIsIgnoredIfLibraryIsNotPresent() {\n\t\tthis.contextRunner.withClassLoader(new FilteredClassLoader(MyService.class))\n\t\t\t.run((context) -> assertThat(context).doesNotHaveBean(\"myService\"));\n\t}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.context.properties.ConfigurationProperties\nimport java.time.Duration\n\n@ConfigurationProperties(\"acme\")\nclass AcmeProperties(\n\n\t/**\n\t * Whether to check the location of acme resources.\n\t */\n\tvar isCheckLocation: Boolean = true,\n\n\t/**\n\t * Timeout for establishing a connection to the acme server.\n\t */\n\tvar loginTimeout:Duration = Duration.ofSeconds(3))"
+    },
+    {
+      "language": "java",
+      "text": "import java.time.Duration;\n\nimport org.springframework.boot.context.properties.ConfigurationProperties;\n\n@ConfigurationProperties(\"acme\")\npublic class AcmeProperties {\n\n\t/**\n\t * Whether to check the location of acme resources.\n\t */\n\tprivate boolean checkLocation = true;\n\n\t/**\n\t * Timeout for establishing a connection to the acme server.\n\t */\n\tprivate Duration loginTimeout = Duration.ofSeconds(3);\n\n\t// getters/setters ...\n\n\tpublic boolean isCheckLocation() {\n\t\treturn this.checkLocation;\n\t}\n\n\tpublic void setCheckLocation(boolean checkLocation) {\n\t\tthis.checkLocation = checkLocation;\n\t}\n\n\tpublic Duration getLoginTimeout() {\n\t\treturn this.loginTimeout;\n\t}\n\n\tpublic void setLoginTimeout(Duration loginTimeout) {\n\t\tthis.loginTimeout = loginTimeout;\n\t}\n\n}"
+    },
+    {
+      "language": "xml",
+      "text": "<project>\n\t<build>\n\t\t<plugins>\n\t\t\t<plugin>\n\t\t\t\t<groupId>org.apache.maven.plugins</groupId>\n\t\t\t\t<artifactId>maven-compiler-plugin</artifactId>\n\t\t\t\t<configuration>\n\t\t\t\t\t<annotationProcessorPaths>\n\t\t\t\t\t\t<path>\n\t\t\t\t\t\t\t<groupId>org.springframework.boot</groupId>\n\t\t\t\t\t\t\t<artifactId>spring-boot-autoconfigure-processor</artifactId>\n\t\t\t\t\t\t</path>\n\t\t\t\t\t</annotationProcessorPaths>\n\t\t\t\t</configuration>\n\t\t\t</plugin>\n\t\t</plugins>\n\t</build>\n</project>"
+    },
+    {
+      "language": "gradle",
+      "text": "dependencies {\n\tannotationProcessor \"org.springframework.boot:spring-boot-autoconfigure-processor\"\n}"
+    }
+  ],
+  "headings": [
+    "Creating Your Own Auto-configuration",
+    "Understanding Auto-configured Beans",
+    "Locating Auto-configuration Candidates",
+    "Deprecating and Replacing Auto-configuration Classes",
+    "Condition Annotations",
+    "Class Conditions",
+    "Bean Conditions",
+    "Property Conditions",
+    "Resource Conditions",
+    "Web Application Conditions",
+    "SpEL Expression Conditions",
+    "Testing your Auto-configuration",
+    "Simulating a Web Context",
+    "Overriding the Classpath",
+    "Creating Your Own Starter",
+    "Naming",
+    "Configuration keys",
+    "The “autoconfigure” Module",
+    "Starter Module"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1/reference/features/developing-auto-configuration.html#features.developing-auto-configuration.custom-starter": "r1",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/AutoConfiguration.html": "r2",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html": "r3",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Conditional.html": "r4",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnClass.html": "r5",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingBean.html": "r6",
+    "https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure": "r7",
+    "https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot-autoconfigure/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports": "r8",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Import.html": "r9",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/AutoConfigureBefore.html": "r10",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/AutoConfigureAfter.html": "r11",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webmvc/autoconfigure/WebMvcAutoConfiguration.html": "r12",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/AutoConfigureOrder.html": "r13",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/annotation/Order.html": "r14",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/DependsOn.html": "r15",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r16",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/developing-auto-configuration.html#features.developing-auto-configuration.condition-annotations.class-conditions": "r17",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/developing-auto-configuration.html#features.developing-auto-configuration.condition-annotations.bean-conditions": "r18",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/developing-auto-configuration.html#features.developing-auto-configuration.condition-annotations.property-conditions": "r19",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/developing-auto-configuration.html#features.developing-auto-configuration.condition-annotations.resource-conditions": "r20",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/developing-auto-configuration.html#features.developing-auto-configuration.condition-annotations.web-application-conditions": "r21",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/developing-auto-configuration.html#features.developing-auto-configuration.condition-annotations.spel-conditions": "r22",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnMissingClass.html": "r23",
+    "https://asm.ow2.io/": "r24",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html": "r25",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBean.html": "r26",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html": "r27",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnProperty.html": "r28",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnBooleanProperty.html": "r29",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnResource.html": "r30",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnWebApplication.html": "r31",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnNotWebApplication.html": "r32",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/context/WebApplicationContext.html": "r33",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/context/ConfigurableWebEnvironment.html": "r34",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/web/context/reactive/ReactiveWebApplicationContext.html": "r35",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/web/context/reactive/ConfigurableReactiveWebEnvironment.html": "r36",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnWarDeployment.html": "r37",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnNotWarDeployment.html": "r38",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionalOnExpression.html": "r39",
+    "https://docs.spring.io/spring-framework/reference/7.0/core/expressions.html": "r40",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html": "r41",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/runner/ApplicationContextRunner.html": "r42",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/condition/ConditionEvaluationReport.html": "r43",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/logging/ConditionEvaluationReportLoggingListener.html": "r44",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/runner/WebApplicationContextRunner.html": "r45",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/runner/ReactiveWebApplicationContextRunner.html": "r46",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/FilteredClassLoader.html": "r47",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/ConfigurationProperties.html": "r48",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/time/Duration.html": "r49",
+    "https://docs.spring.io/spring-boot/4.1/specification/configuration-metadata/annotation-processor.html": "r50"
+  }
+}

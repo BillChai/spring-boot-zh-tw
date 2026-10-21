@@ -1,0 +1,56 @@
+{
+  "page": "boot/messaging--rsocket.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/messaging/rsocket.html",
+  "version": "4.1.1",
+  "html_sha256": "fb4109f41afcaa1f7dc96d25af1b0b63e6e7a11b9c57273f672024d828b3a0e1",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.rsocket.server.mapping-path=/rsocket\nspring.rsocket.server.transport=websocket"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  rsocket:\n    server:\n      mapping-path: \"/rsocket\"\n      transport: \"websocket\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.rsocket.server.port=9898"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  rsocket:\n    server:\n      port: 9898"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.messaging.rsocket.RSocketRequester\nimport org.springframework.stereotype.Service\nimport reactor.core.publisher.Mono\n\n@Service\nclass MyService(rsocketRequesterBuilder: RSocketRequester.Builder) {\n\n\tprivate val rsocketRequester: RSocketRequester\n\n\tinit {\n\t\trsocketRequester = rsocketRequesterBuilder.tcp(\"example.org\", 9898)\n\t}\n\n\tfun someRSocketCall(name: String): Mono<User> {\n\t\treturn rsocketRequester.route(\"user\").data(name).retrieveMono(\n\t\t\tUser::class.java\n\t\t)\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import reactor.core.publisher.Mono;\n\nimport org.springframework.messaging.rsocket.RSocketRequester;\nimport org.springframework.stereotype.Service;\n\n@Service\npublic class MyService {\n\n\tprivate final RSocketRequester rsocketRequester;\n\n\tpublic MyService(RSocketRequester.Builder rsocketRequesterBuilder) {\n\t\tthis.rsocketRequester = rsocketRequesterBuilder.tcp(\"example.org\", 9898);\n\t}\n\n\tpublic Mono<User> someRSocketCall(String name) {\n\t\treturn this.rsocketRequester.route(\"user\").data(name).retrieveMono(User.class);\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "RSocket",
+    "RSocket Strategies Auto-configuration",
+    "RSocket Server Auto-configuration",
+    "Spring Messaging RSocket Support",
+    "Calling RSocket Services with RSocketRequester"
+  ],
+  "links": {
+    "https://rsocket.io": "r1",
+    "https://docs.spring.io/spring-framework/reference/7.0/rsocket.html#rsocket-spring": "r2",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/messaging/rsocket/RSocketStrategies.html": "r3",
+    "https://cbor.io/": "r4",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/json.html#features.json.jackson": "r5",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/rsocket/messaging/RSocketStrategiesCustomizer.html": "r6",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/annotation/Order.html": "r7",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/WebApplicationType.html#REACTIVE": "r8",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/messaging/rsocket/annotation/support/RSocketMessageHandler.html": "r9",
+    "https://docs.spring.io/spring-framework/reference/7.0/web/webmvc/mvc-controller/ann-advice.html": "r10",
+    "https://javadoc.io/doc/io.rsocket/rsocket-core/1.1.5/io/rsocket/RSocket.html": "r11",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/messaging/rsocket/RSocketRequester.html": "r12",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/stereotype/Controller.html": "r13",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/messaging/rsocket/RSocketRequester.Builder.html": "r14",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/messaging/rsocket/RSocketConnectorConfigurer.html": "r15"
+  }
+}

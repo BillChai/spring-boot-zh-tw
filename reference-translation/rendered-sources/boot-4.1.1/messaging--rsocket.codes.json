@@ -1,0 +1,8 @@
+[
+  "```properties\nspring.rsocket.server.mapping-path=/rsocket\nspring.rsocket.server.transport=websocket\n```",
+  "```yaml\nspring:\n  rsocket:\n    server:\n      mapping-path: \"/rsocket\"\n      transport: \"websocket\"\n```",
+  "```properties\nspring.rsocket.server.port=9898\n```",
+  "```yaml\nspring:\n  rsocket:\n    server:\n      port: 9898\n```",
+  "```kotlin\nimport org.springframework.messaging.rsocket.RSocketRequester\nimport org.springframework.stereotype.Service\nimport reactor.core.publisher.Mono\n\n@Service\nclass MyService(rsocketRequesterBuilder: RSocketRequester.Builder) {\n\n\tprivate val rsocketRequester: RSocketRequester\n\n\tinit {\n\t\trsocketRequester = rsocketRequesterBuilder.tcp(\"example.org\", 9898)\n\t}\n\n\tfun someRSocketCall(name: String): Mono<User> {\n\t\treturn rsocketRequester.route(\"user\").data(name).retrieveMono(\n\t\t\tUser::class.java\n\t\t)\n\t}\n\n}\n```",
+  "```java\nimport reactor.core.publisher.Mono;\n\nimport org.springframework.messaging.rsocket.RSocketRequester;\nimport org.springframework.stereotype.Service;\n\n@Service\npublic class MyService {\n\n\tprivate final RSocketRequester rsocketRequester;\n\n\tpublic MyService(RSocketRequester.Builder rsocketRequesterBuilder) {\n\t\tthis.rsocketRequester = rsocketRequesterBuilder.tcp(\"example.org\", 9898);\n\t}\n\n\tpublic Mono<User> someRSocketCall(String name) {\n\t\treturn this.rsocketRequester.route(\"user\").data(name).retrieveMono(User.class);\n\t}\n\n}\n```"
+]

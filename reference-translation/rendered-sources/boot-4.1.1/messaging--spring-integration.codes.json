@@ -1,0 +1,8 @@
+[
+  "```properties\nspring.integration.jdbc.initialize-schema=always\n```",
+  "```yaml\nspring:\n  integration:\n    jdbc:\n      initialize-schema: \"always\"\n```",
+  "```properties\nspring.integration.rsocket.client.host=example.org\nspring.integration.rsocket.client.port=9898\n```",
+  "```yaml\n# Connecting to a RSocket server over TCP\nspring:\n  integration:\n    rsocket:\n      client:\n        host: \"example.org\"\n        port: 9898\n```",
+  "```properties\nspring.integration.rsocket.client.uri=ws://example.org\n```",
+  "```yaml\n# Connecting to a RSocket Server over WebSocket\nspring:\n  integration:\n    rsocket:\n      client:\n        uri: \"ws://example.org\"\n```"
+]

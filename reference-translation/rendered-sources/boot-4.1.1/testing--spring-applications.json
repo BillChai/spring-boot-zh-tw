@@ -1,0 +1,14 @@
+{
+  "page": "boot/testing--spring-applications.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-applications.html",
+  "version": "4.1.1",
+  "html_sha256": "83c367dc32b0cd4c45b5abee9985d42e3b206deaaf6b28a7d44b075c8a20fec1",
+  "code_blocks": [],
+  "headings": [
+    "Testing Spring Applications"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html": "r1",
+    "https://docs.spring.io/spring-framework/reference/7.0/testing.html": "r2"
+  }
+}

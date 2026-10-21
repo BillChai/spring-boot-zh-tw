@@ -1,0 +1,83 @@
+{
+  "page": "boot/messaging--pulsar.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/messaging/pulsar.html",
+  "version": "4.1.1",
+  "html_sha256": "6863c3d417f06382ff8fc2becaa60908781f3f646df0a52efd7859222cc16d86",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.pulsar.client.authentication.plugin-class-name=org.apache.pulsar.client.impl.auth.oauth2.AuthenticationOAuth2\nspring.pulsar.client.authentication.param.issuerUrl=https://auth.server.cloud/\nspring.pulsar.client.authentication.param.privateKey=file:///Users/some-key.json\nspring.pulsar.client.authentication.param.audience=urn:sn:acme:dev:my-instance"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  pulsar:\n    client:\n      authentication:\n        plugin-class-name: org.apache.pulsar.client.impl.auth.oauth2.AuthenticationOAuth2\n        param:\n          issuerUrl: https://auth.server.cloud/\n          privateKey: file:///Users/some-key.json\n          audience: urn:sn:acme:dev:my-instance"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.apache.pulsar.client.api.PulsarClientException\nimport org.springframework.pulsar.core.PulsarTemplate\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean(private val pulsarTemplate: PulsarTemplate<String>) {\n\n\t@Throws(PulsarClientException::class)\n\tfun someMethod() {\n\t\tpulsarTemplate.send(\"someTopic\", \"Hello\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.pulsar.core.PulsarTemplate;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\tprivate final PulsarTemplate<String> pulsarTemplate;\n\n\tpublic MyBean(PulsarTemplate<String> pulsarTemplate) {\n\t\tthis.pulsarTemplate = pulsarTemplate;\n\t}\n\n\tpublic void someMethod() {\n\t\tthis.pulsarTemplate.send(\"someTopic\", \"Hello\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.pulsar.annotation.PulsarListener\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean {\n\n\t@PulsarListener(topics = [\"someTopic\"])\n\tfun processMessage(content: String?) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.pulsar.annotation.PulsarListener;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\t@PulsarListener(topics = \"someTopic\")\n\tpublic void processMessage(String content) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.pulsar.annotation.PulsarReader\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyBean {\n\n\t@PulsarReader(topics = [\"someTopic\"], startMessageId = \"earliest\")\n\tfun processMessage(content: String?) {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.pulsar.annotation.PulsarReader;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyBean {\n\n\t@PulsarReader(topics = \"someTopic\", startMessageId = \"earliest\")\n\tpublic void processMessage(String content) {\n\t\t// ...\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Apache Pulsar Support",
+    "Connecting to Pulsar",
+    "Authentication",
+    "SSL",
+    "Connecting to Pulsar Administration",
+    "Authentication",
+    "Sending a Message",
+    "Receiving a Message",
+    "Reading a Message",
+    "Transaction Support",
+    "Additional Pulsar Properties"
+  ],
+  "links": {
+    "https://pulsar.apache.org/": "r1",
+    "https://spring.io/projects/spring-pulsar": "r2",
+    "https://javadoc.io/doc/org.apache.pulsar/pulsar-client-api/4.2.4/org/apache/pulsar/client/api/PulsarClient.html": "r3",
+    "https://pulsar.apache.org/docs/client-libraries-java/#connection-urls": "r4",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/core/PulsarClientBuilderCustomizer.html": "r5",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/reference/reference/pulsar/pulsar-client.html#client-authentication-env-vars": "r6",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/reference/reference/pulsar/pulsar-client.html#tls-encryption": "r7",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/reference/reference/pulsar/pulsar-client.html": "r8",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/core/PulsarAdministration.html": "r9",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/core/PulsarAdminBuilderCustomizer.html": "r10",
+    "https://docs.spring.io/spring-boot/4.1/reference/messaging/pulsar.html#messaging.pulsar.connecting.auth": "r11",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/core/PulsarTopic.html": "r12",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/core/PulsarTemplate.html": "r13",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/core/PulsarProducerFactory.html": "r14",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/core/ProducerBuilderCustomizer.html": "r15",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/core/TypedMessageBuilderCustomizer.html": "r16",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/annotation/PulsarListener.html": "r17",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/config/PulsarListenerContainerFactory.html": "r18",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/core/ConsumerBuilderCustomizer.html": "r19",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/annotation/PulsarReader.html": "r20",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/core/PulsarReaderFactory.html": "r21",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/core/ReaderBuilderCustomizer.html": "r22",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/reference": "r23",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/transaction/PulsarTransactionManager.html": "r24",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/config/ConcurrentPulsarListenerContainerFactory.html": "r25",
+    "https://docs.spring.io/spring-pulsar/docs/2.0.x/api/org/springframework/pulsar/transaction/PulsarAwareTransactionManager.html": "r26",
+    "https://docs.spring.io/spring-boot/4.1/appendix/application-properties/index.html#appendix.application-properties.integration": "r27",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/pulsar/autoconfigure/PulsarProperties.html": "r28"
+  }
+}

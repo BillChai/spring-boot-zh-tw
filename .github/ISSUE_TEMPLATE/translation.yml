@@ -1,0 +1,20 @@
+name: 翻譯勘誤
+description: 回報譯文、術語或補充圖解問題
+title: "[勘誤] "
+body:
+  - type: input
+    id: chapter
+    attributes:
+      label: 章節網址與文件版本
+    validations:
+      required: true
+  - type: textarea
+    id: correction
+    attributes:
+      label: 原文、目前譯文、建議修改與理由
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 核對依據或重現方式

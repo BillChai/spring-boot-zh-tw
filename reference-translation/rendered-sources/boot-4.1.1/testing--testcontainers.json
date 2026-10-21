@@ -1,0 +1,162 @@
+{
+  "page": "boot/testing--testcontainers.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/testing/testcontainers.html",
+  "version": "4.1.1",
+  "html_sha256": "1cdfae70a920f9ef6cef56d03ca52e750c067048f0e86a04bb31b40894449109",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.test.context.TestConfiguration\nimport org.springframework.context.annotation.Bean\nimport org.testcontainers.mongodb.MongoDBContainer\nimport org.testcontainers.utility.DockerImageName\n\n@TestConfiguration(proxyBeanMethods = false)\nclass MyTestConfiguration {\n\n\t@Bean\n\tfun mongoDbContainer(): MongoDBContainer {\n\t\treturn MongoDBContainer(DockerImageName.parse(\"mongo:5.0\"))\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.testcontainers.mongodb.MongoDBContainer;\nimport org.testcontainers.utility.DockerImageName;\n\nimport org.springframework.boot.test.context.TestConfiguration;\nimport org.springframework.context.annotation.Bean;\n\n@TestConfiguration(proxyBeanMethods = false)\nclass MyTestConfiguration {\n\n\t@Bean\n\tMongoDBContainer mongoDbContainer() {\n\t\treturn new MongoDBContainer(DockerImageName.parse(\"mongo:5.0\"));\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.context.annotation.Import\nimport org.testcontainers.mongodb.MongoDBContainer\n\n@SpringBootTest\n@Import(MyTestConfiguration::class)\nclass MyIntegrationTests {\n\n\t@Autowired\n\tprivate val mongo: MongoDBContainer? = null\n\n\t@Test\n\tfun myTest() {\n\t\t...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\nimport org.testcontainers.mongodb.MongoDBContainer;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.context.annotation.Import;\n\n@SpringBootTest\n@Import(MyTestConfiguration.class)\nclass MyIntegrationTests {\n\n\t@Autowired\n\tprivate MongoDBContainer mongo;\n\n\t@Test\n\tvoid myTest() {\n\t\t...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test;\nimport org.testcontainers.junit.jupiter.Container;\nimport org.testcontainers.junit.jupiter.Testcontainers;\nimport org.testcontainers.neo4j.Neo4jContainer;\n\nimport org.springframework.boot.test.context.SpringBootTest;\n\n@Testcontainers\n@SpringBootTest\nclass MyIntegrationTests {\n\n\t@Test\n\tfun myTest() {\n\t\t...\n\t}\n\n\tcompanion object {\n\n\t\t@Container\n\t\t@JvmStatic\n\t\tval neo4j = Neo4jContainer(\"neo4j:5\");\n\n\t}\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\nimport org.testcontainers.junit.jupiter.Container;\nimport org.testcontainers.junit.jupiter.Testcontainers;\nimport org.testcontainers.neo4j.Neo4jContainer;\n\nimport org.springframework.boot.test.context.SpringBootTest;\n\n@Testcontainers\n@SpringBootTest\nclass MyIntegrationTests {\n\n\t@Container\n\tstatic Neo4jContainer neo4j = new Neo4jContainer(\"neo4j:5\");\n\n\t@Test\n\tvoid myTest() {\n\t\t...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.testcontainers.junit.jupiter.Container\nimport org.testcontainers.mongodb.MongoDBContainer\nimport org.testcontainers.neo4j.Neo4jContainer\n\ninterface MyContainers {\n\n\tcompanion object {\n\n\t\t@Container\n\t\tval mongoContainer: MongoDBContainer = MongoDBContainer(\"mongo:5.0\")\n\n\t\t@Container\n\t\tval neo4jContainer: Neo4jContainer = Neo4jContainer(\"neo4j:5\")\n\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.testcontainers.junit.jupiter.Container;\nimport org.testcontainers.mongodb.MongoDBContainer;\nimport org.testcontainers.neo4j.Neo4jContainer;\n\ninterface MyContainers {\n\n\t@Container\n\tMongoDBContainer mongoContainer = new MongoDBContainer(\"mongo:5.0\");\n\n\t@Container\n\tNeo4jContainer neo4jContainer = new Neo4jContainer(\"neo4j:5\");\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.test.context.TestConfiguration\nimport org.springframework.boot.testcontainers.context.ImportTestcontainers\n\n@TestConfiguration(proxyBeanMethods = false)\n@ImportTestcontainers(MyContainers::class)\nclass MyTestConfiguration {\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.test.context.TestConfiguration;\nimport org.springframework.boot.testcontainers.context.ImportTestcontainers;\n\n@TestConfiguration(proxyBeanMethods = false)\n@ImportTestcontainers(MyContainers.class)\nclass MyTestConfiguration {\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test;\nimport org.testcontainers.junit.jupiter.Container;\nimport org.testcontainers.junit.jupiter.Testcontainers;\nimport org.testcontainers.neo4j.Neo4jContainer;\n\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.boot.testcontainers.service.connection.ServiceConnection;\n\n@Testcontainers\n@SpringBootTest\nclass MyIntegrationTests {\n\n\t@Test\n\tfun myTest() {\n\t\t...\n\t}\n\n\tcompanion object {\n\n\t\t@Container\n\t\t@ServiceConnection\n\t\t@JvmStatic\n\t\tval neo4j = Neo4jContainer(\"neo4j:5\");\n\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\nimport org.testcontainers.junit.jupiter.Container;\nimport org.testcontainers.junit.jupiter.Testcontainers;\nimport org.testcontainers.neo4j.Neo4jContainer;\n\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.boot.testcontainers.service.connection.ServiceConnection;\n\n@Testcontainers\n@SpringBootTest\nclass MyIntegrationTests {\n\n\t@Container\n\t@ServiceConnection\n\tstatic Neo4jContainer neo4j = new Neo4jContainer(\"neo4j:5\");\n\n\t@Test\n\tvoid myTest() {\n\t\t...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.test.context.TestConfiguration\nimport org.springframework.boot.testcontainers.service.connection.ServiceConnection\nimport org.springframework.context.annotation.Bean\nimport org.testcontainers.containers.GenericContainer\n\n@TestConfiguration(proxyBeanMethods = false)\nclass MyRedisConfiguration {\n\n\t@Bean\n\t@ServiceConnection(name = \"redis\")\n\tfun redisContainer(): GenericContainer<*> {\n\t\treturn GenericContainer(\"redis:7\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.testcontainers.containers.GenericContainer;\n\nimport org.springframework.boot.test.context.TestConfiguration;\nimport org.springframework.boot.testcontainers.service.connection.ServiceConnection;\nimport org.springframework.context.annotation.Bean;\n\n@TestConfiguration(proxyBeanMethods = false)\npublic class MyRedisConfiguration {\n\n\t@Bean\n\t@ServiceConnection(name = \"redis\")\n\tpublic GenericContainer<?> redisContainer() {\n\t\treturn new GenericContainer<>(\"redis:7\");\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import com.redis.testcontainers.RedisContainer;\nimport org.junit.jupiter.api.Test;\nimport org.testcontainers.junit.jupiter.Container;\nimport org.testcontainers.junit.jupiter.Testcontainers;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.boot.testcontainers.service.connection.PemKeyStore;\nimport org.springframework.boot.testcontainers.service.connection.PemTrustStore;\nimport org.springframework.boot.testcontainers.service.connection.ServiceConnection;\nimport org.springframework.data.redis.core.RedisOperations;\n\n@Testcontainers\n@SpringBootTest\nclass MyRedisWithSslIntegrationTests {\n\n\t@Container\n\t@ServiceConnection\n\t@PemKeyStore(certificate = \"classpath:client.crt\", privateKey = \"classpath:client.key\")\n\t@PemTrustStore(\"classpath:ca.crt\")\n\tstatic RedisContainer redis = new SecureRedisContainer(\"redis:latest\");\n\n\t@Autowired\n\tprivate RedisOperations<Object, Object> operations;\n\n\t@Test\n\tvoid testRedis() {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\nimport org.testcontainers.elasticsearch.ElasticsearchContainer;\nimport org.testcontainers.junit.jupiter.Container;\nimport org.testcontainers.junit.jupiter.Testcontainers;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.data.elasticsearch.test.autoconfigure.DataElasticsearchTest;\nimport org.springframework.boot.testcontainers.service.connection.ServiceConnection;\nimport org.springframework.boot.testcontainers.service.connection.Ssl;\nimport org.springframework.data.elasticsearch.client.elc.ElasticsearchTemplate;\n\n@Testcontainers\n@DataElasticsearchTest\nclass MyElasticsearchWithSslIntegrationTests {\n\n\t@Ssl\n\t@Container\n\t@ServiceConnection\n\tstatic ElasticsearchContainer elasticsearch = new ElasticsearchContainer(\n\t\t\t\"docker.elastic.co/elasticsearch/elasticsearch:8.17.2\");\n\n\t@Autowired\n\tprivate ElasticsearchTemplate elasticsearchTemplate;\n\n\t@Test\n\tvoid testElasticsearch() {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test\nimport org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.test.context.DynamicPropertyRegistry\nimport org.springframework.test.context.DynamicPropertySource\nimport org.testcontainers.junit.jupiter.Container\nimport org.testcontainers.junit.jupiter.Testcontainers\nimport org.testcontainers.neo4j.Neo4jContainer\n\n@Testcontainers\n@SpringBootTest\nclass MyIntegrationTests {\n\n\t@Test\n\tfun myTest() {\n\t\t...\n\t}\n\n\tcompanion object {\n\t\t@Container\n\t\t@JvmStatic\n\t\tval neo4j = Neo4jContainer(\"neo4j:5\");\n\n\t\t@DynamicPropertySource\n\t\t@JvmStatic\n\t\tfun neo4jProperties(registry: DynamicPropertyRegistry) {\n\t\t\tregistry.add(\"spring.neo4j.uri\") { neo4j.boltUrl }\n\t\t}\n\t}\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\nimport org.testcontainers.junit.jupiter.Container;\nimport org.testcontainers.junit.jupiter.Testcontainers;\nimport org.testcontainers.neo4j.Neo4jContainer;\n\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.test.context.DynamicPropertyRegistry;\nimport org.springframework.test.context.DynamicPropertySource;\n\n@Testcontainers\n@SpringBootTest\nclass MyIntegrationTests {\n\n\t@Container\n\tstatic Neo4jContainer neo4j = new Neo4jContainer(\"neo4j:5\");\n\n\t@Test\n\tvoid myTest() {\n\t\t// ...\n\t}\n\n\t@DynamicPropertySource\n\tstatic void neo4jProperties(DynamicPropertyRegistry registry) {\n\t\tregistry.add(\"spring.neo4j.uri\", neo4j::getBoltUrl);\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Testcontainers",
+    "Using Spring Beans",
+    "Using the JUnit Extension",
+    "Importing Container Configuration Interfaces",
+    "Lifecycle of Managed Containers",
+    "Service Connections",
+    "SSL with Service Connections",
+    "Dynamic Properties"
+  ],
+  "links": {
+    "https://www.testcontainers.org/": "r1",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r2",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/testcontainers.html#testing.testcontainers.service-connections": "r3",
+    "https://javadoc.io/doc/org.testcontainers/junit-jupiter/2.0.5/org/testcontainers/junit/jupiter/Testcontainers.html": "r4",
+    "https://javadoc.io/doc/org.testcontainers/junit-jupiter/2.0.5/org/testcontainers/junit/jupiter/Container.html": "r5",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/SpringBootTest.html": "r6",
+    "https://java.testcontainers.org/test_framework_integration/junit_5/#extension": "r7",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html": "r8",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/testcontainers.html#testing.testcontainers.spring-beans": "r9",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/testcontainers.html#testing.testcontainers.importing-configuration-interfaces": "r10",
+    "https://javadoc.io/doc/org.testcontainers/mongodb/2.0.5/org/testcontainers/mongodb/MongoDBContainer.html": "r11",
+    "https://javadoc.io/doc/org.testcontainers/neo4j/2.0.5/org/testcontainers/neo4j/Neo4jContainer.html": "r12",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/testcontainers/context/ImportTestcontainers.html": "r13",
+    "https://java.testcontainers.org": "r14",
+    "https://docs.spring.io/spring-framework/reference/7.0": "r15",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/testcontainers/service/connection/ServiceConnection.html": "r16",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/neo4j/autoconfigure/Neo4jConnectionDetails.html": "r17",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/testcontainers/service/connection/ContainerConnectionDetailsFactory.html": "r18",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/service/connection/ConnectionDetails.html": "r19",
+    "https://javadoc.io/doc/org.testcontainers/testcontainers/2.0.5/org/testcontainers/containers/Container.html": "r20",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/activemq/autoconfigure/ActiveMQConnectionDetails.html": "r21",
+    "https://javadoc.io/doc/org.testcontainers/activemq/2.0.5/org/testcontainers/activemq/ActiveMQContainer.html": "r22",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/artemis/autoconfigure/ArtemisConnectionDetails.html": "r23",
+    "https://javadoc.io/doc/org.testcontainers/activemq/2.0.5/org/testcontainers/activemq/ArtemisContainer.html": "r24",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/cassandra/autoconfigure/CassandraConnectionDetails.html": "r25",
+    "https://javadoc.io/doc/org.testcontainers/testcontainers/2.0.5/org/testcontainers/cassandra/CassandraContainer.html": "r26",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/couchbase/autoconfigure/CouchbaseConnectionDetails.html": "r27",
+    "https://javadoc.io/doc/org.testcontainers/couchbase/2.0.5/org/testcontainers/couchbase/CouchbaseContainer.html": "r28",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/elasticsearch/autoconfigure/ElasticsearchConnectionDetails.html": "r29",
+    "https://javadoc.io/doc/org.testcontainers/elasticsearch/2.0.5/org/testcontainers/elasticsearch/ElasticsearchContainer.html": "r30",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/flyway/autoconfigure/FlywayConnectionDetails.html": "r31",
+    "https://javadoc.io/doc/org.testcontainers/jdbc/2.0.5/org/testcontainers/containers/JdbcDatabaseContainer.html": "r32",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jdbc/autoconfigure/JdbcConnectionDetails.html": "r33",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/kafka/autoconfigure/KafkaConnectionDetails.html": "r34",
+    "https://javadoc.io/doc/org.testcontainers/kafka/2.0.5/org/testcontainers/kafka/KafkaContainer.html": "r35",
+    "https://javadoc.io/doc/org.testcontainers/kafka/2.0.5/org/testcontainers/kafka/ConfluentKafkaContainer.html": "r36",
+    "https://javadoc.io/doc/org.testcontainers/redpanda/2.0.5/org/testcontainers/redpanda/RedpandaContainer.html": "r37",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/ldap/autoconfigure/LdapConnectionDetails.html": "r38",
+    "https://javadoc.io/doc/org.testcontainers/testcontainers/2.0.5/org/testcontainers/ldap/LLdapContainer.html": "r39",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/liquibase/autoconfigure/LiquibaseConnectionDetails.html": "r40",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/mongodb/autoconfigure/MongoConnectionDetails.html": "r41",
+    "https://javadoc.io/doc/org.testcontainers/mongodb/2.0.5/org/testcontainers/mongodb/MongoDBAtlasLocalContainer.html": "r42",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/opentelemetry/autoconfigure/logging/otlp/OtlpLoggingConnectionDetails.html": "r43",
+    "https://javadoc.io/doc/org.testcontainers/grafana/2.0.5/org/testcontainers/grafana/LgtmStackContainer.html": "r44",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/metrics/autoconfigure/export/otlp/OtlpMetricsConnectionDetails.html": "r45",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/tracing/opentelemetry/autoconfigure/otlp/OtlpTracingConnectionDetails.html": "r46",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/pulsar/autoconfigure/PulsarConnectionDetails.html": "r47",
+    "https://javadoc.io/doc/org.testcontainers/pulsar/2.0.5/org/testcontainers/pulsar/PulsarContainer.html": "r48",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/r2dbc/autoconfigure/R2dbcConnectionDetails.html": "r49",
+    "https://javadoc.io/doc/org.testcontainers/clickhouse/2.0.5/org/testcontainers/clickhouse/ClickHouseContainer.html": "r50",
+    "https://javadoc.io/doc/org.testcontainers/mariadb/2.0.5/org/testcontainers/mariadb/MariaDBContainer.html": "r51",
+    "https://javadoc.io/doc/org.testcontainers/mssqlserver/2.0.5/org/testcontainers/mssqlserver/MSSQLServerContainer.html": "r52",
+    "https://javadoc.io/doc/org.testcontainers/mysql/2.0.5/org/testcontainers/mysql/MySQLContainer.html": "r53",
+    "https://javadoc.io/doc/org.testcontainers/oracle-free/2.0.5/org/testcontainers/oracle/OracleContainer.html": "r54",
+    "https://javadoc.io/doc/org.testcontainers/oracle-xe/2.0.5/org/testcontainers/containers/OracleContainer.html": "r55",
+    "https://javadoc.io/doc/org.testcontainers/postgresql/2.0.5/org/testcontainers/postgresql/PostgreSQLContainer.html": "r56",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/amqp/autoconfigure/RabbitConnectionDetails.html": "r57",
+    "https://javadoc.io/doc/org.testcontainers/rabbitmq/2.0.5/org/testcontainers/rabbitmq/RabbitMQContainer.html": "r58",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/amqp/autoconfigure/RabbitStreamConnectionDetails.html": "r59",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/redis/autoconfigure/DataRedisConnectionDetails.html": "r60",
+    "https://javadoc.io/doc/com.redis/testcontainers-redis/2.2.4/com/redis/testcontainers/RedisContainer.html": "r61",
+    "https://javadoc.io/doc/com.redis/testcontainers-redis/2.2.4/com/redis/testcontainers/RedisStackContainer.html": "r62",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/zipkin/autoconfigure/ZipkinConnectionDetails.html": "r63",
+    "https://javadoc.io/doc/org.testcontainers/testcontainers/2.0.5/org/testcontainers/containers/GenericContainer.html": "r64",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/testcontainers/service/connection/Ssl.html": "r65",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/testcontainers/service/connection/JksKeyStore.html": "r66",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/testcontainers/service/connection/JksTrustStore.html": "r67",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/testcontainers/service/connection/PemKeyStore.html": "r68",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/testcontainers/service/connection/PemTrustStore.html": "r69",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/context/DynamicPropertySource.html": "r70"
+  }
+}

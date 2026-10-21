@@ -1,0 +1,4 @@
+[
+  "```properties\nspring.hazelcast.config=classpath:config/my-hazelcast.xml\n```",
+  "```yaml\nspring:\n  hazelcast:\n    config: \"classpath:config/my-hazelcast.xml\"\n```"
+]

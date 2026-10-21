@@ -1,0 +1,23 @@
+{
+  "page": "boot/web--spring-session.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/web/spring-session.html",
+  "version": "4.1.1",
+  "html_sha256": "f141b84e686ff351cc697c6d1329291f1efd102ea7e51691f4f023a5c531c158",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.session.jdbc.table-name=SESSIONS"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  session:\n    jdbc:\n      table-name: \"SESSIONS\""
+    }
+  ],
+  "headings": [
+    "Spring Session"
+  ],
+  "links": {
+    "https://spring.io/projects/spring-session": "r1",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/session/autoconfigure/SessionTimeout.html": "r2"
+  }
+}

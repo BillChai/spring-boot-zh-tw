@@ -1,0 +1,4 @@
+[
+  "```properties\nspring.session.jdbc.table-name=SESSIONS\n```",
+  "```yaml\nspring:\n  session:\n    jdbc:\n      table-name: \"SESSIONS\"\n```"
+]

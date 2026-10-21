@@ -1,0 +1,16 @@
+{
+  "page": "boot/packaging--index.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/packaging/index.html",
+  "version": "4.1.1",
+  "html_sha256": "ea9a4f6f78a8fb40738d541abf8875ac4c25b91f4725e1d8439bb379fb21f133",
+  "code_blocks": [],
+  "headings": [
+    "Packaging Spring Boot Applications"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/native-image/index.html": "r1",
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/aot-cache.html": "r2",
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/checkpoint-restore.html": "r3",
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/container-images/index.html": "r4"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "page": "boot/features--aop.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/features/aop.html",
+  "version": "4.1.1",
+  "html_sha256": "5efa8e5103dd2c7cfe6a6012c644ab30dee06e4803d0245b1ea30cbe2db3990c",
+  "code_blocks": [],
+  "headings": [
+    "Aspect-Oriented Programming"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/reference/7.0/core/aop-api.html": "r1",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/EnableAspectJAutoProxy.html": "r2"
+  }
+}

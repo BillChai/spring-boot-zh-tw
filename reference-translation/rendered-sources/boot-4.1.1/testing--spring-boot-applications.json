@@ -1,0 +1,641 @@
+{
+  "page": "boot/testing--spring-boot-applications.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html",
+  "version": "4.1.1",
+  "html_sha256": "c4366c75271bff9704e106d772d4e8e4e56f4e788e8a1881a68e719fe60b67ab",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.test.context.SpringBootTest\n\n@SpringBootTest(properties = [\"spring.main.web-application-type=reactive\"])\nclass MyWebFluxTests {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.test.context.SpringBootTest;\n\n@SpringBootTest(properties = \"spring.main.web-application-type=reactive\")\nclass MyWebFluxTests {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.autoconfigure.SpringBootApplication\nimport org.springframework.boot.docs.using.structuringyourcode.locatingthemainclass.MyApplication\nimport org.springframework.boot.runApplication\n\n@SpringBootApplication\nclass MyApplication\n\nfun main(args: Array<String>) {\n\trunApplication<MyApplication>(*args)\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\n\n@SpringBootApplication\npublic class MyApplication {\n\n\tpublic static void main(String[] args) {\n\t\tSpringApplication.run(MyApplication.class, args);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.Banner\nimport org.springframework.boot.runApplication\nimport org.springframework.boot.autoconfigure.SpringBootApplication\n\n@SpringBootApplication\nclass MyApplication\n\nfun main(args: Array<String>) {\n\trunApplication<MyApplication>(*args) {\n\t\tsetBannerMode(Banner.Mode.OFF)\n\t\tsetAdditionalProfiles(\"myprofile\")\n\t}\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.Banner;\nimport org.springframework.boot.SpringApplication;\nimport org.springframework.boot.autoconfigure.SpringBootApplication;\n\n@SpringBootApplication\npublic class MyApplication {\n\n\tpublic static void main(String[] args) {\n\t\tSpringApplication application = new SpringApplication(MyApplication.class);\n\t\tapplication.setBannerMode(Banner.Mode.OFF);\n\t\tapplication.setAdditionalProfiles(\"myprofile\");\n\t\tapplication.run(args);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test\nimport org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.boot.test.context.SpringBootTest.UseMainMethod\n\n@SpringBootTest(useMainMethod = UseMainMethod.ALWAYS)\nclass MyApplicationTests {\n\n\t@Test\n\tfun exampleTest() {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.boot.test.context.SpringBootTest.UseMainMethod;\n\n@SpringBootTest(useMainMethod = UseMainMethod.ALWAYS)\nclass MyApplicationTests {\n\n\t@Test\n\tvoid exampleTest() {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test\nimport org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.context.annotation.Import\n\n@SpringBootTest\n@Import(MyTestsConfiguration::class)\nclass MyTests {\n\n\t@Test\n\tfun exampleTest() {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.context.annotation.Import;\n\n@SpringBootTest\n@Import(MyTestsConfiguration.class)\nclass MyTests {\n\n\t@Test\n\tvoid exampleTest() {\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.ApplicationArguments\nimport org.springframework.boot.test.context.SpringBootTest\n\n@SpringBootTest(args = [\"--app.test=one\"])\nclass MyApplicationArgumentTests {\n\n\t@Test\n\tfun applicationArgumentsPopulated(@Autowired args: ApplicationArguments) {\n\t\tassertThat(args.optionNames).containsOnly(\"app.test\")\n\t\tassertThat(args.getOptionValues(\"app.test\")).containsOnly(\"one\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.ApplicationArguments;\nimport org.springframework.boot.test.context.SpringBootTest;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\n@SpringBootTest(args = \"--app.test=one\")\nclass MyApplicationArgumentTests {\n\n\t@Test\n\tvoid applicationArgumentsPopulated(@Autowired ApplicationArguments args) {\n\t\tassertThat(args.getOptionNames()).containsOnly(\"app.test\");\n\t\tassertThat(args.getOptionValues(\"app.test\")).containsOnly(\"one\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient\nimport org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc\nimport org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient\nimport org.springframework.test.web.reactive.server.WebTestClient\nimport org.springframework.test.web.reactive.server.expectBody\nimport org.springframework.test.web.servlet.MockMvc\nimport org.springframework.test.web.servlet.assertj.MockMvcTester\nimport org.springframework.test.web.servlet.client.RestTestClient\nimport org.springframework.test.web.servlet.client.assertj.RestTestClientResponse\nimport org.springframework.test.web.servlet.client.expectBody\nimport org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get\nimport org.springframework.test.web.servlet.result.MockMvcResultMatchers.content\nimport org.springframework.test.web.servlet.result.MockMvcResultMatchers.status\n\n@SpringBootTest\n@AutoConfigureMockMvc\n@AutoConfigureRestTestClient\n@AutoConfigureWebTestClient\nclass MyMockMvcTests {\n\n\t@Test\n\tfun testWithMockMvc(@Autowired mvc: MockMvc) {\n\t\tmvc.perform(get(\"/\"))\n\t\t\t.andExpect(status().isOk())\n\t\t\t.andExpect(content().string(\"Hello World\"))\n\t}\n\n\t@Test // If AssertJ is on the classpath, you can use MockMvcTester\n\tfun testWithMockMvcTester(@Autowired mvc: MockMvcTester) {\n\t\tassertThat(mvc.get().uri(\"/\")).hasStatusOk()\n\t\t\t.hasBodyTextEqualTo(\"Hello World\")\n\t}\n\n\t@Test\n\tfun testWithRestTestClient(@Autowired webClient: RestTestClient) {\n\t\twebClient\n\t\t\t.get().uri(\"/\")\n\t\t\t.exchange()\n\t\t\t.expectStatus().isOk\n\t\t\t.expectBody<String>().isEqualTo(\"Hello World\")\n\t}\n\n\t@Test // If you prefer AssertJ, dedicated assertions are available\n\tfun testWithRestTestClientAssertJ(@Autowired webClient: RestTestClient) {\n\t\tval spec = webClient.get().uri(\"/\").exchange()\n\t\tval response = RestTestClientResponse.from(spec)\n\t\tassertThat(response).hasStatusOk().bodyText().isEqualTo(\"Hello World\")\n\t}\n\n\n\t@Test // If Spring WebFlux is on the classpath\n\tfun testWithWebTestClient(@Autowired webClient: WebTestClient) {\n\t\twebClient\n\t\t\t.get().uri(\"/\")\n\t\t\t.exchange()\n\t\t\t.expectStatus().isOk\n\t\t\t.expectBody<String>().isEqualTo(\"Hello World\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;\nimport org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;\nimport org.springframework.test.web.reactive.server.WebTestClient;\nimport org.springframework.test.web.servlet.MockMvc;\nimport org.springframework.test.web.servlet.assertj.MockMvcTester;\nimport org.springframework.test.web.servlet.client.RestTestClient;\nimport org.springframework.test.web.servlet.client.RestTestClient.ResponseSpec;\nimport org.springframework.test.web.servlet.client.assertj.RestTestClientResponse;\n\nimport static org.assertj.core.api.Assertions.assertThat;\nimport static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;\nimport static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;\nimport static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;\n\n@SpringBootTest\n@AutoConfigureMockMvc\n@AutoConfigureRestTestClient\n@AutoConfigureWebTestClient\nclass MyMockMvcTests {\n\n\t@Test\n\tvoid testWithMockMvc(@Autowired MockMvc mvc) throws Exception {\n\t\tmvc.perform(get(\"/\"))\n\t\t\t\t.andExpect(status().isOk())\n\t\t\t\t.andExpect(content().string(\"Hello World\"));\n\t}\n\n\t@Test // If AssertJ is on the classpath, you can use MockMvcTester\n\tvoid testWithMockMvcTester(@Autowired MockMvcTester mvc) {\n\t\tassertThat(mvc.get().uri(\"/\"))\n\t\t\t\t.hasStatusOk()\n\t\t\t\t.hasBodyTextEqualTo(\"Hello World\");\n\t}\n\n\t@Test\n\tvoid testWithRestTestClient(@Autowired RestTestClient restClient) {\n\t\trestClient\n\t\t\t\t.get().uri(\"/\")\n\t\t\t\t.exchange()\n\t\t\t\t.expectStatus().isOk()\n\t\t\t\t.expectBody(String.class).isEqualTo(\"Hello World\");\n\t}\n\n\t@Test // If you prefer AssertJ, dedicated assertions are available\n\tvoid testWithRestTestClientAssertJ(@Autowired RestTestClient restClient) {\n\t\tResponseSpec spec = restClient.get().uri(\"/\").exchange();\n\t\tRestTestClientResponse response = RestTestClientResponse.from(spec);\n\t\tassertThat(response).hasStatusOk()\n\t\t\t\t.bodyText().isEqualTo(\"Hello World\");\n\t}\n\n\t@Test // If Spring WebFlux is on the classpath\n\tvoid testWithWebTestClient(@Autowired WebTestClient webClient) {\n\t\twebClient\n\t\t\t\t.get().uri(\"/\")\n\t\t\t\t.exchange()\n\t\t\t\t.expectStatus().isOk()\n\t\t\t\t.expectBody(String.class).isEqualTo(\"Hello World\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient\nimport org.springframework.test.web.reactive.server.WebTestClient\nimport org.springframework.test.web.reactive.server.expectBody\n\n@SpringBootTest\n@AutoConfigureWebTestClient\nclass MyMockWebTestClientTests {\n\n\t@Test\n\tfun exampleTest(@Autowired webClient: WebTestClient) {\n\t\twebClient\n\t\t\t.get().uri(\"/\")\n\t\t\t.exchange()\n\t\t\t.expectStatus().isOk\n\t\t\t.expectBody<String>().isEqualTo(\"Hello World\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;\nimport org.springframework.test.web.reactive.server.WebTestClient;\n\n@SpringBootTest\n@AutoConfigureWebTestClient\nclass MyMockWebTestClientTests {\n\n\t@Test\n\tvoid exampleTest(@Autowired WebTestClient webClient) {\n\t\twebClient\n\t\t\t.get().uri(\"/\")\n\t\t\t.exchange()\n\t\t\t.expectStatus().isOk()\n\t\t\t.expectBody(String.class).isEqualTo(\"Hello World\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient\nimport org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.boot.test.context.SpringBootTest.WebEnvironment\nimport org.springframework.test.web.servlet.client.RestTestClient\nimport org.springframework.test.web.servlet.client.expectBody\n\n@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)\n@AutoConfigureRestTestClient\nclass MyRandomPortRestTestClientTests {\n\n\t@Test\n\tfun exampleTest(@Autowired webClient: RestTestClient) {\n\t\twebClient\n\t\t\t.get().uri(\"/\")\n\t\t\t.exchange()\n\t\t\t.expectStatus().isOk\n\t\t\t.expectBody<String>().isEqualTo(\"Hello World\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.boot.test.context.SpringBootTest.WebEnvironment;\nimport org.springframework.test.web.servlet.client.RestTestClient;\n\n@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)\n@AutoConfigureRestTestClient\nclass MyRandomPortRestTestClientTests {\n\n\t@Test\n\tvoid exampleTest(@Autowired RestTestClient restClient) {\n\t\trestClient\n\t\t\t.get().uri(\"/\")\n\t\t\t.exchange()\n\t\t\t.expectStatus().isOk()\n\t\t\t.expectBody(String.class).isEqualTo(\"Hello World\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient\nimport org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.boot.test.context.SpringBootTest.WebEnvironment\nimport org.springframework.test.web.servlet.client.RestTestClient\nimport org.springframework.test.web.servlet.client.assertj.RestTestClientResponse\n\n@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)\n@AutoConfigureRestTestClient\nclass MyRandomPortRestTestClientAssertJTests {\n\n\t@Test\n\tfun exampleTest(@Autowired webClient: RestTestClient) {\n\t\tval exchange = webClient.get().uri(\"/\").exchange()\n\t\tval response = RestTestClientResponse.from(exchange)\n\t\tassertThat(response).hasStatusOk()\n\t\t\t.bodyText().isEqualTo(\"Hello World\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.resttestclient.autoconfigure.AutoConfigureRestTestClient;\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.boot.test.context.SpringBootTest.WebEnvironment;\nimport org.springframework.test.web.servlet.client.RestTestClient;\nimport org.springframework.test.web.servlet.client.RestTestClient.ResponseSpec;\nimport org.springframework.test.web.servlet.client.assertj.RestTestClientResponse;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\n@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)\n@AutoConfigureRestTestClient\nclass MyRandomPortRestTestClientAssertJTests {\n\n\t@Test\n\tvoid exampleTest(@Autowired RestTestClient restClient) {\n\t\tResponseSpec spec = restClient.get().uri(\"/\").exchange();\n\t\tRestTestClientResponse response = RestTestClientResponse.from(spec);\n\t\tassertThat(response).hasStatusOk().bodyText().isEqualTo(\"Hello World\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.boot.test.context.SpringBootTest.WebEnvironment\nimport org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient\nimport org.springframework.test.web.reactive.server.WebTestClient\nimport org.springframework.test.web.reactive.server.expectBody\n\n@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)\n@AutoConfigureWebTestClient\nclass MyRandomPortWebTestClientTests {\n\n\t@Test\n\tfun exampleTest(@Autowired webClient: WebTestClient) {\n\t\twebClient\n\t\t\t.get().uri(\"/\")\n\t\t\t.exchange()\n\t\t\t.expectStatus().isOk\n\t\t\t.expectBody<String>().isEqualTo(\"Hello World\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.boot.test.context.SpringBootTest.WebEnvironment;\nimport org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;\nimport org.springframework.test.web.reactive.server.WebTestClient;\n\n@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)\n@AutoConfigureWebTestClient\nclass MyRandomPortWebTestClientTests {\n\n\t@Test\n\tvoid exampleTest(@Autowired WebTestClient webClient) {\n\t\twebClient\n\t\t\t.get().uri(\"/\")\n\t\t\t.exchange()\n\t\t\t.expectStatus().isOk()\n\t\t\t.expectBody(String.class).isEqualTo(\"Hello World\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.boot.test.context.SpringBootTest.WebEnvironment\nimport org.springframework.boot.resttestclient.TestRestTemplate\nimport org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate\n\n@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)\n@AutoConfigureTestRestTemplate\nclass MyRandomPortTestRestTemplateTests {\n\n\t@Test\n\tfun exampleTest(@Autowired restTemplate: TestRestTemplate) {\n\t\tval body = restTemplate.getForObject(\"/\", String::class.java)\n\t\tassertThat(body).isEqualTo(\"Hello World\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.resttestclient.TestRestTemplate;\nimport org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.boot.test.context.SpringBootTest.WebEnvironment;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\n@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)\n@AutoConfigureTestRestTemplate\nclass MyRandomPortTestRestTemplateTests {\n\n\t@Test\n\tvoid exampleTest(@Autowired TestRestTemplate restTemplate) {\n\t\tString body = restTemplate.getForObject(\"/\", String.class);\n\t\tassertThat(body).isEqualTo(\"Hello World\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import javax.management.MBeanServer\n\nimport org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.test.annotation.DirtiesContext\n\n@SpringBootTest(properties = [\"spring.jmx.enabled=true\"])\n@DirtiesContext\nclass MyJmxTests(@Autowired val mBeanServer: MBeanServer) {\n\n\t@Test\n\tfun exampleTest() {\n\t\tassertThat(mBeanServer.domains).contains(\"java.lang\")\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import javax.management.MBeanServer;\n\nimport org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.test.annotation.DirtiesContext;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\n@SpringBootTest(properties = \"spring.jmx.enabled=true\")\n@DirtiesContext\nclass MyJmxTests {\n\n\t@Autowired\n\tprivate MBeanServer mBeanServer;\n\n\t@Test\n\tvoid exampleTest() {\n\t\tassertThat(this.mBeanServer.getDomains()).contains(\"java.lang\");\n\t\t// ...\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.test.autoconfigure.json.JsonTest\nimport org.springframework.boot.test.json.JacksonTester\n\n@JsonTest\nclass MyJsonTests(@Autowired val json: JacksonTester<VehicleDetails>) {\n\n\t@Test\n\tfun serialize() {\n\t\tval details = VehicleDetails(\"Honda\", \"Civic\")\n\t\t// Assert against a `.json` file in the same package as the test\n\t\tassertThat(json.write(details)).isEqualToJson(\"expected.json\")\n\t\t// Or use JSON path based assertions\n\t\tassertThat(json.write(details)).hasJsonPathStringValue(\"@.make\")\n\t\tassertThat(json.write(details)).extractingJsonPathStringValue(\"@.make\").isEqualTo(\"Honda\")\n\t}\n\n\t@Test\n\tfun deserialize() {\n\t\tval content = \"{\\\"make\\\":\\\"Ford\\\",\\\"model\\\":\\\"Focus\\\"}\"\n\t\tassertThat(json.parse(content)).isEqualTo(VehicleDetails(\"Ford\", \"Focus\"))\n\t\tassertThat(json.parseObject(content).make).isEqualTo(\"Ford\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.test.autoconfigure.json.JsonTest;\nimport org.springframework.boot.test.json.JacksonTester;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\n@JsonTest\nclass MyJsonTests {\n\n\t@Autowired\n\tprivate JacksonTester<VehicleDetails> json;\n\n\t@Test\n\tvoid serialize() throws Exception {\n\t\tVehicleDetails details = new VehicleDetails(\"Honda\", \"Civic\");\n\t\t// Assert against a `.json` file in the same package as the test\n\t\tassertThat(this.json.write(details)).isEqualToJson(\"expected.json\");\n\t\t// Or use JSON path based assertions\n\t\tassertThat(this.json.write(details)).hasJsonPathStringValue(\"@.make\");\n\t\tassertThat(this.json.write(details)).extractingJsonPathStringValue(\"@.make\").isEqualTo(\"Honda\");\n\t}\n\n\t@Test\n\tvoid deserialize() throws Exception {\n\t\tString content = \"{\\\"make\\\":\\\"Ford\\\",\\\"model\\\":\\\"Focus\\\"}\";\n\t\tassertThat(this.json.parse(content)).isEqualTo(new VehicleDetails(\"Ford\", \"Focus\"));\n\t\tassertThat(this.json.parseObject(content).getMake()).isEqualTo(\"Ford\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "\t@Test\n\tfun someTest() {\n\t\tval value = SomeObject(0.152f)\n\t\tassertThat(json.write(value)).extractingJsonPathNumberValue(\"@.test.numberValue\")\n\t\t\t.satisfies(ThrowingConsumer { number ->\n\t\t\t\tassertThat(number.toFloat()).isCloseTo(0.15f, within(0.01f))\n\t\t\t})\n\t}"
+    },
+    {
+      "language": "java",
+      "text": "\t@Test\n\tvoid someTest() throws Exception {\n\t\tSomeObject value = new SomeObject(0.152f);\n\t\tassertThat(this.json.write(value)).extractingJsonPathNumberValue(\"@.test.numberValue\")\n\t\t\t.satisfies((number) -> assertThat(number.floatValue()).isCloseTo(0.15f, within(0.01f)));\n\t}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.mockito.BDDMockito.given\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest\nimport org.springframework.http.MediaType\nimport org.springframework.test.context.bean.override.mockito.MockitoBean\nimport org.springframework.test.web.servlet.assertj.MockMvcTester\n\n@WebMvcTest(UserVehicleController::class)\nclass MyControllerTests(@Autowired val mvc: MockMvcTester) {\n\n\t@MockitoBean\n\tlateinit var userVehicleService: UserVehicleService\n\n\t@Test\n\tfun testExample() {\n\t\tgiven(userVehicleService.getVehicleDetails(\"sboot\"))\n\t\t\t\t.willReturn(VehicleDetails(\"Honda\", \"Civic\"))\n\t\tassertThat(mvc.get().uri(\"/sboot/vehicle\").accept(MediaType.TEXT_PLAIN))\n\t\t\t\t.hasStatusOk().hasBodyTextEqualTo(\"Honda Civic\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;\nimport org.springframework.http.MediaType;\nimport org.springframework.test.context.bean.override.mockito.MockitoBean;\nimport org.springframework.test.web.servlet.assertj.MockMvcTester;\n\nimport static org.assertj.core.api.Assertions.assertThat;\nimport static org.mockito.BDDMockito.given;\n\n@WebMvcTest(UserVehicleController.class)\nclass MyControllerTests {\n\n\t@Autowired\n\tprivate MockMvcTester mvc;\n\n\t@MockitoBean\n\tprivate UserVehicleService userVehicleService;\n\n\t@Test\n\tvoid testExample() {\n\t\tgiven(this.userVehicleService.getVehicleDetails(\"sboot\"))\n\t\t\t.willReturn(new VehicleDetails(\"Honda\", \"Civic\"));\n\t\tassertThat(this.mvc.get().uri(\"/sboot/vehicle\").accept(MediaType.TEXT_PLAIN))\n\t\t\t.hasStatusOk()\n\t\t\t.hasBodyTextEqualTo(\"Honda Civic\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.htmlunit.WebClient\nimport org.htmlunit.html.HtmlPage\nimport org.junit.jupiter.api.Test\nimport org.mockito.BDDMockito.given\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest\nimport org.springframework.test.context.bean.override.mockito.MockitoBean\n\n@WebMvcTest(UserVehicleController::class)\nclass MyHtmlUnitTests(@Autowired val webClient: WebClient) {\n\n\t@MockitoBean\n\tlateinit var userVehicleService: UserVehicleService\n\n\t@Test\n\tfun testExample() {\n\t\tgiven(userVehicleService.getVehicleDetails(\"sboot\")).willReturn(VehicleDetails(\"Honda\", \"Civic\"))\n\t\tval page = webClient.getPage<HtmlPage>(\"/sboot/vehicle.html\")\n\t\tassertThat(page.body.textContent).isEqualTo(\"Honda Civic\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.htmlunit.WebClient;\nimport org.htmlunit.html.HtmlPage;\nimport org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;\nimport org.springframework.test.context.bean.override.mockito.MockitoBean;\n\nimport static org.assertj.core.api.Assertions.assertThat;\nimport static org.mockito.BDDMockito.given;\n\n@WebMvcTest(UserVehicleController.class)\nclass MyHtmlUnitTests {\n\n\t@Autowired\n\tprivate WebClient webClient;\n\n\t@MockitoBean\n\tprivate UserVehicleService userVehicleService;\n\n\t@Test\n\tvoid testExample() throws Exception {\n\t\tgiven(this.userVehicleService.getVehicleDetails(\"sboot\")).willReturn(new VehicleDetails(\"Honda\", \"Civic\"));\n\t\tHtmlPage page = this.webClient.getPage(\"/sboot/vehicle.html\");\n\t\tassertThat(page.getBody().getTextContent()).isEqualTo(\"Honda Civic\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test\nimport org.mockito.BDDMockito.given\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.webflux.test.autoconfigure.WebFluxTest\nimport org.springframework.http.MediaType\nimport org.springframework.test.context.bean.override.mockito.MockitoBean\nimport org.springframework.test.web.reactive.server.WebTestClient\nimport org.springframework.test.web.reactive.server.expectBody\n\n@WebFluxTest(UserVehicleController::class)\nclass MyControllerTests(@Autowired val webClient: WebTestClient) {\n\n\t@MockitoBean\n\tlateinit var userVehicleService: UserVehicleService\n\n\t@Test\n\tfun testExample() {\n\t\tgiven(userVehicleService.getVehicleDetails(\"sboot\"))\n\t\t\t.willReturn(VehicleDetails(\"Honda\", \"Civic\"))\n\t\twebClient.get().uri(\"/sboot/vehicle\").accept(MediaType.TEXT_PLAIN).exchange()\n\t\t\t.expectStatus().isOk\n\t\t\t.expectBody<String>().isEqualTo(\"Honda Civic\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.webflux.test.autoconfigure.WebFluxTest;\nimport org.springframework.http.MediaType;\nimport org.springframework.test.context.bean.override.mockito.MockitoBean;\nimport org.springframework.test.web.reactive.server.WebTestClient;\n\nimport static org.mockito.BDDMockito.given;\n\n@WebFluxTest(UserVehicleController.class)\nclass MyControllerTests {\n\n\t@Autowired\n\tprivate WebTestClient webClient;\n\n\t@MockitoBean\n\tprivate UserVehicleService userVehicleService;\n\n\t@Test\n\tvoid testExample() {\n\t\tgiven(this.userVehicleService.getVehicleDetails(\"sboot\"))\n\t\t\t.willReturn(new VehicleDetails(\"Honda\", \"Civic\"));\n\t\tthis.webClient.get().uri(\"/sboot/vehicle\").accept(MediaType.TEXT_PLAIN).exchange()\n\t\t\t.expectStatus().isOk()\n\t\t\t.expectBody(String.class).isEqualTo(\"Honda Civic\");\n\t}\n\n}"
+    },
+    {
+      "language": "xml",
+      "text": "<dependencies>\n\t<dependency>\n\t\t<groupId>org.springframework.graphql</groupId>\n\t\t<artifactId>spring-graphql-test</artifactId>\n\t\t<scope>test</scope>\n\t</dependency>\n\t<!-- Unless already present in the compile scope -->\n\t<dependency>\n\t\t<groupId>org.springframework.boot</groupId>\n\t\t<artifactId>spring-boot-starter-webflux</artifactId>\n\t\t<scope>test</scope>\n\t</dependency>\n</dependencies>"
+    },
+    {
+      "language": "gradle",
+      "text": "dependencies {\n\ttestImplementation(\"org.springframework.graphql:spring-graphql-test\")\n\t// Unless already present in the implementation configuration\n\ttestImplementation(\"org.springframework.boot:spring-boot-starter-webflux\")\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.docs.web.graphql.runtimewiring.GreetingController\nimport org.springframework.boot.graphql.test.autoconfigure.GraphQlTest\nimport org.springframework.graphql.test.tester.GraphQlTester\n\n@GraphQlTest(GreetingController::class)\ninternal class GreetingControllerTests {\n\n\t@Autowired\n\tlateinit var graphQlTester: GraphQlTester\n\n\t@Test\n\tfun shouldGreetWithSpecificName() {\n\t\tgraphQlTester.document(\"{ greeting(name: \\\"Alice\\\") } \").execute().path(\"greeting\").entity(String::class.java)\n\t\t\t\t.isEqualTo(\"Hello, Alice!\")\n\t}\n\n\t@Test\n\tfun shouldGreetWithDefaultName() {\n\t\tgraphQlTester.document(\"{ greeting } \").execute().path(\"greeting\").entity(String::class.java)\n\t\t\t\t.isEqualTo(\"Hello, Spring!\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.docs.web.graphql.runtimewiring.GreetingController;\nimport org.springframework.boot.graphql.test.autoconfigure.GraphQlTest;\nimport org.springframework.graphql.test.tester.GraphQlTester;\n\n@GraphQlTest(GreetingController.class)\nclass GreetingControllerTests {\n\n\t@Autowired\n\tprivate GraphQlTester graphQlTester;\n\n\t@Test\n\tvoid shouldGreetWithSpecificName() {\n\t\tthis.graphQlTester.document(\"{ greeting(name: \\\"Alice\\\") } \")\n\t\t\t.execute()\n\t\t\t.path(\"greeting\")\n\t\t\t.entity(String.class)\n\t\t\t.isEqualTo(\"Hello, Alice!\");\n\t}\n\n\t@Test\n\tvoid shouldGreetWithDefaultName() {\n\t\tthis.graphQlTester.document(\"{ greeting } \")\n\t\t\t.execute()\n\t\t\t.path(\"greeting\")\n\t\t\t.entity(String.class)\n\t\t\t.isEqualTo(\"Hello, Spring!\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.graphql.test.autoconfigure.tester.AutoConfigureHttpGraphQlTester\nimport org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.boot.test.context.SpringBootTest.WebEnvironment\nimport org.springframework.graphql.test.tester.HttpGraphQlTester\nimport org.springframework.http.HttpHeaders\nimport org.springframework.test.web.reactive.server.WebTestClient\n\n@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)\n@AutoConfigureHttpGraphQlTester\nclass GraphQlIntegrationTests {\n\n\t@Test\n\tfun shouldGreetWithSpecificName(@Autowired graphQlTester: HttpGraphQlTester) {\n\t\tval authenticatedTester = graphQlTester.mutate()\n\t\t\t.webTestClient { client: WebTestClient.Builder ->\n\t\t\t\tclient.defaultHeaders { headers: HttpHeaders ->\n\t\t\t\t\theaders.setBasicAuth(\"admin\", \"ilovespring\")\n\t\t\t\t}\n\t\t\t}.build()\n\t\tauthenticatedTester.document(\"{ greeting(name: \\\"Alice\\\") } \").execute()\n\t\t\t.path(\"greeting\").entity(String::class.java).isEqualTo(\"Hello, Alice!\")\n\t}\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.graphql.test.autoconfigure.tester.AutoConfigureHttpGraphQlTester;\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.boot.test.context.SpringBootTest.WebEnvironment;\nimport org.springframework.graphql.test.tester.HttpGraphQlTester;\n\n@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)\n@AutoConfigureHttpGraphQlTester\nclass GraphQlIntegrationTests {\n\n\t@Test\n\tvoid shouldGreetWithSpecificName(@Autowired HttpGraphQlTester graphQlTester) {\n\t\tHttpGraphQlTester authenticatedTester = graphQlTester.mutate()\n\t\t\t.webTestClient((client) -> client.defaultHeaders((headers) -> headers.setBasicAuth(\"admin\", \"ilovespring\")))\n\t\t\t.build();\n\t\tauthenticatedTester.document(\"{ greeting(name: \\\"Alice\\\") } \")\n\t\t\t.execute()\n\t\t\t.path(\"greeting\")\n\t\t\t.entity(String.class)\n\t\t\t.isEqualTo(\"Hello, Alice!\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.data.cassandra.test.autoconfigure.DataCassandraTest\n\n@DataCassandraTest\nclass MyDataCassandraTests(@Autowired val repository: SomeRepository)"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.data.cassandra.test.autoconfigure.DataCassandraTest;\n\n@DataCassandraTest\nclass MyDataCassandraTests {\n\n\t@Autowired\n\tprivate SomeRepository repository;\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.data.couchbase.test.autoconfigure.DataCouchbaseTest\n\n@DataCouchbaseTest\nclass MyDataCouchbaseTests(@Autowired val repository: SomeRepository) {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.data.couchbase.test.autoconfigure.DataCouchbaseTest;\n\n@DataCouchbaseTest\nclass MyDataCouchbaseTests {\n\n\t@Autowired\n\tprivate SomeRepository repository;\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.data.elasticsearch.test.autoconfigure.DataElasticsearchTest\n\n@DataElasticsearchTest\nclass MyDataElasticsearchTests(@Autowired val repository: SomeRepository) {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.data.elasticsearch.test.autoconfigure.DataElasticsearchTest;\n\n@DataElasticsearchTest\nclass MyDataElasticsearchTests {\n\n\t@Autowired\n\tprivate SomeRepository repository;\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest\nimport org.springframework.transaction.annotation.Propagation\nimport org.springframework.transaction.annotation.Transactional\n\n@DataJpaTest\n@Transactional(propagation = Propagation.NOT_SUPPORTED)\nclass MyNonTransactionalTests {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;\nimport org.springframework.transaction.annotation.Propagation;\nimport org.springframework.transaction.annotation.Transactional;\n\n@DataJpaTest\n@Transactional(propagation = Propagation.NOT_SUPPORTED)\nclass MyNonTransactionalTests {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest\nimport org.springframework.boot.jpa.test.autoconfigure.TestEntityManager\n\n@DataJpaTest\nclass MyRepositoryTests(@Autowired val entityManager: TestEntityManager, @Autowired val repository: UserRepository) {\n\n\t@Test\n\tfun testExample() {\n\t\tentityManager.persist(User(\"sboot\", \"1234\"))\n\t\tval user = repository.findByUsername(\"sboot\")\n\t\tassertThat(user?.username).isEqualTo(\"sboot\")\n\t\tassertThat(user?.employeeNumber).isEqualTo(\"1234\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;\nimport org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\n@DataJpaTest\nclass MyRepositoryTests {\n\n\t@Autowired\n\tprivate TestEntityManager entityManager;\n\n\t@Autowired\n\tprivate UserRepository repository;\n\n\t@Test\n\tvoid testExample() {\n\t\tthis.entityManager.persist(new User(\"sboot\", \"1234\"));\n\t\tUser user = this.repository.findByUsername(\"sboot\");\n\t\tassertThat(user.getUsername()).isEqualTo(\"sboot\");\n\t\tassertThat(user.getEmployeeNumber()).isEqualTo(\"1234\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase\nimport org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest\n\n@DataJpaTest\n@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)\nclass MyRepositoryTests {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;\nimport org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;\nimport org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase.Replace;\n\n@DataJpaTest\n@AutoConfigureTestDatabase(replace = Replace.NONE)\nclass MyRepositoryTests {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.jdbc.test.autoconfigure.JdbcTest\nimport org.springframework.transaction.annotation.Propagation\nimport org.springframework.transaction.annotation.Transactional\n\n@JdbcTest\n@Transactional(propagation = Propagation.NOT_SUPPORTED)\nclass MyTransactionalTests"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.jdbc.test.autoconfigure.JdbcTest;\nimport org.springframework.transaction.annotation.Propagation;\nimport org.springframework.transaction.annotation.Transactional;\n\n@JdbcTest\n@Transactional(propagation = Propagation.NOT_SUPPORTED)\nclass MyTransactionalTests {\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.jooq.DSLContext\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.jooq.test.autoconfigure.JooqTest\n\n@JooqTest\nclass MyJooqTests(@Autowired val dslContext: DSLContext) {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.jooq.DSLContext;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.jooq.test.autoconfigure.JooqTest;\n\n@JooqTest\nclass MyJooqTests {\n\n\t@Autowired\n\tprivate DSLContext dslContext;\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.data.mongodb.test.autoconfigure.DataMongoTest\nimport org.springframework.data.mongodb.core.MongoTemplate\n\n@DataMongoTest\nclass MyDataMongoDbTests(@Autowired val mongoTemplate: MongoTemplate) {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.data.mongodb.test.autoconfigure.DataMongoTest;\nimport org.springframework.data.mongodb.core.MongoTemplate;\n\n@DataMongoTest\nclass MyDataMongoDbTests {\n\n\t@Autowired\n\tprivate MongoTemplate mongoTemplate;\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.data.neo4j.test.autoconfigure.DataNeo4jTest\n\n@DataNeo4jTest\nclass MyDataNeo4jTests(@Autowired val repository: SomeRepository) {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.data.neo4j.test.autoconfigure.DataNeo4jTest;\n\n@DataNeo4jTest\nclass MyDataNeo4jTests {\n\n\t@Autowired\n\tprivate SomeRepository repository;\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.data.neo4j.test.autoconfigure.DataNeo4jTest\nimport org.springframework.transaction.annotation.Propagation\nimport org.springframework.transaction.annotation.Transactional\n\n@DataNeo4jTest\n@Transactional(propagation = Propagation.NOT_SUPPORTED)\nclass MyDataNeo4jTests"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.data.neo4j.test.autoconfigure.DataNeo4jTest;\nimport org.springframework.transaction.annotation.Propagation;\nimport org.springframework.transaction.annotation.Transactional;\n\n@DataNeo4jTest\n@Transactional(propagation = Propagation.NOT_SUPPORTED)\nclass MyDataNeo4jTests {\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.data.redis.test.autoconfigure.DataRedisTest\n\n@DataRedisTest\nclass MyDataRedisTests(@Autowired val repository: SomeRepository) {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.data.redis.test.autoconfigure.DataRedisTest;\n\n@DataRedisTest\nclass MyDataRedisTests {\n\n\t@Autowired\n\tprivate SomeRepository repository;\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.data.ldap.test.autoconfigure.DataLdapTest\nimport org.springframework.ldap.core.LdapTemplate\n\n@DataLdapTest\nclass MyDataLdapTests(@Autowired val ldapTemplate: LdapTemplate) {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.data.ldap.test.autoconfigure.DataLdapTest;\nimport org.springframework.ldap.core.LdapTemplate;\n\n@DataLdapTest\nclass MyDataLdapTests {\n\n\t@Autowired\n\tprivate LdapTemplate ldapTemplate;\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.ldap.autoconfigure.embedded.EmbeddedLdapAutoConfiguration\nimport org.springframework.boot.data.ldap.test.autoconfigure.DataLdapTest\n\n@DataLdapTest(excludeAutoConfiguration = [EmbeddedLdapAutoConfiguration::class])\nclass MyDataLdapTests {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.data.ldap.test.autoconfigure.DataLdapTest;\nimport org.springframework.boot.ldap.autoconfigure.embedded.EmbeddedLdapAutoConfiguration;\n\n@DataLdapTest(excludeAutoConfiguration = EmbeddedLdapAutoConfiguration.class)\nclass MyDataLdapTests {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.restclient.test.autoconfigure.RestClientTest\nimport org.springframework.http.MediaType\nimport org.springframework.test.web.client.MockRestServiceServer\nimport org.springframework.test.web.client.match.MockRestRequestMatchers\nimport org.springframework.test.web.client.response.MockRestResponseCreators\n\n@RestClientTest(RemoteVehicleDetailsService::class)\nclass MyRestTemplateServiceTests(\n\t@Autowired val service: RemoteVehicleDetailsService,\n\t@Autowired val server: MockRestServiceServer) {\n\n\t@Test\n\tfun getVehicleDetailsWhenResultIsSuccessShouldReturnDetails() {\n\t\tserver.expect(MockRestRequestMatchers.requestTo(\"/greet/details\"))\n\t\t\t.andRespond(MockRestResponseCreators.withSuccess(\"hello\", MediaType.TEXT_PLAIN))\n\t\tval greeting = service.callRestService()\n\t\tassertThat(greeting).isEqualTo(\"hello\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.restclient.test.autoconfigure.RestClientTest;\nimport org.springframework.http.MediaType;\nimport org.springframework.test.web.client.MockRestServiceServer;\n\nimport static org.assertj.core.api.Assertions.assertThat;\nimport static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;\nimport static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;\n\n@RestClientTest(org.springframework.boot.docs.testing.springbootapplications.autoconfiguredrestclient.RemoteVehicleDetailsService.class)\nclass MyRestTemplateServiceTests {\n\n\t@Autowired\n\tprivate RemoteVehicleDetailsService service;\n\n\t@Autowired\n\tprivate MockRestServiceServer server;\n\n\t@Test\n\tvoid getVehicleDetailsWhenResultIsSuccessShouldReturnDetails() {\n\t\tthis.server.expect(requestTo(\"/greet/details\")).andRespond(withSuccess(\"hello\", MediaType.TEXT_PLAIN));\n\t\tString greeting = this.service.callRestService();\n\t\tassertThat(greeting).isEqualTo(\"hello\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.restclient.test.autoconfigure.RestClientTest\nimport org.springframework.http.MediaType\nimport org.springframework.test.web.client.MockRestServiceServer\nimport org.springframework.test.web.client.match.MockRestRequestMatchers\nimport org.springframework.test.web.client.response.MockRestResponseCreators\n\n@RestClientTest(RemoteVehicleDetailsService::class)\nclass MyRestClientServiceTests(\n\t@Autowired val service: RemoteVehicleDetailsService,\n\t@Autowired val server: MockRestServiceServer) {\n\n\t@Test\n\tfun getVehicleDetailsWhenResultIsSuccessShouldReturnDetails() {\n\t\tserver.expect(MockRestRequestMatchers.requestTo(\"https://example.com/greet/details\"))\n\t\t\t.andRespond(MockRestResponseCreators.withSuccess(\"hello\", MediaType.TEXT_PLAIN))\n\t\tval greeting = service.callRestService()\n\t\tassertThat(greeting).isEqualTo(\"hello\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.restclient.test.autoconfigure.RestClientTest;\nimport org.springframework.http.MediaType;\nimport org.springframework.test.web.client.MockRestServiceServer;\n\nimport static org.assertj.core.api.Assertions.assertThat;\nimport static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;\nimport static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;\n\n@RestClientTest(RemoteVehicleDetailsService.class)\nclass MyRestClientServiceTests {\n\n\t@Autowired\n\tprivate RemoteVehicleDetailsService service;\n\n\t@Autowired\n\tprivate MockRestServiceServer server;\n\n\t@Test\n\tvoid getVehicleDetailsWhenResultIsSuccessShouldReturnDetails() {\n\t\tthis.server.expect(requestTo(\"https://example.com/greet/details\"))\n\t\t\t.andRespond(withSuccess(\"hello\", MediaType.TEXT_PLAIN));\n\t\tString greeting = this.service.callRestService();\n\t\tassertThat(greeting).isEqualTo(\"hello\");\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.restdocs.test.autoconfigure.AutoConfigureRestDocs;\nimport org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;\nimport org.springframework.http.MediaType;\nimport org.springframework.test.web.servlet.assertj.MockMvcTester;\n\nimport static org.assertj.core.api.Assertions.assertThat;\nimport static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;\n\n@WebMvcTest(UserController.class)\n@AutoConfigureRestDocs\nclass MyUserDocumentationTests {\n\n\t@Autowired\n\tprivate MockMvcTester mvc;\n\n\t@Test\n\tvoid listUsers() {\n\t\tassertThat(this.mvc.get().uri(\"/users\").accept(MediaType.TEXT_PLAIN)).hasStatusOk()\n\t\t\t.apply(document(\"list-users\"));\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.restdocs.test.autoconfigure.AutoConfigureRestDocs;\nimport org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;\nimport org.springframework.http.MediaType;\nimport org.springframework.test.web.servlet.assertj.MockMvcTester;\n\nimport static org.assertj.core.api.Assertions.assertThat;\nimport static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;\n\n@WebMvcTest(UserController.class)\n@AutoConfigureRestDocs\nclass MyUserDocumentationTests {\n\n\t@Autowired\n\tprivate MockMvcTester mvc;\n\n\t@Test\n\tvoid listUsers() {\n\t\tassertThat(this.mvc.get().uri(\"/users\").accept(MediaType.TEXT_PLAIN)).hasStatusOk()\n\t\t\t.apply(document(\"list-users\"));\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.restdocs.test.autoconfigure.RestDocsMockMvcConfigurationCustomizer\nimport org.springframework.boot.test.context.TestConfiguration\nimport org.springframework.restdocs.mockmvc.MockMvcRestDocumentationConfigurer\nimport org.springframework.restdocs.templates.TemplateFormats\n\n@TestConfiguration(proxyBeanMethods = false)\nclass MyRestDocsConfiguration : RestDocsMockMvcConfigurationCustomizer {\n\n\toverride fun customize(configurer: MockMvcRestDocumentationConfigurer) {\n\t\tconfigurer.snippets().withTemplateFormat(TemplateFormats.markdown())\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.restdocs.test.autoconfigure.RestDocsMockMvcConfigurationCustomizer;\nimport org.springframework.boot.test.context.TestConfiguration;\nimport org.springframework.restdocs.mockmvc.MockMvcRestDocumentationConfigurer;\nimport org.springframework.restdocs.templates.TemplateFormats;\n\n@TestConfiguration(proxyBeanMethods = false)\npublic class MyRestDocsConfiguration implements RestDocsMockMvcConfigurationCustomizer {\n\n\t@Override\n\tpublic void customize(MockMvcRestDocumentationConfigurer configurer) {\n\t\tconfigurer.snippets().withTemplateFormat(TemplateFormats.markdown());\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.test.context.TestConfiguration\nimport org.springframework.context.annotation.Bean\nimport org.springframework.restdocs.mockmvc.MockMvcRestDocumentation\nimport org.springframework.restdocs.mockmvc.RestDocumentationResultHandler\n\n@TestConfiguration(proxyBeanMethods = false)\nclass MyResultHandlerConfiguration {\n\n\t@Bean\n\tfun restDocumentation(): RestDocumentationResultHandler {\n\t\treturn MockMvcRestDocumentation.document(\"{method-name}\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.test.context.TestConfiguration;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;\nimport org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;\n\n@TestConfiguration(proxyBeanMethods = false)\npublic class MyResultHandlerConfiguration {\n\n\t@Bean\n\tpublic RestDocumentationResultHandler restDocumentation() {\n\t\treturn MockMvcRestDocumentation.document(\"{method-name}\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.restdocs.test.autoconfigure.AutoConfigureRestDocs\nimport org.springframework.boot.webflux.test.autoconfigure.WebFluxTest\nimport org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation\nimport org.springframework.test.web.reactive.server.WebTestClient\n\n@WebFluxTest\n@AutoConfigureRestDocs\nclass MyUsersDocumentationTests(@Autowired val webTestClient: WebTestClient) {\n\n\t@Test\n\tfun listUsers() {\n\t\twebTestClient\n\t\t\t.get().uri(\"/\")\n\t\t\t.exchange()\n\t\t\t.expectStatus()\n\t\t\t.isOk\n\t\t\t.expectBody()\n\t\t\t.consumeWith(WebTestClientRestDocumentation.document(\"list-users\"))\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.restdocs.test.autoconfigure.AutoConfigureRestDocs;\nimport org.springframework.boot.webflux.test.autoconfigure.WebFluxTest;\nimport org.springframework.test.web.reactive.server.WebTestClient;\n\nimport static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;\n\n@WebFluxTest\n@AutoConfigureRestDocs\nclass MyUsersDocumentationTests {\n\n\t@Autowired\n\tprivate WebTestClient webTestClient;\n\n\t@Test\n\tvoid listUsers() {\n\t\tthis.webTestClient\n\t\t\t.get().uri(\"/\")\n\t\t.exchange()\n\t\t.expectStatus()\n\t\t\t.isOk()\n\t\t.expectBody()\n\t\t\t.consumeWith(document(\"list-users\"));\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.restdocs.test.autoconfigure.RestDocsWebTestClientConfigurationCustomizer\nimport org.springframework.boot.test.context.TestConfiguration\nimport org.springframework.restdocs.webtestclient.WebTestClientRestDocumentationConfigurer\n\n@TestConfiguration(proxyBeanMethods = false)\nclass MyRestDocsConfiguration : RestDocsWebTestClientConfigurationCustomizer {\n\n\toverride fun customize(configurer: WebTestClientRestDocumentationConfigurer) {\n\t\tconfigurer.snippets().withEncoding(\"UTF-8\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.restdocs.test.autoconfigure.RestDocsWebTestClientConfigurationCustomizer;\nimport org.springframework.boot.test.context.TestConfiguration;\nimport org.springframework.restdocs.webtestclient.WebTestClientRestDocumentationConfigurer;\n\n@TestConfiguration(proxyBeanMethods = false)\npublic class MyRestDocsConfiguration implements RestDocsWebTestClientConfigurationCustomizer {\n\n\t@Override\n\tpublic void customize(WebTestClientRestDocumentationConfigurer configurer) {\n\t\tconfigurer.snippets().withEncoding(\"UTF-8\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.test.context.TestConfiguration\nimport org.springframework.boot.webtestclient.autoconfigure.WebTestClientBuilderCustomizer\nimport org.springframework.context.annotation.Bean\nimport org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation\nimport org.springframework.test.web.reactive.server.WebTestClient\n\n@TestConfiguration(proxyBeanMethods = false)\nclass MyWebTestClientBuilderCustomizerConfiguration {\n\n\t@Bean\n\tfun restDocumentation(): WebTestClientBuilderCustomizer {\n\t\treturn WebTestClientBuilderCustomizer { builder: WebTestClient.Builder ->\n\t\t\tbuilder.entityExchangeResultConsumer(\n\t\t\t\tWebTestClientRestDocumentation.document(\"{method-name}\")\n\t\t\t)\n\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.test.context.TestConfiguration;\nimport org.springframework.boot.webtestclient.autoconfigure.WebTestClientBuilderCustomizer;\nimport org.springframework.context.annotation.Bean;\n\nimport static org.springframework.restdocs.webtestclient.WebTestClientRestDocumentation.document;\n\n@TestConfiguration(proxyBeanMethods = false)\npublic class MyWebTestClientBuilderCustomizerConfiguration {\n\n\t@Bean\n\tpublic WebTestClientBuilderCustomizer restDocumentation() {\n\t\treturn (builder) -> builder.entityExchangeResultConsumer(document(\"{method-name}\"));\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.webservices.test.autoconfigure.client.WebServiceClientTest\nimport org.springframework.ws.test.client.MockWebServiceServer\nimport org.springframework.ws.test.client.RequestMatchers\nimport org.springframework.ws.test.client.ResponseCreators\nimport org.springframework.xml.transform.StringSource\n\n@WebServiceClientTest(SomeWebService::class)\nclass MyWebServiceClientTests(\n\t\t@Autowired val server: MockWebServiceServer, @Autowired val someWebService: SomeWebService) {\n\n\t@Test\n\tfun mockServerCall() {\n\t\tserver\n\t\t\t.expect(RequestMatchers.payload(StringSource(\"<request/>\")))\n\t\t\t.andRespond(ResponseCreators.withPayload(StringSource(\"<response><status>200</status></response>\")))\n\t\tassertThat(this.someWebService.test()).extracting(Response::status).isEqualTo(200)\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.webservices.test.autoconfigure.client.WebServiceClientTest;\nimport org.springframework.ws.test.client.MockWebServiceServer;\nimport org.springframework.xml.transform.StringSource;\n\nimport static org.assertj.core.api.Assertions.assertThat;\nimport static org.springframework.ws.test.client.RequestMatchers.payload;\nimport static org.springframework.ws.test.client.ResponseCreators.withPayload;\n\n@WebServiceClientTest(SomeWebService.class)\nclass MyWebServiceClientTests {\n\n\t@Autowired\n\tprivate MockWebServiceServer server;\n\n\t@Autowired\n\tprivate SomeWebService someWebService;\n\n\t@Test\n\tvoid mockServerCall() {\n\t\tthis.server\n\t\t\t.expect(payload(new StringSource(\"<request/>\")))\n\t\t\t.andRespond(withPayload(new StringSource(\"<response><status>200</status></response>\")));\n\t\tassertThat(this.someWebService.test())\n\t\t\t.extracting(Response::getStatus)\n\t\t\t.isEqualTo(200);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.webservices.test.autoconfigure.server.WebServiceServerTest\nimport org.springframework.ws.test.server.MockWebServiceClient\nimport org.springframework.ws.test.server.RequestCreators\nimport org.springframework.ws.test.server.ResponseMatchers\nimport org.springframework.xml.transform.StringSource\n\n@WebServiceServerTest(ExampleEndpoint::class)\nclass MyWebServiceServerTests(@Autowired val client: MockWebServiceClient) {\n\n\t@Test\n\tfun mockServerCall() {\n\t\tclient\n\t\t\t.sendRequest(RequestCreators.withPayload(StringSource(\"<ExampleRequest/>\")))\n\t\t\t.andExpect(ResponseMatchers.payload(StringSource(\"<ExampleResponse>42</ExampleResponse>\")))\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.webservices.test.autoconfigure.server.WebServiceServerTest;\nimport org.springframework.ws.test.server.MockWebServiceClient;\nimport org.springframework.ws.test.server.RequestCreators;\nimport org.springframework.ws.test.server.ResponseMatchers;\nimport org.springframework.xml.transform.StringSource;\n\n@WebServiceServerTest(ExampleEndpoint.class)\nclass MyWebServiceServerTests {\n\n\t@Autowired\n\tprivate MockWebServiceClient client;\n\n\t@Test\n\tvoid mockServerCall() {\n\t\tthis.client\n\t\t\t.sendRequest(RequestCreators.withPayload(new StringSource(\"<ExampleRequest/>\")))\n\t\t\t.andExpect(ResponseMatchers.payload(new StringSource(\"<ExampleResponse>42</ExampleResponse>\")));\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.autoconfigure.ImportAutoConfiguration\nimport org.springframework.boot.integration.autoconfigure.IntegrationAutoConfiguration\nimport org.springframework.boot.jdbc.test.autoconfigure.JdbcTest\n\n@JdbcTest\n@ImportAutoConfiguration(IntegrationAutoConfiguration::class)\nclass MyJdbcTests"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.autoconfigure.ImportAutoConfiguration;\nimport org.springframework.boot.integration.autoconfigure.IntegrationAutoConfiguration;\nimport org.springframework.boot.jdbc.test.autoconfigure.JdbcTest;\n\n@JdbcTest\n@ImportAutoConfiguration(IntegrationAutoConfiguration.class)\nclass MyJdbcTests {\n\n}"
+    },
+    {
+      "language": "text",
+      "text": "com.example.IntegrationAutoConfiguration"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.autoconfigure.SpringBootApplication\nimport org.springframework.data.mongodb.config.EnableMongoAuditing\n\n@SpringBootApplication\n@EnableMongoAuditing\nclass MyApplication {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.autoconfigure.SpringBootApplication;\nimport org.springframework.data.mongodb.config.EnableMongoAuditing;\n\n@SpringBootApplication\n@EnableMongoAuditing\npublic class MyApplication {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.context.annotation.Configuration\nimport org.springframework.data.mongodb.config.EnableMongoAuditing\n\n@Configuration(proxyBeanMethods = false)\n@EnableMongoAuditing\nclass MyMongoConfiguration {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.context.annotation.Configuration;\nimport org.springframework.data.mongodb.config.EnableMongoAuditing;\n\n@Configuration(proxyBeanMethods = false)\n@EnableMongoAuditing\npublic class MyMongoConfiguration {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.web.servlet.config.annotation.WebMvcConfigurer\n\n@Configuration(proxyBeanMethods = false)\nclass MyWebConfiguration {\n\n\t@Bean\n\tfun testConfigurer(): WebMvcConfigurer {\n\t\treturn object : WebMvcConfigurer {\n\t\t\t// ...\n\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.web.servlet.config.annotation.WebMvcConfigurer;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyWebConfiguration {\n\n\t@Bean\n\tpublic WebMvcConfigurer testConfigurer() {\n\t\treturn new WebMvcConfigurer() {\n\t\t\t// ...\n\t\t};\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.stereotype.Component\nimport org.springframework.web.servlet.config.annotation.WebMvcConfigurer\n\n@Component\nclass MyWebMvcConfigurer : WebMvcConfigurer {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.stereotype.Component;\nimport org.springframework.web.servlet.config.annotation.WebMvcConfigurer;\n\n@Component\npublic class MyWebMvcConfigurer implements WebMvcConfigurer {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.autoconfigure.SpringBootApplication\nimport org.springframework.context.annotation.ComponentScan\n\n@SpringBootApplication\n@ComponentScan(\"com.example.app\", \"com.example.another\")\nclass MyApplication {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.autoconfigure.SpringBootApplication;\nimport org.springframework.context.annotation.ComponentScan;\n\n@SpringBootApplication\n@ComponentScan({ \"com.example.app\", \"com.example.another\" })\npublic class MyApplication {\n\n\t// ...\n\n}"
+    }
+  ],
+  "headings": [
+    "Testing Spring Boot Applications",
+    "Detecting Web Application Type",
+    "Detecting Test Configuration",
+    "Using the Test Configuration Main Method",
+    "Excluding Test Configuration",
+    "Using Application Arguments",
+    "Testing With a Mock Environment",
+    "Testing With a Running Server",
+    "Customizing RestTestClient",
+    "Customizing WebTestClient",
+    "Using JMX",
+    "Using Observations",
+    "Using Metrics",
+    "Using Tracing",
+    "Mocking and Spying Beans",
+    "Auto-configured Tests",
+    "Auto-configured JSON Tests",
+    "Auto-configured Spring MVC Tests",
+    "Auto-configured Spring WebFlux Tests",
+    "Auto-configured Spring GraphQL Tests",
+    "Auto-configured Data Cassandra Tests",
+    "Auto-configured Data Couchbase Tests",
+    "Auto-configured Data Elasticsearch Tests",
+    "Auto-configured Data JPA Tests",
+    "Auto-configured JDBC Tests",
+    "Auto-configured Data JDBC Tests",
+    "Auto-configured Data R2DBC Tests",
+    "Auto-configured jOOQ Tests",
+    "Auto-configured Data MongoDB Tests",
+    "Auto-configured Data Neo4j Tests",
+    "Auto-configured Data Redis Tests",
+    "Auto-configured Data LDAP Tests",
+    "Auto-configured REST Clients",
+    "Auto-configured Web Clients",
+    "Auto-configured Spring REST Docs Tests",
+    "Auto-configured Spring REST Docs Tests With Mock MVC",
+    "Auto-configured Spring REST Docs Tests With WebTestClient",
+    "Auto-configured Spring Web Services Tests",
+    "Auto-configured Spring Web Services Client Tests",
+    "Auto-configured Spring Web Services Server Tests",
+    "Additional Auto-configuration and Slicing",
+    "User Configuration and Slicing",
+    "Using Spock to Test Spring Boot Applications"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html": "r1",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/SpringApplication.html": "r2",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/SpringBootTest.html": "r3",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/context/ContextConfiguration.html": "r4",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html#testing.spring-boot-applications.detecting-configuration": "r5",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html#testing.spring-boot-applications.autoconfigured-tests": "r6",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html#testing.spring-boot-applications.with-mock-environment": "r7",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webtestclient/autoconfigure/AutoConfigureWebTestClient.html": "r8",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/web/server/context/WebServerApplicationContext.html": "r9",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/transaction/annotation/Transactional.html": "r10",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Configuration.html": "r11",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/SpringBootApplication.html": "r12",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/SpringBootConfiguration.html": "r13",
+    "https://docs.spring.io/spring-boot/4.1/reference/using/structuring-your-code.html": "r14",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html#testing.spring-boot-applications.user-configuration-and-slicing": "r15",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/ComponentScan.html": "r16",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/TestConfiguration.html": "r17",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/SpringApplication.html#run(java.lang.Class,java.lang.String...)": "r18",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/SpringBootTest.UseMainMethod.html#ALWAYS": "r19",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/SpringBootTest.UseMainMethod.html#WHEN_AVAILABLE": "r20",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/TypeExcludeFilter.html": "r21",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/spring-application.html#features.spring-application.application-arguments": "r22",
+    "https://docs.spring.io/spring-framework/reference/7.0/testing/mockmvc.html": "r23",
+    "https://docs.spring.io/spring-framework/reference/7.0/testing/mockmvc/hamcrest.html": "r24",
+    "https://docs.spring.io/spring-framework/reference/7.0/testing/mockmvc/assertj.html": "r25",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/web/servlet/MockMvc.html": "r26",
+    "https://docs.spring.io/spring-framework/reference/7.0/testing/resttestclient.html": "r27",
+    "https://docs.spring.io/spring-framework/reference/7.0/testing/webtestclient.html": "r28",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webmvc/test/autoconfigure/WebMvcTest.html": "r29",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html#testing.spring-boot-applications.spring-mvc-tests": "r30",
+    "https://docs.spring.io/spring-boot/4.1/reference/web/servlet.html#web.servlet.spring-mvc.error-handling.error-pages": "r31",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/web/server/LocalServerPort.html": "r32",
+    "https://docs.spring.io/spring-boot/4.1/how-to/webserver.html#howto.webserver.discover-port": "r33",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/resttestclient/autoconfigure/AutoConfigureRestTestClient.html": "r34",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/web/servlet/client/assertj/RestTestClientResponse.html": "r35",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/web/reactive/server/WebTestClient.html": "r36",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/web/server/test/AutoConfigureWebServer.html": "r37",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/resttestclient/TestRestTemplate.html": "r38",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/web/servlet/client/RestTestClient.html": "r39",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/resttestclient/autoconfigure/RestTestClientBuilderCustomizer.html": "r40",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/web/servlet/client/RestTestClient.Builder.html": "r41",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webtestclient/autoconfigure/WebTestClientBuilderCustomizer.html": "r42",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/web/reactive/server/WebTestClient.Builder.html": "r43",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.management/javax/management/MBeanServer.html": "r44",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/tracing/test/autoconfigure/AutoConfigureTracing.html": "r45",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/metrics/test/autoconfigure/AutoConfigureMetrics.html": "r46",
+    "https://javadoc.io/doc/io.micrometer/micrometer-observation/1.17.1/io/micrometer/observation/ObservationRegistry.html": "r47",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/instrument/MeterRegistry.html": "r48",
+    "https://javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-trace/1.62.0/io/opentelemetry/sdk/trace/export/SpanExporter.html": "r49",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/tracing/autoconfigure/ConditionalOnEnabledTracingExport.html": "r50",
+    "https://javadoc.io/doc/io.micrometer/micrometer-tracing/1.7.1/io/micrometer/tracing/Tracer.html": "r51",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/context/bean/override/mockito/MockitoBean.html": "r52",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/context/bean/override/mockito/MockitoSpyBean.html": "r53",
+    "https://docs.spring.io/spring-framework/reference/7.0/testing/annotations/integration-spring/annotation-mockitobean.html": "r54",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/test-modules.html": "r55",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/autoconfigure/json/JsonTest.html": "r56",
+    "https://javadoc.io/doc/tools.jackson.core/jackson-databind/3.1.5/tools/jackson/databind/json/JsonMapper.html": "r57",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jackson/JacksonComponent.html": "r58",
+    "https://javadoc.io/doc/tools.jackson.core/jackson-databind/3.1.5/tools/jackson/databind/JacksonModule.html": "r59",
+    "https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.21.5/com/fasterxml/jackson/databind/ObjectMapper.html": "r60",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jackson2/JsonComponent.html": "r61",
+    "https://javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.21.5/com/fasterxml/jackson/databind/Module.html": "r62",
+    "https://docs.spring.io/spring-boot/4.1/appendix/test-auto-configuration/index.html": "r63",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/autoconfigure/json/AutoConfigureJsonTesters.html": "r64",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/json/JacksonTester.html": "r65",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/json/GsonTester.html": "r66",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/json/JsonbTester.html": "r67",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/json/BasicJsonTester.html": "r68",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/annotation/Autowired.html": "r69",
+    "https://junit.org/junit5/docs/6.0.3/api/org.junit.jupiter.api/org/junit/jupiter/api/BeforeEach.html": "r70",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/stereotype/Controller.html": "r71",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/bind/annotation/ControllerAdvice.html": "r72",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/convert/converter/Converter.html": "r73",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/convert/converter/GenericConverter.html": "r74",
+    "https://jakarta.ee/specifications/servlet/6.1/apidocs/jakarta.servlet/jakarta/servlet/Filter.html": "r75",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/servlet/HandlerInterceptor.html": "r76",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/servlet/config/annotation/WebMvcConfigurer.html": "r77",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webmvc/autoconfigure/WebMvcRegistrations.html": "r78",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/method/support/HandlerMethodArgumentResolver.html": "r79",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/stereotype/Component.html": "r80",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/ConfigurationProperties.html": "r81",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/EnableConfigurationProperties.html": "r82",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Import.html": "r83",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/web/servlet/assertj/MockMvcTester.html": "r84",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webmvc/test/autoconfigure/AutoConfigureMockMvc.html": "r85",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/function/client/WebClient.html": "r86",
+    "https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/WebDriver.html": "r87",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r88",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/config/annotation/web/WebSecurityConfigurer.html": "r89",
+    "https://docs.spring.io/spring-boot/4.1/how-to/testing.html#howto.testing.with-spring-security": "r90",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html#testing.spring-boot-applications.with-running-server": "r91",
+    "https://docs.spring.io/spring-framework/reference/7.0/web-reactive.html": "r92",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webflux/test/autoconfigure/WebFluxTest.html": "r93",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/config/WebFluxConfigurer.html": "r94",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/function/server/RouterFunction.html": "r95",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/web/server/SecurityWebFilterChain.html": "r96",
+    "https://docs.spring.io/spring-graphql/reference/2.0/testing.html#testing.graphqltester": "r97",
+    "https://docs.spring.io/spring-graphql/docs/2.0.x/api/org/springframework/graphql/test/tester/GraphQlTester.html": "r98",
+    "https://docs.spring.io/spring-graphql/docs/2.0.x/api/org/springframework/graphql/test/tester/ExecutionGraphQlServiceTester.html": "r99",
+    "https://docs.spring.io/spring-graphql/docs/2.0.x/api/org/springframework/graphql/test/tester/HttpGraphQlTester.html": "r100",
+    "https://docs.spring.io/spring-graphql/reference/2.0/controllers.html": "r101",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/graphql/test/autoconfigure/GraphQlTest.html": "r102",
+    "https://docs.spring.io/spring-graphql/docs/2.0.x/api/org/springframework/graphql/execution/RuntimeWiringConfigurer.html": "r103",
+    "https://docs.spring.io/spring-graphql/docs/2.0.x/api/org/springframework/graphql/execution/DataFetcherExceptionResolver.html": "r104",
+    "https://javadoc.io/doc/com.graphql-java/graphql-java/25.0/graphql/execution/instrumentation/Instrumentation.html": "r105",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/graphql/autoconfigure/GraphQlSourceBuilderCustomizer.html": "r106",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/graphql/test/autoconfigure/tester/AutoConfigureHttpGraphQlTester.html": "r107",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/cassandra/test/autoconfigure/DataCassandraTest.html": "r108",
+    "https://docs.spring.io/spring-data/cassandra/docs/5.1.x/api/org/springframework/data/cassandra/core/CassandraTemplate.html": "r109",
+    "https://docs.spring.io/spring-data/cassandra/docs/5.1.x/api/org/springframework/data/cassandra/core/mapping/Table.html": "r110",
+    "https://docs.spring.io/spring-boot/4.1/reference/data/nosql.html#data.nosql.cassandra": "r111",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/couchbase/test/autoconfigure/DataCouchbaseTest.html": "r112",
+    "https://docs.spring.io/spring-data/couchbase/docs/6.1.x/api/org/springframework/data/couchbase/core/CouchbaseTemplate.html": "r113",
+    "https://docs.spring.io/spring-data/couchbase/docs/6.1.x/api/org/springframework/data/couchbase/core/ReactiveCouchbaseTemplate.html": "r114",
+    "https://docs.spring.io/spring-data/couchbase/docs/6.1.x/api/org/springframework/data/couchbase/core/mapping/Document.html": "r115",
+    "https://docs.spring.io/spring-boot/4.1/reference/data/nosql.html#data.nosql.couchbase": "r116",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/elasticsearch/test/autoconfigure/DataElasticsearchTest.html": "r117",
+    "https://docs.spring.io/spring-data/elasticsearch/docs/6.1.x/api/org/springframework/data/elasticsearch/client/elc/ElasticsearchTemplate.html": "r118",
+    "https://docs.spring.io/spring-data/elasticsearch/docs/6.1.x/api/org/springframework/data/elasticsearch/annotations/Document.html": "r119",
+    "https://docs.spring.io/spring-boot/4.1/reference/data/nosql.html#data.nosql.elasticsearch": "r120",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/jpa/test/autoconfigure/DataJpaTest.html": "r121",
+    "https://jakarta.ee/specifications/persistence/3.2/apidocs/jakarta.persistence/jakarta/persistence/Entity.html": "r122",
+    "https://docs.spring.io/spring-framework/reference/7.0/testing/testcontext-framework/tx.html#testcontext-tx-enabling-transactions": "r123",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jpa/test/autoconfigure/TestEntityManager.html": "r124",
+    "https://jakarta.ee/specifications/persistence/3.2/apidocs/jakarta.persistence/jakarta/persistence/EntityManager.html": "r125",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jpa/test/autoconfigure/AutoConfigureTestEntityManager.html": "r126",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jdbc/core/JdbcTemplate.html": "r127",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jdbc/test/autoconfigure/AutoConfigureTestDatabase.html": "r128",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jdbc/test/autoconfigure/JdbcTest.html": "r129",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/jdbc/test/autoconfigure/DataJdbcTest.html": "r130",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html": "r131",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html#testing.spring-boot-applications.autoconfigured-spring-data-jpa": "r132",
+    "https://docs.spring.io/spring-data/jdbc/docs/4.1.x/api/org/springframework/data/jdbc/repository/config/AbstractJdbcConfiguration.html": "r133",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html#testing.spring-boot-applications.autoconfigured-jdbc": "r134",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/r2dbc/test/autoconfigure/DataR2dbcTest.html": "r135",
+    "https://docs.spring.io/spring-data/r2dbc/docs/4.1.x/api/org/springframework/data/r2dbc/core/R2dbcEntityTemplate.html": "r136",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jooq/test/autoconfigure/JooqTest.html": "r137",
+    "https://docs.spring.io/spring-boot/4.1/reference/data/sql.html#data.sql.jooq": "r138",
+    "https://www.jooq.org/javadoc/3.21.7/org/jooq/DSLContext.html": "r139",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/mongodb/test/autoconfigure/DataMongoTest.html": "r140",
+    "https://docs.spring.io/spring-data/mongodb/docs/5.1.x/api/org/springframework/data/mongodb/core/MongoTemplate.html": "r141",
+    "https://docs.spring.io/spring-data/mongodb/docs/5.1.x/api/org/springframework/data/mongodb/core/mapping/Document.html": "r142",
+    "https://docs.spring.io/spring-boot/4.1/reference/data/nosql.html#data.nosql.mongodb": "r143",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/neo4j/test/autoconfigure/DataNeo4jTest.html": "r144",
+    "https://docs.spring.io/spring-data/neo4j/docs/8.1.x/api/org/springframework/data/neo4j/core/schema/Node.html": "r145",
+    "https://docs.spring.io/spring-boot/4.1/reference/data/nosql.html#data.nosql.neo4j": "r146",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/redis/test/autoconfigure/DataRedisTest.html": "r147",
+    "https://docs.spring.io/spring-data/redis/docs/4.1.x/api/org/springframework/data/redis/core/RedisHash.html": "r148",
+    "https://docs.spring.io/spring-boot/4.1/reference/data/nosql.html#data.nosql.redis": "r149",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/ldap/test/autoconfigure/DataLdapTest.html": "r150",
+    "https://docs.spring.io/spring-ldap/docs/4.1.x/api/org/springframework/ldap/core/LdapTemplate.html": "r151",
+    "https://docs.spring.io/spring-ldap/docs/4.1.x/api/org/springframework/ldap/odm/annotations/Entry.html": "r152",
+    "https://docs.spring.io/spring-boot/4.1/reference/data/nosql.html#data.nosql.ldap": "r153",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/restclient/test/autoconfigure/RestClientTest.html": "r154",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/restclient/RestTemplateBuilder.html": "r155",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/client/RestClient.Builder.html": "r156",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/web/client/MockRestServiceServer.html": "r157",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/client/RestTemplate.html": "r158",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webclient/test/autoconfigure/WebClientTest.html": "r159",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/reactive/function/client/WebClient.Builder.html": "r160",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/restdocs/test/autoconfigure/AutoConfigureRestDocs.html": "r161",
+    "https://spring.io/projects/spring-restdocs": "r162",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/restdocs/test/autoconfigure/RestDocsMockMvcConfigurationCustomizer.html": "r163",
+    "https://docs.spring.io/spring-restdocs/docs/4.0.x/api/org/springframework/restdocs/mockmvc/RestDocumentationResultHandler.html": "r164",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/restdocs/test/autoconfigure/RestDocsWebTestClientConfigurationCustomizer.html": "r165",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webservices/test/autoconfigure/client/WebServiceClientTest.html": "r166",
+    "https://docs.spring.io/spring-ws/docs/5.0.x/api/org/springframework/ws/test/client/MockWebServiceServer.html": "r167",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webservices/client/WebServiceTemplateBuilder.html": "r168",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/webservices.html": "r169",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webservices/test/autoconfigure/server/WebServiceServerTest.html": "r170",
+    "https://docs.spring.io/spring-ws/docs/5.0.x/api/org/springframework/ws/test/server/MockWebServiceClient.html": "r171",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/ImportAutoConfiguration.html": "r172",
+    "https://docs.spring.io/spring-boot/4.1/how-to/testing.html#howto.testing.slice-tests": "r173",
+    "https://spockframework.org/spock/docs/2.4/modules.html#spring-module": "r174"
+  }
+}

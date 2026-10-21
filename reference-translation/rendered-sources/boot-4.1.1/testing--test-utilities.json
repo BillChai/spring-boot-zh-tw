@@ -1,0 +1,81 @@
+{
+  "page": "boot/testing--test-utilities.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/testing/test-utilities.html",
+  "version": "4.1.1",
+  "html_sha256": "5c85648bf5bf0707b6282282107f15b74d9d3c0361606bf4f4020d46a6cb5dde",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer\nimport org.springframework.test.context.ContextConfiguration\n\n@ContextConfiguration(classes = [Config::class], initializers = [ConfigDataApplicationContextInitializer::class])\nclass MyConfigFileTests {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;\nimport org.springframework.test.context.ContextConfiguration;\n\n@ContextConfiguration(classes = Config.class, initializers = ConfigDataApplicationContextInitializer.class)\nclass MyConfigFileTests {\n\n\t// ...\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.springframework.boot.test.util.TestPropertyValues\nimport org.springframework.mock.env.MockEnvironment\n\nclass MyEnvironmentTests {\n\n\t@Test\n\tfun testPropertySources() {\n\t\tval environment = MockEnvironment()\n\t\tTestPropertyValues.of(\"org=Spring\", \"name=Boot\").applyTo(environment)\n\t\tassertThat(environment.getProperty(\"name\")).isEqualTo(\"Boot\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.boot.test.util.TestPropertyValues;\nimport org.springframework.mock.env.MockEnvironment;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\nclass MyEnvironmentTests {\n\n\t@Test\n\tvoid testPropertySources() {\n\t\tMockEnvironment environment = new MockEnvironment();\n\t\tTestPropertyValues.of(\"org=Spring\", \"name=Boot\").applyTo(environment);\n\t\tassertThat(environment.getProperty(\"name\")).isEqualTo(\"Boot\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.junit.jupiter.api.extension.ExtendWith\nimport org.springframework.boot.test.system.CapturedOutput\nimport org.springframework.boot.test.system.OutputCaptureExtension\n\n@ExtendWith(OutputCaptureExtension::class)\nclass MyOutputCaptureTests {\n\n\t@Test\n\tfun testName(output: CapturedOutput?) {\n\t\tprintln(\"Hello World!\")\n\t\tassertThat(output).contains(\"World\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\nimport org.junit.jupiter.api.extension.ExtendWith;\n\nimport org.springframework.boot.test.system.CapturedOutput;\nimport org.springframework.boot.test.system.OutputCaptureExtension;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\n@ExtendWith(OutputCaptureExtension.class)\nclass MyOutputCaptureTests {\n\n\t@Test\n\tvoid testName(CapturedOutput output) {\n\t\tSystem.out.println(\"Hello World!\");\n\t\tassertThat(output).contains(\"World\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.springframework.boot.resttestclient.TestRestTemplate\nimport org.springframework.http.HttpStatus\n\nclass MyTests {\n\n\tprivate val template = TestRestTemplate()\n\n\t@Test\n\tfun testRequest() {\n\t\tval response = template.getForEntity(\"https://myhost.example.com/example\", String::class.java)\n\t\tassertThat(response.statusCode).isEqualTo(HttpStatus.OK)\n\t\t// Other assertions to verify the response\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.junit.jupiter.api.Test;\n\nimport org.springframework.boot.resttestclient.TestRestTemplate;\nimport org.springframework.http.HttpStatus;\nimport org.springframework.http.ResponseEntity;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\nclass MyTests {\n\n\tprivate final TestRestTemplate template = new TestRestTemplate();\n\n\t@Test\n\tvoid testRequest() {\n\t\tResponseEntity<String> response = this.template.getForEntity(\"https://myhost.example.com/example\",\n\t\t\t\tString.class);\n\t\tassertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);\n\t\t// Other assertions to verify the response\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.assertj.core.api.Assertions.assertThat\nimport org.junit.jupiter.api.Test\nimport org.springframework.beans.factory.annotation.Autowired\nimport org.springframework.boot.test.context.SpringBootTest\nimport org.springframework.boot.test.context.SpringBootTest.WebEnvironment\nimport org.springframework.boot.test.context.TestConfiguration\nimport org.springframework.boot.restclient.RestTemplateBuilder\nimport org.springframework.boot.resttestclient.TestRestTemplate\nimport org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate\nimport org.springframework.context.annotation.Bean\nimport org.springframework.http.HttpStatus\nimport java.time.Duration\n\n@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)\n@AutoConfigureTestRestTemplate\nclass MySpringBootTests(@Autowired val template: TestRestTemplate) {\n\n\t@Test\n\tfun testRequest() {\n\t\tval response = template.getForEntity(\"/example\", String::class.java)\n\t\tassertThat(response.statusCode).isEqualTo(HttpStatus.OK)\n\t\t// Other assertions to verify the response\n\t}\n\n\t@TestConfiguration(proxyBeanMethods = false)\n\tinternal class RestTemplateBuilderConfiguration {\n\n\t\t@Bean\n\t\tfun restTemplateBuilder(): RestTemplateBuilder {\n\t\t\treturn RestTemplateBuilder().connectTimeout(Duration.ofSeconds(1))\n\t\t\t\t.readTimeout(Duration.ofSeconds(1))\n\t\t}\n\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.time.Duration;\n\nimport org.junit.jupiter.api.Test;\n\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.restclient.RestTemplateBuilder;\nimport org.springframework.boot.resttestclient.TestRestTemplate;\nimport org.springframework.boot.resttestclient.autoconfigure.AutoConfigureTestRestTemplate;\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.boot.test.context.SpringBootTest.WebEnvironment;\nimport org.springframework.boot.test.context.TestConfiguration;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.http.HttpStatus;\nimport org.springframework.http.ResponseEntity;\n\nimport static org.assertj.core.api.Assertions.assertThat;\n\n@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)\n@AutoConfigureTestRestTemplate\nclass MySpringBootTests {\n\n\t@Autowired\n\tprivate TestRestTemplate template;\n\n\t@Test\n\tvoid testRequest() {\n\t\tResponseEntity<String> response = this.template.getForEntity(\"/example\", String.class);\n\t\tassertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);\n\t\t// Other assertions to verify the response\n\t}\n\n\t@TestConfiguration(proxyBeanMethods = false)\n\tstatic class RestTemplateBuilderConfiguration {\n\n\t\t@Bean\n\t\tRestTemplateBuilder restTemplateBuilder() {\n\t\t\treturn new RestTemplateBuilder().connectTimeout(Duration.ofSeconds(1)).readTimeout(Duration.ofSeconds(1));\n\t\t}\n\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Test Utilities",
+    "ConfigDataApplicationContextInitializer",
+    "TestPropertyValues",
+    "OutputCaptureExtension",
+    "TestRestTemplate"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/ConfigDataApplicationContextInitializer.html": "r1",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContextInitializer.html": "r2",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/SpringBootTest.html": "r3",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html": "r4",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/beans/factory/annotation/Value.html": "r5",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/support/PropertySourcesPlaceholderConfigurer.html": "r6",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/util/TestPropertyValues.html": "r7",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/ConfigurableEnvironment.html": "r8",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ConfigurableApplicationContext.html": "r9",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/system/OutputCaptureExtension.html": "r10",
+    "https://junit.org/junit5/docs/6.0.3/api/org.junit.jupiter.api/org/junit/jupiter/api/extension/Extension.html": "r11",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#out": "r12",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/System.html#err": "r13",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/system/CapturedOutput.html": "r14",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/resttestclient/TestRestTemplate.html": "r15",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/client/RestTemplate.html": "r16",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/http/ResponseEntity.html": "r17",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/web/servlet/client/RestTestClient.html": "r18",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html#testing.spring-boot-applications.with-mock-environment": "r19",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html#testing.spring-boot-applications.with-running-server": "r20",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/web/reactive/server/WebTestClient.html": "r21",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html#testing.spring-boot-applications.spring-webflux-tests": "r22",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/resttestclient/autoconfigure/AutoConfigureTestRestTemplate.html": "r23",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/restclient/RestTemplateBuilder.html": "r24"
+  }
+}

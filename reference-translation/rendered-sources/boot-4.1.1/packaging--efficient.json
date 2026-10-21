@@ -1,0 +1,24 @@
+{
+  "page": "boot/packaging--efficient.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/packaging/efficient.html",
+  "version": "4.1.1",
+  "html_sha256": "a28b500d938e21cee95f847e19e754a2febaa5f43086792210460c0a9a36c3f0",
+  "code_blocks": [
+    {
+      "language": "shell",
+      "text": "$ java -Djarmode=tools -jar my-app.jar extract"
+    },
+    {
+      "language": "shell",
+      "text": "$ java -jar my-app/my-app.jar"
+    }
+  ],
+  "headings": [
+    "Efficient Deployments",
+    "Unpacking the Executable jar"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/aot-cache.html#packaging.aot-cache.aot-cache": "r1",
+    "https://docs.spring.io/spring-boot/4.1/reference/packaging/aot-cache.html#packaging.aot-cache.cds": "r2"
+  }
+}

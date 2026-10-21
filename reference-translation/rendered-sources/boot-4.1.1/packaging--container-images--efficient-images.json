@@ -1,0 +1,20 @@
+{
+  "page": "boot/packaging--container-images--efficient-images.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/packaging/container-images/efficient-images.html",
+  "version": "4.1.1",
+  "html_sha256": "bf3ee2b6fec7dd66fa039d6b14577d5e0aa816ec2a031eaefc31b982df4e1c8f",
+  "code_blocks": [
+    {
+      "language": "yaml",
+      "text": "- \"dependencies\":\n  - BOOT-INF/lib/library1.jar\n  - BOOT-INF/lib/library2.jar\n- \"spring-boot-loader\":\n  - org/springframework/boot/loader/launch/JarLauncher.class\n  - ... <other classes>\n- \"snapshot-dependencies\":\n  - BOOT-INF/lib/library3-SNAPSHOT.jar\n- \"application\":\n  - META-INF/MANIFEST.MF\n  - BOOT-INF/classes/a/b/C.class"
+    }
+  ],
+  "headings": [
+    "Efficient Container Images",
+    "Layering Docker Images"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1/maven-plugin/packaging.html#packaging.layers": "r1",
+    "https://docs.spring.io/spring-boot/4.1/gradle-plugin/packaging.html#packaging-executable.configuring.layered-archives": "r2"
+  }
+}

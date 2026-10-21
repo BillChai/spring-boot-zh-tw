@@ -1,0 +1,4 @@
+[
+  "```shell\n$ java -Djarmode=tools -jar my-app.jar extract\n```",
+  "```shell\n$ java -jar my-app/my-app.jar\n```"
+]

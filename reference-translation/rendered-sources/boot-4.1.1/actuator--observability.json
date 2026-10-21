@@ -1,0 +1,130 @@
+{
+  "page": "boot/actuator--observability.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/actuator/observability.html",
+  "version": "4.1.1",
+  "html_sha256": "4ee19fc0549e0f38865550433acb89e0e24f9faebf36c298e86dad88889a7c80",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import io.micrometer.observation.Observation\nimport io.micrometer.observation.ObservationRegistry;\n\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyCustomObservation(private val observationRegistry: ObservationRegistry) {\n\n\tfun doSomething() {\n\t\tObservation.createNotStarted(\"doSomething\", observationRegistry)\n\t\t\t.lowCardinalityKeyValue(\"locale\", \"en-US\")\n\t\t\t.highCardinalityKeyValue(\"userId\", \"42\")\n\t\t\t.observe {\n\t\t\t\t// Execute business logic here\n\t\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.micrometer.observation.Observation;\nimport io.micrometer.observation.ObservationRegistry;\n\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyCustomObservation {\n\n\tprivate final ObservationRegistry observationRegistry;\n\n\tpublic MyCustomObservation(ObservationRegistry observationRegistry) {\n\t\tthis.observationRegistry = observationRegistry;\n\t}\n\n\tpublic void doSomething() {\n\t\tObservation.createNotStarted(\"doSomething\", this.observationRegistry)\n\t\t\t.lowCardinalityKeyValue(\"locale\", \"en-US\")\n\t\t\t.highCardinalityKeyValue(\"userId\", \"42\")\n\t\t\t.observe(() -> {\n\t\t\t\t// Execute business logic here\n\t\t\t});\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.core.task.support.ContextPropagatingTaskDecorator\n\n@Configuration(proxyBeanMethods = false)\nclass ContextPropagationConfiguration {\n\n\t@Bean\n\tfun contextPropagatingTaskDecorator(): ContextPropagatingTaskDecorator {\n\t\treturn ContextPropagatingTaskDecorator()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.core.task.support.ContextPropagatingTaskDecorator;\n\n@Configuration(proxyBeanMethods = false)\nclass ContextPropagationConfiguration {\n\n\t@Bean\n\tContextPropagatingTaskDecorator contextPropagatingTaskDecorator() {\n\t\treturn new ContextPropagatingTaskDecorator();\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "management.observations.key-values.region=us-east-1\nmanagement.observations.key-values.stack=prod"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  observations:\n    key-values:\n      region: \"us-east-1\"\n      stack: \"prod\""
+    },
+    {
+      "language": "properties",
+      "text": "management.observations.enable.denied.prefix=false\nmanagement.observations.enable.another.denied.prefix=false"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  observations:\n    enable:\n      denied:\n        prefix: false\n      another:\n        denied:\n          prefix: false"
+    },
+    {
+      "language": "kotlin",
+      "text": "import io.micrometer.observation.Observation.Context\nimport io.micrometer.observation.ObservationPredicate\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyObservationPredicate : ObservationPredicate {\n\n\toverride fun test(name: String, context: Context): Boolean {\n\t\treturn !name.contains(\"denied\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.micrometer.observation.Observation.Context;\nimport io.micrometer.observation.ObservationPredicate;\n\nimport org.springframework.stereotype.Component;\n\n@Component\nclass MyObservationPredicate implements ObservationPredicate {\n\n\t@Override\n\tpublic boolean test(String name, Context context) {\n\t\treturn !name.contains(\"denied\");\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import io.opentelemetry.api.OpenTelemetry;\nimport io.opentelemetry.sdk.autoconfigure.AutoConfiguredOpenTelemetrySdk;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\nclass AutoConfiguredOpenTelemetrySdkConfiguration {\n\n\t@Bean\n\tOpenTelemetry autoConfiguredOpenTelemetrySdk() {\n\t\treturn AutoConfiguredOpenTelemetrySdk.initialize().getOpenTelemetrySdk();\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.time.Duration;\n\nimport io.opentelemetry.exporter.otlp.http.metrics.OtlpHttpMetricExporter;\nimport io.opentelemetry.sdk.metrics.SdkMeterProvider;\nimport io.opentelemetry.sdk.metrics.export.MetricExporter;\nimport io.opentelemetry.sdk.metrics.export.MetricReader;\nimport io.opentelemetry.sdk.metrics.export.PeriodicMetricReader;\nimport io.opentelemetry.sdk.resources.Resource;\n\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\n\n@Configuration(proxyBeanMethods = false)\nclass OpenTelemetryMetricsConfiguration {\n\n\t@Bean\n\tOtlpHttpMetricExporter metricExporter() {\n\t\tString endpoint = \"http://localhost:4318/v1/metrics\";\n\t\treturn OtlpHttpMetricExporter.builder().setEndpoint(endpoint).build();\n\t}\n\n\t@Bean\n\tPeriodicMetricReader metricReader(MetricExporter exporter) {\n\t\tDuration interval = Duration.ofMinutes(1);\n\t\treturn PeriodicMetricReader.builder(exporter).setInterval(interval).build();\n\t}\n\n\t@Bean\n\tSdkMeterProvider meterProvider(Resource resource, MetricReader metricReader) {\n\t\treturn SdkMeterProvider.builder().registerMetricReader(metricReader).setResource(resource).build();\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Observability",
+    "Context Propagation",
+    "Common Tags",
+    "Preventing Observations",
+    "Micrometer Observation Annotations support",
+    "OpenTelemetry Support",
+    "Disabling OpenTelemetry",
+    "Environment variables",
+    "General",
+    "Metrics Exporter",
+    "Traces Exporter",
+    "Logs Exporter",
+    "Resource",
+    "Unsupported Environment Variables",
+    "Logging",
+    "Metrics",
+    "Metrics via the OpenTelemetry API and SDK",
+    "Tracing"
+  ],
+  "links": {
+    "https://docs.micrometer.io/micrometer/reference/1.17/observation": "r1",
+    "https://javadoc.io/doc/io.micrometer/micrometer-observation/1.17.1/io/micrometer/observation/ObservationRegistry.html": "r2",
+    "https://javadoc.io/doc/io.micrometer/micrometer-observation/1.17.1/io/micrometer/observation/ObservationPredicate.html": "r3",
+    "https://javadoc.io/doc/io.micrometer/micrometer-observation/1.17.1/io/micrometer/observation/GlobalObservationConvention.html": "r4",
+    "https://javadoc.io/doc/io.micrometer/micrometer-observation/1.17.1/io/micrometer/observation/ObservationFilter.html": "r5",
+    "https://javadoc.io/doc/io.micrometer/micrometer-observation/1.17.1/io/micrometer/observation/ObservationHandler.html": "r6",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/observation/autoconfigure/ObservationRegistryCustomizer.html": "r7",
+    "https://github.com/jdbc-observations/datasource-micrometer": "r8",
+    "https://jdbc-observations.github.io/datasource-micrometer/docs/current/docs/html/": "r9",
+    "https://github.com/micrometer-metrics/context-propagation": "r10",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/ThreadLocal.html": "r11",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/scheduling/annotation/Async.html": "r12",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/task/AsyncTaskExecutor.html": "r13",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/task/support/ContextPropagatingTaskDecorator.html": "r14",
+    "https://javadoc.io/doc/io.micrometer/micrometer-observation/1.17.1/io/micrometer/observation/annotation/Observed.html": "r15",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/annotation/Timed.html": "r16",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/annotation/Counted.html": "r17",
+    "https://javadoc.io/doc/io.micrometer/micrometer-core/1.17.1/io/micrometer/core/aop/MeterTag.html": "r18",
+    "https://javadoc.io/doc/io.micrometer/micrometer-tracing/1.7.1/io/micrometer/tracing/annotation/NewSpan.html": "r19",
+    "https://docs.micrometer.io/micrometer/reference/1.17/concepts/timers.html#_the_timed_annotation": "r20",
+    "https://docs.micrometer.io/micrometer/reference/1.17/observation/components.html#micrometer-observation-annotations": "r21",
+    "https://docs.micrometer.io/tracing/reference/1.7/api.html#_aspect_oriented_programming": "r22",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.supported.spring-data-repository": "r23",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.supported.spring-mvc": "r24",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/observability.html#actuator.observability.preventing-observations": "r25",
+    "https://opentelemetry.io/": "r26",
+    "https://opentelemetry.io/docs/zero-code/java/agent/": "r27",
+    "https://opentelemetry.io/docs/zero-code/java/spring-boot-starter/": "r28",
+    "https://docs.spring.io/spring-framework/reference/7.0/integration/observability.html": "r29",
+    "https://javadoc.io/doc/io.opentelemetry/opentelemetry-api/1.62.0/io/opentelemetry/api/OpenTelemetry.html": "r30",
+    "https://javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-trace/1.62.0/io/opentelemetry/sdk/trace/SdkTracerProvider.html": "r31",
+    "https://javadoc.io/doc/io.opentelemetry/opentelemetry-context/1.62.0/io/opentelemetry/context/propagation/ContextPropagators.html": "r32",
+    "https://javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-logs/1.62.0/io/opentelemetry/sdk/logs/SdkLoggerProvider.html": "r33",
+    "https://javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-metrics/1.62.0/io/opentelemetry/sdk/metrics/SdkMeterProvider.html": "r34",
+    "https://javadoc.io/doc/io.opentelemetry/opentelemetry-sdk-common/1.62.0/io/opentelemetry/sdk/resources/Resource.html": "r35",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/tracing.html": "r36",
+    "https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/#general-sdk-configuration": "r37",
+    "https://opentelemetry.io/docs/specs/otel/configuration/sdk-environment-variables/": "r38",
+    "http://collector:4318/v1/traces": "r39",
+    "https://opentelemetry.io/docs/languages/java/configuration/#zero-code-sdk-autoconfigure": "r40",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/opentelemetry/autoconfigure/logging/OpenTelemetryLoggingAutoConfiguration.html": "r41",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/opentelemetry/autoconfigure/logging/otlp/OtlpLoggingAutoConfiguration.html": "r42",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/opentelemetry/autoconfigure/logging/otlp/OtlpHttpLogRecordExporterBuilderCustomizer.html": "r43",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/opentelemetry/autoconfigure/logging/otlp/OtlpGrpcLogRecordExporterBuilderCustomizer.html": "r44",
+    "https://javadoc.io/doc/io.opentelemetry/opentelemetry-exporter-otlp/1.62.0/io/opentelemetry/exporter/otlp/http/logs/OtlpHttpLogRecordExporter.html": "r45",
+    "https://javadoc.io/doc/io.opentelemetry/opentelemetry-exporter-otlp/1.62.0/io/opentelemetry/exporter/otlp/logs/OtlpGrpcLogRecordExporter.html": "r46",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/loggers.html#actuator.loggers.opentelemetry": "r47",
+    "https://javadoc.io/doc/io.micrometer/micrometer-registry-otlp/1.17.1/io/micrometer/registry/otlp/OtlpMeterRegistry.html": "r48",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/metrics.html#actuator.metrics.export.otlp": "r49",
+    "https://javadoc.io/doc/io.opentelemetry/opentelemetry-api/1.62.0/io/opentelemetry/api/metrics/MeterProvider.html": "r50",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/tracing/opentelemetry/autoconfigure/OpenTelemetryTracingAutoConfiguration.html": "r51",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/tracing/opentelemetry/autoconfigure/otlp/OtlpTracingAutoConfiguration.html": "r52"
+  }
+}

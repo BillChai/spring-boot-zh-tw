@@ -1,0 +1,81 @@
+{
+  "page": "boot/features--kotlin.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/features/kotlin.html",
+  "version": "4.1.1",
+  "html_sha256": "38598d0a81fa785d702a71927c92f1880852f399ebe82ceafb9137ecd950949a",
+  "code_blocks": [
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.autoconfigure.SpringBootApplication\nimport org.springframework.boot.runApplication\n\n@SpringBootApplication\nclass MyApplication\n\nfun main(args: Array<String>) {\n\trunApplication<MyApplication>(*args)\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "runApplication<MyApplication>(*args) {\n\tsetBannerMode(OFF)\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "@ConfigurationProperties(\"example.kotlin\")\ndata class KotlinExampleProperties(\n\t\tval name: String,\n\t\tval description: String,\n\t\tval myService: MyService\n) {\n\n\tdata class MyService(\n\t\t\tval apiToken: String,\n\t\t\tval uri: URI\n\t)\n}"
+    }
+  ],
+  "headings": [
+    "Kotlin Support",
+    "Requirements",
+    "Null-safety",
+    "Kotlin API",
+    "runApplication",
+    "Extensions",
+    "Dependency Management",
+    "@ConfigurationProperties",
+    "Testing",
+    "Resources",
+    "Further Reading",
+    "Examples"
+  ],
+  "links": {
+    "https://kotlinlang.org": "r1",
+    "https://kotlinlang.org/docs/reference/java-interop.html": "r2",
+    "https://docs.spring.io/spring-framework/reference/7.0/languages/kotlin.html": "r3",
+    "https://spring.io/guides/tutorials/spring-boot-kotlin/": "r4",
+    "https://start.spring.io/#!language=kotlin": "r5",
+    "https://slack.kotlinlang.org/": "r6",
+    "https://stackoverflow.com/questions/tagged/spring+kotlin": "r7",
+    "https://kotlinlang.org/docs/whatsnew22.html#new-defaulting-rules-for-use-site-annotation-targets": "r8",
+    "https://discuss.kotlinlang.org/t/classes-final-by-default/166": "r9",
+    "https://kotlinlang.org/docs/reference/compiler-plugins.html#spring-support": "r10",
+    "https://github.com/FasterXML/jackson-module-kotlin": "r11",
+    "https://kotlinlang.org/docs/reference/null-safety.html": "r12",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html": "r13",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html": "r14",
+    "https://www.baeldung.com/kotlin-null-safety": "r15",
+    "https://docs.spring.io/spring-framework/reference/7.0/core/null-safety.html": "r16",
+    "https://jspecify.dev/": "r17",
+    "https://kotlinlang.org/docs/reference/extensions.html": "r18",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/resttestclient/TestRestTemplate.html": "r19",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/client/RestOperations.html": "r20",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/ConfigurationProperties.html": "r21",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/external-config.html#features.external-config.typesafe-configuration-properties.constructor-binding": "r22",
+    "https://docs.spring.io/spring-boot/4.1/specification/configuration-metadata/annotation-processor.html": "r23",
+    "https://kotlinlang.org/docs/reference/kapt.html": "r24",
+    "https://junit.org/junit5/docs/6.0.3/api/org.junit.jupiter.api/org/junit/jupiter/api/BeforeAll.html": "r25",
+    "https://junit.org/junit5/docs/6.0.3/api/org.junit.jupiter.api/org/junit/jupiter/api/AfterAll.html": "r26",
+    "https://mockk.io/": "r27",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/context/bean/override/mockito/MockitoSpyBean.html": "r28",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/spring-boot-applications.html#testing.spring-boot-applications.mocking-beans": "r29",
+    "https://github.com/Ninja-Squad/springmockk": "r30",
+    "https://kotlinlang.org/docs/reference": "r31",
+    "https://kotlinlang.slack.com/": "r32",
+    "https://try.kotlinlang.org/": "r33",
+    "https://blog.jetbrains.com/kotlin/": "r34",
+    "https://kotlin.link/": "r35",
+    "https://spring.io/blog/2016/02/15/developing-spring-boot-applications-with-kotlin": "r36",
+    "https://spring.io/blog/2016/03/20/a-geospatial-messenger-with-kotlin-spring-boot-and-postgresql": "r37",
+    "https://spring.io/blog/2017/01/04/introducing-kotlin-support-in-spring-framework-5-0": "r38",
+    "https://spring.io/blog/2017/08/01/spring-framework-5-kotlin-apis-the-functional-way": "r39",
+    "https://github.com/sdeleuze/spring-boot-kotlin-demo": "r40",
+    "https://github.com/mixitconf/mixit": "r41",
+    "https://github.com/sdeleuze/spring-kotlin-fullstack": "r42",
+    "https://github.com/spring-petclinic/spring-petclinic-kotlin": "r43",
+    "https://github.com/sdeleuze/spring-kotlin-deepdive": "r44",
+    "https://github.com/sdeleuze/spring-boot-coroutines-demo": "r45"
+  }
+}

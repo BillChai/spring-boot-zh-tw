@@ -1,0 +1,8 @@
+[
+  "```properties\nspring.batch.jdbc.table-prefix=CUSTOM_\n```",
+  "```yaml\nspring:\n  batch:\n    jdbc:\n      table-prefix: \"CUSTOM_\"\n```",
+  "```properties\nspring.batch.data.mongodb.schema.initialize=true\n```",
+  "```yaml\nspring:\n  batch:\n    data:\n      mongodb:\n        schema:\n          initialize: true\n```",
+  "```properties\nspring.batch.job.enabled=false\n```",
+  "```yaml\nspring:\n  batch:\n    job:\n      enabled: false\n```"
+]

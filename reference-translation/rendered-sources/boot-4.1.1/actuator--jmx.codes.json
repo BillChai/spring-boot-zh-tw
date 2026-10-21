@@ -1,0 +1,6 @@
+[
+  "```properties\nspring.jmx.unique-names=true\nmanagement.endpoints.jmx.domain=com.example.myapp\n```",
+  "```yaml\nspring:\n  jmx:\n    unique-names: true\nmanagement:\n  endpoints:\n    jmx:\n      domain: \"com.example.myapp\"\n```",
+  "```properties\nmanagement.endpoints.jmx.exposure.exclude=*\n```",
+  "```yaml\nmanagement:\n  endpoints:\n    jmx:\n      exposure:\n        exclude: \"*\"\n```"
+]

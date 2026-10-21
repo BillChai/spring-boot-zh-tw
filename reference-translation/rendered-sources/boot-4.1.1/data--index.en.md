@@ -1,0 +1,3 @@
+# Data
+
+Spring Boot integrates with a number of data technologies, both SQL and NoSQL.

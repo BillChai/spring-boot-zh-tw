@@ -1,0 +1,429 @@
+{
+  "page": "boot/actuator--endpoints.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/actuator/endpoints.html",
+  "version": "4.1.1",
+  "html_sha256": "b9d3d7fa6cbeec0ab48af5ec49a584300885162d9375de53db93fe49c2949f5e",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "management.endpoint.shutdown.access=unrestricted"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoint:\n    shutdown:\n      access: unrestricted"
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoints.access.default=none\nmanagement.endpoint.loggers.access=read-only"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoints:\n    access:\n      default: none\n  endpoint:\n    loggers:\n      access: read-only"
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoints.jmx.exposure.include=health,info"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoints:\n    jmx:\n      exposure:\n        include: \"health,info\""
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoints.web.exposure.include=*\nmanagement.endpoints.web.exposure.exclude=env,beans"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoints:\n    web:\n      exposure:\n        include: \"*\"\n        exclude: \"env,beans\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.security.autoconfigure.actuate.web.servlet.EndpointRequest\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.security.config.Customizer.withDefaults\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity\nimport org.springframework.security.web.SecurityFilterChain\n\n@Configuration(proxyBeanMethods = false)\nclass MySecurityConfiguration {\n\n\t@Bean\n\tfun securityFilterChain(http: HttpSecurity): SecurityFilterChain {\n\t\thttp.securityMatcher(EndpointRequest.toAnyEndpoint()).authorizeHttpRequests { requests ->\n\t\t\trequests.anyRequest().hasRole(\"ENDPOINT_ADMIN\")\n\t\t}\n\t\thttp.httpBasic(withDefaults())\n\t\treturn http.build()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.security.autoconfigure.actuate.web.servlet.EndpointRequest;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity;\nimport org.springframework.security.web.SecurityFilterChain;\n\nimport static org.springframework.security.config.Customizer.withDefaults;\n\n@Configuration(proxyBeanMethods = false)\npublic class MySecurityConfiguration {\n\n\t@Bean\n\tpublic SecurityFilterChain securityFilterChain(HttpSecurity http) {\n\t\thttp.securityMatcher(EndpointRequest.toAnyEndpoint());\n\t\thttp.authorizeHttpRequests((requests) -> requests.anyRequest().hasRole(\"ENDPOINT_ADMIN\"));\n\t\thttp.httpBasic(withDefaults());\n\t\treturn http.build();\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoints.web.exposure.include=*"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoints:\n    web:\n      exposure:\n        include: \"*\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.security.autoconfigure.actuate.web.servlet.EndpointRequest\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity\nimport org.springframework.security.web.SecurityFilterChain\n\n@Configuration(proxyBeanMethods = false)\nclass MySecurityConfiguration {\n\n\t@Bean\n\tfun securityFilterChain(http: HttpSecurity): SecurityFilterChain {\n\t\thttp.securityMatcher(EndpointRequest.toAnyEndpoint()).authorizeHttpRequests { requests ->\n\t\t\trequests.anyRequest().permitAll()\n\t\t}\n\t\treturn http.build()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.security.autoconfigure.actuate.web.servlet.EndpointRequest;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.security.config.annotation.web.builders.HttpSecurity;\nimport org.springframework.security.web.SecurityFilterChain;\n\n@Configuration(proxyBeanMethods = false)\npublic class MySecurityConfiguration {\n\n\t@Bean\n\tpublic SecurityFilterChain securityFilterChain(HttpSecurity http) {\n\t\thttp.securityMatcher(EndpointRequest.toAnyEndpoint());\n\t\thttp.authorizeHttpRequests((requests) -> requests.anyRequest().permitAll());\n\t\treturn http.build();\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoint.beans.cache.time-to-live=10s"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoint:\n    beans:\n      cache:\n        time-to-live: \"10s\""
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoint.env.show-values=when-authorized\nmanagement.endpoint.env.roles=admin"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoint:\n    env:\n      show-values: when-authorized\n      roles: \"admin\""
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoints.web.discovery.enabled=false"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoints:\n    web:\n      discovery:\n        enabled: false"
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoints.web.cors.allowed-origins=https://example.com\nmanagement.endpoints.web.cors.allowed-methods=GET,POST"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoints:\n    web:\n      cors:\n        allowed-origins: \"https://example.com\"\n        allowed-methods: \"GET,POST\""
+    },
+    {
+      "language": "kotlin",
+      "text": "\t@ReadOperation\n\tfun getData(): CustomData {\n\t\treturn CustomData(\"test\", 5)\n\t}"
+    },
+    {
+      "language": "java",
+      "text": "\t@ReadOperation\n\tpublic CustomData getData() {\n\t\treturn new CustomData(\"test\", 5);\n\t}"
+    },
+    {
+      "language": "json",
+      "text": "{\n\t\"name\": \"test\",\n\t\"counter\": 42\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "\t@WriteOperation\n\tfun updateData(name: String?, counter: Int) {\n\t\t// injects \"test\" and 42\n\t}"
+    },
+    {
+      "language": "java",
+      "text": "\t@WriteOperation\n\tpublic void updateData(String name, int counter) {\n\t\t// injects \"test\" and 42\n\t}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.health.contributor.Health\nimport org.springframework.boot.health.contributor.HealthIndicator\nimport org.springframework.stereotype.Component\n\n@Component\nclass MyHealthIndicator : HealthIndicator {\n\n\toverride fun health(): Health {\n\t\tval errorCode = check()\n\t\tif (errorCode != 0) {\n\t\t\treturn Health.down().withDetail(\"Error Code\", errorCode).build()\n\t\t}\n\t\treturn Health.up().build()\n\t}\n\n\tprivate fun check(): Int {\n\t\t// perform some specific health check\n\t\treturn  ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.health.contributor.Health;\nimport org.springframework.boot.health.contributor.HealthIndicator;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyHealthIndicator implements HealthIndicator {\n\n\t@Override\n\tpublic Health health() {\n\t\tint errorCode = check();\n\t\tif (errorCode != 0) {\n\t\t\treturn Health.down().withDetail(\"Error Code\", errorCode).build();\n\t\t}\n\t\treturn Health.up().build();\n\t}\n\n\tprivate int check() {\n\t\t// perform some specific health check\n\t\treturn ...\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoint.health.status.order=fatal,down,out-of-service,unknown,up"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoint:\n    health:\n      status:\n        order: \"fatal,down,out-of-service,unknown,up\""
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoint.health.status.http-mapping.down=503\nmanagement.endpoint.health.status.http-mapping.fatal=503\nmanagement.endpoint.health.status.http-mapping.out-of-service=503"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoint:\n    health:\n      status:\n        http-mapping:\n          down: 503\n          fatal: 503\n          out-of-service: 503"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.health.contributor.Health\nimport org.springframework.boot.health.contributor.ReactiveHealthIndicator\nimport org.springframework.stereotype.Component\nimport reactor.core.publisher.Mono\n\n@Component\nclass MyReactiveHealthIndicator : ReactiveHealthIndicator {\n\n\toverride fun health(): Mono<Health> {\n\t\treturn doHealthCheck().onErrorResume { exception: Throwable ->\n\t\t\tMono.just(Health.Builder().down(exception).build())\n\t\t}\n\t}\n\n\tprivate fun doHealthCheck(): Mono<Health> {\n\t\t// perform some specific health check\n\t\treturn  ...\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import reactor.core.publisher.Mono;\n\nimport org.springframework.boot.health.contributor.Health;\nimport org.springframework.boot.health.contributor.ReactiveHealthIndicator;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyReactiveHealthIndicator implements ReactiveHealthIndicator {\n\n\t@Override\n\tpublic Mono<Health> health() {\n\t\treturn doHealthCheck().onErrorResume((exception) ->\n\t\t\tMono.just(new Health.Builder().down(exception).build()));\n\t}\n\n\tprivate Mono<Health> doHealthCheck() {\n\t\t// perform some specific health check\n\t\treturn ...\n\t}\n\n}"
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoint.health.group.custom.include=db"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoint:\n    health:\n      group:\n        custom:\n          include: \"db\""
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoint.health.group.custom.exclude=db"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoint:\n    health:\n      group:\n        custom:\n          exclude: \"db\""
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoint.health.group.custom.show-details=when-authorized\nmanagement.endpoint.health.group.custom.roles=admin\nmanagement.endpoint.health.group.custom.status.order=fatal,up\nmanagement.endpoint.health.group.custom.status.http-mapping.fatal=500\nmanagement.endpoint.health.group.custom.status.http-mapping.out-of-service=500"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoint:\n    health:\n      group:\n        custom:\n          show-details: \"when-authorized\"\n          roles: \"admin\"\n          status:\n            order: \"fatal,up\"\n            http-mapping:\n              fatal: 500\n              out-of-service: 500"
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoint.health.group.custom.include=\"test/primary\"\nmanagement.endpoint.health.group.custom.exclude=\"test/primary/b\""
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoint.health.group.live.additional-path=\"server:/healthz\""
+    },
+    {
+      "language": "yaml",
+      "text": "livenessProbe:\n  httpGet:\n    path: \"/actuator/health/liveness\"\n    port: <actuator-port>\n  failureThreshold: ...\n  periodSeconds: ...\n\nreadinessProbe:\n  httpGet:\n    path: \"/actuator/health/readiness\"\n    port: <actuator-port>\n  failureThreshold: ...\n  periodSeconds: ..."
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoint.health.probes.add-additional-paths=true"
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoint.health.group.readiness.include=readinessState,customCheck"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoint:\n    health:\n      group:\n        readiness:\n          include: \"readinessState,customCheck\""
+    },
+    {
+      "language": "properties",
+      "text": "info.app.encoding=UTF-8\ninfo.app.java.source=17\ninfo.app.java.target=17"
+    },
+    {
+      "language": "yaml",
+      "text": "info:\n  app:\n    encoding: \"UTF-8\"\n    java:\n      source: \"17\"\n      target: \"17\""
+    },
+    {
+      "language": "properties",
+      "text": "[email protected]@\n[email protected]@\n[email protected]@"
+    },
+    {
+      "language": "yaml",
+      "text": "info:\n  app:\n    encoding: \"@project.build.sourceEncoding@\"\n    java:\n      source: \"@java.version@\"\n      target: \"@java.version@\""
+    },
+    {
+      "language": "properties",
+      "text": "management.info.git.mode=full"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  info:\n    git:\n      mode: \"full\""
+    },
+    {
+      "language": "properties",
+      "text": "management.info.git.enabled=false"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  info:\n    git:\n      enabled: false"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.actuate.info.Info\nimport org.springframework.boot.actuate.info.InfoContributor\nimport org.springframework.stereotype.Component\nimport java.util.Collections\n\n@Component\nclass MyInfoContributor : InfoContributor {\n\n\toverride fun contribute(builder: Info.Builder) {\n\t\tbuilder.withDetail(\"example\", Collections.singletonMap(\"key\", \"value\"))\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.util.Collections;\n\nimport org.springframework.boot.actuate.info.Info;\nimport org.springframework.boot.actuate.info.InfoContributor;\nimport org.springframework.stereotype.Component;\n\n@Component\npublic class MyInfoContributor implements InfoContributor {\n\n\t@Override\n\tpublic void contribute(Info.Builder builder) {\n\t\tbuilder.withDetail(\"example\", Collections.singletonMap(\"key\", \"value\"));\n\t}\n\n}"
+    },
+    {
+      "language": "json",
+      "text": "{\n\t\"example\": {\n\t\t\"key\" : \"value\"\n\t}\n}"
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoint.sbom.additional.system.location=optional:file:/system.spdx.json\nmanagement.endpoint.sbom.additional.system.media-type=application/spdx+json"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoint:\n    sbom:\n      additional:\n        system:\n          location: \"optional:file:/system.spdx.json\"\n          media-type: \"application/spdx+json\""
+    }
+  ],
+  "headings": [
+    "Endpoints",
+    "Controlling Access to Endpoints",
+    "Limiting Access",
+    "Exposing Endpoints",
+    "Security",
+    "Cross Site Request Forgery Protection",
+    "Configuring Endpoints",
+    "Sanitize Sensitive Values",
+    "Hypermedia for Actuator Web Endpoints",
+    "CORS Support",
+    "JSON",
+    "Implementing Custom Endpoints",
+    "Receiving Input",
+    "Input Type Conversion",
+    "Custom Web Endpoints",
+    "Web Endpoint Request Predicates",
+    "Path",
+    "HTTP method",
+    "Consumes",
+    "Produces",
+    "Web Endpoint Response Status",
+    "Web Endpoint Range Requests",
+    "Web Endpoint Security",
+    "Health Information",
+    "Auto-configured HealthIndicators",
+    "Writing Custom HealthIndicators",
+    "Reactive Health Indicators",
+    "Auto-configured ReactiveHealthIndicators",
+    "Health Groups",
+    "DataSource Health",
+    "Kubernetes Probes",
+    "Checking External State With Kubernetes Probes",
+    "Application Lifecycle and Probe States",
+    "Application Information",
+    "Auto-configured InfoContributors",
+    "Custom Application Information",
+    "Git Commit Information",
+    "Build Information",
+    "Java Information",
+    "OS Information",
+    "Process Information",
+    "SSL Information",
+    "Writing Custom InfoContributors",
+    "Software Bill of Materials (SBOM)",
+    "Other SBOM formats",
+    "Additional SBOMs"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/endpoints.html#actuator.endpoints.controlling-access": "r1",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/endpoints.html#actuator.endpoints.exposing": "r2",
+    "https://docs.spring.io/spring-boot/4.1/api/rest/actuator/index.html": "r3",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/audit/AuditEventRepository.html": "r4",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/properties/ConfigurationProperties.html": "r5",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/endpoints.html#actuator.endpoints.sanitization": "r6",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/ConfigurableEnvironment.html": "r7",
+    "https://javadoc.io/doc/org.flywaydb/flyway-core/12.4.0/org/flywaydb/core/Flyway.html": "r8",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/web/exchanges/HttpExchangeRepository.html": "r9",
+    "https://javadoc.io/doc/org.liquibase/liquibase-core/5.0.3/liquibase/Liquibase.html": "r10",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/bind/annotation/RequestMapping.html": "r11",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/spring-application.html#features.spring-application.startup-tracking": "r12",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/metrics/ApplicationStartup.html": "r13",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/SpringApplication.html": "r14",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/context/metrics/buffering/BufferingApplicationStartup.html": "r15",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/annotation/Endpoint.html": "r16",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/jmx/annotation/JmxEndpoint.html": "r17",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/web/annotation/WebEndpoint.html": "r18",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/annotation/ReadOperation.html": "r19",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/web/annotation/ControllerEndpoint.html": "r20",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/web/annotation/RestControllerEndpoint.html": "r21",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/web/annotation/ServletEndpoint.html": "r22",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/endpoints.html#actuator.endpoints.security": "r23",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/EndpointFilter.html": "r24",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/web/SecurityFilterChain.html": "r25",
+    "https://docs.spring.io/spring-security/reference/7.1/api/java/org/springframework/security/web/util/matcher/RequestMatcher.html": "r26",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/security/autoconfigure/actuate/web/servlet/EndpointRequest.html": "r27",
+    "https://docs.spring.io/spring-security/reference/7.1/features/exploits/csrf.html": "r28",
+    "https://docs.spring.io/spring-boot/4.1/how-to/actuator.html#howto.actuator.customizing-sanitization": "r29",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/SanitizingFunction.html": "r30",
+    "https://en.wikipedia.org/wiki/Cross-origin_resource_sharing": "r31",
+    "https://www.w3.org/TR/cors/": "r32",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/autoconfigure/endpoint/web/CorsEndpointProperties.html": "r33",
+    "https://javadoc.io/doc/tools.jackson.core/jackson-databind/3.1.5/tools/jackson/databind/json/JsonMapper.html": "r34",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/jackson/EndpointJsonMapper.html": "r35",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r36",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/annotation/WriteOperation.html": "r37",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/annotation/DeleteOperation.html": "r38",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/web/annotation/EndpointWebExtension.html": "r39",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/jmx/annotation/EndpointJmxExtension.html": "r40",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/stereotype/Controller.html": "r41",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/web/bind/annotation/RestController.html": "r42",
+    "https://jspecify.dev/docs/api/org/jspecify/annotations/Nullable.html": "r43",
+    "https://javadoc.io/doc/org.liquibase/liquibase-core/5.0.3/liquibase/report/CustomData.html": "r44",
+    "https://docs.spring.io/spring-framework/reference/7.0/languages/kotlin/classes-interfaces.html": "r45",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/convert/ApplicationConversionService.html": "r46",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/convert/converter/Converter.html": "r47",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/convert/converter/GenericConverter.html": "r48",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/annotation/EndpointConverter.html": "r49",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/annotation/Selector.html": "r50",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Void.html": "r51",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/io/Resource.html": "r52",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/Principal.html": "r53",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/SecurityContext.html": "r54",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/registry/HealthContributorRegistry.html": "r55",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/contributor/HealthContributor.html": "r56",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html": "r57",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/contributor/HealthIndicator.html": "r58",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/contributor/CompositeHealthContributor.html": "r59",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/contributor/Status.html": "r60",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/actuate/endpoint/StatusAggregator.html": "r61",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/cassandra/health/CassandraDriverHealthIndicator.html": "r62",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/couchbase/health/CouchbaseHealthIndicator.html": "r63",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jdbc/health/DataSourceHealthIndicator.html": "r64",
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html": "r65",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/application/DiskSpaceHealthIndicator.html": "r66",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/elasticsearch/health/ElasticsearchRestClientHealthIndicator.html": "r67",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/hazelcast/health/HazelcastHealthIndicator.html": "r68",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jms/health/JmsHealthIndicator.html": "r69",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/ldap/health/LdapHealthIndicator.html": "r70",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/mail/health/MailHealthIndicator.html": "r71",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/mongodb/health/MongoHealthIndicator.html": "r72",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/neo4j/health/Neo4jHealthIndicator.html": "r73",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/contributor/PingHealthIndicator.html": "r74",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/amqp/health/RabbitHealthIndicator.html": "r75",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/redis/health/DataRedisHealthIndicator.html": "r76",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/application/SslHealthIndicator.html": "r77",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/application/LivenessStateHealthIndicator.html": "r78",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/application/ReadinessStateHealthIndicator.html": "r79",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/contributor/Health.html": "r80",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/actuate/endpoint/HttpCodeStatusMapper.html": "r81",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/contributor/ReactiveHealthContributor.html": "r82",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/registry/ReactiveHealthContributorRegistry.html": "r83",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/contributor/ReactiveHealthIndicator.html": "r84",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/health/contributor/AbstractReactiveHealthIndicator.html": "r85",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/cassandra/health/CassandraDriverReactiveHealthIndicator.html": "r86",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/couchbase/health/CouchbaseReactiveHealthIndicator.html": "r87",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/elasticsearch/health/DataElasticsearchReactiveHealthIndicator.html": "r88",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/mongodb/health/MongoReactiveHealthIndicator.html": "r89",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/neo4j/health/Neo4jReactiveHealthIndicator.html": "r90",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/redis/health/DataRedisReactiveHealthIndicator.html": "r91",
+    "http://localhost:8080/actuator/health/custom": "r92",
+    "https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes": "r93",
+    "https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/": "r94",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/spring-application.html#features.spring-application.application-availability": "r95",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/availability/ApplicationAvailability.html": "r96",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/endpoints.html#actuator.endpoints.health.auto-configured-health-indicators": "r97",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/endpoints.html#actuator.endpoints.health.groups": "r98",
+    "https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#when-should-you-use-a-startup-probe": "r99",
+    "https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#define-startup-probes": "r100",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/endpoints.html#actuator.endpoints.kubernetes-probes.lifecycle": "r101",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/spring-application.html#features.spring-application.application-availability.liveness": "r102",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/spring-application.html#features.spring-application.application-availability.readiness": "r103",
+    "https://kubernetes.io/docs/concepts/services-networking/ingress/": "r104",
+    "https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/": "r105",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/availability/AvailabilityState.html": "r106",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/spring-application.html#features.spring-application.application-events-and-listeners": "r107",
+    "https://docs.spring.io/spring-boot/4.1/reference/web/graceful-shutdown.html": "r108",
+    "https://docs.spring.io/spring-boot/4.1/how-to/deployment/cloud.html#howto.deployment.cloud.kubernetes.container-lifecycle": "r109",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/info/InfoContributor.html": "r110",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/info/BuildInfoContributor.html": "r111",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/info/EnvironmentInfoContributor.html": "r112",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/core/env/Environment.html": "r113",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/info/GitInfoContributor.html": "r114",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/info/JavaInfoContributor.html": "r115",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/info/OsInfoContributor.html": "r116",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/info/ProcessInfoContributor.html": "r117",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/info/SslInfoContributor.html": "r118",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/ssl.html#features.ssl.bundles": "r119",
+    "https://docs.spring.io/spring-boot/4.1/how-to/properties-and-configuration.html#howto.properties-and-configuration.expand-properties": "r120",
+    "https://docs.spring.io/cdn-cgi/l/email-protection": "r121",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/info/GitProperties.html": "r122",
+    "https://docs.spring.io/spring-boot/4.1/how-to/build.html#howto.build.generate-git-info": "r123",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/info/BuildProperties.html": "r124",
+    "https://docs.spring.io/spring-boot/4.1/how-to/build.html#howto.build.generate-info": "r125",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/info/JavaInfo.html": "r126",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/info/OsInfo.html": "r127",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/info/ProcessInfo.html": "r128",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/info/SslInfo.html": "r129",
+    "https://en.wikipedia.org/wiki/Software_supply_chain": "r130",
+    "https://docs.spring.io/spring-boot/4.1/how-to/build.html#howto.build.generate-cyclonedx-sbom": "r131"
+  }
+}

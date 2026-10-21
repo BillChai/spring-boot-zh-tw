@@ -1,0 +1,179 @@
+{
+  "page": "boot/features--dev-services.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/features/dev-services.html",
+  "version": "4.1.1",
+  "html_sha256": "f53ad6c766267c3603f92c1d8b4f42b4af6b12783040a51e81763ae668b5ba7d",
+  "code_blocks": [
+    {
+      "language": "xml",
+      "text": "<dependencies>\n\t<dependency>\n\t\t<groupId>org.springframework.boot</groupId>\n\t\t<artifactId>spring-boot-docker-compose</artifactId>\n\t\t<optional>true</optional>\n\t</dependency>\n</dependencies>"
+    },
+    {
+      "language": "gradle",
+      "text": "dependencies {\n\tdevelopmentOnly(\"org.springframework.boot:spring-boot-docker-compose\")\n}"
+    },
+    {
+      "language": "yaml",
+      "text": "services:\n  redis:\n    image: 'redis:latest'\n    ports:\n      - '6379'\n    secrets:\n      - ssl-ca\n      - ssl-key\n      - ssl-cert\n    command: 'redis-server --tls-port 6379 --port 0 --tls-cert-file /run/secrets/ssl-cert --tls-key-file /run/secrets/ssl-key --tls-ca-cert-file /run/secrets/ssl-ca'\n    labels:\n      - 'org.springframework.boot.sslbundle.pem.keystore.certificate=client.crt'\n      - 'org.springframework.boot.sslbundle.pem.keystore.private-key=client.key'\n      - 'org.springframework.boot.sslbundle.pem.truststore.certificate=ca.crt'\nsecrets:\n  ssl-ca:\n    file: 'ca.crt'\n  ssl-key:\n    file: 'server.key'\n  ssl-cert:\n    file: 'server.crt'"
+    },
+    {
+      "language": "yaml",
+      "text": "services:\n  redis:\n    image: 'mycompany/mycustomredis:7.0'\n    ports:\n      - '6379'\n    labels:\n      org.springframework.boot.service-connection: redis"
+    },
+    {
+      "language": "yaml",
+      "text": "services:\n  redis:\n    image: 'redis:7.0'\n    ports:\n      - '6379'\n    labels:\n      org.springframework.boot.ignore: true"
+    },
+    {
+      "language": "properties",
+      "text": "spring.docker.compose.file=../my-compose.yml"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  docker:\n    compose:\n      file: \"../my-compose.yml\""
+    },
+    {
+      "language": "yaml",
+      "text": "services:\n  redis:\n    image: 'redis:7.0'\n    ports:\n      - '6379'\n    labels:\n      org.springframework.boot.readiness-check.tcp.disable: true"
+    },
+    {
+      "language": "properties",
+      "text": "spring.docker.compose.readiness.tcp.connect-timeout=10s\nspring.docker.compose.readiness.tcp.read-timeout=5s"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  docker:\n    compose:\n      readiness:\n        tcp:\n          connect-timeout: 10s\n          read-timeout: 5s"
+    },
+    {
+      "language": "properties",
+      "text": "spring.docker.compose.lifecycle-management=start-and-stop\nspring.docker.compose.arguments[0]=--project-name=myapp\nspring.docker.compose.arguments[1]=--progress=auto\nspring.docker.compose.start.command=up\nspring.docker.compose.start.arguments[0]=--build\nspring.docker.compose.start.arguments[1]=--force-recreate\nspring.docker.compose.stop.command=down\nspring.docker.compose.stop.timeout=1m\nspring.docker.compose.stop.arguments[0]=--volumes\nspring.docker.compose.stop.arguments[1]=--remove-orphans"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  docker:\n    compose:\n      lifecycle-management: start-and-stop\n      arguments:\n        - \"--project-name=myapp\"\n        - \"--progress=auto\"\n      start:\n        command: up\n        arguments:\n          - \"--build\"\n          - \"--force-recreate\"\n      stop:\n        command: down\n        timeout: 1m\n        arguments:\n          - \"--volumes\"\n          - \"--remove-orphans\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.docker.compose.profiles.active=myprofile"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  docker:\n    compose:\n      profiles:\n        active: \"myprofile\""
+    },
+    {
+      "language": "gradle",
+      "text": "dependencies {\n\ttestAndDevelopmentOnly(\"org.springframework.boot:spring-boot-docker-compose\")\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.fromApplication\n\nfun main(args: Array<String>) {\n\tfromApplication<MyApplication>().run(*args)\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.SpringApplication;\n\npublic class TestMyApplication {\n\n\tpublic static void main(String[] args) {\n\t\tSpringApplication.from(MyApplication::main).run(args);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.test.context.TestConfiguration\nimport org.springframework.boot.testcontainers.service.connection.ServiceConnection\nimport org.springframework.context.annotation.Bean\nimport org.testcontainers.neo4j.Neo4jContainer\n\n@TestConfiguration(proxyBeanMethods = false)\nclass MyContainersConfiguration {\n\n\t@Bean\n\t@ServiceConnection\n\tfun neo4jContainer(): Neo4jContainer {\n\t\treturn Neo4jContainer(\"neo4j:5\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.testcontainers.neo4j.Neo4jContainer;\n\nimport org.springframework.boot.test.context.TestConfiguration;\nimport org.springframework.boot.testcontainers.service.connection.ServiceConnection;\nimport org.springframework.context.annotation.Bean;\n\n@TestConfiguration(proxyBeanMethods = false)\npublic class MyContainersConfiguration {\n\n\t@Bean\n\t@ServiceConnection\n\tpublic Neo4jContainer neo4jContainer() {\n\t\treturn new Neo4jContainer(\"neo4j:5\");\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.fromApplication\nimport org.springframework.boot.with\n\nfun main(args: Array<String>) {\n\tfromApplication<MyApplication>().with(MyContainersConfiguration::class).run(*args)\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.SpringApplication;\n\npublic class TestMyApplication {\n\n\tpublic static void main(String[] args) {\n\t\tSpringApplication.from(MyApplication::main).with(MyContainersConfiguration.class).run(args);\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.test.context.TestConfiguration\nimport org.springframework.context.annotation.Bean\nimport org.springframework.test.context.DynamicPropertyRegistrar;\nimport org.testcontainers.mongodb.MongoDBContainer\n\n@TestConfiguration(proxyBeanMethods = false)\nclass MyContainersConfiguration {\n\n\t@Bean\n\tfun mongoDbContainer(): MongoDBContainer {\n\t\treturn MongoDBContainer(\"mongo:5.0\")\n\t}\n\t\n\t@Bean\n\tfun mongoDbProperties(container: MongoDBContainer): DynamicPropertyRegistrar {\n\t\treturn DynamicPropertyRegistrar { properties ->\n\t\t\tproperties.add(\"spring.mongodb.host\") { container.host }\n\t\t\tproperties.add(\"spring.mongodb.port\") { container.firstMappedPort }\n\t\t}\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.testcontainers.mongodb.MongoDBContainer;\n\nimport org.springframework.boot.test.context.TestConfiguration;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.test.context.DynamicPropertyRegistrar;\n\n@TestConfiguration(proxyBeanMethods = false)\npublic class MyContainersConfiguration {\n\n\t@Bean\n\tpublic MongoDBContainer mongoDbContainer() {\n\t\treturn new MongoDBContainer(\"mongo:5.0\");\n\t}\n\n\t@Bean\n\tpublic DynamicPropertyRegistrar mongoDbProperties(MongoDBContainer container) {\n\t\treturn (properties) -> {\n\t\t\tproperties.add(\"spring.mongodb.host\", container::getHost);\n\t\t\tproperties.add(\"spring.mongodb.port\", container::getFirstMappedPort);\n\t\t};\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.testcontainers.service.connection.ServiceConnection\nimport org.testcontainers.junit.jupiter.Container\nimport org.testcontainers.mongodb.MongoDBContainer\nimport org.testcontainers.neo4j.Neo4jContainer\n\ninterface MyContainers {\n\n\tcompanion object {\n\n\t\t@Container\n\t\t@ServiceConnection\n\t\t@JvmField\n\t\tval mongoContainer = MongoDBContainer(\"mongo:5.0\")\n\n\t\t@Container\n\t\t@ServiceConnection\n\t\t@JvmField\n\t\tval neo4jContainer = Neo4jContainer(\"neo4j:5\")\n\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.testcontainers.junit.jupiter.Container;\nimport org.testcontainers.mongodb.MongoDBContainer;\nimport org.testcontainers.neo4j.Neo4jContainer;\n\nimport org.springframework.boot.testcontainers.service.connection.ServiceConnection;\n\npublic interface MyContainers {\n\n\t@Container\n\t@ServiceConnection\n\tMongoDBContainer mongoContainer = new MongoDBContainer(\"mongo:5.0\");\n\n\t@Container\n\t@ServiceConnection\n\tNeo4jContainer neo4jContainer = new Neo4jContainer(\"neo4j:5\");\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.test.context.TestConfiguration\nimport org.springframework.boot.testcontainers.context.ImportTestcontainers\n\n@TestConfiguration(proxyBeanMethods = false)\n@ImportTestcontainers(MyContainers::class)\nclass MyContainersConfiguration"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.test.context.TestConfiguration;\nimport org.springframework.boot.testcontainers.context.ImportTestcontainers;\n\n@TestConfiguration(proxyBeanMethods = false)\n@ImportTestcontainers(MyContainers.class)\npublic class MyContainersConfiguration {\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.devtools.restart.RestartScope\nimport org.springframework.boot.test.context.TestConfiguration\nimport org.springframework.boot.testcontainers.service.connection.ServiceConnection\nimport org.springframework.context.annotation.Bean\nimport org.testcontainers.mongodb.MongoDBContainer\n\n@TestConfiguration(proxyBeanMethods = false)\nclass MyContainersConfiguration {\n\n\t@Bean\n\t@RestartScope\n\t@ServiceConnection\n\tfun mongoDbContainer(): MongoDBContainer {\n\t\treturn MongoDBContainer(\"mongo:5.0\")\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.testcontainers.mongodb.MongoDBContainer;\n\nimport org.springframework.boot.devtools.restart.RestartScope;\nimport org.springframework.boot.test.context.TestConfiguration;\nimport org.springframework.boot.testcontainers.service.connection.ServiceConnection;\nimport org.springframework.context.annotation.Bean;\n\n@TestConfiguration(proxyBeanMethods = false)\npublic class MyContainersConfiguration {\n\n\t@Bean\n\t@RestartScope\n\t@ServiceConnection\n\tpublic MongoDBContainer mongoDbContainer() {\n\t\treturn new MongoDBContainer(\"mongo:5.0\");\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Development-time Services",
+    "Docker Compose Support",
+    "Prerequisites",
+    "Service Connections",
+    "SSL support",
+    "Custom Images",
+    "Skipping Specific Containers",
+    "Using a Specific Compose File",
+    "Waiting for Container Readiness",
+    "Controlling the Docker Compose Lifecycle",
+    "Activating Docker Compose Profiles",
+    "Using Docker Compose in Tests",
+    "Testcontainers Support",
+    "Using Testcontainers at Development Time",
+    "Contributing Dynamic Properties at Development Time",
+    "Importing Testcontainers Declaration Classes",
+    "Using DevTools with Testcontainers at Development Time"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1/gradle-plugin/packaging.html#packaging-executable.configuring.including-development-only-dependencies": "r1",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/activemq/autoconfigure/ActiveMQConnectionDetails.html": "r2",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/artemis/autoconfigure/ArtemisConnectionDetails.html": "r3",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/cassandra/autoconfigure/CassandraConnectionDetails.html": "r4",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/elasticsearch/autoconfigure/ElasticsearchConnectionDetails.html": "r5",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/hazelcast/autoconfigure/HazelcastConnectionDetails.html": "r6",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/jdbc/autoconfigure/JdbcConnectionDetails.html": "r7",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/ldap/autoconfigure/LdapConnectionDetails.html": "r8",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/mongodb/autoconfigure/MongoConnectionDetails.html": "r9",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/neo4j/autoconfigure/Neo4jConnectionDetails.html": "r10",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/opentelemetry/autoconfigure/logging/otlp/OtlpLoggingConnectionDetails.html": "r11",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/metrics/autoconfigure/export/otlp/OtlpMetricsConnectionDetails.html": "r12",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/micrometer/tracing/opentelemetry/autoconfigure/otlp/OtlpTracingConnectionDetails.html": "r13",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/pulsar/autoconfigure/PulsarConnectionDetails.html": "r14",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/r2dbc/autoconfigure/R2dbcConnectionDetails.html": "r15",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/amqp/autoconfigure/RabbitConnectionDetails.html": "r16",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/amqp/autoconfigure/RabbitStreamConnectionDetails.html": "r17",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/data/redis/autoconfigure/DataRedisConnectionDetails.html": "r18",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/zipkin/autoconfigure/ZipkinConnectionDetails.html": "r19",
+    "https://docs.docker.com/reference/compose-file/services/#labels": "r20",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/ssl.html#features.ssl.jks": "r21",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/ssl.html#features.ssl.pem": "r22",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/testcontainers.html#testing.testcontainers": "r23",
+    "https://javadoc.io/doc/org.testcontainers/testcontainers/2.0.5/org/testcontainers/containers/Container.html": "r24",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/test/context/TestConfiguration.html": "r25",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/annotation/Bean.html": "r26",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/testcontainers/service/connection/ServiceConnection.html": "r27",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/autoconfigure/service/connection/ConnectionDetails.html": "r28",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/testcontainers.html#testing.testcontainers.service-connections": "r29",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/context/DynamicPropertyRegistrar.html": "r30",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/testcontainers/context/ImportTestcontainers.html": "r31",
+    "https://docs.spring.io/spring-boot/4.1/reference/testing/testcontainers.html#testing.testcontainers.dynamic-properties": "r32",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/test/context/DynamicPropertySource.html": "r33",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/devtools/restart/RestartScope.html": "r34"
+  }
+}

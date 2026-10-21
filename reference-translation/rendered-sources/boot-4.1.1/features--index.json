@@ -1,0 +1,14 @@
+{
+  "page": "boot/features--index.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/features/index.html",
+  "version": "4.1.1",
+  "html_sha256": "66d74117554c72a0e4678c07e5984dd9100b1c3d6aa88f5c463a6b16f135c702",
+  "code_blocks": [],
+  "headings": [
+    "Core Features"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1/tutorial/index.html": "r1",
+    "https://docs.spring.io/spring-boot/4.1/reference/using/index.html": "r2"
+  }
+}

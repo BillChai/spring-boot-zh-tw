@@ -1,0 +1,47 @@
+{
+  "page": "boot/io--webservices.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/io/webservices.html",
+  "version": "4.1.1",
+  "html_sha256": "c6ee514f6be511d4f833ed579b425bb44696257ec1f42c7dc97bc3c5af57c346",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.webservices.wsdl-locations=classpath:/wsdl"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  webservices:\n    wsdl-locations: \"classpath:/wsdl\""
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.webservices.client.WebServiceTemplateBuilder\nimport org.springframework.stereotype.Service\nimport org.springframework.ws.client.core.WebServiceTemplate\nimport org.springframework.ws.soap.client.core.SoapActionCallback\n\n@Service\nclass MyService(webServiceTemplateBuilder: WebServiceTemplateBuilder) {\n\n\tprivate val webServiceTemplate: WebServiceTemplate\n\n\tinit {\n\t\twebServiceTemplate = webServiceTemplateBuilder.build()\n\t}\n\n\tfun someWsCall(detailsReq: SomeRequest): SomeResponse {\n\t\treturn webServiceTemplate.marshalSendAndReceive(\n\t\t\tdetailsReq,\n\t\t\tSoapActionCallback(\"https://ws.example.com/action\")\n\t\t) as SomeResponse\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import org.springframework.boot.webservices.client.WebServiceTemplateBuilder;\nimport org.springframework.stereotype.Service;\nimport org.springframework.ws.client.core.WebServiceTemplate;\nimport org.springframework.ws.soap.client.core.SoapActionCallback;\n\n@Service\npublic class MyService {\n\n\tprivate final WebServiceTemplate webServiceTemplate;\n\n\tpublic MyService(WebServiceTemplateBuilder webServiceTemplateBuilder) {\n\t\tthis.webServiceTemplate = webServiceTemplateBuilder.build();\n\t}\n\n\tpublic SomeResponse someWsCall(SomeRequest detailsReq) {\n\t\treturn (SomeResponse) this.webServiceTemplate.marshalSendAndReceive(detailsReq,\n\t\t\t\tnew SoapActionCallback(\"https://ws.example.com/action\"));\n\t}\n\n}"
+    },
+    {
+      "language": "kotlin",
+      "text": "import org.springframework.boot.http.client.HttpClientSettings\nimport org.springframework.boot.webservices.client.WebServiceMessageSenderFactory\nimport org.springframework.boot.webservices.client.WebServiceTemplateBuilder\nimport org.springframework.context.annotation.Bean\nimport org.springframework.context.annotation.Configuration\nimport org.springframework.ws.client.core.WebServiceTemplate\nimport java.time.Duration\n\n@Configuration(proxyBeanMethods = false)\nclass MyWebServiceTemplateConfiguration {\n\n\t@Bean\n\tfun webServiceTemplate(builder: WebServiceTemplateBuilder): WebServiceTemplate {\n\t\tval settings = HttpClientSettings.defaults()\n\t\t\t\t.withConnectTimeout(Duration.ofSeconds(2))\n\t\t\t\t.withReadTimeout(Duration.ofSeconds(2))\n\t\tbuilder.httpMessageSenderFactory(WebServiceMessageSenderFactory.http(settings))\n\t\treturn builder.build()\n\t}\n\n}"
+    },
+    {
+      "language": "java",
+      "text": "import java.time.Duration;\n\nimport org.springframework.boot.http.client.HttpClientSettings;\nimport org.springframework.boot.webservices.client.WebServiceMessageSenderFactory;\nimport org.springframework.boot.webservices.client.WebServiceTemplateBuilder;\nimport org.springframework.context.annotation.Bean;\nimport org.springframework.context.annotation.Configuration;\nimport org.springframework.ws.client.core.WebServiceTemplate;\n\n@Configuration(proxyBeanMethods = false)\npublic class MyWebServiceTemplateConfiguration {\n\n\t@Bean\n\tpublic WebServiceTemplate webServiceTemplate(WebServiceTemplateBuilder builder) {\n\t\tHttpClientSettings settings = HttpClientSettings.defaults()\n\t\t\t.withConnectTimeout(Duration.ofSeconds(2))\n\t\t\t.withReadTimeout(Duration.ofSeconds(2));\n\t\tbuilder.httpMessageSenderFactory(WebServiceMessageSenderFactory.http(settings));\n\t\treturn builder.build();\n\t}\n\n}"
+    }
+  ],
+  "headings": [
+    "Web Services",
+    "Calling Web Services with WebServiceTemplate"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-ws/docs/5.0.x/api/org/springframework/ws/server/endpoint/annotation/Endpoint.html": "r1",
+    "https://docs.spring.io/spring-ws/docs/5.0.x/reference/html": "r2",
+    "https://docs.spring.io/spring-ws/docs/5.0.x/api/org/springframework/ws/wsdl/wsdl11/SimpleWsdl11Definition.html": "r3",
+    "https://docs.spring.io/spring-ws/docs/5.0.x/api/org/springframework/xml/xsd/SimpleXsdSchema.html": "r4",
+    "https://docs.spring.io/spring-ws/docs/5.0.x/reference/html#client-web-service-template": "r5",
+    "https://docs.spring.io/spring-ws/docs/5.0.x/api/org/springframework/ws/client/core/WebServiceTemplate.html": "r6",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/webservices/client/WebServiceTemplateBuilder.html": "r7",
+    "https://docs.spring.io/spring-ws/docs/5.0.x/api/org/springframework/ws/transport/WebServiceMessageSender.html": "r8",
+    "https://docs.spring.io/spring-boot/4.1/reference/io/rest-client.html#io.rest-client.clienthttprequestfactory.configuration": "r9"
+  }
+}

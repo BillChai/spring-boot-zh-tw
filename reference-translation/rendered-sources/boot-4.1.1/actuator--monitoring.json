@@ -1,0 +1,84 @@
+{
+  "page": "boot/actuator--monitoring.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/actuator/monitoring.html",
+  "version": "4.1.1",
+  "html_sha256": "55a6359961818f195494999e898812f51a79eebc07358145fe47fd0a9d984a1c",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "management.endpoints.web.base-path=/manage"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoints:\n    web:\n      base-path: \"/manage\""
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoints.web.base-path=/\nmanagement.endpoints.web.path-mapping.health=healthcheck"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoints:\n    web:\n      base-path: \"/\"\n      path-mapping:\n        health: \"healthcheck\""
+    },
+    {
+      "language": "properties",
+      "text": "management.server.port=8081"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  server:\n    port: 8081"
+    },
+    {
+      "language": "properties",
+      "text": "server.port=8443\nserver.ssl.enabled=true\nserver.ssl.key-store=classpath:store.jks\nserver.ssl.key-password=secret\nmanagement.server.port=8080\nmanagement.server.ssl.enabled=false"
+    },
+    {
+      "language": "yaml",
+      "text": "server:\n  port: 8443\n  ssl:\n    enabled: true\n    key-store: \"classpath:store.jks\"\n    key-password: \"secret\"\nmanagement:\n  server:\n    port: 8080\n    ssl:\n      enabled: false"
+    },
+    {
+      "language": "properties",
+      "text": "server.port=8443\nserver.ssl.enabled=true\nserver.ssl.key-store=classpath:main.jks\nserver.ssl.key-password=secret\nmanagement.server.port=8080\nmanagement.server.ssl.enabled=true\nmanagement.server.ssl.key-store=classpath:management.jks\nmanagement.server.ssl.key-password=secret"
+    },
+    {
+      "language": "yaml",
+      "text": "server:\n  port: 8443\n  ssl:\n    enabled: true\n    key-store: \"classpath:main.jks\"\n    key-password: \"secret\"\nmanagement:\n  server:\n    port: 8080\n    ssl:\n      enabled: true\n      key-store: \"classpath:management.jks\"\n      key-password: \"secret\""
+    },
+    {
+      "language": "properties",
+      "text": "management.server.port=8081\nmanagement.server.address=127.0.0.1"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  server:\n    port: 8081\n    address: \"127.0.0.1\""
+    },
+    {
+      "language": "properties",
+      "text": "management.server.port=-1"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  server:\n    port: -1"
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoints.web.exposure.exclude=*"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoints:\n    web:\n      exposure:\n        exclude: \"*\""
+    }
+  ],
+  "headings": [
+    "Monitoring and Management Over HTTP",
+    "Customizing the Management Endpoint Paths",
+    "Customizing the Management Server Port",
+    "Configuring Management-specific SSL",
+    "Customizing the Management Server Address",
+    "Disabling HTTP Endpoints"
+  ],
+  "links": {
+    "https://docs.spring.io/spring-boot/4.1/api/rest/actuator/index.html": "r1",
+    "https://docs.spring.io/spring-boot/4.1/reference/actuator/monitoring.html#actuator.monitoring.customizing-management-server-port": "r2"
+  }
+}

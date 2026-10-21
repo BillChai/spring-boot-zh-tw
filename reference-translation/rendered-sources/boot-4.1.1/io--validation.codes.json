@@ -1,0 +1,4 @@
+[
+  "```kotlin\nimport jakarta.validation.constraints.Size\nimport org.springframework.stereotype.Service\nimport org.springframework.validation.annotation.Validated\n\n@Service\n@Validated\nclass MyBean {\n\n\tfun findByCodeAndAuthor(code: @Size(min = 8, max = 10) String?, author: Author?): Archive? {\n\t\treturn null\n\t}\n\n}\n```",
+  "```java\nimport jakarta.validation.constraints.Size;\n\nimport org.springframework.stereotype.Service;\nimport org.springframework.validation.annotation.Validated;\n\n@Service\n@Validated\npublic class MyBean {\n\n\tpublic Archive findByCodeAndAuthor(@Size(min = 8, max = 10) String code, Author author) {\n\t\treturn ...\n\t}\n\n}\n```"
+]

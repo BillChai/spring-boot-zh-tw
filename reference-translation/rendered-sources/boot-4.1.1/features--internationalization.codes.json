@@ -1,0 +1,4 @@
+[
+  "```properties\nspring.messages.basename=messages, config.i18n.messages\nspring.messages.common-messages=classpath:my-common-messages.properties\nspring.messages.fallback-to-system-locale=false\n```",
+  "```yaml\nspring:\n  messages:\n    basename: \"messages, config.i18n.messages\"\n    common-messages: \"classpath:my-common-messages.properties\"\n    fallback-to-system-locale: false\n```"
+]

@@ -1,0 +1,48 @@
+{
+  "page": "boot/messaging--spring-integration.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/messaging/spring-integration.html",
+  "version": "4.1.1",
+  "html_sha256": "564547c1adac838a7ef534509aa2e91505f8015927893b899a9a5a37708cdd79",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.integration.jdbc.initialize-schema=always"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  integration:\n    jdbc:\n      initialize-schema: \"always\""
+    },
+    {
+      "language": "properties",
+      "text": "spring.integration.rsocket.client.host=example.org\nspring.integration.rsocket.client.port=9898"
+    },
+    {
+      "language": "yaml",
+      "text": "# Connecting to a RSocket server over TCP\nspring:\n  integration:\n    rsocket:\n      client:\n        host: \"example.org\"\n        port: 9898"
+    },
+    {
+      "language": "properties",
+      "text": "spring.integration.rsocket.client.uri=ws://example.org"
+    },
+    {
+      "language": "yaml",
+      "text": "# Connecting to a RSocket Server over WebSocket\nspring:\n  integration:\n    rsocket:\n      client:\n        uri: \"ws://example.org\""
+    }
+  ],
+  "headings": [
+    "Spring Integration"
+  ],
+  "links": {
+    "https://spring.io/projects/spring-integration": "r1",
+    "https://docs.spring.io/spring-integration/docs/7.1.x/api/org/springframework/integration/config/EnableIntegration.html": "r2",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/scheduling/TaskScheduler.html": "r3",
+    "https://docs.spring.io/spring-boot/4.1/reference/features/task-execution-and-scheduling.html": "r4",
+    "https://docs.spring.io/spring-integration/docs/7.1.x/api/org/springframework/integration/scheduling/PollerMetadata.html": "r5",
+    "https://docs.spring.io/spring-integration/docs/7.1.x/api/org/springframework/integration/rsocket/IntegrationRSocketEndpoint.html": "r6",
+    "https://docs.spring.io/spring-integration/docs/7.1.x/api/org/springframework/integration/rsocket/outbound/RSocketOutboundGateway.html": "r7",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/messaging/handler/annotation/MessageMapping.html": "r8",
+    "https://docs.spring.io/spring-integration/docs/7.1.x/api/org/springframework/integration/rsocket/ClientRSocketConnector.html": "r9",
+    "https://github.com/spring-projects/spring-boot/tree/v4.1.1/module/spring-boot-integration/src/main/java/org/springframework/boot/integration/autoconfigure/IntegrationAutoConfiguration.java": "r10",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/integration/autoconfigure/IntegrationProperties.html": "r11"
+  }
+}

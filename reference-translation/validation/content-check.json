@@ -1,0 +1,717 @@
+{
+  "errors": [],
+  "review_notes": [
+    {
+      "page": "features--spring-application",
+      "inline_code_needing_review": [
+        "SpringApplication.addListeners(…​)",
+        "SpringApplication.run(…​)",
+        "SpringApplication.setBanner(…​)",
+        "SpringApplicationBuilder.listeners(…​)",
+        "setApplicationContextFactory(…​)"
+      ]
+    },
+    {
+      "page": "features--external-config",
+      "inline_code_needing_review": [
+        "SpringApplication.setDefaultProperties(…​)",
+        "setEnvironmentPrefix(…​)"
+      ]
+    },
+    {
+      "page": "features--profiles",
+      "inline_code_needing_review": [
+        "SpringApplication.setAdditionalProfiles(…​)"
+      ]
+    },
+    {
+      "page": "features--dev-services",
+      "inline_code_needing_review": [
+        "SpringApplication.from(…​)",
+        "with(…​)"
+      ]
+    },
+    {
+      "page": "web--servlet",
+      "inline_code_needing_review": [
+        "Lax",
+        "configureApiVersioning(…​)"
+      ]
+    },
+    {
+      "page": "web--reactive",
+      "inline_code_needing_review": [
+        "configureApiVersioning(…​)"
+      ]
+    },
+    {
+      "page": "data--nosql",
+      "inline_code_needing_review": [
+        "[localhost:9200][r62]"
+      ]
+    },
+    {
+      "page": "io--rest-client",
+      "inline_code_needing_review": [
+        "build(…​)"
+      ]
+    },
+    {
+      "page": "actuator--endpoints",
+      "inline_code_needing_review": [
+        "[localhost:8080/actuator/health/custom][r92]"
+      ]
+    },
+    {
+      "page": "actuator--observability",
+      "inline_code_needing_review": [
+        "[collector:4318/v1/traces][r39]"
+      ]
+    },
+    {
+      "page": "actuator--metrics",
+      "inline_code_needing_review": [
+        "[api.appoptics.com/v1/measurements][r25]",
+        "[api.datadoghq.com][r32]"
+      ]
+    },
+    {
+      "page": "actuator--tracing",
+      "inline_code_needing_review": [
+        "[localhost:8080][r8]",
+        "[localhost:9411][r9]"
+      ]
+    }
+  ],
+  "diagrams": 49,
+  "boot_translated_pages": 89,
+  "boot_source_pages": 89,
+  "translated_pages": 89,
+  "source_pages": 89,
+  "rendered_source_coverage": [
+    {
+      "page": "features--index",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "features--spring-application",
+      "original_code_blocks": 25,
+      "source_headings": 18,
+      "translated_headings": 18,
+      "source_table_lines": 8,
+      "translated_table_lines": 8
+    },
+    {
+      "page": "features--external-config",
+      "original_code_blocks": 102,
+      "source_headings": 44,
+      "translated_headings": 44,
+      "source_table_lines": 21,
+      "translated_table_lines": 21
+    },
+    {
+      "page": "features--profiles",
+      "original_code_blocks": 14,
+      "source_headings": 5,
+      "translated_headings": 5,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "features--logging",
+      "original_code_blocks": 39,
+      "source_headings": 24,
+      "translated_headings": 24,
+      "source_table_lines": 74,
+      "translated_table_lines": 74
+    },
+    {
+      "page": "features--internationalization",
+      "original_code_blocks": 2,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "features--aop",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "features--json",
+      "original_code_blocks": 4,
+      "source_headings": 8,
+      "translated_headings": 8,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "features--task-execution-and-scheduling",
+      "original_code_blocks": 16,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "features--dev-services",
+      "original_code_blocks": 29,
+      "source_headings": 17,
+      "translated_headings": 17,
+      "source_table_lines": 20,
+      "translated_table_lines": 20
+    },
+    {
+      "page": "features--developing-auto-configuration",
+      "original_code_blocks": 20,
+      "source_headings": 19,
+      "translated_headings": 19,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "features--kotlin",
+      "original_code_blocks": 3,
+      "source_headings": 12,
+      "translated_headings": 12,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "features--ssl",
+      "original_code_blocks": 16,
+      "source_headings": 7,
+      "translated_headings": 7,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "web--index",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "web--servlet",
+      "original_code_blocks": 53,
+      "source_headings": 32,
+      "translated_headings": 32,
+      "source_table_lines": 10,
+      "translated_table_lines": 10
+    },
+    {
+      "page": "web--reactive",
+      "original_code_blocks": 21,
+      "source_headings": 17,
+      "translated_headings": 17,
+      "source_table_lines": 14,
+      "translated_table_lines": 14
+    },
+    {
+      "page": "web--graceful-shutdown",
+      "original_code_blocks": 4,
+      "source_headings": 3,
+      "translated_headings": 3,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "web--spring-security",
+      "original_code_blocks": 2,
+      "source_headings": 5,
+      "translated_headings": 5,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "web--spring-session",
+      "original_code_blocks": 2,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "web--spring-graphql",
+      "original_code_blocks": 7,
+      "source_headings": 9,
+      "translated_headings": 9,
+      "source_table_lines": 6,
+      "translated_table_lines": 6
+    },
+    {
+      "page": "web--spring-hateoas",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "data--index",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "data--sql",
+      "original_code_blocks": 43,
+      "source_headings": 29,
+      "translated_headings": 29,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "data--nosql",
+      "original_code_blocks": 80,
+      "source_headings": 29,
+      "translated_headings": 29,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "io--index",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "io--caching",
+      "original_code_blocks": 28,
+      "source_headings": 13,
+      "translated_headings": 13,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "io--spring-batch",
+      "original_code_blocks": 6,
+      "source_headings": 2,
+      "translated_headings": 2,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "io--grpc",
+      "original_code_blocks": 39,
+      "source_headings": 31,
+      "translated_headings": 31,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "io--hazelcast",
+      "original_code_blocks": 2,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "io--quartz",
+      "original_code_blocks": 6,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "io--email",
+      "original_code_blocks": 4,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "io--validation",
+      "original_code_blocks": 2,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "io--rest-client",
+      "original_code_blocks": 48,
+      "source_headings": 23,
+      "translated_headings": 23,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "io--webservices",
+      "original_code_blocks": 6,
+      "source_headings": 2,
+      "translated_headings": 2,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "io--jta",
+      "original_code_blocks": 6,
+      "source_headings": 4,
+      "translated_headings": 4,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "messaging--index",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "messaging--jms",
+      "original_code_blocks": 24,
+      "source_headings": 6,
+      "translated_headings": 6,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "messaging--amqp",
+      "original_code_blocks": 16,
+      "source_headings": 6,
+      "translated_headings": 6,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "messaging--kafka",
+      "original_code_blocks": 20,
+      "source_headings": 6,
+      "translated_headings": 6,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "messaging--pulsar",
+      "original_code_blocks": 8,
+      "source_headings": 11,
+      "translated_headings": 11,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "messaging--rsocket",
+      "original_code_blocks": 6,
+      "source_headings": 5,
+      "translated_headings": 5,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "messaging--spring-integration",
+      "original_code_blocks": 6,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "messaging--websockets",
+      "original_code_blocks": 1,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "security--index",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "security--oauth2",
+      "original_code_blocks": 20,
+      "source_headings": 5,
+      "translated_headings": 5,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "security--saml2",
+      "original_code_blocks": 5,
+      "source_headings": 5,
+      "translated_headings": 5,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "testing--index",
+      "original_code_blocks": 1,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "testing--test-modules",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 27,
+      "translated_table_lines": 27
+    },
+    {
+      "page": "testing--test-scope-dependencies",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "testing--spring-applications",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "testing--spring-boot-applications",
+      "original_code_blocks": 103,
+      "source_headings": 43,
+      "translated_headings": 43,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "testing--testcontainers",
+      "original_code_blocks": 18,
+      "source_headings": 8,
+      "translated_headings": 8,
+      "source_table_lines": 23,
+      "translated_table_lines": 23
+    },
+    {
+      "page": "testing--test-utilities",
+      "original_code_blocks": 10,
+      "source_headings": 5,
+      "translated_headings": 5,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "packaging--index",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "packaging--efficient",
+      "original_code_blocks": 2,
+      "source_headings": 2,
+      "translated_headings": 2,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "packaging--aot-cache",
+      "original_code_blocks": 4,
+      "source_headings": 3,
+      "translated_headings": 3,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "packaging--aot",
+      "original_code_blocks": 2,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "packaging--native-image--index",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "packaging--native-image--introducing-graalvm-native-images",
+      "original_code_blocks": 2,
+      "source_headings": 6,
+      "translated_headings": 6,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "packaging--native-image--advanced-topics",
+      "original_code_blocks": 12,
+      "source_headings": 11,
+      "translated_headings": 11,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "packaging--checkpoint-restore",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "packaging--container-images--index",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "packaging--container-images--efficient-images",
+      "original_code_blocks": 1,
+      "source_headings": 2,
+      "translated_headings": 2,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "packaging--container-images--dockerfiles",
+      "original_code_blocks": 6,
+      "source_headings": 3,
+      "translated_headings": 3,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "packaging--container-images--cloud-native-buildpacks",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "actuator--index",
+      "original_code_blocks": 0,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "actuator--enabling",
+      "original_code_blocks": 2,
+      "source_headings": 1,
+      "translated_headings": 1,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "actuator--endpoints",
+      "original_code_blocks": 60,
+      "source_headings": 46,
+      "translated_headings": 46,
+      "source_table_lines": 98,
+      "translated_table_lines": 98
+    },
+    {
+      "page": "actuator--monitoring",
+      "original_code_blocks": 16,
+      "source_headings": 6,
+      "translated_headings": 6,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "actuator--jmx",
+      "original_code_blocks": 4,
+      "source_headings": 3,
+      "translated_headings": 3,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "actuator--observability",
+      "original_code_blocks": 12,
+      "source_headings": 18,
+      "translated_headings": 18,
+      "source_table_lines": 58,
+      "translated_table_lines": 58
+    },
+    {
+      "page": "actuator--loggers",
+      "original_code_blocks": 9,
+      "source_headings": 3,
+      "translated_headings": 3,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "actuator--metrics",
+      "original_code_blocks": 90,
+      "source_headings": 59,
+      "translated_headings": 59,
+      "source_table_lines": 37,
+      "translated_table_lines": 37
+    },
+    {
+      "page": "actuator--tracing",
+      "original_code_blocks": 13,
+      "source_headings": 15,
+      "translated_headings": 15,
+      "source_table_lines": 8,
+      "translated_table_lines": 8
+    },
+    {
+      "page": "actuator--auditing",
+      "original_code_blocks": 0,
+      "source_headings": 2,
+      "translated_headings": 2,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "actuator--http-exchanges",
+      "original_code_blocks": 0,
+      "source_headings": 2,
+      "translated_headings": 2,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "actuator--process-monitoring",
+      "original_code_blocks": 1,
+      "source_headings": 3,
+      "translated_headings": 3,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    },
+    {
+      "page": "actuator--cloud-foundry",
+      "original_code_blocks": 8,
+      "source_headings": 4,
+      "translated_headings": 4,
+      "source_table_lines": 0,
+      "translated_table_lines": 0
+    }
+  ]
+}

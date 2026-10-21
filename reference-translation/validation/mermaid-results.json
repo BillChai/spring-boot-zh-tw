@@ -1,0 +1,296 @@
+[
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 19019
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 2,
+    "status": "rendered",
+    "svgLength": 15568
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 3,
+    "status": "rendered",
+    "svgLength": 30146
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 4,
+    "status": "rendered",
+    "svgLength": 19441
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 5,
+    "status": "rendered",
+    "svgLength": 14477
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 6,
+    "status": "rendered",
+    "svgLength": 18580
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 7,
+    "status": "rendered",
+    "svgLength": 16896
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 8,
+    "status": "rendered",
+    "svgLength": 15425
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 9,
+    "status": "rendered",
+    "svgLength": 14234
+  },
+  {
+    "file": "ECOSYSTEM.md",
+    "index": 10,
+    "status": "rendered",
+    "svgLength": 14815
+  },
+  {
+    "file": "boot/actuator--endpoints.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 23300
+  },
+  {
+    "file": "boot/actuator--endpoints.md",
+    "index": 2,
+    "status": "rendered",
+    "svgLength": 16504
+  },
+  {
+    "file": "boot/actuator--metrics.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 20679
+  },
+  {
+    "file": "boot/actuator--observability.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 19558
+  },
+  {
+    "file": "boot/actuator--tracing.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 18119
+  },
+  {
+    "file": "boot/data--nosql.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 14886
+  },
+  {
+    "file": "boot/data--sql.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 15865
+  },
+  {
+    "file": "boot/features--aop.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 25531
+  },
+  {
+    "file": "boot/features--dev-services.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 18320
+  },
+  {
+    "file": "boot/features--developing-auto-configuration.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 18990
+  },
+  {
+    "file": "boot/features--external-config.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 16398
+  },
+  {
+    "file": "boot/features--external-config.md",
+    "index": 2,
+    "status": "rendered",
+    "svgLength": 15506
+  },
+  {
+    "file": "boot/features--logging.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 16835
+  },
+  {
+    "file": "boot/features--profiles.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 19424
+  },
+  {
+    "file": "boot/features--spring-application.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 16223
+  },
+  {
+    "file": "boot/features--ssl.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 18086
+  },
+  {
+    "file": "boot/features--task-execution-and-scheduling.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 17929
+  },
+  {
+    "file": "boot/io--caching.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 16397
+  },
+  {
+    "file": "boot/io--grpc.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 16374
+  },
+  {
+    "file": "boot/io--rest-client.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 15242
+  },
+  {
+    "file": "boot/messaging--amqp.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 19870
+  },
+  {
+    "file": "boot/packaging--aot-cache.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 16586
+  },
+  {
+    "file": "boot/packaging--container-images--efficient-images.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 13950
+  },
+  {
+    "file": "boot/packaging--native-image--introducing-graalvm-native-images.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 17491
+  },
+  {
+    "file": "boot/security--oauth2.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 17902
+  },
+  {
+    "file": "boot/testing--spring-boot-applications.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 18799
+  },
+  {
+    "file": "boot/testing--testcontainers.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 25353
+  },
+  {
+    "file": "boot/using--auto-configuration.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 21636
+  },
+  {
+    "file": "boot/using--build-systems.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 13584
+  },
+  {
+    "file": "boot/using--configuration-classes.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 14623
+  },
+  {
+    "file": "boot/using--devtools.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 15596
+  },
+  {
+    "file": "boot/using--devtools.md",
+    "index": 2,
+    "status": "rendered",
+    "svgLength": 25112
+  },
+  {
+    "file": "boot/using--running-your-application.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 14712
+  },
+  {
+    "file": "boot/using--spring-beans-and-dependency-injection.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 14174
+  },
+  {
+    "file": "boot/using--structuring-your-code.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 15144
+  },
+  {
+    "file": "boot/using--using-the-springbootapplication-annotation.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 16815
+  },
+  {
+    "file": "boot/web--servlet.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 15207
+  },
+  {
+    "file": "boot/web--spring-graphql.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 16029
+  },
+  {
+    "file": "boot/web--spring-security.md",
+    "index": 1,
+    "status": "rendered",
+    "svgLength": 15645
+  }
+]

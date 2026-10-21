@@ -1,0 +1,95 @@
+[
+  {
+    "page": "features--spring-application",
+    "items": [
+      "SpringApplication.addListeners(…​)",
+      "SpringApplication.run(…​)",
+      "SpringApplication.setBanner(…​)",
+      "SpringApplicationBuilder.listeners(…​)",
+      "setApplicationContextFactory(…​)"
+    ],
+    "resolution": "已對照譯文：方法的 Unicode 省略符改為一般省略符；URL 改為可點選連結；Lax 保留於 SameSite=Lax。均無內容遺漏。"
+  },
+  {
+    "page": "features--external-config",
+    "items": [
+      "SpringApplication.setDefaultProperties(…​)",
+      "setEnvironmentPrefix(…​)"
+    ],
+    "resolution": "已對照譯文：方法的 Unicode 省略符改為一般省略符；URL 改為可點選連結；Lax 保留於 SameSite=Lax。均無內容遺漏。"
+  },
+  {
+    "page": "features--profiles",
+    "items": [
+      "SpringApplication.setAdditionalProfiles(…​)"
+    ],
+    "resolution": "已對照譯文：方法的 Unicode 省略符改為一般省略符；URL 改為可點選連結；Lax 保留於 SameSite=Lax。均無內容遺漏。"
+  },
+  {
+    "page": "features--dev-services",
+    "items": [
+      "SpringApplication.from(…​)",
+      "with(…​)"
+    ],
+    "resolution": "已對照譯文：方法的 Unicode 省略符改為一般省略符；URL 改為可點選連結；Lax 保留於 SameSite=Lax。均無內容遺漏。"
+  },
+  {
+    "page": "web--servlet",
+    "items": [
+      "Lax",
+      "configureApiVersioning(…​)"
+    ],
+    "resolution": "已對照譯文：方法的 Unicode 省略符改為一般省略符；URL 改為可點選連結；Lax 保留於 SameSite=Lax。均無內容遺漏。"
+  },
+  {
+    "page": "web--reactive",
+    "items": [
+      "configureApiVersioning(…​)"
+    ],
+    "resolution": "已對照譯文：方法的 Unicode 省略符改為一般省略符；URL 改為可點選連結；Lax 保留於 SameSite=Lax。均無內容遺漏。"
+  },
+  {
+    "page": "data--nosql",
+    "items": [
+      "[localhost:9200][r62]"
+    ],
+    "resolution": "已對照譯文：方法的 Unicode 省略符改為一般省略符；URL 改為可點選連結；Lax 保留於 SameSite=Lax。均無內容遺漏。"
+  },
+  {
+    "page": "io--rest-client",
+    "items": [
+      "build(…​)"
+    ],
+    "resolution": "已對照譯文：方法的 Unicode 省略符改為一般省略符；URL 改為可點選連結；Lax 保留於 SameSite=Lax。均無內容遺漏。"
+  },
+  {
+    "page": "actuator--endpoints",
+    "items": [
+      "[localhost:8080/actuator/health/custom][r92]"
+    ],
+    "resolution": "已對照譯文：方法的 Unicode 省略符改為一般省略符；URL 改為可點選連結；Lax 保留於 SameSite=Lax。均無內容遺漏。"
+  },
+  {
+    "page": "actuator--observability",
+    "items": [
+      "[collector:4318/v1/traces][r39]"
+    ],
+    "resolution": "已對照譯文：方法的 Unicode 省略符改為一般省略符；URL 改為可點選連結；Lax 保留於 SameSite=Lax。均無內容遺漏。"
+  },
+  {
+    "page": "actuator--metrics",
+    "items": [
+      "[api.appoptics.com/v1/measurements][r25]",
+      "[api.datadoghq.com][r32]"
+    ],
+    "resolution": "已對照譯文：方法的 Unicode 省略符改為一般省略符；URL 改為可點選連結；Lax 保留於 SameSite=Lax。均無內容遺漏。"
+  },
+  {
+    "page": "actuator--tracing",
+    "items": [
+      "[localhost:8080][r8]",
+      "[localhost:9411][r9]"
+    ],
+    "resolution": "已對照譯文：方法的 Unicode 省略符改為一般省略符；URL 改為可點選連結；Lax 保留於 SameSite=Lax。均無內容遺漏。"
+  }
+]

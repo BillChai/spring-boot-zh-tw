@@ -1,0 +1,39 @@
+{
+  "page": "boot/actuator--jmx.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/actuator/jmx.html",
+  "version": "4.1.1",
+  "html_sha256": "98c79a276f1f8b4b69e752e09034ad7785e61978a8af757790fc691ba6827711",
+  "code_blocks": [
+    {
+      "language": "properties",
+      "text": "spring.jmx.unique-names=true\nmanagement.endpoints.jmx.domain=com.example.myapp"
+    },
+    {
+      "language": "yaml",
+      "text": "spring:\n  jmx:\n    unique-names: true\nmanagement:\n  endpoints:\n    jmx:\n      domain: \"com.example.myapp\""
+    },
+    {
+      "language": "properties",
+      "text": "management.endpoints.jmx.exposure.exclude=*"
+    },
+    {
+      "language": "yaml",
+      "text": "management:\n  endpoints:\n    jmx:\n      exposure:\n        exclude: \"*\""
+    }
+  ],
+  "headings": [
+    "Monitoring and Management over JMX",
+    "Customizing MBean Names",
+    "Disabling JMX Endpoints"
+  ],
+  "links": {
+    "https://docs.oracle.com/en/java/javase/17/docs/api/java.management/javax/management/MBeanServer.html": "r1",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jmx/export/annotation/ManagedAttribute.html": "r2",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/jmx/export/annotation/ManagedOperation.html": "r3",
+    "https://logging.apache.org/log4j/2.x/manual/jmx.html": "r4",
+    "https://javadoc.io/doc/org.quartz-scheduler/quartz/2.5.2/constant-values.html#org.quartz.impl.StdSchedulerFactory.PROP_SCHED_JMX_EXPORT": "r5",
+    "https://github.com/spring-projects/spring-boot/tree/v4.1.1/core/spring-boot-autoconfigure/src/main/java/org/springframework/boot/autoconfigure/jmx/JmxAutoConfiguration.java": "r6",
+    "https://docs.spring.io/spring-boot/4.1.1/api/java/org/springframework/boot/actuate/endpoint/jmx/EndpointObjectNameFactory.html": "r7",
+    "https://docs.spring.io/spring-framework/docs/7.0.x/javadoc-api/org/springframework/context/ApplicationContext.html": "r8"
+  }
+}

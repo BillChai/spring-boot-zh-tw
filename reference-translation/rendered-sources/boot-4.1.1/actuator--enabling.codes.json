@@ -1,0 +1,4 @@
+[
+  "```xml\n<dependencies>\n\t<dependency>\n\t\t<groupId>org.springframework.boot</groupId>\n\t\t<artifactId>spring-boot-starter-actuator</artifactId>\n\t</dependency>\n</dependencies>\n```",
+  "```gradle\ndependencies {\n\timplementation 'org.springframework.boot:spring-boot-starter-actuator'\n}\n```"
+]

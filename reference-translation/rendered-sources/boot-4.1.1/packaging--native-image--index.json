@@ -1,0 +1,13 @@
+{
+  "page": "boot/packaging--native-image--index.md",
+  "url": "https://docs.spring.io/spring-boot/4.1/reference/packaging/native-image/index.html",
+  "version": "4.1.1",
+  "html_sha256": "462aff93b287568335936b474e4704141e62e484f92c3b667ddfde9822f6aa0b",
+  "code_blocks": [],
+  "headings": [
+    "GraalVM Native Images"
+  ],
+  "links": {
+    "https://www.graalvm.org/native-image/": "r1"
+  }
+}
